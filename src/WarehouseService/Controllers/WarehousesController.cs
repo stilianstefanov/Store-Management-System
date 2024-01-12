@@ -7,6 +7,15 @@ namespace WarehouseService.Controllers
     [ApiController]
     public class WarehousesController : ControllerBase
     {
+        public WarehousesController()
+        {
+            
+        }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok("Hello from WarehouseService");
+        }
     }
 }
