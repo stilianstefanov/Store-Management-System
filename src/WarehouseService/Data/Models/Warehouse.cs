@@ -20,5 +20,7 @@
         [Required]
         [MaxLength(TypeMaxLength)]
         public string Type { get; set; } = null!;
+
+        public bool IsDeleted { get; set; }
     }
 }

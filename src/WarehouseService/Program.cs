@@ -1,6 +1,9 @@
 
 namespace WarehouseService
 {
+    using Data;
+    using Microsoft.EntityFrameworkCore;
+
     public class Program
     {
         public static void Main(string[] args)
