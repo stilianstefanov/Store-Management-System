@@ -3,19 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WarehouseService.Controllers
 {
+    using Data.Contracts;
+
     [Route("api/[controller]")]
     [ApiController]
     public class WarehousesController : ControllerBase
     {
-        public WarehousesController()
-        {
-            
-        }
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok("Hello from WarehouseService");
-        }
+        
     }
 }

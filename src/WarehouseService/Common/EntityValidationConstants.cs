@@ -6,7 +6,11 @@
         {
             public const int NameMaxLength = 100;
 
+            public const int NameMinLength = 3;
+
             public const int TypeMaxLength = 100;
+
+            public const int TypeMinLength = 3;
         }
     }
 }
