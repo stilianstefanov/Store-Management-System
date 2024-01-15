@@ -27,6 +27,11 @@ namespace WarehouseService.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(WarehouseCreateModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             await _warehouseService.CreateAsync(model);
 
             return StatusCode(StatusCodes.Status201Created);
