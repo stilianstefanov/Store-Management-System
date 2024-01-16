@@ -18,7 +18,7 @@ namespace WarehouseService.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAllWarehouses()
         {
             try
             {
@@ -30,8 +30,25 @@ namespace WarehouseService.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetWarehouseById(string id)
+        {
+            try
+            {
+                return Ok(await _warehouseService.GetByIdAsync(id));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(WarehouseCreateModel model)
+        public async Task<IActionResult> CreateWarehouse(WarehouseCreateModel model)
         {
             if (!ModelState.IsValid)
             {

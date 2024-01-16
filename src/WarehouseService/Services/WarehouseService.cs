@@ -32,5 +32,12 @@
 
             await _repository.SaveChangesAsync();
         }
+
+        public async Task<WarehouseViewModel> GetByIdAsync(string id)
+        {
+            var warehouse = await _repository.GetByIdAsync(id);
+
+            return _mapper.Map<WarehouseViewModel>(warehouse);
+        }
     }
 }
