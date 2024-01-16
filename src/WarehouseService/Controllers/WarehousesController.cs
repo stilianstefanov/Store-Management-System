@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WarehouseService.Controllers
 {
-    using Data.Contracts;
     using Data.ViewModels;
     using Services.Contracts;
 
@@ -21,7 +20,14 @@ namespace WarehouseService.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _warehouseService.GetAllAsync());
+            try
+            {
+                return Ok(await _warehouseService.GetAllAsync());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         [HttpPost]
@@ -32,9 +38,16 @@ namespace WarehouseService.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _warehouseService.CreateAsync(model);
+            try
+            {
+                await _warehouseService.CreateAsync(model);
 
-            return StatusCode(StatusCodes.Status201Created);
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
     }
 }
