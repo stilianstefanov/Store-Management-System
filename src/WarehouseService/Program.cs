@@ -13,8 +13,10 @@ namespace WarehouseService
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services
-                .AddDbContext<WarehousesDbContext>(opt => opt.UseInMemoryDatabase("TestDb"));
+                .AddDbContext<WarehousesDbContext>(opt => 
+                    opt.UseSqlServer(connectionString));
 
             builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
             builder.Services.AddScoped<IWarehouseService, WarehouseService>();
