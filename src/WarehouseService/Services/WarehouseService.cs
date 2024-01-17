@@ -24,7 +24,7 @@
             return _mapper.Map<IEnumerable<WarehouseViewModel>>(warehouses);
         }
 
-        public async Task<WarehouseViewModel> CreateAsync(WarehouseCreateModel model)
+        public async Task<WarehouseViewModel> CreateAsync(WarehouseReadModel model)
         {
             var warehouse = _mapper.Map<Warehouse>(model);
 

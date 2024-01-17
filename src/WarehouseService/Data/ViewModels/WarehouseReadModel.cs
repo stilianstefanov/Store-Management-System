@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using static Common.EntityValidationConstants.Warehouse;
 
-    public class WarehouseCreateModel
+    public class WarehouseReadModel
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]

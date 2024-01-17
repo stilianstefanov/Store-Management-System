@@ -48,7 +48,7 @@ namespace WarehouseService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateWarehouse(WarehouseCreateModel model)
+        public async Task<IActionResult> CreateWarehouse(WarehouseReadModel model)
         {
             if (!ModelState.IsValid)
             {

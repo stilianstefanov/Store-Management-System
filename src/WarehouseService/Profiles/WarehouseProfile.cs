@@ -11,7 +11,7 @@
             CreateMap<Warehouse, WarehouseViewModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
 
-            CreateMap<WarehouseCreateModel, Warehouse>();
+            CreateMap<WarehouseReadModel, Warehouse>();
         }
     }
 }
