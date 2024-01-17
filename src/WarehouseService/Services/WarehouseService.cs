@@ -50,5 +50,12 @@
 
             return _mapper.Map<WarehouseViewModel>(updatedWarehouse);
         }
+
+        public async Task DeleteAsync(string id)
+        {
+            await _repository.DeleteAsync(id);
+
+            await _repository.SaveChangesAsync();
+        }
     }
 }
