@@ -24,13 +24,15 @@
             return _mapper.Map<IEnumerable<WarehouseViewModel>>(warehouses);
         }
 
-        public async Task CreateAsync(WarehouseCreateModel model)
+        public async Task<WarehouseViewModel> CreateAsync(WarehouseCreateModel model)
         {
             var warehouse = _mapper.Map<Warehouse>(model);
 
             await _repository.AddAsync(warehouse);
 
             await _repository.SaveChangesAsync();
+
+            return _mapper.Map<WarehouseViewModel>(warehouse);
         }
 
         public async Task<WarehouseViewModel> GetByIdAsync(string id)

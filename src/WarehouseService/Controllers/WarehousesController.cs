@@ -30,7 +30,7 @@ namespace WarehouseService.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetWarehouseById")]
         public async Task<IActionResult> GetWarehouseById(string id)
         {
             try
@@ -57,9 +57,9 @@ namespace WarehouseService.Controllers
 
             try
             {
-                await _warehouseService.CreateAsync(model);
+                var createdWarehouse = await _warehouseService.CreateAsync(model);
 
-                return StatusCode(StatusCodes.Status201Created);
+                return CreatedAtRoute(nameof(GetWarehouseById), new { createdWarehouse.Id }, createdWarehouse);
             }
             catch (Exception ex)
             {

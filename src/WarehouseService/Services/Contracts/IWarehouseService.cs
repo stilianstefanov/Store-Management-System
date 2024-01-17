@@ -6,8 +6,10 @@
     {
         Task<IEnumerable<WarehouseViewModel>> GetAllAsync();
 
-        Task CreateAsync(WarehouseCreateModel model);
+        Task<WarehouseViewModel> CreateAsync(WarehouseCreateModel model);
 
         Task<WarehouseViewModel> GetByIdAsync(string id);
+
+
     }
 }
