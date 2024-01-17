@@ -41,5 +41,14 @@
 
             return _mapper.Map<WarehouseViewModel>(warehouse);
         }
+
+        public async Task<WarehouseViewModel> UpdateAsync(string id, WarehouseReadModel model)
+        {
+            var updatedWarehouse = await _repository.UpdateAsync(id, _mapper.Map<Warehouse>(model));
+
+            await _repository.SaveChangesAsync();
+
+            return _mapper.Map<WarehouseViewModel>(updatedWarehouse);
+        }
     }
 }

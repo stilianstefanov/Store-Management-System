@@ -36,7 +36,7 @@
             await _dbContext.Warehouses.AddAsync(warehouse);
         }
 
-        public async Task UpdateAsync(string id, Warehouse warehouse)
+        public async Task<Warehouse> UpdateAsync(string id, Warehouse warehouse)
         {
             var warehouseToUpdate = await _dbContext.Warehouses
                 .FirstOrDefaultAsync(w => w.Id == Guid.Parse(id) && !w.IsDeleted);
@@ -48,6 +48,8 @@
 
             warehouseToUpdate.Name = warehouse.Name;
             warehouseToUpdate.Type = warehouse.Type;
+
+            return warehouseToUpdate;
         }
 
         public async Task DeleteAsync(string id)

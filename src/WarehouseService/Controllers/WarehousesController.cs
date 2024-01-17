@@ -66,5 +66,27 @@ namespace WarehouseService.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateWarehouse(string id, [FromBody]WarehouseReadModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                return Ok(await _warehouseService.UpdateAsync(id, model));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }
