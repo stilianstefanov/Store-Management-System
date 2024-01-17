@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace WarehouseService.Controllers
+﻿namespace WarehouseService.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
     using Data.ViewModels;
     using Services.Contracts;
 
