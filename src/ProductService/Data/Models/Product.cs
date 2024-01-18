@@ -37,5 +37,7 @@
 
         [Required]
         public string WarehouseId { get; set; } = null!;
+
+        public bool IsDeleted { get; set; }
     }
 }
