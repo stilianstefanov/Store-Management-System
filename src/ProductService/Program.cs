@@ -1,6 +1,7 @@
 namespace ProductService
 {
     using Data;
+    using Data.Contracts;
     using Microsoft.EntityFrameworkCore;
 
     public class Program
@@ -11,6 +12,8 @@ namespace ProductService
 
             builder.Services.AddDbContext<ProductDbContext>(opt =>
                 opt.UseInMemoryDatabase("TestDb"));
+
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
