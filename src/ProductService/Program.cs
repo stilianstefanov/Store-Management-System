@@ -3,6 +3,8 @@ namespace ProductService
     using Data;
     using Data.Contracts;
     using Microsoft.EntityFrameworkCore;
+    using Services;
+    using Services.Contracts;
 
     public class Program
     {
@@ -14,7 +16,9 @@ namespace ProductService
                 opt.UseInMemoryDatabase("TestDb"));
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IProductService, ProductService>();
 
+            builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

@@ -7,5 +7,11 @@
         Task<IEnumerable<ProductViewModel>> GetAllAsync();
 
         Task<ProductDetailsViewModel> CreateAsync(ProductCreateModel model);
+
+        Task<ProductDetailsViewModel> GetByIdAsync(string id);
+
+        Task<ProductDetailsViewModel> UpdateAsync(string id, ProductUpdateModel model);
+
+        Task DeleteAsync(string id);
     }
 }

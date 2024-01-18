@@ -13,15 +13,15 @@
         [Key]
         public Guid Id { get; set; }
 
+        [MaxLength(BarcodeMaxLength)]
         public string? Barcode { get; set; }
 
         [Required]
         [MaxLength(NameMaxLength)]
         public string Name { get; set; } = null!;
 
-        [Required]
         [MaxLength(DescriptionMaxLength)]
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; }
 
         [Required]
         public decimal Price { get; set; }
@@ -36,6 +36,7 @@
         public int MaxQuantity { get; set; }
 
         [Required]
+        [MaxLength(WarehouseIdMaxLength)]
         public string WarehouseId { get; set; } = null!;
 
         public bool IsDeleted { get; set; }
