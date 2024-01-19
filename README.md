@@ -1,2 +1,2 @@
 # Store-Management-System
-Currently in development. More information comming soon.
+.NET 8 microservice app with React client. Currently in development, more information comming soon.
