@@ -37,7 +37,9 @@
 
         public async Task<ProductDetailsViewModel> GetByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var product = await _productRepository.GetByIdAsync(id);
+
+            return _mapper.Map<ProductDetailsViewModel>(product);
         }
 
         public async Task<ProductDetailsViewModel> UpdateAsync(string id, ProductUpdateModel model)

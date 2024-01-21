@@ -30,6 +30,19 @@ namespace ProductService.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProductById(string id)
+        {
+            try
+            {
+                return Ok(await _productService.GetByIdAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateProduct(ProductCreateModel model)
         {
