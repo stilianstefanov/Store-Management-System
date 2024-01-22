@@ -30,7 +30,7 @@ namespace ProductService.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetProductById")]
         public async Task<IActionResult> GetProductById(string id)
         {
             try
@@ -55,8 +55,7 @@ namespace ProductService.Controllers
             {
                 var createdProduct = await _productService.CreateAsync(model);
 
-                return Created();
-                //return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
+                return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.Id }, createdProduct);
             }
             catch (Exception ex)
             {
