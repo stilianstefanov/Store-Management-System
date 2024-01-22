@@ -44,7 +44,11 @@
 
         public async Task<ProductDetailsViewModel> UpdateAsync(string id, ProductUpdateModel model)
         {
-            throw new NotImplementedException();
+            var updatedProduct = await _productRepository.UpdateAsync(id, _mapper.Map<Product>(model));
+
+            await _productRepository.SaveChangesAsync();
+
+            return _mapper.Map<ProductDetailsViewModel>(updatedProduct);
         }
 
         public async Task DeleteAsync(string id)

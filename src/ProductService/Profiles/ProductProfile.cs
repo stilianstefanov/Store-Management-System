@@ -16,6 +16,8 @@
             CreateMap<Product, ProductDetailsViewModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
                 .ForMember(dest => dest.Warehouse, opt => opt.Ignore());
+
+            CreateMap<ProductUpdateModel, Product>();
         }
     }
 }

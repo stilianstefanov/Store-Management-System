@@ -53,7 +53,6 @@
             productToUpdate.Quantity = product.Quantity;
             productToUpdate.MinQuantity = product.MinQuantity;
             productToUpdate.MaxQuantity = product.MaxQuantity;
-            productToUpdate.WarehouseId = product.WarehouseId;
 
             return productToUpdate;
         }
