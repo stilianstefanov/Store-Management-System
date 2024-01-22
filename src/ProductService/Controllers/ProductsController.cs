@@ -37,6 +37,10 @@ namespace ProductService.Controllers
             {
                 return Ok(await _productService.GetByIdAsync(id));
             }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
