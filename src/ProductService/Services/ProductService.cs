@@ -49,7 +49,9 @@
 
         public async Task DeleteAsync(string id)
         {
-            throw new NotImplementedException();
+            await _productRepository.DeleteAsync(id);
+
+            await _productRepository.SaveChangesAsync();
         }
     }
 }
