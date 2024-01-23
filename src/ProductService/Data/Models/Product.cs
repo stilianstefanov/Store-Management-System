@@ -24,6 +24,9 @@
         public string? Description { get; set; }
 
         [Required]
+        public decimal DeliveryPrice { get; set; }
+
+        [Required]
         public decimal Price { get; set; }
 
         [Required]

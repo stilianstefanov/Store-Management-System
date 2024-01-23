@@ -16,6 +16,9 @@
         public string? Barcode { get; set; }
 
         [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
+        public decimal DeliveryPrice { get; set; }
+
+        [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
         public decimal Price { get; set; }
 
         [Range(QuantityMinValue, QuantityMaxValue)]

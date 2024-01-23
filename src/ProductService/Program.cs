@@ -12,8 +12,10 @@ namespace ProductService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<ProductDbContext>(opt =>
-                opt.UseInMemoryDatabase("TestDb"));
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services
+                .AddDbContext<ProductDbContext>(opt =>
+                    opt.UseSqlServer(connectionString));
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductService, ProductService>();

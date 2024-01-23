@@ -12,6 +12,8 @@
 
         public decimal Price { get; set; }
 
+        public decimal DeliveryPrice { get; set; }
+
         public int Quantity { get; set; }
 
         public int MinQuantity { get; set; }
