@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productservice
+  template:
+    metadata:
+      labels:
+        app: productservice
+    spec:
+      containers:
+        - name: productservice
+          image: stilianstefanov/productservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: productservice
+  ports:
+  - name: productservice
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
