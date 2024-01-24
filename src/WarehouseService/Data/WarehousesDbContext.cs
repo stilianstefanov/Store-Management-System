@@ -11,5 +11,7 @@
         }
 
         public DbSet<Warehouse> Warehouses { get; set; } = null!;
+
+        public DbSet<Product> Products { get; set; } = null!;
     }
 }

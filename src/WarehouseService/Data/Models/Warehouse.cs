@@ -8,6 +8,7 @@
         public Warehouse()
         {
             Id = Guid.NewGuid();
+            Products = new HashSet<Product>();
         }
 
         [Key]
@@ -22,5 +23,8 @@
         public string Type { get; set; } = null!;
 
         public bool IsDeleted { get; set; }
+
+
+        public ICollection<Product> Products { get; set; }
     }
 }

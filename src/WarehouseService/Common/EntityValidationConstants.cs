@@ -12,5 +12,10 @@
 
             public const int TypeMinLength = 3;
         }
+
+        public static class Product
+        {
+            public const int ExternalIdMaxLength = 100;
+        }
     }
 }
