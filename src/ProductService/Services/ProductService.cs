@@ -5,16 +5,21 @@
     using Data.Contracts;
     using Data.Models;
     using Data.ViewModels;
+    using Messaging.Contracts;
+    using Messaging.Models;
 
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
+        private readonly IMessageSenderService _messageSender;
 
-        public ProductService(IProductRepository productRepository, IMapper mapper)
+
+        public ProductService(IProductRepository productRepository, IMapper mapper, IMessageSenderService messageSender)
         {
             _productRepository = productRepository;
             _mapper = mapper;
+            _messageSender = messageSender;
         }
 
         public async Task<IEnumerable<ProductViewModel>> GetAllAsync()
@@ -31,6 +36,8 @@
             await _productRepository.AddAsync(product);
 
             await _productRepository.SaveChangesAsync();
+
+            _messageSender.PublishCreatedProduct(_mapper.Map<ProductCreatedDto>(product));
 
             return _mapper.Map<ProductDetailsViewModel>(product);
         }

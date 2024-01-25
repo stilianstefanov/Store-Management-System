@@ -3,6 +3,7 @@
     using AutoMapper;
     using Data.Models;
     using Data.ViewModels;
+    using Messaging.Models;
 
     public class ProductProfile : Profile
     {
@@ -18,6 +19,8 @@
                 .ForMember(dest => dest.Warehouse, opt => opt.Ignore());
 
             CreateMap<ProductUpdateModel, Product>();
+
+            CreateMap<Product, ProductCreatedDto>();
         }
     }
 }

@@ -2,6 +2,8 @@ namespace ProductService
 {
     using Data;
     using Data.Contracts;
+    using Messaging;
+    using Messaging.Contracts;
     using Microsoft.EntityFrameworkCore;
     using Services;
     using Services.Contracts;
@@ -19,6 +21,8 @@ namespace ProductService
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>();
+            builder.Services.AddSingleton<IMessageSenderService, MessageSenderService>();
 
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
