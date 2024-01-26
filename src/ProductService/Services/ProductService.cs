@@ -31,15 +31,15 @@
 
         public async Task<ProductDetailsViewModel> CreateAsync(ProductCreateModel model)
         {
-            var product = _mapper.Map<Product>(model);
+            var newProduct = _mapper.Map<Product>(model);
 
-            await _productRepository.AddAsync(product);
+            await _productRepository.AddAsync(newProduct);
 
             await _productRepository.SaveChangesAsync();
 
-            _messageSender.PublishCreatedProduct(_mapper.Map<ProductCreatedDto>(product));
+            _messageSender.PublishCreatedProduct(_mapper.Map<ProductCreatedDto>(newProduct));
 
-            return _mapper.Map<ProductDetailsViewModel>(product);
+            return _mapper.Map<ProductDetailsViewModel>(newProduct);
         }
 
         public async Task<ProductDetailsViewModel> GetByIdAsync(string id)
