@@ -20,7 +20,8 @@
 
             CreateMap<ProductUpdateModel, Product>();
 
-            CreateMap<Product, ProductCreatedDto>();
+            CreateMap<Product, ProductCreatedDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
         }
     }
 }
