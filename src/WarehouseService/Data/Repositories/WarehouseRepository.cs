@@ -1,4 +1,4 @@
-﻿namespace WarehouseService.Data
+﻿namespace WarehouseService.Data.Repositories
 {
     using Contracts;
     using Microsoft.EntityFrameworkCore;
@@ -28,7 +28,7 @@
 
         public async Task<Warehouse?> GetByIdAsync(string id)
         {
-            var warehouse =  await _dbContext.Warehouses
+            var warehouse = await _dbContext.Warehouses
                 .Include(w => w.Products)
                 .FirstOrDefaultAsync(w => w.Id == Guid.Parse(id) && !w.IsDeleted);
 

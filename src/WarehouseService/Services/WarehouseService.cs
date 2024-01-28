@@ -2,8 +2,8 @@
 {
     using AutoMapper;
     using Contracts;
-    using Data.Contracts;
     using Data.Models;
+    using Data.Repositories.Contracts;
     using Data.ViewModels;
 
     public class WarehouseService : IWarehouseService

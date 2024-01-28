@@ -2,10 +2,11 @@
 namespace WarehouseService
 {
     using Data;
-    using Data.Contracts;
     using Microsoft.EntityFrameworkCore;
     using Services;
     using Services.Contracts;
+    using Data.Repositories.Contracts;
+    using Data.Repositories;
 
     public class Program
     {

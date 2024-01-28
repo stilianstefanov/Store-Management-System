@@ -1,4 +1,4 @@
-﻿namespace WarehouseService.Data.Contracts
+﻿namespace WarehouseService.Data.Repositories.Contracts
 {
     using Models;
 
