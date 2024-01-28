@@ -7,6 +7,8 @@ namespace WarehouseService
     using Services.Contracts;
     using Data.Repositories.Contracts;
     using Data.Repositories;
+    using Messaging;
+    using Messaging.Contracts;
 
     public class Program
     {
@@ -21,6 +23,9 @@ namespace WarehouseService
 
             builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
             builder.Services.AddScoped<IWarehouseService, WarehouseService>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+            builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
             builder.Services.AddAutoMapper(typeof(Program));
 
             builder.Services.AddControllers();

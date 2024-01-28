@@ -2,6 +2,6 @@
 {
     public static class EventTypes
     {
-        public const string ProductCreated = "Product_Created";
+        public const string ProductCreated = "ProductCreated";
     }
 }
