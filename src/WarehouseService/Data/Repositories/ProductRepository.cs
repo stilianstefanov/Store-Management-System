@@ -25,7 +25,7 @@
 
         public async Task<bool> ExternalProductExistsAsync(string externalProductId)
         {
-            return await _dbContext.Products.AnyAsync(p => p.ExternalId == externalProductId);
+            return await _dbContext.Products.AnyAsync(p => p.ExternalId == externalProductId && !p.IsDeleted);
         }
     }
 }

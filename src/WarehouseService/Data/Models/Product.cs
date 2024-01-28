@@ -30,6 +30,8 @@
         [Required]
         public int MaxQuantity { get; set; }
 
+        public bool IsDeleted { get; set; }
+
 
         [ForeignKey(nameof(Warehouse))]
         public Guid WarehouseId { get; set; }
