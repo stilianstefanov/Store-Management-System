@@ -1,8 +1,10 @@
 ﻿namespace WarehouseService.Data.Repositories
 {
     using Contracts;
+    using Messaging.Models;
     using Microsoft.EntityFrameworkCore;
     using Models;
+    using static Common.ExceptionMessages;
 
     public class ProductRepository : IProductRepository
     {
@@ -26,6 +28,21 @@
         public async Task<bool> ExternalProductExistsAsync(string externalProductId)
         {
             return await _dbContext.Products.AnyAsync(p => p.ExternalId == externalProductId && !p.IsDeleted);
+        }
+
+        public async Task UpdateProductAsync(ProductUpdatedDto updatedDto)
+        {
+            var productToUpdate = await _dbContext.Products.FirstOrDefaultAsync(p => p.ExternalId == updatedDto.Id);
+
+            if (productToUpdate == null)
+            {
+                throw new InvalidOperationException(ProductNotFound);
+            }
+
+            productToUpdate.Name = updatedDto.Name;
+            productToUpdate.Quantity = updatedDto.Quantity;
+            productToUpdate.MinQuantity = updatedDto.MinQuantity;
+            productToUpdate.MaxQuantity = updatedDto.MaxQuantity;
         }
     }
 }

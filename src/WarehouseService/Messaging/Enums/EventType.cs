@@ -3,6 +3,7 @@
     public enum EventType
     {
         ProductCreated = 0,
-        Undefined = 1
+        ProductUpdated = 1,
+        Undefined = 2
     }
 }

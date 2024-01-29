@@ -1,5 +1,6 @@
 ﻿namespace WarehouseService.Data.Repositories.Contracts
 {
+    using Messaging.Models;
     using Models;
 
     public interface IProductRepository
@@ -9,5 +10,7 @@
         Task AddProductAsync(Product product);
 
         Task<bool> ExternalProductExistsAsync(string externalProductId);
+
+        Task UpdateProductAsync(ProductUpdatedDto updatedDto);
     }
 }

@@ -28,7 +28,9 @@
                 case EventType.ProductCreated:
                     await ProcessProductCreatedEventAsync(message);
                     break;
-                
+                case EventType.ProductUpdated:
+                    await ProcessProductUpdatedEventAsync(message);
+                    break;
             }
         }
 
@@ -49,6 +51,26 @@
                 if (productExists) return;
                 
                 await productRepository.AddProductAsync(product);
+
+                await productRepository.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private async Task ProcessProductUpdatedEventAsync(string message)
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var productRepository = scope.ServiceProvider.GetRequiredService<IProductRepository>();
+
+            var productUpdatedDto = JsonSerializer.Deserialize<ProductUpdatedDto>(message);
+
+            try
+            {
+                await productRepository.UpdateProductAsync(productUpdatedDto!);
 
                 await productRepository.SaveChangesAsync();
             }
