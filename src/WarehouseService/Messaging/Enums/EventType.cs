@@ -4,6 +4,7 @@
     {
         ProductCreated = 0,
         ProductUpdated = 1,
-        Undefined = 2
+        ProductDeleted = 2,
+        Undefined = 3
     }
 }

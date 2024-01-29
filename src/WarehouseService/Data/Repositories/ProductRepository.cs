@@ -44,5 +44,17 @@
             productToUpdate.MinQuantity = updatedDto.MinQuantity;
             productToUpdate.MaxQuantity = updatedDto.MaxQuantity;
         }
+
+        public async Task DeleteProductAsync(string externalProductId)
+        {
+            var productToDelete = await _dbContext.Products.FirstOrDefaultAsync(p => p.ExternalId == externalProductId);
+
+            if (productToDelete == null)
+            {
+                throw new InvalidOperationException(ProductNotFound);
+            }
+
+            productToDelete.IsDeleted = true;
+        }
     }
 }

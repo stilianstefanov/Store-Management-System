@@ -31,6 +31,9 @@
                 case EventType.ProductUpdated:
                     await ProcessProductUpdatedEventAsync(message);
                     break;
+                case EventType.ProductDeleted:
+                    await ProcessProductDeletedEventAsync(message);
+                    break;
             }
         }
 
@@ -71,6 +74,26 @@
             try
             {
                 await productRepository.UpdateProductAsync(productUpdatedDto!);
+
+                await productRepository.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private async Task ProcessProductDeletedEventAsync(string message)
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var productRepository = scope.ServiceProvider.GetRequiredService<IProductRepository>();
+
+            var productDeletedDto = JsonSerializer.Deserialize<ProductDeletedDto>(message);
+
+            try
+            {
+                await productRepository.DeleteProductAsync(productDeletedDto!.Id);
 
                 await productRepository.SaveChangesAsync();
             }

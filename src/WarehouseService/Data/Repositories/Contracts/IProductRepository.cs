@@ -12,5 +12,7 @@
         Task<bool> ExternalProductExistsAsync(string externalProductId);
 
         Task UpdateProductAsync(ProductUpdatedDto updatedDto);
+
+        Task DeleteProductAsync(string externalProductId);
     }
 }
