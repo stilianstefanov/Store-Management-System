@@ -13,7 +13,5 @@
         Task AddAsync(Warehouse warehouse);
 
         Task<Warehouse> UpdateAsync(string id, Warehouse warehouse);
-
-        Task DeleteAsync(string id);
     }
 }

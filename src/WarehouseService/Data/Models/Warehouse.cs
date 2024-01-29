@@ -22,8 +22,6 @@
         [MaxLength(TypeMaxLength)]
         public string Type { get; set; } = null!;
 
-        public bool IsDeleted { get; set; }
-
 
         public ICollection<Product> Products { get; set; }
     }

@@ -11,7 +11,5 @@
         Task<WarehouseViewModel> GetByIdAsync(string id);
 
         Task<WarehouseViewModel> UpdateAsync(string id, WarehouseReadModel model);
-
-        Task DeleteAsync(string id);
     }
 }

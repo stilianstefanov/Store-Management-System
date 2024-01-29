@@ -21,7 +21,7 @@
 
         public async Task<IEnumerable<Warehouse>> GetAllAsync()
         {
-            return await _dbContext.Warehouses.Where(w => !w.IsDeleted)
+            return await _dbContext.Warehouses
                 .Include(w => w.Products)
                 .ToArrayAsync();
         }
@@ -30,7 +30,7 @@
         {
             var warehouse = await _dbContext.Warehouses
                 .Include(w => w.Products)
-                .FirstOrDefaultAsync(w => w.Id == Guid.Parse(id) && !w.IsDeleted);
+                .FirstOrDefaultAsync(w => w.Id == Guid.Parse(id));
 
             return warehouse ?? throw new InvalidOperationException(WarehouseNotFound);
         }
@@ -43,7 +43,7 @@
         public async Task<Warehouse> UpdateAsync(string id, Warehouse warehouse)
         {
             var warehouseToUpdate = await _dbContext.Warehouses
-                .FirstOrDefaultAsync(w => w.Id == Guid.Parse(id) && !w.IsDeleted);
+                .FirstOrDefaultAsync(w => w.Id == Guid.Parse(id));
 
             if (warehouseToUpdate == null)
             {
@@ -54,19 +54,6 @@
             warehouseToUpdate.Type = warehouse.Type;
 
             return warehouseToUpdate;
-        }
-
-        public async Task DeleteAsync(string id)
-        {
-            var warehouseToDelete = await _dbContext.Warehouses
-                .FirstOrDefaultAsync(w => w.Id == Guid.Parse(id) && !w.IsDeleted);
-
-            if (warehouseToDelete == null)
-            {
-                throw new InvalidOperationException(WarehouseNotFound);
-            }
-
-            warehouseToDelete.IsDeleted = true;
         }
     }
 }
