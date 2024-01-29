@@ -22,5 +22,14 @@
 
             _messageBusClient.SendMessage(message);
         }
+
+        public void PublishUpdatedProduct(ProductUpdatedDto productUpdatedDto)
+        {
+            productUpdatedDto.Event = ProductUpdated;
+
+            var message = JsonSerializer.Serialize(productUpdatedDto);
+
+            _messageBusClient.SendMessage(message);
+        }
     }
 }

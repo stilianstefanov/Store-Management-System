@@ -50,6 +50,7 @@
             productToUpdate.Name = product.Name;
             productToUpdate.Description = product.Description;
             productToUpdate.Price = product.Price;
+            productToUpdate.DeliveryPrice = product.DeliveryPrice;
             productToUpdate.Quantity = product.Quantity;
             productToUpdate.MinQuantity = product.MinQuantity;
             productToUpdate.MaxQuantity = product.MaxQuantity;

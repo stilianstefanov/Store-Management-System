@@ -5,5 +5,7 @@
     public interface IMessageSenderService
     {
         void PublishCreatedProduct(ProductCreatedDto productCreatedDto);
+
+        void PublishUpdatedProduct(ProductUpdatedDto productUpdatedDto);
     }
 }

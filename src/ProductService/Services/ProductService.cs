@@ -55,6 +55,8 @@
 
             await _productRepository.SaveChangesAsync();
 
+            _messageSender.PublishUpdatedProduct(_mapper.Map<ProductUpdatedDto>(updatedProduct));
+
             return _mapper.Map<ProductDetailsViewModel>(updatedProduct);
         }
 
