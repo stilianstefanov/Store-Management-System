@@ -65,6 +65,8 @@
             await _productRepository.DeleteAsync(id);
 
             await _productRepository.SaveChangesAsync();
+
+            _messageSender.PublishDeletedProduct(new ProductDeletedDto { Id = id });
         }
     }
 }

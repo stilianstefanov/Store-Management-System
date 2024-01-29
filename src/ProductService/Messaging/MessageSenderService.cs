@@ -31,5 +31,14 @@
 
             _messageBusClient.SendMessage(message);
         }
+
+        public void PublishDeletedProduct(ProductDeletedDto productDeletedDto)
+        {
+            productDeletedDto.Event = ProductDeleted;
+
+            var message = JsonSerializer.Serialize(productDeletedDto);
+
+            _messageBusClient.SendMessage(message);
+        }
     }
 }

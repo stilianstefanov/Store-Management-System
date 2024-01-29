@@ -7,5 +7,7 @@
         void PublishCreatedProduct(ProductCreatedDto productCreatedDto);
 
         void PublishUpdatedProduct(ProductUpdatedDto productUpdatedDto);
+
+        void PublishDeletedProduct(ProductDeletedDto productDeletedDto);
     }
 }

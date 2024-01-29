@@ -5,5 +5,7 @@
         public const string ProductCreated = "ProductCreated";
 
         public const string ProductUpdated = "ProductUpdated";
+
+        public const string ProductDeleted = "ProductDeleted";
     }
 }
