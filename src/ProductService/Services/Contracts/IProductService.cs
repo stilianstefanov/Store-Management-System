@@ -12,6 +12,8 @@
 
         Task<ProductDetailsViewModel> UpdateAsync(string id, ProductUpdateModel model);
 
+        Task<ProductDetailsViewModel> PartialUpdateAsync(string id, ProductPartialUpdateModel model);
+
         Task DeleteAsync(string id);
     }
 }

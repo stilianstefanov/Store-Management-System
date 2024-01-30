@@ -60,6 +60,25 @@
             return _mapper.Map<ProductDetailsViewModel>(updatedProduct);
         }
 
+        public async Task<ProductDetailsViewModel> PartialUpdateAsync(string id, ProductPartialUpdateModel model)
+        {
+            var productToUpdate = await _productRepository.GetByIdAsync(id);
+
+            if (model.Quantity.HasValue)
+            {
+                productToUpdate!.Quantity = model.Quantity.Value;
+            }
+
+            if (!string.IsNullOrEmpty(model.WarehouseId))
+            {
+                productToUpdate!.WarehouseId = model.WarehouseId;
+            }
+
+            await _productRepository.SaveChangesAsync();
+
+            return _mapper.Map<ProductDetailsViewModel>(productToUpdate);
+        }
+
         public async Task DeleteAsync(string id)
         {
             await _productRepository.DeleteAsync(id);
