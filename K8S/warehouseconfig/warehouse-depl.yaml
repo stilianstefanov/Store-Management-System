@@ -29,3 +29,7 @@ spec:
     protocol: TCP
     port: 8080
     targetPort: 8080
+  - name: warehousegrpc
+    protocol: TCP
+    port: 777
+    targetPort: 777
