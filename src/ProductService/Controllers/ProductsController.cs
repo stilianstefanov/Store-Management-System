@@ -89,6 +89,28 @@ namespace ProductService.Controllers
             }
         }
 
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PartialUpdateProduct(string id, [FromBody] ProductPartialUpdateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                return Ok(await _productService.PartialUpdateAsync(id, model));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(string id)
         {
