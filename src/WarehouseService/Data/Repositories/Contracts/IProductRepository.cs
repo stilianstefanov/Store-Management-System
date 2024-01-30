@@ -14,5 +14,6 @@
         Task UpdateProductAsync(ProductUpdatedDto updatedDto);
 
         Task DeleteProductAsync(string externalProductId);
+        Task<Product> GetProductByExternalId(string id);
     }
 }

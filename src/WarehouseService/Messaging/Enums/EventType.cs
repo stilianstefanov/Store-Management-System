@@ -5,6 +5,7 @@
         ProductCreated = 0,
         ProductUpdated = 1,
         ProductDeleted = 2,
-        Undefined = 3
+        ProductPartiallyUpdated = 3,
+        Undefined = 4
     }
 }

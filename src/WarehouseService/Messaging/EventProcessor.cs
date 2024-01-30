@@ -34,6 +34,9 @@
                 case EventType.ProductDeleted:
                     await ProcessProductDeletedEventAsync(message);
                     break;
+                case EventType.ProductPartiallyUpdated:
+                    await ProcessProductPartiallyUpdatedEventAsync(message);
+                    break;
             }
         }
 
@@ -74,6 +77,36 @@
             try
             {
                 await productRepository.UpdateProductAsync(productUpdatedDto!);
+
+                await productRepository.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private async Task ProcessProductPartiallyUpdatedEventAsync(string message)
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var productRepository = scope.ServiceProvider.GetRequiredService<IProductRepository>();
+
+            var productPartialUpdatedDto = JsonSerializer.Deserialize<ProductPartialUpdatedDto>(message);
+
+            try
+            {
+                var productToUpdate = await productRepository.GetProductByExternalId(productPartialUpdatedDto!.Id);
+
+                if (productPartialUpdatedDto.Quantity.HasValue)
+                {
+                    productToUpdate.Quantity = productPartialUpdatedDto.Quantity.Value;
+                }
+
+                if (!string.IsNullOrEmpty(productPartialUpdatedDto.WarehouseId))
+                {
+                    productToUpdate.WarehouseId = Guid.Parse(productPartialUpdatedDto.WarehouseId);
+                }
 
                 await productRepository.SaveChangesAsync();
             }

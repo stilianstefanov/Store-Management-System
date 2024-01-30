@@ -56,5 +56,17 @@
 
             productToDelete.IsDeleted = true;
         }
+
+        public async Task<Product> GetProductByExternalId(string id)
+        {
+            var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.ExternalId == id);
+
+            if (product == null)
+            {
+                throw new InvalidOperationException(ProductNotFound);
+            }
+
+            return product;
+        }
     }
 }
