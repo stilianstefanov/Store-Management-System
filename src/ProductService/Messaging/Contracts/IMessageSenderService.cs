@@ -8,6 +8,8 @@
 
         void PublishUpdatedProduct(ProductUpdatedDto productUpdatedDto);
 
+        void PublishPartiallyUpdatedProduct(ProductPartialUpdatedDto productPartialUpdatedDto);
+
         void PublishDeletedProduct(ProductDeletedDto productDeletedDto);
     }
 }

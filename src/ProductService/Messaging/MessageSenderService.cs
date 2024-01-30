@@ -32,6 +32,15 @@
             _messageBusClient.SendMessage(message);
         }
 
+        public void PublishPartiallyUpdatedProduct(ProductPartialUpdatedDto productPartialUpdatedDto)
+        {
+            productPartialUpdatedDto.Event = ProductPartiallyUpdated;
+
+            var message = JsonSerializer.Serialize(productPartialUpdatedDto);
+
+            _messageBusClient.SendMessage(message);
+        }
+
         public void PublishDeletedProduct(ProductDeletedDto productDeletedDto)
         {
             productDeletedDto.Event = ProductDeleted;

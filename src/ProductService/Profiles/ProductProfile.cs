@@ -25,6 +25,9 @@
 
             CreateMap<Product, ProductUpdatedDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
+
+            CreateMap<Product, ProductPartialUpdatedDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
         }
     }
 }

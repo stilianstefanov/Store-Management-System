@@ -7,5 +7,7 @@
         public const string ProductUpdated = "ProductUpdated";
 
         public const string ProductDeleted = "ProductDeleted";
+
+        public const string ProductPartiallyUpdated = "ProductPartiallyUpdated";
     }
 }
