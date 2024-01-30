@@ -27,7 +27,7 @@ namespace WarehouseService
 
             builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
             builder.Services.AddAutoMapper(typeof(Program));
-
+            builder.Services.AddGrpc();
             builder.Services.AddControllers();
             builder.Services.AddHostedService<MessageBusSubscriber>();
          
@@ -35,6 +35,7 @@ namespace WarehouseService
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            app.MapGrpcService<GrpcWarehouseService>();
 
             if (app.Environment.IsDevelopment())
             {
