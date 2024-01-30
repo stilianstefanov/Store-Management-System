@@ -20,6 +20,9 @@
             CreateMap<ProductCreatedDto, Product>()
                 .ForMember(dest => dest.ExternalId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.WarehouseId, opt => opt.MapFrom(src => Guid.Parse(src.WarehouseId)));
+
+            CreateMap<Warehouse, GrpcWarehouseModel>()
+                .ForMember(dest => dest.WarehouseId, opt => opt.MapFrom(src => src.Id.ToString()));
         }
     }
 }
