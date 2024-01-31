@@ -13,13 +13,18 @@
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
         private readonly IMessageSenderService _messageSender;
+        private readonly IWarehouseGrpcClientService _grpcClient;
 
 
-        public ProductService(IProductRepository productRepository, IMapper mapper, IMessageSenderService messageSender)
+        public ProductService(IProductRepository productRepository,
+            IMapper mapper, 
+            IMessageSenderService messageSender,
+            IWarehouseGrpcClientService grpcClient)
         {
             _productRepository = productRepository;
             _mapper = mapper;
             _messageSender = messageSender;
+            _grpcClient = grpcClient;
         }
 
         public async Task<IEnumerable<ProductViewModel>> GetAllAsync()
@@ -46,7 +51,11 @@
         {
             var product = await _productRepository.GetByIdAsync(id);
 
-            return _mapper.Map<ProductDetailsViewModel>(product);
+            var productDetailsModel = _mapper.Map<ProductDetailsViewModel>(product);
+
+            productDetailsModel.Warehouse = _grpcClient.GetWarehouseById(product!.WarehouseId)!;
+
+            return productDetailsModel;
         }
 
         public async Task<ProductDetailsViewModel> UpdateAsync(string id, ProductUpdateModel model)

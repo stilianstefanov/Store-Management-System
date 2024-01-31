@@ -4,6 +4,7 @@
     using Data.Models;
     using Data.ViewModels;
     using Messaging.Models;
+    using WarehouseService;
 
     public class ProductProfile : Profile
     {
@@ -28,6 +29,9 @@
 
             CreateMap<Product, ProductPartialUpdatedDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
+
+            CreateMap<GrpcWarehouseModel, WarehouseViewModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.WarehouseId));
         }
     }
 }
