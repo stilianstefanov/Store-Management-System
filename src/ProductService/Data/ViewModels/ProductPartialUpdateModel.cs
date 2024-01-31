@@ -8,7 +8,6 @@
         [Range(QuantityMinValue, QuantityMaxValue)]
         public int? Quantity { get; set; }
 
-        //ToDO Add validation for WarehouseId via gRPC
         public string? WarehouseId { get; set; }
     }
 }
