@@ -40,5 +40,28 @@
                 return null;
             }
         }
+
+        public bool WarehouseExists(string id)
+        {
+            var channel = GrpcChannel.ForAddress(_configuration["GrpcWarehouseService"]!);
+
+            var client = new WarehouseServiceGrpc.WarehouseServiceGrpcClient(channel);
+
+            var request = new WarehouseExistsByIdRequest()
+            {
+                Id = id
+            };
+
+            try
+            {
+                var response = client.WarehouseExistsById(request);
+
+                return response.Exists;
+            }
+            catch (RpcException e)
+            {
+                throw new Exception();
+            }
+        }
     }
 }

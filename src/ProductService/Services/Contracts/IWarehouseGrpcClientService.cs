@@ -5,5 +5,7 @@
     public interface IWarehouseGrpcClientService
     {
         WarehouseViewModel? GetWarehouseById(string id);
+
+        bool WarehouseExists(string id);
     }
 }
