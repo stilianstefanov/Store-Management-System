@@ -61,6 +61,10 @@ namespace ProductService.Controllers
 
                 return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.Id }, createdProduct);
             }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);

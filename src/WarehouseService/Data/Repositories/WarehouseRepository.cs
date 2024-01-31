@@ -30,7 +30,7 @@
         {
             var warehouse = await _dbContext.Warehouses
                 .Include(w => w.Products)
-                .FirstOrDefaultAsync(w => w.Id == Guid.Parse(id));
+                .FirstOrDefaultAsync(w => w.Id.ToString() == id);
 
             return warehouse ?? throw new InvalidOperationException(WarehouseNotFound);
         }
@@ -43,7 +43,7 @@
         public async Task<Warehouse> UpdateAsync(string id, Warehouse warehouse)
         {
             var warehouseToUpdate = await _dbContext.Warehouses
-                .FirstOrDefaultAsync(w => w.Id == Guid.Parse(id));
+                .FirstOrDefaultAsync(w => w.Id.ToString() == id);
 
             if (warehouseToUpdate == null)
             {
@@ -59,7 +59,7 @@
         public async Task<bool> ExistsByIdAsync(string id)
         {
             return await _dbContext.Warehouses
-                .AnyAsync(w => w.Id == Guid.Parse(id));
+                .AnyAsync(w => w.Id.ToString() == id);
         }
     }
 }

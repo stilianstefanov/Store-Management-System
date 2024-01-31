@@ -26,7 +26,7 @@
 
         public async Task<Product?> GetByIdAsync(string id)
         {
-            var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == Guid.Parse(id) && !p.IsDeleted);
+            var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
             return product ?? throw new InvalidOperationException(ProductNotFound);
         }
@@ -39,7 +39,7 @@
         public async Task<Product> UpdateAsync(string id, Product product)
         {
             var productToUpdate = await _dbContext.Products
-                .FirstOrDefaultAsync(p => p.Id == Guid.Parse(id) && !p.IsDeleted);
+                .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
             if (productToUpdate == null)
             {
@@ -61,7 +61,7 @@
         public async Task DeleteAsync(string id)
         {
             var productToDelete = await _dbContext.Products
-                .FirstOrDefaultAsync(p => p.Id == Guid.Parse(id) && !p.IsDeleted);
+                .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
             if (productToDelete == null)
             {

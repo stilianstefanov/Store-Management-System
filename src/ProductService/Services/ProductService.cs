@@ -7,6 +7,7 @@
     using Data.ViewModels;
     using Messaging.Contracts;
     using Messaging.Models;
+    using static Common.ExceptionMessages;
 
     public class ProductService : IProductService
     {
@@ -36,6 +37,8 @@
 
         public async Task<ProductDetailsViewModel> CreateAsync(ProductCreateModel model)
         {
+            ValidateWarehouseId(model.WarehouseId);
+
             var newProduct = _mapper.Map<Product>(model);
 
             await _productRepository.AddAsync(newProduct);
@@ -76,6 +79,8 @@
 
             if (!string.IsNullOrEmpty(model.WarehouseId))
             {
+                ValidateWarehouseId(model.WarehouseId);
+
                 productToUpdate!.WarehouseId = model.WarehouseId;
             }
 
@@ -102,6 +107,18 @@
             productDetailsModel.Warehouse = _grpcClient.GetWarehouseById(product!.WarehouseId)!;
 
             return productDetailsModel;
+        }
+
+        private bool ValidateWarehouseId(string warehouseId)
+        {
+            var warehouseExists = _grpcClient.WarehouseExists(warehouseId);
+
+            if (!warehouseExists)
+            {
+                throw new InvalidOperationException(WarehouseNotFound);
+            }
+
+            return true;
         }
     }
 }
