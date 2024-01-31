@@ -44,18 +44,14 @@
 
             _messageSender.PublishCreatedProduct(_mapper.Map<ProductCreatedDto>(newProduct));
 
-            return _mapper.Map<ProductDetailsViewModel>(newProduct);
+            return GetProductDetailsViewModel(newProduct);
         }
 
         public async Task<ProductDetailsViewModel> GetByIdAsync(string id)
         {
             var product = await _productRepository.GetByIdAsync(id);
 
-            var productDetailsModel = _mapper.Map<ProductDetailsViewModel>(product);
-
-            productDetailsModel.Warehouse = _grpcClient.GetWarehouseById(product!.WarehouseId)!;
-
-            return productDetailsModel;
+            return GetProductDetailsViewModel(product);
         }
 
         public async Task<ProductDetailsViewModel> UpdateAsync(string id, ProductUpdateModel model)
@@ -66,7 +62,7 @@
 
             _messageSender.PublishUpdatedProduct(_mapper.Map<ProductUpdatedDto>(updatedProduct));
 
-            return _mapper.Map<ProductDetailsViewModel>(updatedProduct);
+           return GetProductDetailsViewModel(updatedProduct);
         }
 
         public async Task<ProductDetailsViewModel> PartialUpdateAsync(string id, ProductPartialUpdateModel model)
@@ -87,7 +83,7 @@
 
             _messageSender.PublishPartiallyUpdatedProduct(_mapper.Map<ProductPartialUpdatedDto>(productToUpdate));
 
-            return _mapper.Map<ProductDetailsViewModel>(productToUpdate);
+            return GetProductDetailsViewModel(productToUpdate);
         }
 
         public async Task DeleteAsync(string id)
@@ -97,6 +93,15 @@
             await _productRepository.SaveChangesAsync();
 
             _messageSender.PublishDeletedProduct(new ProductDeletedDto { Id = id });
+        }
+
+        private ProductDetailsViewModel GetProductDetailsViewModel(Product? product)
+        {
+            var productDetailsModel = _mapper.Map<ProductDetailsViewModel>(product);
+
+            productDetailsModel.Warehouse = _grpcClient.GetWarehouseById(product!.WarehouseId)!;
+
+            return productDetailsModel;
         }
     }
 }
