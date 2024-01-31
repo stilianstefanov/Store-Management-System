@@ -37,5 +37,24 @@
                 throw new RpcException(new Status(StatusCode.Internal, ex.Message));
             }
         }
+
+        public override async Task<WarehouseExistsByIdResponse> WarehouseExistsById(WarehouseExistsByIdRequest request, ServerCallContext context)
+        {
+            try
+            {
+                var exists = await _repository.ExistsByIdAsync(request.Id);
+
+                var response = new WarehouseExistsByIdResponse
+                {
+                    Exists = exists
+                };
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Internal, ex.Message));
+            }
+        }
     }
 }

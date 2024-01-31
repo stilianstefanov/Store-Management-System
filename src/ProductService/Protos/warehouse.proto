@@ -4,10 +4,15 @@ option csharp_namespace = "WarehouseService";
 
 service WarehouseServiceGrpc {
     rpc GetWarehouseById (GetWarehouseByIdRequest) returns (GetWarehouseByIdResponse);
+    rpc WarehouseExistsById (WarehouseExistsByIdRequest) returns (WarehouseExistsByIdResponse);
 }
 
 message GetWarehouseByIdRequest {
     string id = 1;
+}
+
+message WarehouseExistsByIdRequest {
+	string id = 1;
 }
 
 message GrpcWarehouseModel{
@@ -18,4 +23,8 @@ message GrpcWarehouseModel{
 
 message GetWarehouseByIdResponse {
     GrpcWarehouseModel warehouse = 1;
+}
+
+message WarehouseExistsByIdResponse {
+	bool exists = 1;
 }

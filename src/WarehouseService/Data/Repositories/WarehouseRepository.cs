@@ -55,5 +55,11 @@
 
             return warehouseToUpdate;
         }
+
+        public async Task<bool> ExistsByIdAsync(string id)
+        {
+            return await _dbContext.Warehouses
+                .AnyAsync(w => w.Id == Guid.Parse(id));
+        }
     }
 }

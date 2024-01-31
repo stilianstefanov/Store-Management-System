@@ -13,5 +13,7 @@
         Task AddAsync(Warehouse warehouse);
 
         Task<Warehouse> UpdateAsync(string id, Warehouse warehouse);
+
+        Task<bool> ExistsByIdAsync(string id);
     }
 }
