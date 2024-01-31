@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "WarehouseService";
+
+service WarehouseServiceGrpc {
+    rpc GetWarehouseById (GetWarehouseByIdRequest) returns (GetWarehouseByIdResponse);
+}
+
+message GetWarehouseByIdRequest {
+    string id = 1;
+}
+
+message GrpcWarehouseModel{
+    string warehouseId = 1;
+    string name = 2;
+    string type = 3;
+}
+
+message GetWarehouseByIdResponse {
+    GrpcWarehouseModel warehouse = 1;
+}
