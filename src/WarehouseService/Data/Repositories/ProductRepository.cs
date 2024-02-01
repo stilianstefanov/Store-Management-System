@@ -68,5 +68,14 @@
 
             return product;
         }
+
+        public async Task<IEnumerable<Product>> GetProductsByWarehouseIdAsync(string warehouseId)
+        {
+            var products = await _dbContext.Products
+                .Where(p => p.WarehouseId.ToString() == warehouseId && !p.IsDeleted)
+                .ToArrayAsync();
+
+            return products;
+        }
     }
 }

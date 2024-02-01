@@ -50,5 +50,10 @@
 
             return _mapper.Map<WarehouseViewModel>(updatedWarehouse);
         }
+
+        public async Task<bool> ExistsAsync(string id)
+        {
+            return await _repository.ExistsByIdAsync(id);
+        }
     }
 }
