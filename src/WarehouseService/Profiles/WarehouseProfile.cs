@@ -10,8 +10,7 @@
         public WarehouseProfile()
         {
             CreateMap<Warehouse, WarehouseViewModel>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
-                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Products.Where(p => !p.IsDeleted)));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
 
             CreateMap<WarehouseReadModel, Warehouse>();
 
