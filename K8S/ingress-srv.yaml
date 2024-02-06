@@ -24,3 +24,10 @@ spec:
                 name: product-clusterip-srv
                 port:
                   number: 8080
+          - path: /api/borrowers
+            pathType: Prefix
+            backend:
+              service:
+                name: credit-clusterip-srv
+                port:
+                  number: 8080
