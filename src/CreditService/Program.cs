@@ -10,8 +10,11 @@ namespace CreditService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<CreditDbContext>(options =>
-                options.UseInMemoryDatabase("TestDb"));
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            builder.Services
+                .AddDbContext<CreditDbContext>(opt =>
+                    opt.UseSqlServer(connectionString));
 
             builder.Services.AddControllers();
   
