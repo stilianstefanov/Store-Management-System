@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: credit-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: creditservice
+  template:
+    metadata:
+      labels:
+        app: creditservice
+    spec:
+      containers:
+        - name: creditservice
+          image: stilianstefanov/creditservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: credit-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: creditservice
+  ports:
+  - name: creditservice
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
