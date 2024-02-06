@@ -8,6 +8,7 @@
         public Borrower()
         {
             Id = Guid.NewGuid();
+            Purchases = new HashSet<Purchase>();
         }
 
         [Key]
@@ -24,6 +25,10 @@
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;
 
+        public decimal CurrentCredit { get; set; }
+
         public decimal CreditLimit { get; set; }
+
+        public ICollection<Purchase> Purchases { get; set; }
     }
 }
