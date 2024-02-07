@@ -52,7 +52,7 @@ namespace CreditService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBorrower(BorrowerCreateModel borrower)
+        public async Task<IActionResult> CreateBorrower(BorrowerCreateModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -61,9 +61,33 @@ namespace CreditService.Controllers
 
             try
             {
-                var newBorrower = await _borrowerService.CreateBorrowerAsync(borrower);
+                var newBorrower = await _borrowerService.CreateBorrowerAsync(model);
 
                 return CreatedAtAction(nameof(GetBorrowerById), new { id = newBorrower.Id }, newBorrower);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateBorrower(string id, [FromBody]BorrowerUpdateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var updatedBorrower = await _borrowerService.UpdateBorrowerAsync(id, model);
+
+                return Ok(updatedBorrower);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

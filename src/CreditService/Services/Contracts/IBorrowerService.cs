@@ -9,5 +9,7 @@
         Task<BorrowerViewModel> GetBorrowerByIdAsync(string id);
 
         Task<BorrowerViewModel> CreateBorrowerAsync(BorrowerCreateModel borrower);
+
+        Task<BorrowerViewModel> UpdateBorrowerAsync(string id, BorrowerUpdateModel borrower);
     }
 }

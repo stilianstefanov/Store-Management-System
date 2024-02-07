@@ -31,15 +31,24 @@
             return _mapper.Map<BorrowerViewModel>(borrower)!;
         }
 
-        public async Task<BorrowerViewModel> CreateBorrowerAsync(BorrowerCreateModel borrower)
+        public async Task<BorrowerViewModel> CreateBorrowerAsync(BorrowerCreateModel model)
         {
-            var newBorrower = _mapper.Map<Borrower>(borrower)!;
+            var newBorrower = _mapper.Map<Borrower>(model)!;
 
             await _borrowerRepository.AddBorrowerAsync(newBorrower);
 
             await _borrowerRepository.SaveChangesAsync();
 
             return _mapper.Map<BorrowerViewModel>(newBorrower)!;
+        }
+
+        public async Task<BorrowerViewModel> UpdateBorrowerAsync(string id, BorrowerUpdateModel model)
+        {
+            var updatedBorrower = await _borrowerRepository.UpdateBorrowerAsync(id, _mapper.Map<Borrower>(model)!);
+
+            await _borrowerRepository.SaveChangesAsync();
+
+            return _mapper.Map<BorrowerViewModel>(updatedBorrower)!;
         }
     }
 }
