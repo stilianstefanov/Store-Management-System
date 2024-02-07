@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using Contracts;
+    using Data.Models;
     using Data.ViewModels.Borrower;
     using Data.Repositories.Contracts;
 
@@ -28,6 +29,17 @@
             var borrower = await _borrowerRepository.GetBorrowerByIdAsync(id);
 
             return _mapper.Map<BorrowerViewModel>(borrower)!;
+        }
+
+        public async Task<BorrowerViewModel> CreateBorrowerAsync(BorrowerCreateModel borrower)
+        {
+            var newBorrower = _mapper.Map<Borrower>(borrower)!;
+
+            await _borrowerRepository.AddBorrowerAsync(newBorrower);
+
+            await _borrowerRepository.SaveChangesAsync();
+
+            return _mapper.Map<BorrowerViewModel>(newBorrower)!;
         }
     }
 }

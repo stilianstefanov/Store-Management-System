@@ -7,5 +7,7 @@
         Task<IEnumerable<BorrowerViewModel>> GetAllBorrowersAsync();
 
         Task<BorrowerViewModel> GetBorrowerByIdAsync(string id);
+
+        Task<BorrowerViewModel> CreateBorrowerAsync(BorrowerCreateModel borrower);
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CreditService.Controllers
 {
+    using Data.ViewModels.Borrower;
     using Services.Contracts;
 
     [Route("api/[controller]")]
@@ -31,7 +32,7 @@ namespace CreditService.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetBorrowerById")]
         public async Task<IActionResult> GetBorrowerById(string id)
         {
             try
@@ -43,6 +44,26 @@ namespace CreditService.Controllers
             catch (InvalidOperationException ex)
             {
                 return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBorrower(BorrowerCreateModel borrower)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                var newBorrower = await _borrowerService.CreateBorrowerAsync(borrower);
+
+                return CreatedAtAction(nameof(GetBorrowerById), new { id = newBorrower.Id }, newBorrower);
             }
             catch (Exception ex)
             {
