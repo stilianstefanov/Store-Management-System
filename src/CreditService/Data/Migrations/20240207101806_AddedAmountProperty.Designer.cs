@@ -4,6 +4,7 @@ using CreditService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreditService.Migrations
 {
     [DbContext(typeof(CreditDbContext))]
-    partial class CreditDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240207101806_AddedAmountProperty")]
+    partial class AddedAmountProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,9 +36,6 @@ namespace CreditService.Migrations
 
                     b.Property<decimal>("CurrentCredit")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -71,9 +71,6 @@ namespace CreditService.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BorrowerId");
@@ -93,9 +90,6 @@ namespace CreditService.Migrations
                     b.Property<string>("ExternalId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<Guid>("PurchaseId")
                         .HasColumnType("uniqueidentifier");

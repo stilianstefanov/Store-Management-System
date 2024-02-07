@@ -18,6 +18,8 @@
 
         public decimal Amount { get; set; }
 
+        public bool IsDeleted { get; set; }
+
 
         [ForeignKey(nameof(Borrower))]
         public Guid BorrowerId { get; set; }

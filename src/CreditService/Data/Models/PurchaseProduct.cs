@@ -19,6 +19,8 @@
 
         public decimal PurchasePrice { get; set; }
 
+        public bool IsDeleted { get; set; }
+
 
         [ForeignKey(nameof(Purchase))]
         public Guid PurchaseId { get; set; }

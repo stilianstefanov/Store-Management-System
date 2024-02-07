@@ -29,6 +29,8 @@
 
         public decimal CreditLimit { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public ICollection<Purchase> Purchases { get; set; }
     }
 }

@@ -1,7 +1,8 @@
-
 namespace CreditService
 {
     using Data;
+    using Data.Repositories;
+    using Data.Repositories.Contracts;
     using Microsoft.EntityFrameworkCore;
 
     public class Program
@@ -15,6 +16,8 @@ namespace CreditService
             builder.Services
                 .AddDbContext<CreditDbContext>(opt =>
                     opt.UseSqlServer(connectionString));
+
+            builder.Services.AddScoped<IBorrowerRepository, BorrowerRepository>();
 
             builder.Services.AddControllers();
   
