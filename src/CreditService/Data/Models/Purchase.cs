@@ -16,6 +16,8 @@
 
         public DateTime Date { get; set; }
 
+        public decimal Amount { get; set; }
+
 
         [ForeignKey(nameof(Borrower))]
         public Guid BorrowerId { get; set; }
