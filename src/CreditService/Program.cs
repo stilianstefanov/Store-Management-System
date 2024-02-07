@@ -4,6 +4,8 @@ namespace CreditService
     using Data.Repositories;
     using Data.Repositories.Contracts;
     using Microsoft.EntityFrameworkCore;
+    using Services;
+    using Services.Contracts;
 
     public class Program
     {
@@ -18,6 +20,7 @@ namespace CreditService
                     opt.UseSqlServer(connectionString));
 
             builder.Services.AddScoped<IBorrowerRepository, BorrowerRepository>();
+            builder.Services.AddScoped<IBorrowerService, BorrowerService>();
 
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
