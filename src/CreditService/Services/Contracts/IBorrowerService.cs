@@ -1,6 +1,6 @@
 ﻿namespace CreditService.Services.Contracts
 {
-    using Data.ViewModels;
+    using Data.ViewModels.Borrower;
 
     public interface IBorrowerService
     {

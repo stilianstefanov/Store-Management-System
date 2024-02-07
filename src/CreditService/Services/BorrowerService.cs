@@ -2,8 +2,8 @@
 {
     using AutoMapper;
     using Contracts;
+    using Data.ViewModels.Borrower;
     using Data.Repositories.Contracts;
-    using Data.ViewModels;
 
     public class BorrowerService : IBorrowerService
     {

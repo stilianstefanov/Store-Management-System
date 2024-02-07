@@ -1,14 +1,17 @@
 ﻿namespace CreditService.Profiles
 {
     using AutoMapper;
+    using Data.ViewModels.Borrower;
     using Data.Models;
-    using Data.ViewModels;
 
     public class BorrowerProfile : Profile
     {
         public BorrowerProfile()
         {
-            CreateMap<Borrower, BorrowerViewModel>();
+            CreateMap<Borrower, BorrowerViewModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
+
+            CreateMap<BorrowerCreateModel, Borrower>();
         }
     }
 }

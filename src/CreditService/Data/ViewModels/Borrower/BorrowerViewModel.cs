@@ -1,4 +1,4 @@
-﻿namespace CreditService.Data.ViewModels
+﻿namespace CreditService.Data.ViewModels.Borrower
 {
     public class BorrowerViewModel
     {
