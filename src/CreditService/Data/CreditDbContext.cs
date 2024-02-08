@@ -31,10 +31,6 @@
                 .Property(p => p.PurchasePrice)
                 .HasColumnType("decimal(18,2)");
 
-            modelBuilder.Entity<Purchase>()
-                .Property(p => p.Amount)
-                .HasColumnType("decimal(18,2)");
-
             base.OnModelCreating(modelBuilder);
         }
     }
