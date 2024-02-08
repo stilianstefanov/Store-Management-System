@@ -24,5 +24,16 @@
 
             public const string CreditLimitMaxValue = "99999";
         }
+
+        public static class PurchaseProduct
+        {
+            public const int BoughtQuantityMinValue = 1;
+
+            public const int BoughtQuantityMaxValue = 9999;
+
+            public const string PurchasePriceMinValue = "0.01";
+
+            public const string PurchasePriceMaxValue = "99999";
+        }
     }
 }
