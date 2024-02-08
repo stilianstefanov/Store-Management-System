@@ -11,5 +11,7 @@
         Task<BorrowerViewModel> CreateBorrowerAsync(BorrowerCreateModel borrower);
 
         Task<BorrowerViewModel> UpdateBorrowerAsync(string id, BorrowerUpdateModel borrower);
+
+        Task<bool> BorrowerExistsAsync(string id);
     }
 }

@@ -68,5 +68,10 @@
 
             borrowerToDelete.IsDeleted = true;
         }
+
+        public async Task<bool> BorrowerExistsAsync(string id)
+        {
+            return await _dbContext.Borrowers.AnyAsync(b => b.Id.ToString() == id && !b.IsDeleted);
+        }
     }
 }

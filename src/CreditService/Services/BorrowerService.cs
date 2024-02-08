@@ -50,5 +50,10 @@
 
             return _mapper.Map<BorrowerViewModel>(updatedBorrower)!;
         }
+
+        public async Task<bool> BorrowerExistsAsync(string id)
+        {
+            return await _borrowerRepository.BorrowerExistsAsync(id);
+        }
     }
 }

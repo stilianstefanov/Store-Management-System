@@ -15,5 +15,7 @@
         Task<Borrower> UpdateBorrowerAsync(string id, Borrower borrower);
 
         Task DeleteBorrowerAsync(string id);
+
+        Task<bool> BorrowerExistsAsync(string id);
     }
 }
