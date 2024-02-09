@@ -24,6 +24,7 @@ namespace CreditService
             builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
             builder.Services.AddScoped<IPurchaseService, PurchaseService>();
             builder.Services.AddScoped<IPurchaseProductRepository, PurchaseProductRepository>();
+            builder.Services.AddScoped<IPurchaseProductService, PurchaseProductService>();
 
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
