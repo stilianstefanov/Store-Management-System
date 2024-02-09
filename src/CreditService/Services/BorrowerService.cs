@@ -57,7 +57,7 @@
             return await _borrowerRepository.BorrowerExistsAsync(id);
         }
 
-        public async Task<bool> UpdateBorrowerCreditAsync(string id, decimal amount)
+        public async Task<bool> IncreaseBorrowerCreditAsync(string id, decimal amount)
         {
             var borrower = await _borrowerRepository.GetBorrowerByIdAsync(id);
 

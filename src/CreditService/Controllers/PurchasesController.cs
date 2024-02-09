@@ -78,7 +78,7 @@ namespace CreditService.Controllers
 
                 var newPurchase = await _purchaseService.CreatePurchaseAsync(borrowerId, purchasedProducts);
 
-                var isSucceeded = await _borrowerService.UpdateBorrowerCreditAsync(borrowerId, newPurchase.Amount);
+                var isSucceeded = await _borrowerService.IncreaseBorrowerCreditAsync(borrowerId, newPurchase.Amount);
 
                 if (!isSucceeded)
                 {

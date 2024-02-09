@@ -15,6 +15,6 @@
 
         Task<bool> BorrowerExistsAsync(string id);
 
-        Task<bool> UpdateBorrowerCreditAsync(string id, decimal amount);
+        Task<bool> IncreaseBorrowerCreditAsync(string id, decimal amount);
     }
 }
