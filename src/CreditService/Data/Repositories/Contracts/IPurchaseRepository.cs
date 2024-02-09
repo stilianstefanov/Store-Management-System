@@ -8,6 +8,8 @@
 
         Task<IEnumerable<Purchase>> GetPurchasesByBorrowerIdAsync(string borrowerId);
 
+        Task<Purchase> GetPurchaseByIdAsync(string id);
+
         Task AddPurchaseAsync(Purchase purchase);
 
         Task DeletePurchaseAsync(string id);

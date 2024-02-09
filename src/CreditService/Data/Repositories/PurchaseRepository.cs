@@ -23,9 +23,19 @@
         {
             var purchases = await _dbContext.Purchases
                 .Where(p => p.BorrowerId.ToString() == borrowerId && !p.IsDeleted)
+                .Include(p => p.Products)
                 .ToArrayAsync();
 
             return purchases;
+        }
+
+        public async Task<Purchase> GetPurchaseByIdAsync(string id)
+        {
+            var purchase = await _dbContext.Purchases
+                .Include(p => p.Products)
+                .FirstOrDefaultAsync(p => p.Id.ToString() == id);
+
+            return purchase ?? throw new InvalidOperationException(PurchaseNotFound);
         }
 
         public async Task AddPurchaseAsync(Purchase purchase)

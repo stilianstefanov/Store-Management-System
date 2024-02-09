@@ -25,6 +25,13 @@
             return _mapper.Map<IEnumerable<PurchaseViewModel>>(purchases)!;
         }
 
+        public async Task<PurchaseViewModel> GetPurchaseByIdAsync(string id)
+        {
+            var purchase = await _purchaseRepository.GetPurchaseByIdAsync(id);
+
+            return _mapper.Map<PurchaseViewModel>(purchase)!;
+        }
+
         public async Task<PurchaseViewModel> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchaseProductCreateModel> purchasedProducts)
         {
             var newPurchase = new Purchase

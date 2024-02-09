@@ -45,12 +45,28 @@ namespace CreditService.Controllers
         [HttpGet("{id}", Name = "GetPurchaseById")]
         public async Task<IActionResult> GetPurchaseById(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(await _purchaseService.GetPurchaseByIdAsync(id));
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> CreatePurchase(string borrowerId, [FromBody] IEnumerable<PurchaseProductCreateModel> purchasedProducts)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
                 var borrowerExists = await _borrowerService.BorrowerExistsAsync(borrowerId);
@@ -62,7 +78,7 @@ namespace CreditService.Controllers
 
                 var newPurchase = await _purchaseService.CreatePurchaseAsync(borrowerId, purchasedProducts);
 
-                return CreatedAtAction(nameof(GetPurchaseById), new { newPurchase.Id }, newPurchase);
+                return CreatedAtAction(nameof(GetPurchaseById), new { borrowerId, newPurchase.Id }, newPurchase);
             }
             catch (Exception ex)
             {
