@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CreditService.Controllers
 {
+    using Data.ViewModels.PurchaseProduct;
     using Services.Contracts;
     using static Common.ExceptionMessages;
 
@@ -34,6 +35,34 @@ namespace CreditService.Controllers
                 var purchases = await _purchaseService.GetPurchasesByBorrowerIdAsync(borrowerId);
 
                 return Ok(purchases);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet("{id}", Name = "GetPurchaseById")]
+        public async Task<IActionResult> GetPurchaseById(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreatePurchase(string borrowerId, [FromBody] IEnumerable<PurchaseProductCreateModel> purchasedProducts)
+        {
+            try
+            {
+                var borrowerExists = await _borrowerService.BorrowerExistsAsync(borrowerId);
+
+                if (!borrowerExists)
+                {
+                    return NotFound(BorrowerNotFound);
+                }
+
+                var newPurchase = await _purchaseService.CreatePurchaseAsync(borrowerId, purchasedProducts);
+
+                return CreatedAtAction(nameof(GetPurchaseById), new { newPurchase.Id }, newPurchase);
             }
             catch (Exception ex)
             {
