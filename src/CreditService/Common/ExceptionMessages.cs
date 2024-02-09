@@ -6,6 +6,8 @@
 
         public const string PurchaseNotFound = "Purchase with the provided ID does not exist";
 
+        public const string ProductNotFound = "Product with the provided ID does not exist";
+
         public const string InsufficientCredit = "Insufficient credit";
     }
 }
