@@ -43,14 +43,17 @@
 
             await _purchaseRepository.AddPurchaseAsync(newPurchase);
 
-            await _purchaseRepository.SaveChangesAsync();
-
             return _mapper.Map<PurchaseViewModel>(newPurchase)!;
         }
 
         public async Task DeletePurchaseAsync(string id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task CompletePurchaseAsync()
+        {
+            await _purchaseRepository.SaveChangesAsync();
         }
     }
 }

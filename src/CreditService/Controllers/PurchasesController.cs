@@ -78,6 +78,15 @@ namespace CreditService.Controllers
 
                 var newPurchase = await _purchaseService.CreatePurchaseAsync(borrowerId, purchasedProducts);
 
+                var isSucceeded = await _borrowerService.UpdateBorrowerCreditAsync(borrowerId, newPurchase.Amount);
+
+                if (!isSucceeded)
+                {
+                    return BadRequest(InsufficientCredit);
+                }
+
+                await _purchaseService.CompletePurchaseAsync();
+
                 return CreatedAtAction(nameof(GetPurchaseById), new { borrowerId, newPurchase.Id }, newPurchase);
             }
             catch (Exception ex)

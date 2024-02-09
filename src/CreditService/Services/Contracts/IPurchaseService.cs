@@ -12,5 +12,7 @@
         Task<PurchaseViewModel> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchaseProductCreateModel> purchasedProducts);
         
         Task DeletePurchaseAsync(string id);
+
+        Task CompletePurchaseAsync();
     }
 }
