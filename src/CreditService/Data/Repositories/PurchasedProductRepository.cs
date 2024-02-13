@@ -22,7 +22,7 @@
         public async Task<IEnumerable<PurchasedProduct>> GetProductsByPurchaseIdAsync(string purchaseId)
         {
             var products = await _dbContext.PurchaseProducts
-                .Where(p => p.PurchaseId.ToString() == purchaseId)
+                .Where(p => p.PurchaseId.ToString() == purchaseId && !p.IsDeleted)
                 .ToArrayAsync();
 
             return products;
