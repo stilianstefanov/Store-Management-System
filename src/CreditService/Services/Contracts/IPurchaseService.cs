@@ -13,6 +13,8 @@
         
         Task<decimal> DeletePurchaseAsync(string id);
 
+        Task DeletePurchasesByBorrowerIdAsync(string borrowerId);
+
         Task CompletePurchaseAsync();
     }
 }

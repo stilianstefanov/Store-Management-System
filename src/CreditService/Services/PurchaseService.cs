@@ -55,6 +55,23 @@
             return amount;
         }
 
+        public async Task DeletePurchasesByBorrowerIdAsync(string borrowerId)
+        {
+            var purchases = await _purchaseRepository.GetPurchasesByBorrowerIdAsync(borrowerId);
+
+            foreach (var purchase in purchases)
+            {
+                purchase.IsDeleted = true;
+
+                foreach (var product in purchase.Products)
+                {
+                    product.IsDeleted = true;
+                }
+            }
+
+            await _purchaseRepository.SaveChangesAsync();
+        }
+
         public async Task CompletePurchaseAsync()
         {
             await _purchaseRepository.SaveChangesAsync();

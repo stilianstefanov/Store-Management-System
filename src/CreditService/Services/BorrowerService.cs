@@ -51,6 +51,13 @@
             return _mapper.Map<BorrowerViewModel>(updatedBorrower)!;
         }
 
+        public async Task DeleteBorrowerAsync(string id)
+        {
+            await _borrowerRepository.DeleteBorrowerAsync(id);
+
+            await _borrowerRepository.SaveChangesAsync();
+        }
+
         public async Task<bool> BorrowerExistsAsync(string id)
         {
             return await _borrowerRepository.BorrowerExistsAsync(id);

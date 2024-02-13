@@ -46,6 +46,7 @@
         public async Task<decimal> DeletePurchaseAsync(string id)
         {
             var purchase = await _dbContext.Purchases
+                .Include(p => p.Products)
                 .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
             if (purchase == null)

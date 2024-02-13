@@ -11,10 +11,12 @@ namespace CreditService.Controllers
     public class BorrowersController : ControllerBase
     {
         private readonly IBorrowerService _borrowerService;
+        private readonly IPurchaseService _purchaseService;
 
-        public BorrowersController(IBorrowerService borrowerService)
+        public BorrowersController(IBorrowerService borrowerService, IPurchaseService purchaseService)
         {
             _borrowerService = borrowerService;
+            _purchaseService = purchaseService;
         }
 
         [HttpGet]
@@ -84,6 +86,27 @@ namespace CreditService.Controllers
                 var updatedBorrower = await _borrowerService.UpdateBorrowerAsync(id, model);
 
                 return Ok(updatedBorrower);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBorrower(string id)
+        {
+            try
+            {
+                await _borrowerService.DeleteBorrowerAsync(id);
+
+                await _purchaseService.DeletePurchasesByBorrowerIdAsync(id);
+
+                return NoContent();
             }
             catch (InvalidOperationException ex)
             {

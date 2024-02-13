@@ -12,6 +12,8 @@
 
         Task<BorrowerViewModel> UpdateBorrowerAsync(string id, BorrowerUpdateModel borrower);
 
+        Task DeleteBorrowerAsync(string id);
+
         Task<bool> BorrowerExistsAsync(string id);
 
         Task<bool> IncreaseBorrowerCreditAsync(string id, decimal amount);
