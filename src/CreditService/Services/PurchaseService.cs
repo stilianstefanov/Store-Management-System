@@ -76,5 +76,10 @@
         {
             await _purchaseRepository.SaveChangesAsync();
         }
+
+        public async Task<bool> PurchaseExistsAsync(string id)
+        {
+            return await _purchaseRepository.PurchaseExistsAsync(id);
+        }
     }
 }

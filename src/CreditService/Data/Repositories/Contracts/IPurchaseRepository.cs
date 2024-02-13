@@ -13,5 +13,7 @@
         Task AddPurchaseAsync(Purchase purchase);
 
         Task<decimal> DeletePurchaseAsync(string id);
+
+        Task<bool> PurchaseExistsAsync(string id);
     }
 }

@@ -62,5 +62,13 @@
 
             return amount;
         }
+
+        public async Task<bool> PurchaseExistsAsync(string id)
+        {
+            var purchaseExists = await _dbContext.Purchases
+                .AnyAsync(p => p.Id.ToString() == id && !p.IsDeleted);
+
+            return purchaseExists;
+        }
     }
 }

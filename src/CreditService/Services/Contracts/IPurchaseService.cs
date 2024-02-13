@@ -16,5 +16,7 @@
         Task DeletePurchasesByBorrowerIdAsync(string borrowerId);
 
         Task CompletePurchaseAsync();
+
+        Task<bool> PurchaseExistsAsync(string id);
     }
 }
