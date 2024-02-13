@@ -4,11 +4,11 @@
     using Data.Repositories.Contracts;
     using Data.ViewModels.PurchasedProduct;
 
-    public class PurchaseProductService : IPurchaseProductService
+    public class PurchasedProductService : IPurchasedProductService
     {
         private readonly IPurchasedProductRepository _purchaseProductRepository;
 
-        public PurchaseProductService(IPurchasedProductRepository purchaseProductRepository)
+        public PurchasedProductService(IPurchasedProductRepository purchaseProductRepository)
         {
             _purchaseProductRepository = purchaseProductRepository;
         }
@@ -25,6 +25,18 @@
             await _purchaseProductRepository.SaveChangesAsync();
 
             return amount;
+        }
+
+        public async Task DeleteBoughtProductsByPurchaseIdAsync(string purchaseId)
+        {
+            var products = await _purchaseProductRepository.GetProductsByPurchaseIdAsync(purchaseId);
+
+            foreach (var product in products)
+            {
+                product.IsDeleted = true;
+            }
+
+            await _purchaseProductRepository.SaveChangesAsync();
         }
     }
 }

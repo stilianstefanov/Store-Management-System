@@ -10,10 +10,10 @@ namespace CreditService.Controllers
     [ApiController]
     public class PurchasedProductsController : ControllerBase
     {
-        private readonly IPurchaseProductService _purchaseProductService;
+        private readonly IPurchasedProductService _purchaseProductService;
         private readonly IBorrowerService _borrowerService;
 
-        public PurchasedProductsController(IPurchaseProductService purchaseProductService, IBorrowerService borrowerService)
+        public PurchasedProductsController(IPurchasedProductService purchaseProductService, IBorrowerService borrowerService)
         {
             _purchaseProductService = purchaseProductService;
             _borrowerService = borrowerService;

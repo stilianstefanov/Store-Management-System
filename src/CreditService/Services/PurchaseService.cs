@@ -46,9 +46,13 @@
             return _mapper.Map<PurchaseViewModel>(newPurchase)!;
         }
 
-        public async Task DeletePurchaseAsync(string id)
+        public async Task<decimal> DeletePurchaseAsync(string id)
         {
-            throw new NotImplementedException();
+            var amount = await _purchaseRepository.DeletePurchaseAsync(id);
+
+            await _purchaseRepository.SaveChangesAsync();
+
+            return amount;
         }
 
         public async Task CompletePurchaseAsync()

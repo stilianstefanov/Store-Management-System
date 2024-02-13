@@ -15,7 +15,7 @@
 
         public DbSet<Purchase> Purchases { get; set; } = null!;
 
-        public DbSet<PurchasedProduct> PurchaseProducts { get; set; } = null!;
+        public DbSet<PurchasedProduct> PurchasedProducts { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

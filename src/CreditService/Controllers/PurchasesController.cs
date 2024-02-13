@@ -13,11 +13,16 @@ namespace CreditService.Controllers
     {
         private readonly IPurchaseService _purchaseService;
         private readonly IBorrowerService _borrowerService;
+        private readonly IPurchasedProductService _purchasedProductService;
 
-        public PurchasesController(IPurchaseService purchaseService, IBorrowerService borrowerService)
+        public PurchasesController(
+            IPurchaseService purchaseService,
+            IBorrowerService borrowerService,
+            IPurchasedProductService purchasedProductService)
         {
             _purchaseService = purchaseService;
             _borrowerService = borrowerService;
+            _purchasedProductService = purchasedProductService;
         }
 
         [HttpGet]
@@ -88,6 +93,36 @@ namespace CreditService.Controllers
                 await _purchaseService.CompletePurchaseAsync();
 
                 return CreatedAtAction(nameof(GetPurchaseById), new { borrowerId, newPurchase.Id }, newPurchase);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePurchase(string borrowerId, string id)
+        {
+            try
+            {
+                var borrowerExists = await _borrowerService.BorrowerExistsAsync(borrowerId);
+
+                if (!borrowerExists)
+                {
+                    return NotFound(BorrowerNotFound);
+                }
+
+                var totalAmount = await _purchaseService.DeletePurchaseAsync(id);
+
+                await _borrowerService.DecreaseBorrowerCreditAsync(borrowerId, totalAmount);
+
+                await _purchasedProductService.DeleteBoughtProductsByPurchaseIdAsync(id);
+
+                return NoContent();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

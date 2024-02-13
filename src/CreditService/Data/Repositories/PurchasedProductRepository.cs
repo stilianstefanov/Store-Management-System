@@ -21,7 +21,7 @@
 
         public async Task<IEnumerable<PurchasedProduct>> GetProductsByPurchaseIdAsync(string purchaseId)
         {
-            var products = await _dbContext.PurchaseProducts
+            var products = await _dbContext.PurchasedProducts
                 .Where(p => p.PurchaseId.ToString() == purchaseId && !p.IsDeleted)
                 .ToArrayAsync();
 
@@ -30,8 +30,8 @@
 
         public async Task<decimal> DeleteProductByIdAsync(string id)
         {
-            var product = await _dbContext.PurchaseProducts
-                .FirstOrDefaultAsync(p => p.Id.ToString() == id);
+            var product = await _dbContext.PurchasedProducts
+                .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
             if (product == null)
             {

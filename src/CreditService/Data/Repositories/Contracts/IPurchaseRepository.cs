@@ -12,6 +12,6 @@
 
         Task AddPurchaseAsync(Purchase purchase);
 
-        Task DeletePurchaseAsync(string id);
+        Task<decimal> DeletePurchaseAsync(string id);
     }
 }

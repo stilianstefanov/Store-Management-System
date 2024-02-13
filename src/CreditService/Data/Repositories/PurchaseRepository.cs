@@ -33,7 +33,7 @@
         {
             var purchase = await _dbContext.Purchases
                 .Include(p => p.Products)
-                .FirstOrDefaultAsync(p => p.Id.ToString() == id);
+                .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
             return purchase ?? throw new InvalidOperationException(PurchaseNotFound);
         }
@@ -43,10 +43,10 @@
             await _dbContext.Purchases.AddAsync(purchase);
         }
 
-        public async Task DeletePurchaseAsync(string id)
+        public async Task<decimal> DeletePurchaseAsync(string id)
         {
             var purchase = await _dbContext.Purchases
-                .FirstOrDefaultAsync(p => p.Id.ToString() == id);
+                .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
             if (purchase == null)
             {
@@ -54,6 +54,12 @@
             }
 
             purchase.IsDeleted = true;
+
+            var amount = purchase.Products
+                .Where(p => !p.IsDeleted)
+                .Sum(p => p.PurchasePrice * p.BoughtQuantity);
+
+            return amount;
         }
     }
 }
