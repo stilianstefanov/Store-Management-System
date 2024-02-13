@@ -1,9 +1,9 @@
-﻿namespace CreditService.Data.ViewModels.PurchaseProduct
+﻿namespace CreditService.Data.ViewModels.PurchasedProduct
 {
     using System.ComponentModel.DataAnnotations;
     using static Common.EntityValidationConstants.PurchaseProduct;
 
-    public class PurchaseProductCreateModel
+    public class PurchasedProductCreateModel
     {
         public string ExternalId { get; set; } = null!;
 

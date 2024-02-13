@@ -5,7 +5,6 @@
     using Data.Models;
     using Data.ViewModels.Borrower;
     using Data.Repositories.Contracts;
-    using Data.ViewModels.PurchaseProduct;
 
     public class BorrowerService : IBorrowerService
     {
@@ -71,6 +70,20 @@
             await _borrowerRepository.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task DecreaseBorrowerCreditAsync(string id, decimal amount)
+        {
+            var borrower = await _borrowerRepository.GetBorrowerByIdAsync(id);
+
+            borrower.CurrentCredit -= amount;
+
+            if (borrower.CurrentCredit < 0)
+            {
+                borrower.CurrentCredit = 0;
+            }
+
+            await _borrowerRepository.SaveChangesAsync();
         }
     }
 }

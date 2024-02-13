@@ -5,7 +5,7 @@
     using Data.Models;
     using Data.Repositories.Contracts;
     using Data.ViewModels.Purchase;
-    using Data.ViewModels.PurchaseProduct;
+    using Data.ViewModels.PurchasedProduct;
 
     public class PurchaseService : IPurchaseService
     {
@@ -32,13 +32,13 @@
             return _mapper.Map<PurchaseViewModel>(purchase)!;
         }
 
-        public async Task<PurchaseViewModel> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchaseProductCreateModel> purchasedProducts)
+        public async Task<PurchaseViewModel> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
             var newPurchase = new Purchase
             {
                 BorrowerId = Guid.Parse(borrowerId),
                 Date = DateTime.UtcNow,
-                Products = _mapper.Map<ICollection<PurchaseProduct>>(purchasedProducts)!
+                Products = _mapper.Map<ICollection<PurchasedProduct>>(purchasedProducts)!
             };
 
             await _purchaseRepository.AddPurchaseAsync(newPurchase);

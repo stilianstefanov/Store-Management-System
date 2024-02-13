@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CreditService.Controllers
 {
-    using Data.ViewModels.PurchaseProduct;
+    using Data.ViewModels.PurchasedProduct;
     using Services.Contracts;
     using static Common.ExceptionMessages;
 
@@ -60,7 +60,7 @@ namespace CreditService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePurchase(string borrowerId, [FromBody] IEnumerable<PurchaseProductCreateModel> purchasedProducts)
+        public async Task<IActionResult> CreatePurchase(string borrowerId, [FromBody] IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
             if (!ModelState.IsValid)
             {

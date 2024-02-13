@@ -8,7 +8,7 @@
         public Purchase()
         {
             Id = Guid.NewGuid();
-            Products = new HashSet<PurchaseProduct>();
+            Products = new HashSet<PurchasedProduct>();
         }
 
         [Key]
@@ -24,6 +24,6 @@
 
         public Borrower Borrower { get; set; } = null!;
 
-        public ICollection<PurchaseProduct> Products { get; set; }
+        public ICollection<PurchasedProduct> Products { get; set; }
     }
 }

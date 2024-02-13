@@ -15,7 +15,7 @@
 
         public DbSet<Purchase> Purchases { get; set; } = null!;
 
-        public DbSet<PurchaseProduct> PurchaseProducts { get; set; } = null!;
+        public DbSet<PurchasedProduct> PurchaseProducts { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,7 @@
                 .Property(p => p.CurrentCredit)
                 .HasColumnType("decimal(18,2)");
 
-            modelBuilder.Entity<PurchaseProduct>()
+            modelBuilder.Entity<PurchasedProduct>()
                 .Property(p => p.PurchasePrice)
                 .HasColumnType("decimal(18,2)");
 

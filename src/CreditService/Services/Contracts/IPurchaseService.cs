@@ -1,7 +1,7 @@
 ﻿namespace CreditService.Services.Contracts
 {
     using Data.ViewModels.Purchase;
-    using Data.ViewModels.PurchaseProduct;
+    using Data.ViewModels.PurchasedProduct;
 
     public interface IPurchaseService
     {
@@ -9,7 +9,7 @@
 
         Task<PurchaseViewModel> GetPurchaseByIdAsync(string id);
         
-        Task<PurchaseViewModel> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchaseProductCreateModel> purchasedProducts);
+        Task<PurchaseViewModel> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts);
         
         Task DeletePurchaseAsync(string id);
 

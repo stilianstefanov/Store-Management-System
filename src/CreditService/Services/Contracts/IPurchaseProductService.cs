@@ -1,11 +1,11 @@
 ﻿namespace CreditService.Services.Contracts
 {
-    using Data.ViewModels.PurchaseProduct;
+    using Data.ViewModels.PurchasedProduct;
 
     public interface IPurchaseProductService
     {
-        Task <IEnumerable<PurchaseProductViewModel>> GetBoughtProductsByPurchaseIdAsync(string purchaseId);
+        Task <IEnumerable<PurchasedProductViewModel>> GetBoughtProductsByPurchaseIdAsync(string purchaseId);
 
-        Task DeleteBoughtProductByIdAsync(string id);
+        Task<decimal> DeleteBoughtProductByIdAsync(string id);
     }
 }

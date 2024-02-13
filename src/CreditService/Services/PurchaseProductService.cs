@@ -1,18 +1,30 @@
 ﻿namespace CreditService.Services
 {
     using Contracts;
-    using Data.ViewModels.PurchaseProduct;
+    using Data.Repositories.Contracts;
+    using Data.ViewModels.PurchasedProduct;
 
     public class PurchaseProductService : IPurchaseProductService
     {
-        public async Task<IEnumerable<PurchaseProductViewModel>> GetBoughtProductsByPurchaseIdAsync(string purchaseId)
+        private readonly IPurchasedProductRepository _purchaseProductRepository;
+
+        public PurchaseProductService(IPurchasedProductRepository purchaseProductRepository)
+        {
+            _purchaseProductRepository = purchaseProductRepository;
+        }
+
+        public async Task<IEnumerable<PurchasedProductViewModel>> GetBoughtProductsByPurchaseIdAsync(string purchaseId)
         {
             throw new NotImplementedException();
         }
 
-        public async Task DeleteBoughtProductByIdAsync(string id)
+        public async Task<decimal> DeleteBoughtProductByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var amount = await _purchaseProductRepository.DeleteProductByIdAsync(id);
+
+            await _purchaseProductRepository.SaveChangesAsync();
+
+            return amount;
         }
     }
 }

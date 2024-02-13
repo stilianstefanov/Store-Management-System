@@ -1,6 +1,6 @@
-﻿namespace CreditService.Data.ViewModels.PurchaseProduct
+﻿namespace CreditService.Data.ViewModels.PurchasedProduct
 {
-    public class PurchaseProductViewModel
+    public class PurchasedProductViewModel
     {
         public string Id { get; set; } = null!;
 

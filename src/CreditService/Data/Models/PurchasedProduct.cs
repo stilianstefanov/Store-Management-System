@@ -3,9 +3,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class PurchaseProduct
+    public class PurchasedProduct
     {
-        public PurchaseProduct()
+        public PurchasedProduct()
         {
             Id = Guid.NewGuid();
         }

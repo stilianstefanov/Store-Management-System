@@ -1,4 +1,4 @@
-﻿namespace CreditService.Data.ViewModels.PurchaseProduct
+﻿namespace CreditService.Data.ViewModels.PurchasedProduct
 {
     public class ProductDetailsViewModel
     {

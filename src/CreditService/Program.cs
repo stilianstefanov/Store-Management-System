@@ -23,7 +23,7 @@ namespace CreditService
             builder.Services.AddScoped<IBorrowerService, BorrowerService>();
             builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
             builder.Services.AddScoped<IPurchaseService, PurchaseService>();
-            builder.Services.AddScoped<IPurchaseProductRepository, PurchaseProductRepository>();
+            builder.Services.AddScoped<IPurchasedProductRepository, PurchasedProductRepository>();
             builder.Services.AddScoped<IPurchaseProductService, PurchaseProductService>();
 
             builder.Services.AddAutoMapper(typeof(Program));

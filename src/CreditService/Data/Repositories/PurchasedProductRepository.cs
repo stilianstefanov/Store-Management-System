@@ -5,11 +5,11 @@
     using Models;
     using static Common.ExceptionMessages;
 
-    public class PurchaseProductRepository : IPurchaseProductRepository
+    public class PurchasedProductRepository : IPurchasedProductRepository
     {
         private readonly CreditDbContext _dbContext;
 
-        public PurchaseProductRepository(CreditDbContext dbContext)
+        public PurchasedProductRepository(CreditDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -19,7 +19,7 @@
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<PurchaseProduct>> GetProductsByPurchaseIdAsync(string purchaseId)
+        public async Task<IEnumerable<PurchasedProduct>> GetProductsByPurchaseIdAsync(string purchaseId)
         {
             var products = await _dbContext.PurchaseProducts
                 .Where(p => p.PurchaseId.ToString() == purchaseId)
@@ -28,7 +28,7 @@
             return products;
         }
 
-        public async Task DeleteProductByIdAsync(string id)
+        public async Task<decimal> DeleteProductByIdAsync(string id)
         {
             var product = await _dbContext.PurchaseProducts
                 .FirstOrDefaultAsync(p => p.Id.ToString() == id);
@@ -39,6 +39,8 @@
             }
 
             product.IsDeleted = true;
+
+            return product.PurchasePrice * product.BoughtQuantity;
         }
     }
 }

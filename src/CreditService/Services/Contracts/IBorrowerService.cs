@@ -1,7 +1,6 @@
 ﻿namespace CreditService.Services.Contracts
 {
     using Data.ViewModels.Borrower;
-    using Data.ViewModels.PurchaseProduct;
 
     public interface IBorrowerService
     {
@@ -16,5 +15,7 @@
         Task<bool> BorrowerExistsAsync(string id);
 
         Task<bool> IncreaseBorrowerCreditAsync(string id, decimal amount);
+
+        Task DecreaseBorrowerCreditAsync(string id, decimal amount);
     }
 }
