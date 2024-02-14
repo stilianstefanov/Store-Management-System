@@ -7,10 +7,14 @@
     public class PurchasedProductService : IPurchasedProductService
     {
         private readonly IPurchasedProductRepository _purchaseProductRepository;
+        private readonly IProductGrpcClientService _productGrpcClient;
 
-        public PurchasedProductService(IPurchasedProductRepository purchaseProductRepository)
+        public PurchasedProductService(
+            IPurchasedProductRepository purchaseProductRepository, 
+            IProductGrpcClientService productGrpcClient)
         {
             _purchaseProductRepository = purchaseProductRepository;
+            _productGrpcClient = productGrpcClient;
         }
 
         public async Task<IEnumerable<PurchasedProductViewModel>> GetBoughtProductsByPurchaseIdAsync(string purchaseId)
