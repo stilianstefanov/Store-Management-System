@@ -10,6 +10,8 @@
 
         Task<Product?> GetByIdAsync(string id);
 
+        Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<string> ids);
+
         Task AddAsync(Product product);
 
         Task<Product> UpdateAsync(string id, Product product);

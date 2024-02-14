@@ -32,6 +32,9 @@
 
             CreateMap<GrpcWarehouseModel, WarehouseViewModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.WarehouseId));
+
+            CreateMap<Product, GrpcProductModel>()
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id.ToString()));
         }
     }
 }

@@ -26,11 +26,13 @@ namespace ProductService
             builder.Services.AddSingleton<IMessageSenderService, MessageSenderService>();
 
             builder.Services.AddAutoMapper(typeof(Program));
+            builder.Services.AddGrpc();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            app.MapGrpcService<GrpcProductService>();
 
             if (app.Environment.IsDevelopment())
             {

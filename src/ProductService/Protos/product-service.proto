@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option csharp_namespace = "ProductService";
+
+service ProductServiceGrpc {
+    rpc GetProductsByMultipleIds (GetProductByMultipleIdsRequest) returns (GetProductsByMultipleIdsResponse);
+}
+
+message GetProductByMultipleIdsRequest {
+    repeated string ids = 1;
+}
+
+
+message GrpcProductModel{
+    string productId = 1;
+    string name = 2;
+    string description = 3;
+}
+
+message GetProductsByMultipleIdsResponse {
+    repeated GrpcProductModel products = 1;
+}
