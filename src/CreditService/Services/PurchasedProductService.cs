@@ -1,5 +1,6 @@
 ﻿namespace CreditService.Services
 {
+    using AutoMapper;
     using Contracts;
     using Data.Repositories.Contracts;
     using Data.ViewModels.PurchasedProduct;
@@ -8,18 +9,39 @@
     {
         private readonly IPurchasedProductRepository _purchaseProductRepository;
         private readonly IProductGrpcClientService _productGrpcClient;
+        private readonly IMapper _mapper;
 
         public PurchasedProductService(
             IPurchasedProductRepository purchaseProductRepository, 
-            IProductGrpcClientService productGrpcClient)
+            IProductGrpcClientService productGrpcClient,
+            IMapper mapper)
         {
             _purchaseProductRepository = purchaseProductRepository;
             _productGrpcClient = productGrpcClient;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<PurchasedProductViewModel>> GetBoughtProductsByPurchaseIdAsync(string purchaseId)
         {
-            throw new NotImplementedException();
+            var purchasedProducts = await _purchaseProductRepository.GetProductsByPurchaseIdAsync(purchaseId);
+
+            var productsDetails =
+                await _productGrpcClient.GetProductsAsync(purchasedProducts.Select(p => p.ExternalId));
+
+            var result = new List<PurchasedProductViewModel>();
+
+            foreach (var product in purchasedProducts)
+            {
+                var productDetails = productsDetails.FirstOrDefault(p => p.ExternalId == product.ExternalId);
+
+                var productViewModel = _mapper.Map<PurchasedProductViewModel>(product)!;
+
+                productViewModel.ProductDetails = productDetails;
+
+                result.Add(productViewModel);
+            }
+
+            return result;
         }
 
         public async Task<decimal> DeleteBoughtProductByIdAsync(string id)

@@ -11,6 +11,9 @@
         {
             CreateMap<PurchasedProductCreateModel, PurchasedProduct>();
 
+            CreateMap<PurchasedProduct, PurchasedProductViewModel>()
+                .ForMember(dest => dest.ProductDetails, opt => opt.Ignore());
+
             CreateMap<GrpcProductModel, ProductDetailsViewModel>()
                 .ForMember(dest => dest.ExternalId, opt => opt.MapFrom(src => src.ProductId));
         }

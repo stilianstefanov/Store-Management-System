@@ -34,7 +34,7 @@
         public async Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<string> ids)
         {
             var products = await _dbContext.Products
-                .Where(p => ids.Contains(p.Id.ToString()) && !p.IsDeleted)
+                .Where(p => ids.Contains(p.Id.ToString()))
                 .ToArrayAsync();
 
             return products;
