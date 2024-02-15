@@ -20,10 +20,10 @@ namespace CreditService
                     opt.UseSqlServer(connectionString));
 
             builder.Services.AddScoped<IBorrowerRepository, BorrowerRepository>();
-            builder.Services.AddScoped<IBorrowerService, BorrowerService>();
             builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
-            builder.Services.AddScoped<IPurchaseService, PurchaseService>();
             builder.Services.AddScoped<IPurchasedProductRepository, PurchasedProductRepository>();
+            builder.Services.AddScoped<IBorrowerService, BorrowerService>();
+            builder.Services.AddScoped<IPurchaseService, PurchaseService>();
             builder.Services.AddScoped<IPurchasedProductService, PurchasedProductService>();
             builder.Services.AddScoped<IProductGrpcClientService, ProductGrpcClientService>();
 
