@@ -4,10 +4,15 @@ option csharp_namespace = "ProductService";
 
 service ProductServiceGrpc {
     rpc GetProductsByMultipleIds (GetProductByMultipleIdsRequest) returns (GetProductsByMultipleIdsResponse);
+    rpc ProductsExist (ProductsExistRequest) returns (ProductsExistResponse);
 }
 
 message GetProductByMultipleIdsRequest {
     repeated string ids = 1;
+}
+
+message ProductsExistRequest {
+	repeated string ids = 1;
 }
 
 
@@ -19,4 +24,8 @@ message GrpcProductModel{
 
 message GetProductsByMultipleIdsResponse {
     repeated GrpcProductModel products = 1;
+}
+
+message ProductsExistResponse {
+    bool productsExist = 1;
 }
