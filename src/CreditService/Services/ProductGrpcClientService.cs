@@ -40,5 +40,28 @@
                 throw new Exception(e.Message);
             }
         }
+
+        public async Task<bool> ProductsExistAsync(IEnumerable<string> ids)
+        {
+            var channel = GrpcChannel.ForAddress(_configuration["GrpcProductService"]!);
+
+            var client = new ProductServiceGrpc.ProductServiceGrpcClient(channel);
+
+            var request = new ProductsExistRequest
+            {
+                Ids = { ids }
+            };
+
+            try
+            {
+                var response = await client.ProductsExistAsync(request);
+
+                return response.ProductsExist;
+            }
+            catch (RpcException e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

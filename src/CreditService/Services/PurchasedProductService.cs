@@ -64,5 +64,13 @@
 
             await _purchaseProductRepository.SaveChangesAsync();
         }
+
+        public async Task<bool> ValidateProductsAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        {
+            var productsExist =
+                await _productGrpcClient.ProductsExistAsync(purchasedProducts.Select(p => p.ExternalId));
+
+            return productsExist;
+        }
     }
 }

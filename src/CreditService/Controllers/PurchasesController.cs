@@ -81,6 +81,13 @@ namespace CreditService.Controllers
                     return NotFound(BorrowerNotFound);
                 }
 
+                var productsExist = await _purchasedProductService.ValidateProductsAsync(purchasedProducts);
+
+                if (!productsExist)
+                {
+                    return BadRequest(ProductsNotFound);
+                }
+
                 var newPurchase = await _purchaseService.CreatePurchaseAsync(borrowerId, purchasedProducts);
 
                 var isSucceeded = await _borrowerService.IncreaseBorrowerCreditAsync(borrowerId, newPurchase.Amount);
