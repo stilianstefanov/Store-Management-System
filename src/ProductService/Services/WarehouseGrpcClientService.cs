@@ -60,7 +60,7 @@
             }
             catch (RpcException e)
             {
-                throw new Exception();
+                throw new Exception(e.Message);
             }
         }
     }

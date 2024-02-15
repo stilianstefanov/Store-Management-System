@@ -36,5 +36,19 @@
                 throw new RpcException(new Status(StatusCode.Internal, ex.Message));
             }
         }
+
+        public override async Task<ProductsExistResponse> ProductsExist(ProductsExistRequest request, ServerCallContext context)
+        {
+            try
+            {
+                var productsExist = await _productRepository.ProductsExistAsync(request.Ids);
+
+                return new ProductsExistResponse { ProductsExist = productsExist };
+            }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Internal, ex.Message));
+            }
+        }
     }
 }

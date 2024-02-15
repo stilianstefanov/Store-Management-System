@@ -17,5 +17,7 @@
         Task<Product> UpdateAsync(string id, Product product);
 
         Task DeleteAsync(string id);
+
+        Task<bool> ProductsExistAsync(IEnumerable<string> ids);
     }
 }
