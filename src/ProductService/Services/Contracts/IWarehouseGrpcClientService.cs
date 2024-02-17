@@ -4,8 +4,8 @@
 
     public interface IWarehouseGrpcClientService
     {
-        WarehouseViewModel? GetWarehouseById(string id);
+        Task<WarehouseViewModel> GetWarehouseById(string id);
 
-        bool WarehouseExists(string id);
+        Task<bool> WarehouseExists(string id);
     }
 }

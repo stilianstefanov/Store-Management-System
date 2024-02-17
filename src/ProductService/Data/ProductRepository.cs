@@ -28,7 +28,7 @@
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
-            return product ?? throw new InvalidOperationException(ProductNotFound);
+            return product;
         }
 
         public async Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<string> ids)
@@ -52,7 +52,7 @@
 
             if (productToUpdate == null)
             {
-                throw new InvalidOperationException(ProductNotFound);
+                throw new KeyNotFoundException(ProductNotFound);
             }
             
             productToUpdate.Barcode = product.Barcode;
@@ -74,7 +74,7 @@
 
             if (productToDelete == null)
             {
-                throw new InvalidOperationException(ProductNotFound);
+                throw new KeyNotFoundException(ProductNotFound);
             }
 
             productToDelete.IsDeleted = true;

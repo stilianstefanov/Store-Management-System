@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ProductService.Controllers
 {
     using Data.ViewModels;
+    using Utilities;
     using Services.Contracts;
 
     [Route("api/[controller]")]
@@ -20,118 +21,67 @@ namespace ProductService.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            try
-            {
-                return Ok(await _productService.GetAllAsync());
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            var result = await _productService.GetAllAsync();
+
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return Ok(result.Data);
         }
 
         [HttpGet("{id}", Name = "GetProductById")]
         public async Task<IActionResult> GetProductById(string id)
         {
-            try
-            {
-                return Ok(await _productService.GetByIdAsync(id));
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            var result = await _productService.GetByIdAsync(id);
+
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+                
+            return Ok(result.Data);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateProduct(ProductCreateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            try
-            {
-                var createdProduct = await _productService.CreateAsync(model);
+            var result = await _productService.CreateAsync(model);
 
-                return CreatedAtAction(nameof(GetProductById), new { id = createdProduct.Id }, createdProduct);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return Ok(result.Data);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(string id, [FromBody]ProductUpdateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            
+            var result = await _productService.UpdateAsync(id, model);
 
-            try
-            {
-                return Ok(await _productService.UpdateAsync(id, model));
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return Ok(result.Data);
         }
 
         [HttpPatch("{id}")]
         public async Task<IActionResult> PartialUpdateProduct(string id, [FromBody] ProductPartialUpdateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            
+            var result = await _productService.PartialUpdateAsync(id, model);
 
-            try
-            {
-                return Ok(await _productService.PartialUpdateAsync(id, model));
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return Ok(result.Data);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(string id)
         {
-            try
-            {
-                await _productService.DeleteAsync(id);
+            var result = await _productService.DeleteAsync(id);
 
-                return NoContent();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return NoContent();
         }
     }
 }

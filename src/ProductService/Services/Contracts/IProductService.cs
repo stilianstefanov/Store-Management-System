@@ -1,19 +1,20 @@
 ﻿namespace ProductService.Services.Contracts
 {
     using Data.ViewModels;
+    using Utilities;
 
     public interface IProductService
     {
-        Task<IEnumerable<ProductViewModel>> GetAllAsync();
+        Task<OperationResult<IEnumerable<ProductViewModel>>> GetAllAsync();
 
-        Task<ProductDetailsViewModel> CreateAsync(ProductCreateModel model);
+        Task<OperationResult<ProductDetailsViewModel>> CreateAsync(ProductCreateModel model);
 
-        Task<ProductDetailsViewModel> GetByIdAsync(string id);
+        Task<OperationResult<ProductDetailsViewModel>> GetByIdAsync(string id);
 
-        Task<ProductDetailsViewModel> UpdateAsync(string id, ProductUpdateModel model);
+        Task<OperationResult<ProductDetailsViewModel>> UpdateAsync(string id, ProductUpdateModel model);
 
-        Task<ProductDetailsViewModel> PartialUpdateAsync(string id, ProductPartialUpdateModel model);
+        Task<OperationResult<ProductDetailsViewModel>> PartialUpdateAsync(string id, ProductPartialUpdateModel model);
 
-        Task DeleteAsync(string id);
+        Task<OperationResult<bool>> DeleteAsync(string id);
     }
 }

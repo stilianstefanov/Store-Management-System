@@ -18,7 +18,7 @@
             _mapper = mapper; 
         }
 
-        public WarehouseViewModel? GetWarehouseById(string id)
+        public async Task<WarehouseViewModel> GetWarehouseById(string id)
         {
             var channel = GrpcChannel.ForAddress(_configuration["GrpcWarehouseService"]!);
 
@@ -31,7 +31,7 @@
 
             try
             {
-                var response = client.GetWarehouseById(request);
+                var response = await client.GetWarehouseByIdAsync(request);
 
                 return _mapper.Map<WarehouseViewModel>(response.Warehouse);
             }
@@ -41,7 +41,7 @@
             }
         }
 
-        public bool WarehouseExists(string id)
+        public async Task<bool> WarehouseExists(string id)
         {
             var channel = GrpcChannel.ForAddress(_configuration["GrpcWarehouseService"]!);
 
@@ -54,7 +54,7 @@
 
             try
             {
-                var response = client.WarehouseExistsById(request);
+                var response = await client.WarehouseExistsByIdAsync(request);
 
                 return response.Exists;
             }
