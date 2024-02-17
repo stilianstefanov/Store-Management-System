@@ -1,44 +1,37 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace WarehouseService.Controllers
+﻿namespace WarehouseService.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+
     using Services.Contracts;
-    using static Common.ExceptionMessages;
+    using Utilities;
+    using Utilities.Enums;
 
     [Route("api/warehouses/{warehouseId}/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly IWarehouseService _warehouseService;
 
-        public ProductsController(IProductService productService, IWarehouseService warehouseService)
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
-            _warehouseService = warehouseService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProductsByWarehouseIdAsync(string warehouseId)
+        public async Task<IActionResult> GetProductsByWarehouseId(string warehouseId)
         {
-            try
-            {
-                var warehouseExists = await _warehouseService.ExistsAsync(warehouseId);
+            var result = await _productService.GetProductsByWarehouseIdAsync(warehouseId);
 
-                if (!warehouseExists)
+            if (!result.IsSuccess)
+            {
+                return result.ErrorType switch
                 {
-                    return NotFound(WarehouseNotFound);
-                }
-
-                var products = await _productService.GetProductsByWarehouseIdAsync(warehouseId);
-
-                return Ok(products);
+                    ErrorType.NotFound => NotFound(result.ErrorMessage),
+                _ =>  this.GeneralError()
+                };
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+
+            return Ok(result.Data);
         }
     }
 }
