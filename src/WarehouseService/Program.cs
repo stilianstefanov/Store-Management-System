@@ -1,4 +1,3 @@
-
 namespace WarehouseService
 {
     using Data;
@@ -9,6 +8,7 @@ namespace WarehouseService
     using Data.Repositories;
     using Messaging;
     using Messaging.Contracts;
+    using Services.GrpcServices;
 
     public class Program
     {

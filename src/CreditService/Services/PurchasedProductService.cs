@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using Contracts;
+    using GrpcServices.Contracts;
     using Data.Repositories.Contracts;
     using Data.ViewModels.PurchasedProduct;
 

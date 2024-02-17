@@ -1,4 +1,4 @@
-﻿namespace ProductService.Services
+﻿namespace ProductService.Services.GrpcServices
 {
     using AutoMapper;
     using Data.Contracts;

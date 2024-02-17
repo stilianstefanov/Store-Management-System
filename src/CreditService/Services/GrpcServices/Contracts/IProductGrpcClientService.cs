@@ -1,4 +1,4 @@
-﻿namespace CreditService.Services.Contracts
+﻿namespace CreditService.Services.GrpcServices.Contracts
 {
     using Data.ViewModels.PurchasedProduct;
 

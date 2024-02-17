@@ -1,4 +1,4 @@
-﻿namespace WarehouseService.Services
+﻿namespace WarehouseService.Services.GrpcServices
 {
     using AutoMapper;
     using Data.Repositories.Contracts;

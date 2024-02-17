@@ -1,7 +1,8 @@
-﻿namespace CreditService.Services
+﻿namespace CreditService.Services.GrpcServices
 {
     using AutoMapper;
     using Contracts;
+    using CreditService.Services.GrpcServices.Contracts;
     using Data.ViewModels.PurchasedProduct;
     using Grpc.Core;
     using Grpc.Net.Client;

@@ -7,7 +7,9 @@ namespace ProductService
     using Microsoft.EntityFrameworkCore;
     using Services;
     using Services.Contracts;
-
+    using Services.GrpcServices;
+    using Services.GrpcServices.Contracts;
+    
     public class Program
     {
         public static void Main(string[] args)

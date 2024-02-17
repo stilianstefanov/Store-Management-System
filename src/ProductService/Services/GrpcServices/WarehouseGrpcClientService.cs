@@ -1,4 +1,4 @@
-﻿namespace ProductService.Services
+﻿namespace ProductService.Services.GrpcServices
 {
     using AutoMapper;
     using Contracts;
@@ -15,7 +15,7 @@
         public WarehouseGrpcClientService(IConfiguration configuration, IMapper mapper)
         {
             _configuration = configuration;
-            _mapper = mapper; 
+            _mapper = mapper;
         }
 
         public async Task<WarehouseViewModel> GetWarehouseById(string id)

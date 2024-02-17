@@ -5,6 +5,7 @@
     using Data.Contracts;
     using Data.Models;
     using Data.ViewModels;
+    using GrpcServices.Contracts;
     using Messaging.Contracts;
     using Messaging.Models;
     using Utilities;
@@ -125,7 +126,7 @@
 
                 if (model.Quantity.HasValue)
                 {
-                    productToUpdate!.Quantity = model.Quantity.Value;
+                    productToUpdate.Quantity = model.Quantity.Value;
                 }
 
                 if (!string.IsNullOrEmpty(model.WarehouseId))
@@ -137,7 +138,7 @@
                         return OperationResult<ProductDetailsViewModel>.Failure(WarehouseNotFound, ErrorType.NotFound);
                     }
 
-                    productToUpdate!.WarehouseId = model.WarehouseId;
+                    productToUpdate.WarehouseId = model.WarehouseId;
                 }
 
                 await _productRepository.SaveChangesAsync();
@@ -178,7 +179,7 @@
         {
             var productDetailsModel = _mapper.Map<ProductDetailsViewModel>(product);
 
-            productDetailsModel.Warehouse = await _grpcClient.GetWarehouseById(product!.WarehouseId)!;
+            productDetailsModel.Warehouse = await _grpcClient.GetWarehouseById(product!.WarehouseId);
 
             return productDetailsModel;
         }

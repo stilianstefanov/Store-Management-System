@@ -1,4 +1,4 @@
-﻿namespace ProductService.Services.Contracts
+﻿namespace ProductService.Services.GrpcServices.Contracts
 {
     using Data.ViewModels;
 
