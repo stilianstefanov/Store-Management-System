@@ -1,18 +1,19 @@
 ﻿namespace CreditService.Services.Contracts
 {
     using Data.ViewModels.Borrower;
+    using Utilities;
 
     public interface IBorrowerService
     {
-        Task<IEnumerable<BorrowerViewModel>> GetAllBorrowersAsync();
+        Task<OperationResult<IEnumerable<BorrowerViewModel>>> GetAllBorrowersAsync();
 
-        Task<BorrowerViewModel> GetBorrowerByIdAsync(string id);
+        Task<OperationResult<BorrowerViewModel>> GetBorrowerByIdAsync(string id);
 
-        Task<BorrowerViewModel> CreateBorrowerAsync(BorrowerCreateModel borrower);
+        Task<OperationResult<BorrowerViewModel>> CreateBorrowerAsync(BorrowerCreateModel borrower);
 
-        Task<BorrowerViewModel> UpdateBorrowerAsync(string id, BorrowerUpdateModel borrower);
+        Task<OperationResult<BorrowerViewModel>> UpdateBorrowerAsync(string id, BorrowerUpdateModel borrower);
 
-        Task DeleteBorrowerAsync(string id);
+        Task<OperationResult<bool>> DeleteBorrowerAsync(string id);
 
         Task<bool> BorrowerExistsAsync(string id);
 

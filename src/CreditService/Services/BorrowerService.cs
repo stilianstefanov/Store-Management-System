@@ -5,57 +5,115 @@
     using Data.Models;
     using Data.ViewModels.Borrower;
     using Data.Repositories.Contracts;
+    using Utilities;
+    using Utilities.Enums;
+    using static Common.ExceptionMessages;
 
     public class BorrowerService : IBorrowerService
     {
         private readonly IBorrowerRepository _borrowerRepository;
         private readonly IMapper _mapper;
+        private readonly IPurchaseService _purchaseService;
 
-        public BorrowerService(IBorrowerRepository borrowerRepository, IMapper mapper)
+        public BorrowerService(IBorrowerRepository borrowerRepository,IPurchaseService purchaseService, IMapper mapper)
         {
             _borrowerRepository = borrowerRepository;
+            _purchaseService = purchaseService;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<BorrowerViewModel>> GetAllBorrowersAsync()
+        public async Task<OperationResult<IEnumerable<BorrowerViewModel>>> GetAllBorrowersAsync()
         {
-            var borrowers = await _borrowerRepository.GetAllBorrowersAsync();
+            try
+            {
+                var borrowers = await _borrowerRepository.GetAllBorrowersAsync();
 
-            return _mapper.Map<IEnumerable<BorrowerViewModel>>(borrowers)!;
+                return OperationResult<IEnumerable<BorrowerViewModel>>.Success(
+                    _mapper.Map<IEnumerable<BorrowerViewModel>>(borrowers)!);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<IEnumerable<BorrowerViewModel>>.Failure(ex.Message);
+            }
         }
 
-        public async Task<BorrowerViewModel> GetBorrowerByIdAsync(string id)
+        public async Task<OperationResult<BorrowerViewModel>> GetBorrowerByIdAsync(string id)
         {
-            var borrower = await _borrowerRepository.GetBorrowerByIdAsync(id);
+            try
+            {
+                var borrower = await _borrowerRepository.GetBorrowerByIdAsync(id);
 
-            return _mapper.Map<BorrowerViewModel>(borrower)!;
+                if (borrower == null)
+                {
+                    return OperationResult<BorrowerViewModel>.Failure(BorrowerNotFound, ErrorType.NotFound);
+                }
+
+                return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(borrower)!);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<BorrowerViewModel>.Failure(ex.Message);
+            }
         }
 
-        public async Task<BorrowerViewModel> CreateBorrowerAsync(BorrowerCreateModel model)
+        public async Task<OperationResult<BorrowerViewModel>> CreateBorrowerAsync(BorrowerCreateModel model)
         {
-            var newBorrower = _mapper.Map<Borrower>(model)!;
+            try
+            {
+                var newBorrower = _mapper.Map<Borrower>(model)!;
 
-            await _borrowerRepository.AddBorrowerAsync(newBorrower);
+                await _borrowerRepository.AddBorrowerAsync(newBorrower);
 
-            await _borrowerRepository.SaveChangesAsync();
+                await _borrowerRepository.SaveChangesAsync();
 
-            return _mapper.Map<BorrowerViewModel>(newBorrower)!;
+                return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(newBorrower)!);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<BorrowerViewModel>.Failure(ex.Message);
+            }
         }
 
-        public async Task<BorrowerViewModel> UpdateBorrowerAsync(string id, BorrowerUpdateModel model)
+        public async Task<OperationResult<BorrowerViewModel>> UpdateBorrowerAsync(string id, BorrowerUpdateModel model)
         {
-            var updatedBorrower = await _borrowerRepository.UpdateBorrowerAsync(id, _mapper.Map<Borrower>(model)!);
+            try
+            {
+                var updatedBorrower = await _borrowerRepository.UpdateBorrowerAsync(id, _mapper.Map<Borrower>(model)!);
 
-            await _borrowerRepository.SaveChangesAsync();
+                await _borrowerRepository.SaveChangesAsync();
 
-            return _mapper.Map<BorrowerViewModel>(updatedBorrower)!;
+                return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(updatedBorrower)!);
+            }
+            catch (KeyNotFoundException)
+            {
+                return OperationResult<BorrowerViewModel>.Failure(BorrowerNotFound, ErrorType.NotFound);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<BorrowerViewModel>.Failure(ex.Message);
+            }
         }
 
-        public async Task DeleteBorrowerAsync(string id)
+        public async Task<OperationResult<bool>> DeleteBorrowerAsync(string id)
         {
-            await _borrowerRepository.DeleteBorrowerAsync(id);
+            try
+            {
+                await _borrowerRepository.DeleteBorrowerAsync(id);
 
-            await _borrowerRepository.SaveChangesAsync();
+                await _borrowerRepository.SaveChangesAsync();
+
+                await _purchaseService.DeletePurchasesByBorrowerIdAsync(id);
+
+                return OperationResult<bool>.Success(true);
+            }
+            catch (KeyNotFoundException)
+            {
+                return OperationResult<bool>.Failure(BorrowerNotFound, ErrorType.NotFound);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<bool>.Failure(ex.Message);
+            }
         }
 
         public async Task<bool> BorrowerExistsAsync(string id)

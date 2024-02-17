@@ -11,5 +11,7 @@
         public const string InsufficientCredit = "Insufficient credit";
 
         public const string ProductsNotFound = "Product or Products with the provided IDs do not exist";
+
+        public const string GeneralErrorMessage = "An error occurred while processing your request. Please try again later.";
     }
 }

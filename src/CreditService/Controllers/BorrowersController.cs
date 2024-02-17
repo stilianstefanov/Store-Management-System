@@ -5,117 +5,71 @@ namespace CreditService.Controllers
 {
     using Data.ViewModels.Borrower;
     using Services.Contracts;
+    using Utilities;
 
     [Route("api/[controller]")]
     [ApiController]
     public class BorrowersController : ControllerBase
     {
         private readonly IBorrowerService _borrowerService;
-        private readonly IPurchaseService _purchaseService;
 
-        public BorrowersController(IBorrowerService borrowerService, IPurchaseService purchaseService)
+        public BorrowersController(IBorrowerService borrowerService)
         {
             _borrowerService = borrowerService;
-            _purchaseService = purchaseService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllBorrowers()
         {
-            try
-            {
-                var borrowers = await _borrowerService.GetAllBorrowersAsync();
+            var result = await _borrowerService.GetAllBorrowersAsync();
 
-                return Ok(borrowers);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return Ok(result.Data);
         }
 
         [HttpGet("{id}", Name = "GetBorrowerById")]
         public async Task<IActionResult> GetBorrowerById(string id)
         {
-            try
-            {
-                var borrower = await _borrowerService.GetBorrowerByIdAsync(id);
+           var result = await _borrowerService.GetBorrowerByIdAsync(id);
 
-                return Ok(borrower);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return Ok(result.Data);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBorrower(BorrowerCreateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            try
-            {
-                var newBorrower = await _borrowerService.CreateBorrowerAsync(model);
+            var result = await _borrowerService.CreateBorrowerAsync(model);
 
-                return CreatedAtAction(nameof(GetBorrowerById), new { id = newBorrower.Id }, newBorrower);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return CreatedAtAction(nameof(GetBorrowerById), new { id = result.Data!.Id }, result.Data);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBorrower(string id, [FromBody]BorrowerUpdateModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            try
-            {
-                var updatedBorrower = await _borrowerService.UpdateBorrowerAsync(id, model);
+            var result = await _borrowerService.UpdateBorrowerAsync(id, model);
 
-                return Ok(updatedBorrower);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return Ok(result.Data);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBorrower(string id)
         {
-            try
-            {
-                await _borrowerService.DeleteBorrowerAsync(id);
+            var result = await _borrowerService.DeleteBorrowerAsync(id);
 
-                await _purchaseService.DeletePurchasesByBorrowerIdAsync(id);
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
-                return NoContent();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NoContent();
         }
     }
 }

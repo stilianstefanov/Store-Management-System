@@ -24,12 +24,12 @@
             return await _dbContext.Borrowers.Where(b => !b.IsDeleted).ToArrayAsync();
         }
 
-        public async Task<Borrower> GetBorrowerByIdAsync(string id)
+        public async Task<Borrower?> GetBorrowerByIdAsync(string id)
         {
             var borrower = await _dbContext.Borrowers
                 .FirstOrDefaultAsync(b => b.Id.ToString() == id && !b.IsDeleted);
 
-            return borrower ?? throw new InvalidOperationException(BorrowerNotFound);
+            return borrower;
         }
 
         public async Task AddBorrowerAsync(Borrower borrower)
@@ -44,7 +44,7 @@
 
             if (borrowerToUpdate == null)
             {
-                throw new InvalidOperationException(BorrowerNotFound);
+                throw new KeyNotFoundException(BorrowerNotFound);
             }
 
             borrowerToUpdate.Name = borrower.Name;
@@ -63,7 +63,7 @@
 
             if (borrowerToDelete == null)
             {
-                throw new InvalidOperationException(BorrowerNotFound);
+                throw new KeyNotFoundException(BorrowerNotFound);
             }
 
             borrowerToDelete.IsDeleted = true;

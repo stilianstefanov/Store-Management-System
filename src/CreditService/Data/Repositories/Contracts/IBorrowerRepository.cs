@@ -8,7 +8,7 @@
 
         Task<IEnumerable<Borrower>> GetAllBorrowersAsync();
 
-        Task<Borrower> GetBorrowerByIdAsync(string id);
+        Task<Borrower?> GetBorrowerByIdAsync(string id);
 
         Task AddBorrowerAsync(Borrower borrower);
 
