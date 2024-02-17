@@ -22,14 +22,7 @@
         {
             var result = await _productService.GetProductsByWarehouseIdAsync(warehouseId);
 
-            if (!result.IsSuccess)
-            {
-                return result.ErrorType switch
-                {
-                    ErrorType.NotFound => NotFound(result.ErrorMessage),
-                _ =>  this.GeneralError()
-                };
-            }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
             return Ok(result.Data);
         }

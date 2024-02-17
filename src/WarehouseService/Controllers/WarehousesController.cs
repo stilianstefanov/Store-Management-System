@@ -23,7 +23,7 @@
         {
             var result = await _warehouseService.GetAllAsync();
 
-            if (!result.IsSuccess) return this.GeneralError();
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
             return Ok(result.Data);
         }
@@ -33,14 +33,7 @@
         {
             var result = await _warehouseService.GetByIdAsync(id);
 
-            if (!result.IsSuccess)
-            {
-                return result.ErrorType switch
-                {
-                    ErrorType.NotFound => NotFound(result.ErrorMessage),
-                    _ => this.GeneralError()
-                };
-            }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
             return Ok(result.Data);
         }
@@ -52,7 +45,7 @@
 
             var result = await _warehouseService.CreateAsync(model);
 
-            if (!result.IsSuccess) return this.GeneralError();
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
             return CreatedAtRoute("GetWarehouseById", new { id = result.Data!.Id }, result.Data);
         }
@@ -64,14 +57,7 @@
 
             var result = await _warehouseService.UpdateAsync(id, model);
 
-            if (!result.IsSuccess)
-            {
-                return result.ErrorType switch
-                {
-                    ErrorType.NotFound => NotFound(result.ErrorMessage),
-                    _ => this.GeneralError()
-                };
-            }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
             return Ok(result.Data);
         }

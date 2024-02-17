@@ -1,13 +1,19 @@
 ﻿namespace WarehouseService.Utilities
 {
     using Microsoft.AspNetCore.Mvc;
+    using Enums;
     using static Common.ExceptionMessages;
 
     public static class ControllerExtensions
     {
-        public static IActionResult GeneralError(this ControllerBase controller)
+        public static IActionResult Error(this ControllerBase controller,
+            ErrorType errorType = ErrorType.Internal, string errorMessage = GeneralErrorMessage)
         {
-            return controller.StatusCode(StatusCodes.Status500InternalServerError, new { Error = GeneralErrorMessage });
+            return errorType switch
+            {
+                ErrorType.NotFound => controller.NotFound(errorMessage),
+                _ => controller.StatusCode(StatusCodes.Status500InternalServerError, new { Error = GeneralErrorMessage })
+            };
         }
     }
 }
