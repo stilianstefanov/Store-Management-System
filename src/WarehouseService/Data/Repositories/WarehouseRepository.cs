@@ -30,7 +30,7 @@
             var warehouse = await _dbContext.Warehouses
                 .FirstOrDefaultAsync(w => w.Id.ToString() == id);
 
-            return warehouse ?? throw new InvalidOperationException(WarehouseNotFound);
+            return warehouse;
         }
 
         public async Task AddAsync(Warehouse warehouse)
@@ -45,7 +45,7 @@
 
             if (warehouseToUpdate == null)
             {
-                throw new InvalidOperationException(WarehouseNotFound);
+                throw new KeyNotFoundException(WarehouseNotFound);
             }
 
             warehouseToUpdate.Name = warehouse.Name;

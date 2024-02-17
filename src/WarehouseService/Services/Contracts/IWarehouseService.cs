@@ -1,16 +1,17 @@
 ﻿namespace WarehouseService.Services.Contracts
 {
     using Data.ViewModels;
+    using Utilities;
 
     public interface IWarehouseService
     {
-        Task<IEnumerable<WarehouseViewModel>> GetAllAsync();
+        Task<OperationResult<IEnumerable<WarehouseViewModel>>> GetAllAsync();
 
-        Task<WarehouseViewModel> CreateAsync(WarehouseReadModel model);
+        Task<OperationResult<WarehouseViewModel>> CreateAsync(WarehouseReadModel model);
 
-        Task<WarehouseViewModel> GetByIdAsync(string id);
+        Task<OperationResult<WarehouseViewModel>> GetByIdAsync(string id);
 
-        Task<WarehouseViewModel> UpdateAsync(string id, WarehouseReadModel model);
+        Task<OperationResult<WarehouseViewModel>> UpdateAsync(string id, WarehouseReadModel model);
 
         Task<bool> ExistsAsync(string id);
     }

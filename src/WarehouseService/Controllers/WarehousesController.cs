@@ -4,6 +4,8 @@
 
     using Data.ViewModels;
     using Services.Contracts;
+    using Utilities;
+    using Utilities.Enums;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -19,73 +21,59 @@
         [HttpGet]
         public async Task<IActionResult> GetAllWarehouses()
         {
-            try
-            {
-                return Ok(await _warehouseService.GetAllAsync());
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            var result = await _warehouseService.GetAllAsync();
+
+            if (!result.IsSuccess) return this.GeneralError();
+
+            return Ok(result.Data);
         }
 
         [HttpGet("{id}", Name = "GetWarehouseById")]
         public async Task<IActionResult> GetWarehouseById(string id)
         {
-            try
+            var result = await _warehouseService.GetByIdAsync(id);
+
+            if (!result.IsSuccess)
             {
-                return Ok(await _warehouseService.GetByIdAsync(id));
+                return result.ErrorType switch
+                {
+                    ErrorType.NotFound => NotFound(result.ErrorMessage),
+                    _ => this.GeneralError()
+                };
             }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+
+            return Ok(result.Data);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateWarehouse(WarehouseReadModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            try
-            {
-                var createdWarehouse = await _warehouseService.CreateAsync(model);
+            var result = await _warehouseService.CreateAsync(model);
 
-                return CreatedAtRoute(nameof(GetWarehouseById), new { createdWarehouse.Id }, createdWarehouse);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            if (!result.IsSuccess) return this.GeneralError();
+
+            return CreatedAtRoute("GetWarehouseById", new { id = result.Data!.Id }, result.Data);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateWarehouse(string id, [FromBody]WarehouseReadModel model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _warehouseService.UpdateAsync(id, model);
+
+            if (!result.IsSuccess)
             {
-                return BadRequest(ModelState);
+                return result.ErrorType switch
+                {
+                    ErrorType.NotFound => NotFound(result.ErrorMessage),
+                    _ => this.GeneralError()
+                };
             }
 
-            try
-            {
-                return Ok(await _warehouseService.UpdateAsync(id, model));
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return Ok(result.Data);
         }
     }
 }
