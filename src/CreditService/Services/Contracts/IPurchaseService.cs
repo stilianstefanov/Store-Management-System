@@ -2,20 +2,17 @@
 {
     using Data.ViewModels.Purchase;
     using Data.ViewModels.PurchasedProduct;
+    using Utilities;
 
     public interface IPurchaseService
     {
-        Task<IEnumerable<PurchaseViewModel>> GetPurchasesByBorrowerIdAsync(string borrowerId);
+        Task<OperationResult<IEnumerable<PurchaseViewModel>>> GetPurchasesByBorrowerIdAsync(string borrowerId);
 
-        Task<PurchaseViewModel> GetPurchaseByIdAsync(string id);
+        Task<OperationResult<PurchaseViewModel>> GetPurchaseByIdAsync(string id);
         
-        Task<PurchaseViewModel> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts);
+        Task<OperationResult<PurchaseViewModel>> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts);
         
-        Task<decimal> DeletePurchaseAsync(string id);
-
-        Task DeletePurchasesByBorrowerIdAsync(string borrowerId);
-
-        Task CompletePurchaseAsync();
+        Task<OperationResult<bool>> DeletePurchaseAsync(string id, string borrowerId);
 
         Task<bool> PurchaseExistsAsync(string id);
     }

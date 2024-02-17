@@ -59,6 +59,8 @@
         public async Task DeleteBorrowerAsync(string id)
         {
             var borrowerToDelete = await _dbContext.Borrowers
+                .Include(b => b.Purchases)
+                .ThenInclude(p => p.Products)
                 .FirstOrDefaultAsync(b => b.Id.ToString() == id && !b.IsDeleted);
 
             if (borrowerToDelete == null)
@@ -67,6 +69,16 @@
             }
 
             borrowerToDelete.IsDeleted = true;
+
+            foreach (var purchase in borrowerToDelete.Purchases)
+            {
+                purchase.IsDeleted = true;
+
+                foreach (var product in purchase.Products)
+                {
+                    product.IsDeleted = true;
+                }
+            }
         }
 
         public async Task<bool> BorrowerExistsAsync(string id)

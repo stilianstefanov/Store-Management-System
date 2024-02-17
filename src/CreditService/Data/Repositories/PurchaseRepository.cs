@@ -29,13 +29,13 @@
             return purchases;
         }
 
-        public async Task<Purchase> GetPurchaseByIdAsync(string id)
+        public async Task<Purchase?> GetPurchaseByIdAsync(string id)
         {
             var purchase = await _dbContext.Purchases
                 .Include(p => p.Products)
                 .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
-            return purchase ?? throw new InvalidOperationException(PurchaseNotFound);
+            return purchase;
         }
 
         public async Task AddPurchaseAsync(Purchase purchase)
@@ -51,7 +51,7 @@
 
             if (purchase == null)
             {
-                throw new InvalidOperationException(PurchaseNotFound);
+                throw new KeyNotFoundException(PurchaseNotFound);
             }
 
             purchase.IsDeleted = true;

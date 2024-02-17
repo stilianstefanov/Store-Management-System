@@ -6,33 +6,149 @@
     using Data.Repositories.Contracts;
     using Data.ViewModels.Purchase;
     using Data.ViewModels.PurchasedProduct;
+    using Utilities;
+    using Utilities.Enums;
+    using static Common.ExceptionMessages;
 
     public class PurchaseService : IPurchaseService
     {
         private readonly IPurchaseRepository _purchaseRepository;
         private readonly IMapper _mapper;
+        private readonly IBorrowerService _borrowerService;
+        private readonly IPurchasedProductService _purchasedProductService;
 
-        public PurchaseService(IPurchaseRepository purchaseRepository, IMapper mapper)
+        public PurchaseService(
+            IPurchaseRepository purchaseRepository, 
+            IBorrowerService borrowerService,
+            IPurchasedProductService purchasedProductService,
+            IMapper mapper)
         {
             _purchaseRepository = purchaseRepository;
+            _borrowerService = borrowerService;
+            _purchasedProductService = purchasedProductService;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PurchaseViewModel>> GetPurchasesByBorrowerIdAsync(string borrowerId)
+        public async Task<OperationResult<IEnumerable<PurchaseViewModel>>> GetPurchasesByBorrowerIdAsync(string borrowerId)
         {
-            var purchases = await _purchaseRepository.GetPurchasesByBorrowerIdAsync(borrowerId);
+            try
+            {
+                if (!await BorrowerExistsAsync(borrowerId))
+                {
+                    return OperationResult<IEnumerable<PurchaseViewModel>>.Failure(BorrowerNotFound, ErrorType.NotFound);
+                }
 
-            return _mapper.Map<IEnumerable<PurchaseViewModel>>(purchases)!;
+                var purchases = await _purchaseRepository.GetPurchasesByBorrowerIdAsync(borrowerId);
+
+                return OperationResult<IEnumerable<PurchaseViewModel>>.Success(
+                    _mapper.Map<IEnumerable<PurchaseViewModel>>(purchases)!);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<IEnumerable<PurchaseViewModel>>.Failure(ex.Message);
+            }
         }
 
-        public async Task<PurchaseViewModel> GetPurchaseByIdAsync(string id)
+        public async Task<OperationResult<PurchaseViewModel>> GetPurchaseByIdAsync(string id)
         {
-            var purchase = await _purchaseRepository.GetPurchaseByIdAsync(id);
+            try
+            {
+                var purchase = await _purchaseRepository.GetPurchaseByIdAsync(id);
 
-            return _mapper.Map<PurchaseViewModel>(purchase)!;
+                if (purchase == null)
+                {
+                    return OperationResult<PurchaseViewModel>.Failure(PurchaseNotFound, ErrorType.NotFound);
+                }
+
+                return OperationResult<PurchaseViewModel>.Success(_mapper.Map<PurchaseViewModel>(purchase)!);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<PurchaseViewModel>.Failure(ex.Message);
+            }
         }
 
-        public async Task<PurchaseViewModel> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        public async Task<OperationResult<PurchaseViewModel>> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        {
+            try
+            {
+                var purchasedProductModels = purchasedProducts.ToArray();
+
+                if (!await BorrowerExistsAsync(borrowerId))
+                {
+                    return OperationResult<PurchaseViewModel>.Failure(BorrowerNotFound, ErrorType.NotFound);
+                }
+
+                if (!await ValidateProductsAsync(purchasedProductModels))
+                {
+                    return OperationResult<PurchaseViewModel>.Failure(ProductNotFound, ErrorType.NotFound);
+                }
+
+                if (!await TryIncreaseBorrowerCreditAsync(borrowerId, purchasedProductModels))
+                {
+                    return OperationResult<PurchaseViewModel>.Failure(InsufficientCredit, ErrorType.BadRequest);
+                }
+
+                var newPurchase = await CreateNewPurchase(borrowerId, purchasedProductModels);
+
+                return OperationResult<PurchaseViewModel>.Success(_mapper.Map<PurchaseViewModel>(newPurchase)!);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<PurchaseViewModel>.Failure(ex.Message);
+            }
+        }
+
+        public async Task<OperationResult<bool>> DeletePurchaseAsync(string id, string borrowerId)
+        {
+            if (!await BorrowerExistsAsync(borrowerId))
+            {
+                return OperationResult<bool>.Failure(BorrowerNotFound, ErrorType.NotFound);
+            }
+
+            try
+            {
+                var purchaseAmount = await _purchaseRepository.DeletePurchaseAsync(id);
+
+                await _borrowerService.DecreaseBorrowerCreditAsync(borrowerId, purchaseAmount);
+
+                await _purchasedProductService.DeleteBoughtProductsByPurchaseIdAsync(id);
+
+                return OperationResult<bool>.Success(true);
+            }
+            catch (KeyNotFoundException)
+            {
+                return OperationResult<bool>.Failure(PurchaseNotFound, ErrorType.NotFound);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<bool>.Failure(ex.Message);
+            }
+        }
+
+        public async Task<bool> PurchaseExistsAsync(string id)
+        {
+            return await _purchaseRepository.PurchaseExistsAsync(id);
+        }
+
+        private async Task<bool> ValidateProductsAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        {
+            return await _purchasedProductService.ValidateProductsAsync(purchasedProducts);
+        }
+
+        private async Task<bool> BorrowerExistsAsync(string borrowerId)
+        {
+            return await _borrowerService.BorrowerExistsAsync(borrowerId);
+        }
+
+        private async Task<bool> TryIncreaseBorrowerCreditAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        {
+            var totalAmount = purchasedProducts.Sum(p => p.PurchasePrice * p.BoughtQuantity);
+
+            return await _borrowerService.IncreaseBorrowerCreditAsync(borrowerId, totalAmount);
+        }
+
+        private async Task<Purchase> CreateNewPurchase(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
             var newPurchase = new Purchase
             {
@@ -43,43 +159,9 @@
 
             await _purchaseRepository.AddPurchaseAsync(newPurchase);
 
-            return _mapper.Map<PurchaseViewModel>(newPurchase)!;
-        }
-
-        public async Task<decimal> DeletePurchaseAsync(string id)
-        {
-            var amount = await _purchaseRepository.DeletePurchaseAsync(id);
-
             await _purchaseRepository.SaveChangesAsync();
 
-            return amount;
-        }
-
-        public async Task DeletePurchasesByBorrowerIdAsync(string borrowerId)
-        {
-            var purchases = await _purchaseRepository.GetPurchasesByBorrowerIdAsync(borrowerId);
-
-            foreach (var purchase in purchases)
-            {
-                purchase.IsDeleted = true;
-
-                foreach (var product in purchase.Products)
-                {
-                    product.IsDeleted = true;
-                }
-            }
-
-            await _purchaseRepository.SaveChangesAsync();
-        }
-
-        public async Task CompletePurchaseAsync()
-        {
-            await _purchaseRepository.SaveChangesAsync();
-        }
-
-        public async Task<bool> PurchaseExistsAsync(string id)
-        {
-            return await _purchaseRepository.PurchaseExistsAsync(id);
+            return newPurchase;
         }
     }
 }

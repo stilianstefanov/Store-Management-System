@@ -13,12 +13,10 @@
     {
         private readonly IBorrowerRepository _borrowerRepository;
         private readonly IMapper _mapper;
-        private readonly IPurchaseService _purchaseService;
 
-        public BorrowerService(IBorrowerRepository borrowerRepository,IPurchaseService purchaseService, IMapper mapper)
+        public BorrowerService(IBorrowerRepository borrowerRepository, IMapper mapper)
         {
             _borrowerRepository = borrowerRepository;
-            _purchaseService = purchaseService;
             _mapper = mapper;
         }
 
@@ -102,8 +100,6 @@
 
                 await _borrowerRepository.SaveChangesAsync();
 
-                await _purchaseService.DeletePurchasesByBorrowerIdAsync(id);
-
                 return OperationResult<bool>.Success(true);
             }
             catch (KeyNotFoundException)
@@ -125,7 +121,7 @@
         {
             var borrower = await _borrowerRepository.GetBorrowerByIdAsync(id);
 
-            if (borrower.CreditLimit - borrower.CurrentCredit < amount)
+            if (borrower!.CreditLimit - borrower.CurrentCredit < amount)
             {
                 return false;
             }
@@ -141,7 +137,7 @@
         {
             var borrower = await _borrowerRepository.GetBorrowerByIdAsync(id);
 
-            borrower.CurrentCredit -= amount;
+            borrower!.CurrentCredit -= amount;
 
             if (borrower.CurrentCredit < 0)
             {

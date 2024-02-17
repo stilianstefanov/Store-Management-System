@@ -12,6 +12,7 @@
             return errorType switch
             {
                 ErrorType.NotFound => controller.NotFound(errorMessage),
+                ErrorType.BadRequest => controller.BadRequest(errorMessage),
                 _ => controller.StatusCode(StatusCodes.Status500InternalServerError, new { Error = GeneralErrorMessage })
             };
         }
