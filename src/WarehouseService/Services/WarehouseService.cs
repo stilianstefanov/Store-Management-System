@@ -80,7 +80,7 @@
             }
             catch (KeyNotFoundException ex)
             {
-                return OperationResult<WarehouseViewModel>.Failure(WarehouseNotFound, ErrorType.NotFound);
+                return OperationResult<WarehouseViewModel>.Failure(ex.Message, ErrorType.NotFound);
             }
             catch (Exception ex)
             {

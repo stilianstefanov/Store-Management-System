@@ -82,9 +82,9 @@
 
                 return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(updatedBorrower)!);
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException ex)
             {
-                return OperationResult<BorrowerViewModel>.Failure(BorrowerNotFound, ErrorType.NotFound);
+                return OperationResult<BorrowerViewModel>.Failure(ex.Message, ErrorType.NotFound);
             }
             catch (Exception ex)
             {
@@ -102,9 +102,9 @@
 
                 return OperationResult<bool>.Success(true);
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException ex)
             {
-                return OperationResult<bool>.Failure(BorrowerNotFound, ErrorType.NotFound);
+                return OperationResult<bool>.Failure(ex.Message, ErrorType.NotFound);
             }
             catch (Exception ex)
             {

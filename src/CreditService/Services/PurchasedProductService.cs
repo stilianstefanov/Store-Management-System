@@ -7,6 +7,7 @@
     using Data.Repositories.Contracts;
     using Data.ViewModels.PurchasedProduct;
     using Utilities;
+    using Utilities.Enums;
     using static Common.ExceptionMessages;
 
     public class PurchasedProductService : IPurchasedProductService
@@ -38,7 +39,7 @@
 
             if (!purchaseExists)
             {
-                return OperationResult<IEnumerable<PurchasedProductViewModel>>.Failure(PurchaseNotFound);
+                return OperationResult<IEnumerable<PurchasedProductViewModel>>.Failure(PurchaseNotFound, ErrorType.NotFound);
             }
 
             var purchasedProducts = await _purchaseProductRepository.GetProductsByPurchaseIdAsync(purchaseId);
@@ -74,7 +75,7 @@
             }
             catch (KeyNotFoundException ex)
             {
-                return OperationResult<bool>.Failure(ex.Message);
+                return OperationResult<bool>.Failure(ex.Message, ErrorType.NotFound);
             }
         }
 

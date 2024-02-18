@@ -115,18 +115,15 @@
 
                 return OperationResult<bool>.Success(true);
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException ex)
             {
-                return OperationResult<bool>.Failure(PurchaseNotFound, ErrorType.NotFound);
+                return OperationResult<bool>.Failure(ex.Message, ErrorType.NotFound);
             }
             catch (Exception ex)
             {
                 return OperationResult<bool>.Failure(ex.Message);
             }
         }
-
-        public async Task<bool> PurchaseExistsAsync(string id)
-            => await _purchaseRepository.PurchaseExistsAsync(id);
 
         private async Task<bool> BorrowerExistsAsync(string borrowerId)
             => await _borrowerService.BorrowerExistsAsync(borrowerId);

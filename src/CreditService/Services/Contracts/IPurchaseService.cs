@@ -13,7 +13,5 @@
         Task<OperationResult<PurchaseViewModel>> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts);
         
         Task<OperationResult<bool>> DeletePurchaseAsync(string id, string borrowerId);
-
-        Task<bool> PurchaseExistsAsync(string id);
     }
 }

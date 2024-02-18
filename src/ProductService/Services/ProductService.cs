@@ -103,9 +103,9 @@
                 return OperationResult<ProductDetailsViewModel>.Success(
                     await MapProductDetailsModelWithWarehouse(updatedProduct));
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException ex)
             {
-                return OperationResult<ProductDetailsViewModel>.Failure(ProductNotFound, ErrorType.NotFound);
+                return OperationResult<ProductDetailsViewModel>.Failure(ex.Message, ErrorType.NotFound);
             }
             catch (Exception ex)
             {
@@ -165,9 +165,9 @@
 
                 return OperationResult<bool>.Success(true);
             }
-            catch (KeyNotFoundException)
+            catch (KeyNotFoundException ex)
             {
-                return OperationResult<bool>.Failure(ProductNotFound, ErrorType.NotFound);
+                return OperationResult<bool>.Failure(ex.Message, ErrorType.NotFound);
             }
             catch (Exception ex)
             {
