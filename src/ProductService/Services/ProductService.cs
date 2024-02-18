@@ -33,22 +33,73 @@
 
         public async Task<OperationResult<IEnumerable<ProductViewModel>>> GetAllAsync()
         {
-            try
-            {
-                var products = await _productRepository.GetAllAsync();
+            var products = await _productRepository.GetAllAsync();
 
-                return OperationResult<IEnumerable<ProductViewModel>>
-                    .Success(_mapper.Map<IEnumerable<ProductViewModel>>(products));
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<IEnumerable<ProductViewModel>>.Failure(ex.Message);
-            }
+            return OperationResult<IEnumerable<ProductViewModel>>
+                .Success(_mapper.Map<IEnumerable<ProductViewModel>>(products));
         }
 
         public async Task<OperationResult<ProductDetailsViewModel>> CreateAsync(ProductCreateModel model)
         {
-            try
+            var warehouseExists = await ValidateWarehouseId(model.WarehouseId);
+
+            if (!warehouseExists)
+            {
+                return OperationResult<ProductDetailsViewModel>.Failure(WarehouseNotFound, ErrorType.NotFound);
+            }
+
+            var newProduct = _mapper.Map<Product>(model);
+
+            await _productRepository.AddAsync(newProduct);
+
+            await _productRepository.SaveChangesAsync();
+
+            _messageSender.PublishCreatedProduct(_mapper.Map<ProductCreatedDto>(newProduct));
+
+            return OperationResult<ProductDetailsViewModel>.Success(
+                await MapProductDetailsModelWithWarehouse(newProduct));
+        }
+
+        public async Task<OperationResult<ProductDetailsViewModel>> GetByIdAsync(string id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+
+            return product == null 
+                ? OperationResult<ProductDetailsViewModel>.Failure(ProductNotFound, ErrorType.NotFound)
+                : OperationResult<ProductDetailsViewModel>.Success(await MapProductDetailsModelWithWarehouse(product));
+        }
+
+        public async Task<OperationResult<ProductDetailsViewModel>> UpdateAsync(string id, ProductUpdateModel model)
+        {
+            var updatedProduct = await _productRepository.UpdateAsync(id, _mapper.Map<Product>(model));
+
+            if (updatedProduct == null)
+            {
+                return OperationResult<ProductDetailsViewModel>.Failure(ProductNotFound, ErrorType.NotFound);
+            }
+
+            await _productRepository.SaveChangesAsync();
+
+            _messageSender.PublishUpdatedProduct(_mapper.Map<ProductUpdatedDto>(updatedProduct));
+
+            return OperationResult<ProductDetailsViewModel>.Success(await MapProductDetailsModelWithWarehouse(updatedProduct));
+        }
+
+        public async Task<OperationResult<ProductDetailsViewModel>> PartialUpdateAsync(string id, ProductPartialUpdateModel model)
+        {
+            var productToUpdate = await _productRepository.GetByIdAsync(id);
+            
+            if (productToUpdate == null)
+            {
+                return OperationResult<ProductDetailsViewModel>.Failure(ProductNotFound, ErrorType.NotFound);
+            }
+
+            if (model.Quantity.HasValue)
+            {
+                productToUpdate.Quantity = model.Quantity.Value;
+            }
+
+            if (!string.IsNullOrEmpty(model.WarehouseId))
             {
                 var warehouseExists = await ValidateWarehouseId(model.WarehouseId);
 
@@ -57,122 +108,32 @@
                     return OperationResult<ProductDetailsViewModel>.Failure(WarehouseNotFound, ErrorType.NotFound);
                 }
 
-                var newProduct = _mapper.Map<Product>(model);
-
-                await _productRepository.AddAsync(newProduct);
-
-                await _productRepository.SaveChangesAsync();
-
-                _messageSender.PublishCreatedProduct(_mapper.Map<ProductCreatedDto>(newProduct));
-
-                return OperationResult<ProductDetailsViewModel>.Success(
-                    await MapProductDetailsModelWithWarehouse(newProduct));
+                productToUpdate.WarehouseId = model.WarehouseId;
             }
-            catch (Exception ex)
-            {
-                return OperationResult<ProductDetailsViewModel>.Failure(ex.Message);
-            }
-        }
 
-        public async Task<OperationResult<ProductDetailsViewModel>> GetByIdAsync(string id)
-        {
-            try
-            {
-                var product = await _productRepository.GetByIdAsync(id);
+            await _productRepository.SaveChangesAsync();
 
-                return product == null 
-                    ? OperationResult<ProductDetailsViewModel>.Failure(ProductNotFound, ErrorType.NotFound)
-                    : OperationResult<ProductDetailsViewModel>.Success(await MapProductDetailsModelWithWarehouse(product));
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<ProductDetailsViewModel>.Failure(ex.Message);
-            }
-        }
+            _messageSender.PublishPartiallyUpdatedProduct(_mapper.Map<ProductPartialUpdatedDto>(productToUpdate));
 
-        public async Task<OperationResult<ProductDetailsViewModel>> UpdateAsync(string id, ProductUpdateModel model)
-        {
-            try
-            {
-                var updatedProduct = await _productRepository.UpdateAsync(id, _mapper.Map<Product>(model));
-
-                await _productRepository.SaveChangesAsync();
-
-                _messageSender.PublishUpdatedProduct(_mapper.Map<ProductUpdatedDto>(updatedProduct));
-
-                return OperationResult<ProductDetailsViewModel>.Success(
-                    await MapProductDetailsModelWithWarehouse(updatedProduct));
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return OperationResult<ProductDetailsViewModel>.Failure(ex.Message, ErrorType.NotFound);
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<ProductDetailsViewModel>.Failure(ex.Message);
-            }
-        }
-
-        public async Task<OperationResult<ProductDetailsViewModel>> PartialUpdateAsync(string id, ProductPartialUpdateModel model)
-        {
-            try
-            {
-                var productToUpdate = await _productRepository.GetByIdAsync(id);
-
-                if (productToUpdate == null)
-                {
-                    return OperationResult<ProductDetailsViewModel>.Failure(ProductNotFound, ErrorType.NotFound);
-                }
-
-                if (model.Quantity.HasValue)
-                {
-                    productToUpdate.Quantity = model.Quantity.Value;
-                }
-
-                if (!string.IsNullOrEmpty(model.WarehouseId))
-                {
-                    var warehouseExists = await ValidateWarehouseId(model.WarehouseId);
-
-                    if (!warehouseExists)
-                    {
-                        return OperationResult<ProductDetailsViewModel>.Failure(WarehouseNotFound, ErrorType.NotFound);
-                    }
-
-                    productToUpdate.WarehouseId = model.WarehouseId;
-                }
-
-                await _productRepository.SaveChangesAsync();
-
-                _messageSender.PublishPartiallyUpdatedProduct(_mapper.Map<ProductPartialUpdatedDto>(productToUpdate));
-
-                return OperationResult<ProductDetailsViewModel>.Success(await MapProductDetailsModelWithWarehouse(productToUpdate));
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<ProductDetailsViewModel>.Failure(ex.Message);
-            }
+            return OperationResult<ProductDetailsViewModel>.Success(await MapProductDetailsModelWithWarehouse(productToUpdate));
         }
 
         public async Task<OperationResult<bool>> DeleteAsync(string id)
         {
-            try
-            {
-                await _productRepository.DeleteAsync(id);
+            var productExists = await _productRepository.ProductExistsAsync(id);
 
-                await _productRepository.SaveChangesAsync();
-
-                _messageSender.PublishDeletedProduct(new ProductDeletedDto { Id = id });
-
-                return OperationResult<bool>.Success(true);
-            }
-            catch (KeyNotFoundException ex)
+            if (!productExists)
             {
-                return OperationResult<bool>.Failure(ex.Message, ErrorType.NotFound);
+                return OperationResult<bool>.Failure(ProductNotFound, ErrorType.NotFound);
             }
-            catch (Exception ex)
-            {
-                return OperationResult<bool>.Failure(ex.Message);
-            }
+            
+            await _productRepository.DeleteAsync(id);
+
+            await _productRepository.SaveChangesAsync();
+
+            _messageSender.PublishDeletedProduct(new ProductDeletedDto { Id = id });
+
+            return OperationResult<bool>.Success(true);
         }
 
         private async Task<ProductDetailsViewModel> MapProductDetailsModelWithWarehouse(Product? product)

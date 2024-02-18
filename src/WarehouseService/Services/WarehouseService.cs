@@ -49,18 +49,16 @@
 
         public async Task<OperationResult<WarehouseViewModel>> UpdateAsync(string id, WarehouseReadModel model)
         {
-            try
-            {
-                var updatedWarehouse = await _repository.UpdateAsync(id, _mapper.Map<Warehouse>(model));
+            var updatedWarehouse = await _repository.UpdateAsync(id, _mapper.Map<Warehouse>(model));
 
-                await _repository.SaveChangesAsync();
-
-                return OperationResult<WarehouseViewModel>.Success(_mapper.Map<WarehouseViewModel>(updatedWarehouse));
-            }
-            catch (KeyNotFoundException ex)
+            if (updatedWarehouse == null)
             {
-                return OperationResult<WarehouseViewModel>.Failure(ex.Message, ErrorType.NotFound);
+                return OperationResult<WarehouseViewModel>.Failure(WarehouseNotFound, ErrorType.NotFound);
             }
+            
+            await _repository.SaveChangesAsync();
+
+            return OperationResult<WarehouseViewModel>.Success(_mapper.Map<WarehouseViewModel>(updatedWarehouse));
         }
 
         public async Task<bool> ExistsAsync(string id)

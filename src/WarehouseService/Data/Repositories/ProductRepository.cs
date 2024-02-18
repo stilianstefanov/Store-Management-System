@@ -4,7 +4,6 @@
     using Messaging.Models;
     using Microsoft.EntityFrameworkCore;
     using Models;
-    using static Common.ExceptionMessages;
 
     public class ProductRepository : IProductRepository
     {
@@ -32,12 +31,7 @@
 
         public async Task UpdateProductAsync(ProductUpdatedDto updatedDto)
         {
-            var productToUpdate = await _dbContext.Products.FirstOrDefaultAsync(p => p.ExternalId == updatedDto.Id);
-
-            if (productToUpdate == null)
-            {
-                throw new InvalidOperationException(ProductNotFound);
-            }
+            var productToUpdate = await _dbContext.Products.FirstAsync(p => p.ExternalId == updatedDto.Id);
 
             productToUpdate.Name = updatedDto.Name;
             productToUpdate.Quantity = updatedDto.Quantity;
@@ -47,24 +41,14 @@
 
         public async Task DeleteProductAsync(string externalProductId)
         {
-            var productToDelete = await _dbContext.Products.FirstOrDefaultAsync(p => p.ExternalId == externalProductId);
-
-            if (productToDelete == null)
-            {
-                throw new InvalidOperationException(ProductNotFound);
-            }
+            var productToDelete = await _dbContext.Products.FirstAsync(p => p.ExternalId == externalProductId);
 
             productToDelete.IsDeleted = true;
         }
 
-        public async Task<Product> GetProductByExternalId(string id)
+        public async Task<Product?> GetProductByExternalId(string id)
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.ExternalId == id);
-
-            if (product == null)
-            {
-                throw new InvalidOperationException(ProductNotFound);
-            }
 
             return product;
         }

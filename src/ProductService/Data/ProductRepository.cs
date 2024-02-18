@@ -45,16 +45,13 @@
             await _dbContext.Products.AddAsync(product);
         }
 
-        public async Task<Product> UpdateAsync(string id, Product product)
+        public async Task<Product?> UpdateAsync(string id, Product product)
         {
             var productToUpdate = await _dbContext.Products
                 .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
-            if (productToUpdate == null)
-            {
-                throw new KeyNotFoundException(ProductNotFound);
-            }
-            
+            if (productToUpdate == null) return null;
+
             productToUpdate.Barcode = product.Barcode;
             productToUpdate.Name = product.Name;
             productToUpdate.Description = product.Description;
@@ -70,14 +67,14 @@
         public async Task DeleteAsync(string id)
         {
             var productToDelete = await _dbContext.Products
-                .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
-
-            if (productToDelete == null)
-            {
-                throw new KeyNotFoundException(ProductNotFound);
-            }
+                .FirstAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
             productToDelete.IsDeleted = true;
+        }
+
+        public async Task<bool> ProductExistsAsync(string id)
+        {
+            return await _dbContext.Products.AnyAsync(p => p.Id.ToString() == id && !p.IsDeleted);
         }
 
         public async Task<bool> ProductsExistAsync(IEnumerable<string> ids)

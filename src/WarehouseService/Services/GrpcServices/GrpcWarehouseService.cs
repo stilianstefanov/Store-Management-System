@@ -28,10 +28,6 @@
 
                 return response;
             }
-            catch (InvalidOperationException ex)
-            {
-                throw new RpcException(new Status(StatusCode.NotFound, ex.Message));
-            }
             catch (Exception ex)
             {
                 throw new RpcException(new Status(StatusCode.Internal, ex.Message));

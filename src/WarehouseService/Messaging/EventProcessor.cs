@@ -46,24 +46,18 @@
 
             var productRepository = scope.ServiceProvider.GetRequiredService<IProductRepository>();
 
+
             var productCreatedDto = JsonSerializer.Deserialize<ProductCreatedDto>(message);
 
-            try
-            {
-                var product = _mapper.Map<Product>(productCreatedDto);
+            var product = _mapper.Map<Product>(productCreatedDto);
 
-                var productExists = await productRepository.ExternalProductExistsAsync(product.ExternalId);
+            var productExists = await productRepository.ExternalProductExistsAsync(product.ExternalId);
 
-                if (productExists) return;
-                
-                await productRepository.AddProductAsync(product);
+            if (productExists) return;
+            
+            await productRepository.AddProductAsync(product);
 
-                await productRepository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            await productRepository.SaveChangesAsync();
         }
 
         private async Task ProcessProductUpdatedEventAsync(string message)
@@ -72,18 +66,16 @@
 
             var productRepository = scope.ServiceProvider.GetRequiredService<IProductRepository>();
 
+
             var productUpdatedDto = JsonSerializer.Deserialize<ProductUpdatedDto>(message);
 
-            try
-            {
-                await productRepository.UpdateProductAsync(productUpdatedDto!);
+            var productExists = await productRepository.ExternalProductExistsAsync(productUpdatedDto!.Id);
 
-                await productRepository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            if (!productExists) return;
+
+            await productRepository.UpdateProductAsync(productUpdatedDto!);
+
+            await productRepository.SaveChangesAsync();
         }
 
         private async Task ProcessProductPartiallyUpdatedEventAsync(string message)
@@ -92,28 +84,24 @@
 
             var productRepository = scope.ServiceProvider.GetRequiredService<IProductRepository>();
 
+
             var productPartialUpdatedDto = JsonSerializer.Deserialize<ProductPartialUpdatedDto>(message);
 
-            try
+            var productToUpdate = await productRepository.GetProductByExternalId(productPartialUpdatedDto!.Id);
+
+            if (productToUpdate == null) return;
+
+            if (productPartialUpdatedDto.Quantity.HasValue)
             {
-                var productToUpdate = await productRepository.GetProductByExternalId(productPartialUpdatedDto!.Id);
-
-                if (productPartialUpdatedDto.Quantity.HasValue)
-                {
-                    productToUpdate.Quantity = productPartialUpdatedDto.Quantity.Value;
-                }
-
-                if (!string.IsNullOrEmpty(productPartialUpdatedDto.WarehouseId))
-                {
-                    productToUpdate.WarehouseId = Guid.Parse(productPartialUpdatedDto.WarehouseId);
-                }
-
-                await productRepository.SaveChangesAsync();
+                productToUpdate.Quantity = productPartialUpdatedDto.Quantity.Value;
             }
-            catch (Exception ex)
+
+            if (!string.IsNullOrEmpty(productPartialUpdatedDto.WarehouseId))
             {
-                Console.WriteLine(ex.Message);
+                productToUpdate.WarehouseId = Guid.Parse(productPartialUpdatedDto.WarehouseId);
             }
+
+            await productRepository.SaveChangesAsync();
         }
 
         private async Task ProcessProductDeletedEventAsync(string message)
@@ -122,18 +110,16 @@
 
             var productRepository = scope.ServiceProvider.GetRequiredService<IProductRepository>();
 
+
             var productDeletedDto = JsonSerializer.Deserialize<ProductDeletedDto>(message);
 
-            try
-            {
-                await productRepository.DeleteProductAsync(productDeletedDto!.Id);
+            var productExists = await productRepository.ExternalProductExistsAsync(productDeletedDto!.Id);
 
-                await productRepository.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            if (!productExists) return;
+
+            await productRepository.DeleteProductAsync(productDeletedDto!.Id);
+
+            await productRepository.SaveChangesAsync();
         }
 
         private EventType DetermineEventType(string notificationMessage)

@@ -38,15 +38,12 @@
             await _dbContext.Warehouses.AddAsync(warehouse);
         }
 
-        public async Task<Warehouse> UpdateAsync(string id, Warehouse warehouse)
+        public async Task<Warehouse?> UpdateAsync(string id, Warehouse warehouse)
         {
             var warehouseToUpdate = await _dbContext.Warehouses
                 .FirstOrDefaultAsync(w => w.Id.ToString() == id);
 
-            if (warehouseToUpdate == null)
-            {
-                throw new KeyNotFoundException(WarehouseNotFound);
-            }
+            if (warehouseToUpdate == null) return null;
 
             warehouseToUpdate.Name = warehouse.Name;
             warehouseToUpdate.Type = warehouse.Type;

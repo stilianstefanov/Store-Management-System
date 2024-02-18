@@ -9,7 +9,8 @@ namespace ProductService
     using Services.Contracts;
     using Services.GrpcServices;
     using Services.GrpcServices.Contracts;
-    
+    using Utilities.Middleware;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -34,6 +35,7 @@ namespace ProductService
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            app.UseMiddleware<GlobalExceptionMiddleware>();
             app.MapGrpcService<GrpcProductService>();
 
             if (app.Environment.IsDevelopment())
