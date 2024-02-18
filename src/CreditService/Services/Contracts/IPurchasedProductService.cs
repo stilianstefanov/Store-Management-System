@@ -1,15 +1,12 @@
 ﻿namespace CreditService.Services.Contracts
 {
     using Data.ViewModels.PurchasedProduct;
+    using Utilities;
 
     public interface IPurchasedProductService
     {
-        Task <IEnumerable<PurchasedProductViewModel>> GetBoughtProductsByPurchaseIdAsync(string purchaseId);
+        Task<OperationResult<IEnumerable<PurchasedProductViewModel>>> GetBoughtProductsByPurchaseIdAsync(string purchaseId);
 
-        Task<decimal> DeleteBoughtProductByIdAsync(string id);
-
-        Task DeleteBoughtProductsByPurchaseIdAsync(string purchaseId);
-
-        Task<bool> ValidateProductsAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts);
+        Task<OperationResult<bool>> DeleteBoughtProductByIdAsync(string borrowerId, string id);
     }
 }

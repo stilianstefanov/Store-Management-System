@@ -54,13 +54,18 @@
                 throw new KeyNotFoundException(PurchaseNotFound);
             }
 
-            purchase.IsDeleted = true;
-
-            var amount = purchase.Products
+            var purchaseAmount = purchase.Products
                 .Where(p => !p.IsDeleted)
                 .Sum(p => p.PurchasePrice * p.BoughtQuantity);
 
-            return amount;
+            purchase.IsDeleted = true;
+
+            foreach (var product in purchase.Products)
+            {
+                product.IsDeleted = true;
+            }
+
+            return purchaseAmount;
         }
 
         public async Task<bool> PurchaseExistsAsync(string id)

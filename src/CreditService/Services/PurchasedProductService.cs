@@ -2,76 +2,105 @@
 {
     using AutoMapper;
     using Contracts;
+    using Data.Models;
     using GrpcServices.Contracts;
     using Data.Repositories.Contracts;
     using Data.ViewModels.PurchasedProduct;
+    using Utilities;
+    using static Common.ExceptionMessages;
 
     public class PurchasedProductService : IPurchasedProductService
     {
         private readonly IPurchasedProductRepository _purchaseProductRepository;
         private readonly IProductGrpcClientService _productGrpcClient;
+        private readonly IPurchaseRepository _purchaseRepository;
+        private readonly IBorrowerService _borrowerService;
         private readonly IMapper _mapper;
+    
 
         public PurchasedProductService(
-            IPurchasedProductRepository purchaseProductRepository, 
+            IPurchasedProductRepository purchaseProductRepository,
+            IPurchaseRepository purchaseRepository,
             IProductGrpcClientService productGrpcClient,
+            IBorrowerService borrowerService,
             IMapper mapper)
         {
             _purchaseProductRepository = purchaseProductRepository;
             _productGrpcClient = productGrpcClient;
+            _purchaseRepository = purchaseRepository;
+            _borrowerService = borrowerService;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PurchasedProductViewModel>> GetBoughtProductsByPurchaseIdAsync(string purchaseId)
+        public async Task<OperationResult<IEnumerable<PurchasedProductViewModel>>> GetBoughtProductsByPurchaseIdAsync(string purchaseId)
         {
+            var purchaseExists = await _purchaseRepository.PurchaseExistsAsync(purchaseId);
+
+            if (!purchaseExists)
+            {
+                return OperationResult<IEnumerable<PurchasedProductViewModel>>.Failure(PurchaseNotFound);
+            }
+
             var purchasedProducts = await _purchaseProductRepository.GetProductsByPurchaseIdAsync(purchaseId);
 
-            var productsDetails =
-                await _productGrpcClient.GetProductsAsync(purchasedProducts.Select(p => p.ExternalId));
+            var purchasedProductsArr =  purchasedProducts.ToArray();
 
-            var result = new List<PurchasedProductViewModel>();
-
-            foreach (var product in purchasedProducts)
+            if (!purchasedProductsArr.Any())
             {
-                var productDetails = productsDetails.FirstOrDefault(p => p.ExternalId == product.ExternalId);
-
-                var productViewModel = _mapper.Map<PurchasedProductViewModel>(product)!;
-
-                productViewModel.ProductDetails = productDetails;
-
-                result.Add(productViewModel);
+                return OperationResult<IEnumerable<PurchasedProductViewModel>>.Success(
+                    Enumerable.Empty<PurchasedProductViewModel>());
             }
+
+            var resultProducts = await MapProductDetailsAsync(purchasedProductsArr);
+
+            return OperationResult<IEnumerable<PurchasedProductViewModel>>.Success(resultProducts);
+        }
+
+        public async Task<OperationResult<bool>> DeleteBoughtProductByIdAsync(string borrowerId, string id)
+        {
+            var borrowerExists = await _borrowerService.BorrowerExistsAsync(borrowerId);
+
+            if (!borrowerExists) return OperationResult<bool>.Failure(BorrowerNotFound);
+
+            try
+            {
+                var amount = await _purchaseProductRepository.DeleteProductByIdAsync(id);
+
+                await _purchaseProductRepository.SaveChangesAsync();
+
+                await _borrowerService.DecreaseBorrowerCreditAsync(borrowerId, amount);
+
+                return OperationResult<bool>.Success(true);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return OperationResult<bool>.Failure(ex.Message);
+            }
+        }
+
+        private async Task<IEnumerable<PurchasedProductViewModel>> MapProductDetailsAsync(
+            IEnumerable<PurchasedProduct> purchasedProducts)
+        {
+            var purchasedProductsArr = purchasedProducts.ToArray();
+
+            var productsDetails = 
+                await _productGrpcClient.GetProductsAsync(purchasedProductsArr.Select(p => p.ExternalId));
+
+            var productDetailsLookup = productsDetails.ToDictionary(p => p.ExternalId);
+
+            var result = purchasedProductsArr.Select(product =>
+            {
+                var viewModel = _mapper.Map<PurchasedProductViewModel>(product)!;
+
+                productDetailsLookup.TryGetValue(product.ExternalId, out var productDetails);
+
+                viewModel.ProductDetails = productDetails!;
+
+                return viewModel;
+
+            }).ToArray();
 
             return result;
-        }
-
-        public async Task<decimal> DeleteBoughtProductByIdAsync(string id)
-        {
-            var amount = await _purchaseProductRepository.DeleteProductByIdAsync(id);
-
-            await _purchaseProductRepository.SaveChangesAsync();
-
-            return amount;
-        }
-
-        public async Task DeleteBoughtProductsByPurchaseIdAsync(string purchaseId)
-        {
-            var products = await _purchaseProductRepository.GetProductsByPurchaseIdAsync(purchaseId);
-
-            foreach (var product in products)
-            {
-                product.IsDeleted = true;
-            }
-
-            await _purchaseProductRepository.SaveChangesAsync();
-        }
-
-        public async Task<bool> ValidateProductsAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts)
-        {
-            var productsExist =
-                await _productGrpcClient.ProductsExistAsync(purchasedProducts.Select(p => p.ExternalId));
-
-            return productsExist;
         }
     }
 }

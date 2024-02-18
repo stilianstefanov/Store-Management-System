@@ -35,7 +35,7 @@
 
             if (product == null)
             {
-                throw new InvalidOperationException(ProductNotFound);
+                throw new KeyNotFoundException(ProductNotFound);
             }
 
             product.IsDeleted = true;

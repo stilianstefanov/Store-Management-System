@@ -4,81 +4,37 @@ using Microsoft.AspNetCore.Mvc;
 namespace CreditService.Controllers
 {
     using Services.Contracts;
-    using static Common.ExceptionMessages;
+    using Utilities;
 
     [Route("api/borrowers/{borrowerId}/purchases/{purchaseId}/[controller]")]
     [ApiController]
     public class PurchasedProductsController : ControllerBase
     {
         private readonly IPurchasedProductService _purchaseProductService;
-        private readonly IBorrowerService _borrowerService;
-        private readonly IPurchaseService _purchaseService;
 
-        public PurchasedProductsController(
-            IPurchasedProductService purchaseProductService,
-            IBorrowerService borrowerService,
-            IPurchaseService purchaseService)
+        public PurchasedProductsController(IPurchasedProductService purchaseProductService)
         {
             _purchaseProductService = purchaseProductService;
-            _borrowerService = borrowerService;
-            _purchaseService = purchaseService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetBoughtProductsByPurchaseId(string borrowerId, string purchaseId)
+        public async Task<IActionResult> GetBoughtProductsByPurchaseId(string purchaseId)
         {
-            try
-            {
-                var borrowerExists = await _borrowerService.BorrowerExistsAsync(borrowerId);
+            var result = await _purchaseProductService.GetBoughtProductsByPurchaseIdAsync(purchaseId);
 
-                if (!borrowerExists)
-                {
-                    return NotFound(BorrowerNotFound);
-                }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
-                var purchaseExists = await _purchaseService.PurchaseExistsAsync(purchaseId);
-
-                if (!purchaseExists)
-                {
-                    return NotFound(PurchaseNotFound);
-                }
-
-                var products = await _purchaseProductService.GetBoughtProductsByPurchaseIdAsync(purchaseId);
-
-                return Ok(products);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return Ok(result.Data);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBoughtProductById(string borrowerId, string id)
         {
-            try
-            {
-                var borrowerExists = await _borrowerService.BorrowerExistsAsync(borrowerId);
+            var result = await _purchaseProductService.DeleteBoughtProductByIdAsync(borrowerId, id);
 
-                if (!borrowerExists)
-                {
-                    return NotFound(BorrowerNotFound);
-                }
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
-                var amount = await _purchaseProductService.DeleteBoughtProductByIdAsync(id);
-
-                await _borrowerService.DecreaseBorrowerCreditAsync(borrowerId, amount);
-
-                return NoContent();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NoContent();
         }
     }
 }

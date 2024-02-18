@@ -6,6 +6,7 @@
     using Data.Repositories.Contracts;
     using Data.ViewModels.Purchase;
     using Data.ViewModels.PurchasedProduct;
+    using GrpcServices.Contracts;
     using Utilities;
     using Utilities.Enums;
     using static Common.ExceptionMessages;
@@ -15,17 +16,17 @@
         private readonly IPurchaseRepository _purchaseRepository;
         private readonly IMapper _mapper;
         private readonly IBorrowerService _borrowerService;
-        private readonly IPurchasedProductService _purchasedProductService;
+        private readonly IProductGrpcClientService _productGrpcClient;
 
         public PurchaseService(
             IPurchaseRepository purchaseRepository, 
             IBorrowerService borrowerService,
-            IPurchasedProductService purchasedProductService,
+            IProductGrpcClientService productGrpcClient,
             IMapper mapper)
         {
             _purchaseRepository = purchaseRepository;
             _borrowerService = borrowerService;
-            _purchasedProductService = purchasedProductService;
+            _productGrpcClient = productGrpcClient;
             _mapper = mapper;
         }
 
@@ -112,8 +113,6 @@
 
                 await _borrowerService.DecreaseBorrowerCreditAsync(borrowerId, purchaseAmount);
 
-                await _purchasedProductService.DeleteBoughtProductsByPurchaseIdAsync(id);
-
                 return OperationResult<bool>.Success(true);
             }
             catch (KeyNotFoundException)
@@ -127,18 +126,17 @@
         }
 
         public async Task<bool> PurchaseExistsAsync(string id)
-        {
-            return await _purchaseRepository.PurchaseExistsAsync(id);
-        }
+            => await _purchaseRepository.PurchaseExistsAsync(id);
+
+        private async Task<bool> BorrowerExistsAsync(string borrowerId)
+            => await _borrowerService.BorrowerExistsAsync(borrowerId);
 
         private async Task<bool> ValidateProductsAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
-            return await _purchasedProductService.ValidateProductsAsync(purchasedProducts);
-        }
+            var productsExist =
+                await _productGrpcClient.ProductsExistAsync(purchasedProducts.Select(p => p.ExternalId));
 
-        private async Task<bool> BorrowerExistsAsync(string borrowerId)
-        {
-            return await _borrowerService.BorrowerExistsAsync(borrowerId);
+            return productsExist;
         }
 
         private async Task<bool> TryIncreaseBorrowerCreditAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
