@@ -22,50 +22,29 @@
 
         public async Task<OperationResult<IEnumerable<WarehouseViewModel>>> GetAllAsync()
         {
-            try
-            {
-                var warehouses = _mapper.Map<IEnumerable<WarehouseViewModel>>(await _repository.GetAllAsync());
+            var warehouses = _mapper.Map<IEnumerable<WarehouseViewModel>>(await _repository.GetAllAsync());
 
-                return OperationResult<IEnumerable<WarehouseViewModel>>.Success(warehouses);
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<IEnumerable<WarehouseViewModel>>.Failure(ex.Message);
-            }
+            return OperationResult<IEnumerable<WarehouseViewModel>>.Success(warehouses);
         }
 
         public async Task<OperationResult<WarehouseViewModel>> CreateAsync(WarehouseReadModel model)
         {
             var warehouse = _mapper.Map<Warehouse>(model);
 
-            try
-            {
-                await _repository.AddAsync(warehouse);
+            await _repository.AddAsync(warehouse);
 
-                await _repository.SaveChangesAsync();
+            await _repository.SaveChangesAsync();
 
-                return OperationResult<WarehouseViewModel>.Success(_mapper.Map<WarehouseViewModel>(warehouse));
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<WarehouseViewModel>.Failure(ex.Message);
-            }
+            return OperationResult<WarehouseViewModel>.Success(_mapper.Map<WarehouseViewModel>(warehouse));
         }
 
         public async Task<OperationResult<WarehouseViewModel>> GetByIdAsync(string id)
         {
-            try
-            {
-                var warehouse = await _repository.GetByIdAsync(id);
+            var warehouse = await _repository.GetByIdAsync(id);
 
-                return warehouse == null 
-                    ? OperationResult<WarehouseViewModel>.Failure(WarehouseNotFound, ErrorType.NotFound) 
-                    : OperationResult<WarehouseViewModel>.Success(_mapper.Map<WarehouseViewModel>(warehouse));
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<WarehouseViewModel>.Failure(ex.Message);
-            }
+            return warehouse == null 
+                ? OperationResult<WarehouseViewModel>.Failure(WarehouseNotFound, ErrorType.NotFound) 
+                : OperationResult<WarehouseViewModel>.Success(_mapper.Map<WarehouseViewModel>(warehouse));
         }
 
         public async Task<OperationResult<WarehouseViewModel>> UpdateAsync(string id, WarehouseReadModel model)
@@ -81,10 +60,6 @@
             catch (KeyNotFoundException ex)
             {
                 return OperationResult<WarehouseViewModel>.Failure(ex.Message, ErrorType.NotFound);
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<WarehouseViewModel>.Failure(ex.Message);
             }
         }
 

@@ -23,24 +23,17 @@
 
         public async Task<OperationResult<IEnumerable<ProductViewModel>>> GetProductsByWarehouseIdAsync(string warehouseId)
         {
-            try
+            var warehouseExists = await _warehouseService.ExistsAsync(warehouseId);
+
+            if (!warehouseExists)
             {
-                var warehouseExists = await _warehouseService.ExistsAsync(warehouseId);
-
-                if (!warehouseExists)
-                {
-                    return OperationResult<IEnumerable<ProductViewModel>>.Failure(WarehouseNotFound, ErrorType.NotFound);
-                }
-
-                var products = await _productRepository.GetProductsByWarehouseIdAsync(warehouseId);
-
-                return OperationResult<IEnumerable<ProductViewModel>>
-                    .Success(_mapper.Map<IEnumerable<ProductViewModel>>(products));
+                return OperationResult<IEnumerable<ProductViewModel>>.Failure(WarehouseNotFound, ErrorType.NotFound);
             }
-            catch (Exception ex)
-            {
-                return OperationResult<IEnumerable<ProductViewModel>>.Failure(ex.Message);
-            }
+
+            var products = await _productRepository.GetProductsByWarehouseIdAsync(warehouseId);
+
+            return OperationResult<IEnumerable<ProductViewModel>>
+                .Success(_mapper.Map<IEnumerable<ProductViewModel>>(products));
         }
     }
 }

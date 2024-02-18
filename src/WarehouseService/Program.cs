@@ -9,6 +9,7 @@ namespace WarehouseService
     using Messaging;
     using Messaging.Contracts;
     using Services.GrpcServices;
+    using Utilities.Middleware;
 
     public class Program
     {
@@ -36,6 +37,7 @@ namespace WarehouseService
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            app.UseMiddleware<GlobalExceptionMiddleware>();
             app.MapGrpcService<GrpcWarehouseService>();
 
             if (app.Environment.IsDevelopment())
