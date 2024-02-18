@@ -3,7 +3,6 @@
     using Contracts;
     using Microsoft.EntityFrameworkCore;
     using Models;
-    using static Common.ExceptionMessages;
 
     public class PurchasedProductRepository : IPurchasedProductRepository
     {
@@ -31,16 +30,16 @@
         public async Task<decimal> DeleteProductByIdAsync(string id)
         {
             var product = await _dbContext.PurchasedProducts
-                .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
-
-            if (product == null)
-            {
-                throw new KeyNotFoundException(ProductNotFound);
-            }
+                .FirstAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
             product.IsDeleted = true;
 
             return product.PurchasePrice * product.BoughtQuantity;
+        }
+
+        public async Task<bool> ProductExistsAsync(string id)
+        {
+            return await _dbContext.PurchasedProducts.AnyAsync(p => p.Id.ToString() == id && !p.IsDeleted);
         }
     }
 }

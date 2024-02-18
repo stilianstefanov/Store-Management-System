@@ -37,15 +37,12 @@
             await _dbContext.Borrowers.AddAsync(borrower);
         }
 
-        public async Task<Borrower> UpdateBorrowerAsync(string id, Borrower borrower)
+        public async Task<Borrower?> UpdateBorrowerAsync(string id, Borrower borrower)
         {
             var borrowerToUpdate = await _dbContext.Borrowers
                 .FirstOrDefaultAsync(b => b.Id.ToString() == id && !b.IsDeleted);
 
-            if (borrowerToUpdate == null)
-            {
-                throw new KeyNotFoundException(BorrowerNotFound);
-            }
+            if (borrowerToUpdate == null) return null;
 
             borrowerToUpdate.Name = borrower.Name;
             borrowerToUpdate.Surname = borrower.Surname;
@@ -61,12 +58,7 @@
             var borrowerToDelete = await _dbContext.Borrowers
                 .Include(b => b.Purchases)
                 .ThenInclude(p => p.Products)
-                .FirstOrDefaultAsync(b => b.Id.ToString() == id && !b.IsDeleted);
-
-            if (borrowerToDelete == null)
-            {
-                throw new KeyNotFoundException(BorrowerNotFound);
-            }
+                .FirstAsync(b => b.Id.ToString() == id && !b.IsDeleted);
 
             borrowerToDelete.IsDeleted = true;
 

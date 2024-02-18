@@ -47,12 +47,7 @@
         {
             var purchase = await _dbContext.Purchases
                 .Include(p => p.Products)
-                .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
-
-            if (purchase == null)
-            {
-                throw new KeyNotFoundException(PurchaseNotFound);
-            }
+                .FirstAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
             var purchaseAmount = purchase.Products
                 .Where(p => !p.IsDeleted)

@@ -63,20 +63,17 @@
 
             if (!borrowerExists) return OperationResult<bool>.Failure(BorrowerNotFound);
 
-            try
-            {
-                var amount = await _purchaseProductRepository.DeleteProductByIdAsync(id);
+            var productExists = await _purchaseProductRepository.ProductExistsAsync(id);
 
-                await _purchaseProductRepository.SaveChangesAsync();
+            if (!productExists) return OperationResult<bool>.Failure(ProductNotFound);
+            
+            var amount = await _purchaseProductRepository.DeleteProductByIdAsync(id);
 
-                await _borrowerService.DecreaseBorrowerCreditAsync(borrowerId, amount);
+            await _purchaseProductRepository.SaveChangesAsync();
 
-                return OperationResult<bool>.Success(true);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return OperationResult<bool>.Failure(ex.Message, ErrorType.NotFound);
-            }
+            await _borrowerService.DecreaseBorrowerCreditAsync(borrowerId, amount);
+
+            return OperationResult<bool>.Success(true);
         }
 
         private async Task<IEnumerable<PurchasedProductViewModel>> MapProductDetailsAsync(

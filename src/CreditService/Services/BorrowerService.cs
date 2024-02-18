@@ -22,94 +22,60 @@
 
         public async Task<OperationResult<IEnumerable<BorrowerViewModel>>> GetAllBorrowersAsync()
         {
-            try
-            {
-                var borrowers = await _borrowerRepository.GetAllBorrowersAsync();
+            var borrowers = await _borrowerRepository.GetAllBorrowersAsync();
 
-                return OperationResult<IEnumerable<BorrowerViewModel>>.Success(
-                    _mapper.Map<IEnumerable<BorrowerViewModel>>(borrowers)!);
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<IEnumerable<BorrowerViewModel>>.Failure(ex.Message);
-            }
+            return OperationResult<IEnumerable<BorrowerViewModel>>.Success(
+                _mapper.Map<IEnumerable<BorrowerViewModel>>(borrowers)!);
         }
 
         public async Task<OperationResult<BorrowerViewModel>> GetBorrowerByIdAsync(string id)
         {
-            try
-            {
-                var borrower = await _borrowerRepository.GetBorrowerByIdAsync(id);
-
-                if (borrower == null)
-                {
-                    return OperationResult<BorrowerViewModel>.Failure(BorrowerNotFound, ErrorType.NotFound);
-                }
-
-                return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(borrower)!);
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<BorrowerViewModel>.Failure(ex.Message);
-            }
+            var borrower = await _borrowerRepository.GetBorrowerByIdAsync(id);
+            
+            return borrower == null 
+                ? OperationResult<BorrowerViewModel>.Failure(BorrowerNotFound, ErrorType.NotFound)
+                : OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(borrower)!);
         }
 
         public async Task<OperationResult<BorrowerViewModel>> CreateBorrowerAsync(BorrowerCreateModel model)
         {
-            try
-            {
-                var newBorrower = _mapper.Map<Borrower>(model)!;
+            var newBorrower = _mapper.Map<Borrower>(model)!;
 
-                await _borrowerRepository.AddBorrowerAsync(newBorrower);
+            await _borrowerRepository.AddBorrowerAsync(newBorrower);
 
-                await _borrowerRepository.SaveChangesAsync();
+            await _borrowerRepository.SaveChangesAsync();
 
-                return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(newBorrower)!);
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<BorrowerViewModel>.Failure(ex.Message);
-            }
+            return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(newBorrower)!);
         }
 
         public async Task<OperationResult<BorrowerViewModel>> UpdateBorrowerAsync(string id, BorrowerUpdateModel model)
         {
-            try
-            {
-                var updatedBorrower = await _borrowerRepository.UpdateBorrowerAsync(id, _mapper.Map<Borrower>(model)!);
+            var updatedBorrower = await _borrowerRepository.UpdateBorrowerAsync(id, _mapper.Map<Borrower>(model)!);
 
-                await _borrowerRepository.SaveChangesAsync();
+            if (updatedBorrower == null)
+            {
+                return OperationResult<BorrowerViewModel>.Failure(BorrowerNotFound, ErrorType.NotFound);
+            }
 
-                return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(updatedBorrower)!);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return OperationResult<BorrowerViewModel>.Failure(ex.Message, ErrorType.NotFound);
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<BorrowerViewModel>.Failure(ex.Message);
-            }
+            await _borrowerRepository.SaveChangesAsync();
+
+            return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(updatedBorrower)!);
         }
 
         public async Task<OperationResult<bool>> DeleteBorrowerAsync(string id)
         {
-            try
-            {
-                await _borrowerRepository.DeleteBorrowerAsync(id);
+            var borrowerExists = await _borrowerRepository.BorrowerExistsAsync(id);
 
-                await _borrowerRepository.SaveChangesAsync();
+            if (!borrowerExists)
+            {
+                return OperationResult<bool>.Failure(BorrowerNotFound, ErrorType.NotFound);
+            }
 
-                return OperationResult<bool>.Success(true);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return OperationResult<bool>.Failure(ex.Message, ErrorType.NotFound);
-            }
-            catch (Exception ex)
-            {
-                return OperationResult<bool>.Failure(ex.Message);
-            }
+            await _borrowerRepository.DeleteBorrowerAsync(id);
+
+            await _borrowerRepository.SaveChangesAsync();
+
+            return OperationResult<bool>.Success(true);
         }
 
         public async Task<bool> BorrowerExistsAsync(string id)

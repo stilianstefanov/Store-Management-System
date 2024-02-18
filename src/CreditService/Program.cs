@@ -8,6 +8,7 @@ namespace CreditService
     using Services.Contracts;
     using Services.GrpcServices;
     using Services.GrpcServices.Contracts;
+    using Utilities.Middleware;
 
     public class Program
     {
@@ -35,7 +36,7 @@ namespace CreditService
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
-
+            app.UseMiddleware<GlobalExceptionMiddleware>();
 
             if (app.Environment.IsDevelopment())
             {

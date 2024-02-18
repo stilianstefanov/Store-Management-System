@@ -12,7 +12,7 @@
 
         Task AddBorrowerAsync(Borrower borrower);
 
-        Task<Borrower> UpdateBorrowerAsync(string id, Borrower borrower);
+        Task<Borrower?> UpdateBorrowerAsync(string id, Borrower borrower);
 
         Task DeleteBorrowerAsync(string id);
 

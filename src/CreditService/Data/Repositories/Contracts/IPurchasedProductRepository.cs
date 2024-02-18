@@ -9,5 +9,7 @@
         Task<IEnumerable<PurchasedProduct>> GetProductsByPurchaseIdAsync(string purchaseId);
 
         Task<decimal> DeleteProductByIdAsync(string id);
+
+        Task<bool> ProductExistsAsync(string id);
     }
 }
