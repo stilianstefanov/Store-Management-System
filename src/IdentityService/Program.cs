@@ -5,6 +5,7 @@ namespace IdentityService
     using Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Utilities.Middleware;
 
     public class Program
     {
@@ -38,6 +39,7 @@ namespace IdentityService
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            app.UseMiddleware<GlobalExceptionMiddleware>();
 
           
             if (app.Environment.IsDevelopment())
