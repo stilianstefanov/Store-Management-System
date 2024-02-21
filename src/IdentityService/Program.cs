@@ -5,6 +5,8 @@ namespace IdentityService
     using Data.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Services;
+    using Services.Contracts;
     using Utilities.Middleware;
 
     public class Program
@@ -32,6 +34,9 @@ namespace IdentityService
                 options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
                 options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             });
+
+            builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
 
             builder.Services.AddControllers();
            

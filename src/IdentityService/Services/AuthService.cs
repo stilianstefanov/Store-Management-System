@@ -12,10 +12,17 @@
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ITokenGeneratorService _tokenGenerator;
+        private readonly IConfiguration _configuration;
 
-        public AuthService(UserManager<ApplicationUser> userManager)
+        public AuthService(
+            UserManager<ApplicationUser> userManager, 
+            ITokenGeneratorService tokenGenerator,
+            IConfiguration configuration)
         {
             _userManager = userManager;
+            _tokenGenerator = tokenGenerator;
+            _configuration = configuration;
         }
 
         public async Task<OperationResult<string>> RegisterAsync(RegisterModel registerModel)
@@ -58,6 +65,10 @@
                 return OperationResult<string>.Failure(InvalidCredentials, ErrorType.BadRequest);
 
             var userRoles = await _userManager.GetRolesAsync(user);
+
+            var token = _tokenGenerator.GenerateToken(user, _configuration, userRoles);
+
+            return OperationResult<string>.Success(token);
         }
     }
 }
