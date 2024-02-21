@@ -47,7 +47,17 @@
 
         public async Task<OperationResult<string>> LoginAsync(LoginModel loginModel)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByNameAsync(loginModel.UserName);
+
+            if (user == null)
+                return OperationResult<string>.Failure(InvalidCredentials, ErrorType.BadRequest);
+
+            var passwordValid = await _userManager.CheckPasswordAsync(user, loginModel.Password);
+
+            if (!passwordValid)
+                return OperationResult<string>.Failure(InvalidCredentials, ErrorType.BadRequest);
+
+            var userRoles = await _userManager.GetRolesAsync(user);
         }
     }
 }
