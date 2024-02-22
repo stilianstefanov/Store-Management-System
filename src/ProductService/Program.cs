@@ -4,11 +4,14 @@ namespace ProductService
     using Data.Contracts;
     using Messaging;
     using Messaging.Contracts;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.IdentityModel.Tokens;
     using Services;
     using Services.Contracts;
     using Services.GrpcServices;
     using Services.GrpcServices.Contracts;
+    using System.Text;
     using Utilities.Middleware;
 
     public class Program
@@ -21,6 +24,29 @@ namespace ProductService
             builder.Services
                 .AddDbContext<ProductDbContext>(opt =>
                     opt.UseSqlServer(connectionString));
+
+
+            builder.Services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+                        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!))
+                    };
+                });
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductService, ProductService>();
@@ -46,6 +72,7 @@ namespace ProductService
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

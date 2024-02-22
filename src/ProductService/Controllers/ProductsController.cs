@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace ProductService.Controllers
 {
     using Data.ViewModels;
+    using Microsoft.AspNetCore.Authorization;
     using Utilities;
     using Services.Contracts;
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
