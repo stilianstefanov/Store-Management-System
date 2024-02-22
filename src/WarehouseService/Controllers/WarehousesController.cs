@@ -3,12 +3,13 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Data.ViewModels;
+    using Microsoft.AspNetCore.Authorization;
     using Services.Contracts;
     using Utilities;
-    using Utilities.Enums;
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class WarehousesController : ControllerBase
     {
         private readonly IWarehouseService _warehouseService;

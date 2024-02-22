@@ -1,13 +1,14 @@
 ﻿namespace WarehouseService.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Contracts;
     using Utilities;
-    using Utilities.Enums;
 
     [Route("api/warehouses/{warehouseId}/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;

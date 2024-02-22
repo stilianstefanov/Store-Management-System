@@ -1,5 +1,6 @@
 namespace WarehouseService
 {
+    using System.Text;
     using Data;
     using Microsoft.EntityFrameworkCore;
     using Services;
@@ -8,6 +9,8 @@ namespace WarehouseService
     using Data.Repositories;
     using Messaging;
     using Messaging.Contracts;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.IdentityModel.Tokens;
     using Services.GrpcServices;
     using Utilities.Middleware;
 
@@ -21,6 +24,28 @@ namespace WarehouseService
             builder.Services
                 .AddDbContext<WarehousesDbContext>(opt => 
                     opt.UseSqlServer(connectionString));
+
+            builder.Services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+                        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!))
+                    };
+                });
 
             builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
             builder.Services.AddScoped<IWarehouseService, WarehouseService>();
@@ -48,6 +73,7 @@ namespace WarehouseService
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
