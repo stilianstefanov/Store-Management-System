@@ -6,6 +6,7 @@
     using Contracts;
     using Data.Models;
     using Microsoft.IdentityModel.Tokens;
+    using static Common.ApplicationConstants;
 
     public class TokenGeneratorService : ITokenGeneratorService
     {
@@ -38,7 +39,7 @@
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddHours(12),
+                Expires = DateTime.UtcNow.AddHours(TokenExpirationInHours),
                 Issuer = configuration["JWT:ValidIssuer"],
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
