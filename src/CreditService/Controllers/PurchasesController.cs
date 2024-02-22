@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace CreditService.Controllers
 {
     using Data.ViewModels.PurchasedProduct;
+    using Microsoft.AspNetCore.Authorization;
     using Services.Contracts;
     using Utilities;
-    using static Common.ExceptionMessages;
 
     [Route("api/borrowers/{borrowerId}/[controller]")]
     [ApiController]
+    [Authorize]
     public class PurchasesController : ControllerBase
     {
         private readonly IPurchaseService _purchaseService;

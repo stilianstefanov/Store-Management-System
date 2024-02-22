@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace CreditService.Controllers
 {
     using Data.ViewModels.Borrower;
+    using Microsoft.AspNetCore.Authorization;
     using Services.Contracts;
     using Utilities;
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BorrowersController : ControllerBase
     {
         private readonly IBorrowerService _borrowerService;

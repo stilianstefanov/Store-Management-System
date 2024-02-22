@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CreditService.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Services.Contracts;
     using Utilities;
 
     [Route("api/borrowers/{borrowerId}/purchases/{purchaseId}/[controller]")]
     [ApiController]
+    [Authorize]
     public class PurchasedProductsController : ControllerBase
     {
         private readonly IPurchasedProductService _purchaseProductService;
