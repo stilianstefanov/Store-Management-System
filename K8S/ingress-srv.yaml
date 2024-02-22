@@ -31,3 +31,10 @@ spec:
                 name: credit-clusterip-srv
                 port:
                   number: 8080
+          - path: /api/auth
+            pathType: Prefix
+            backend:
+              service:
+                name: identity-clusterip-srv
+                port:
+                  number: 8080

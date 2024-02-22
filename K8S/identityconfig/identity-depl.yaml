@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identityservice
+  template:
+    metadata:
+      labels:
+        app: identityservice
+    spec:
+      containers:
+        - name: identityservice
+          image: stilianstefanov/identityservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: identityservice
+  ports:
+  - name: identityservice
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
