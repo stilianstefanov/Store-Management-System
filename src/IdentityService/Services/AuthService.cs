@@ -27,10 +27,15 @@
 
         public async Task<OperationResult<string>> RegisterAsync(RegisterModel registerModel)
         {
-            var userExists = await _userManager.FindByNameAsync(registerModel.UserName);
+            var userNameExists = await _userManager.FindByNameAsync(registerModel.UserName);
 
-            if (userExists != null) 
-                return OperationResult<string>.Failure(UserAlreadyExists, ErrorType.BadRequest);
+            if (userNameExists != null) 
+                return OperationResult<string>.Failure(UserNameAlreadyExists, ErrorType.BadRequest);
+
+            var userEmailExists = await _userManager.FindByEmailAsync(registerModel.Email);
+
+            if (userEmailExists != null) 
+                return OperationResult<string>.Failure(EmailAlreadyExists, ErrorType.BadRequest);
 
             var newUser = new ApplicationUser()
             {
