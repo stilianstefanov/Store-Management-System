@@ -59,8 +59,8 @@
 
         public async Task<OperationResult<string>> LoginAsync(LoginModel loginModel)
         {
-            var user = await _userManager.FindByNameAsync(loginModel.UserName) 
-                       ?? await _userManager.FindByEmailAsync(loginModel.UserName);
+            var user = await _userManager.FindByNameAsync(loginModel.UserNameOrEmail) 
+                       ?? await _userManager.FindByEmailAsync(loginModel.UserNameOrEmail);
 
             if (user == null)
                 return OperationResult<string>.Failure(InvalidCredentials, ErrorType.BadRequest);

@@ -7,7 +7,7 @@
     {
         [Required]
         [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength)]
-        public string UserName { get; set; } = null!;
+        public string UserNameOrEmail { get; set; } = null!;
 
         [Required]
         [DataType(DataType.Password)]
