@@ -42,6 +42,10 @@
         [MaxLength(WarehouseIdMaxLength)]
         public string WarehouseId { get; set; } = null!;
 
+        [Required]
+        [MaxLength(UserIdMaxLength)]
+        public string UserId { get; set; } = null!;
+
         public bool IsDeleted { get; set; }
     }
 }

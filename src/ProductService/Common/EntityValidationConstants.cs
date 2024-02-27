@@ -21,6 +21,8 @@
             public const int QuantityMinValue = 0;
 
             public const int QuantityMaxValue = 9999;
+
+            public const int UserIdMaxLength = 50;
         }
     }
 }

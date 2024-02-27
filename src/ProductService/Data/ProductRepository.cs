@@ -3,7 +3,6 @@
     using Contracts;
     using Microsoft.EntityFrameworkCore;
     using Models;
-    using static Common.ExceptionMessages;
 
     public class ProductRepository : IProductRepository
     {
@@ -19,9 +18,11 @@
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync()
+        public async Task<IEnumerable<Product>> GetAllAsync(string userId)
         {
-            return await _dbContext.Products.Where(p => !p.IsDeleted).ToArrayAsync();
+            return await _dbContext.Products
+                .Where(p => !p.IsDeleted && p.UserId == userId)
+                .ToArrayAsync();
         }
 
         public async Task<Product?> GetByIdAsync(string id)
@@ -45,36 +46,12 @@
             await _dbContext.Products.AddAsync(product);
         }
 
-        public async Task<Product?> UpdateAsync(string id, Product product)
-        {
-            var productToUpdate = await _dbContext.Products
-                .FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
-
-            if (productToUpdate == null) return null;
-
-            productToUpdate.Barcode = product.Barcode;
-            productToUpdate.Name = product.Name;
-            productToUpdate.Description = product.Description;
-            productToUpdate.Price = product.Price;
-            productToUpdate.DeliveryPrice = product.DeliveryPrice;
-            productToUpdate.Quantity = product.Quantity;
-            productToUpdate.MinQuantity = product.MinQuantity;
-            productToUpdate.MaxQuantity = product.MaxQuantity;
-
-            return productToUpdate;
-        }
-
         public async Task DeleteAsync(string id)
         {
             var productToDelete = await _dbContext.Products
                 .FirstAsync(p => p.Id.ToString() == id && !p.IsDeleted);
 
             productToDelete.IsDeleted = true;
-        }
-
-        public async Task<bool> ProductExistsAsync(string id)
-        {
-            return await _dbContext.Products.AnyAsync(p => p.Id.ToString() == id && !p.IsDeleted);
         }
 
         public async Task<bool> ProductsExistAsync(IEnumerable<string> ids)

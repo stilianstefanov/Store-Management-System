@@ -6,7 +6,7 @@
     {
         Task SaveChangesAsync();
 
-        Task<IEnumerable<Product>> GetAllAsync();
+        Task<IEnumerable<Product>> GetAllAsync(string userId);
 
         Task<Product?> GetByIdAsync(string id);
 
@@ -14,11 +14,7 @@
 
         Task AddAsync(Product product);
 
-        Task<Product?> UpdateAsync(string id, Product product);
-
         Task DeleteAsync(string id);
-
-        Task<bool> ProductExistsAsync(string id);
 
         Task<bool> ProductsExistAsync(IEnumerable<string> ids);
     }

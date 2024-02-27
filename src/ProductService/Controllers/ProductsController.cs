@@ -23,7 +23,7 @@ namespace ProductService.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            var result = await _productService.GetAllAsync();
+            var result = await _productService.GetAllAsync(User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -33,7 +33,7 @@ namespace ProductService.Controllers
         [HttpGet("{id}", Name = "GetProductById")]
         public async Task<IActionResult> GetProductById(string id)
         {
-            var result = await _productService.GetByIdAsync(id);
+            var result = await _productService.GetByIdAsync(id, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
                 
@@ -45,7 +45,7 @@ namespace ProductService.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var result = await _productService.CreateAsync(model);
+            var result = await _productService.CreateAsync(model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -57,7 +57,7 @@ namespace ProductService.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             
-            var result = await _productService.UpdateAsync(id, model);
+            var result = await _productService.UpdateAsync(id, model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -69,7 +69,7 @@ namespace ProductService.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             
-            var result = await _productService.PartialUpdateAsync(id, model);
+            var result = await _productService.PartialUpdateAsync(id, model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -79,7 +79,7 @@ namespace ProductService.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(string id)
         {
-            var result = await _productService.DeleteAsync(id);
+            var result = await _productService.DeleteAsync(id, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
