@@ -6,13 +6,11 @@
     {
         Task SaveChangesAsync();
 
-        Task<IEnumerable<Borrower>> GetAllBorrowersAsync();
+        Task<IEnumerable<Borrower>> GetAllBorrowersAsync(string userId);
 
         Task<Borrower?> GetBorrowerByIdAsync(string id);
 
         Task AddBorrowerAsync(Borrower borrower);
-
-        Task<Borrower?> UpdateBorrowerAsync(string id, Borrower borrower);
 
         Task DeleteBorrowerAsync(string id);
 

@@ -66,7 +66,7 @@
 
             if (!await ValidateProductsAsync(purchasedProductModels))
             {
-                return OperationResult<PurchaseViewModel>.Failure(ProductNotFound, ErrorType.NotFound);
+                return OperationResult<PurchaseViewModel>.Failure(ProductsNotFound, ErrorType.NotFound);
             }
 
             if (!await TryIncreaseBorrowerCreditAsync(borrowerId, purchasedProductModels))

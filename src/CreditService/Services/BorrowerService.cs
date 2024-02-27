@@ -20,26 +20,31 @@
             _mapper = mapper;
         }
 
-        public async Task<OperationResult<IEnumerable<BorrowerViewModel>>> GetAllBorrowersAsync()
+        public async Task<OperationResult<IEnumerable<BorrowerViewModel>>> GetAllBorrowersAsync(string userId)
         {
-            var borrowers = await _borrowerRepository.GetAllBorrowersAsync();
+            var borrowers = await _borrowerRepository.GetAllBorrowersAsync(userId);
 
             return OperationResult<IEnumerable<BorrowerViewModel>>.Success(
                 _mapper.Map<IEnumerable<BorrowerViewModel>>(borrowers)!);
         }
 
-        public async Task<OperationResult<BorrowerViewModel>> GetBorrowerByIdAsync(string id)
+        public async Task<OperationResult<BorrowerViewModel>> GetBorrowerByIdAsync(string id, string userId)
         {
             var borrower = await _borrowerRepository.GetBorrowerByIdAsync(id);
-            
-            return borrower == null 
-                ? OperationResult<BorrowerViewModel>.Failure(BorrowerNotFound, ErrorType.NotFound)
-                : OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(borrower)!);
+
+            if (borrower == null || borrower.UserId != userId)
+            {
+                return OperationResult<BorrowerViewModel>.Failure(BorrowerNotFound, ErrorType.NotFound);
+            }
+
+            return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(borrower)!);
         }
 
-        public async Task<OperationResult<BorrowerViewModel>> CreateBorrowerAsync(BorrowerCreateModel model)
+        public async Task<OperationResult<BorrowerViewModel>> CreateBorrowerAsync(BorrowerCreateModel model, string userId)
         {
             var newBorrower = _mapper.Map<Borrower>(model)!;
+
+            newBorrower.UserId = userId;
 
             await _borrowerRepository.AddBorrowerAsync(newBorrower);
 
@@ -48,25 +53,27 @@
             return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(newBorrower)!);
         }
 
-        public async Task<OperationResult<BorrowerViewModel>> UpdateBorrowerAsync(string id, BorrowerUpdateModel model)
+        public async Task<OperationResult<BorrowerViewModel>> UpdateBorrowerAsync(string id, BorrowerUpdateModel model, string userId)
         {
-            var updatedBorrower = await _borrowerRepository.UpdateBorrowerAsync(id, _mapper.Map<Borrower>(model)!);
+            var borrowerToUpdate = await _borrowerRepository.GetBorrowerByIdAsync(id);
 
-            if (updatedBorrower == null)
+            if (borrowerToUpdate == null || borrowerToUpdate.UserId != userId)
             {
                 return OperationResult<BorrowerViewModel>.Failure(BorrowerNotFound, ErrorType.NotFound);
             }
 
+            _mapper.Map(model, borrowerToUpdate);
+
             await _borrowerRepository.SaveChangesAsync();
 
-            return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(updatedBorrower)!);
+            return OperationResult<BorrowerViewModel>.Success(_mapper.Map<BorrowerViewModel>(borrowerToUpdate)!);
         }
 
-        public async Task<OperationResult<bool>> DeleteBorrowerAsync(string id)
+        public async Task<OperationResult<bool>> DeleteBorrowerAsync(string id, string userId)
         {
-            var borrowerExists = await _borrowerRepository.BorrowerExistsAsync(id);
+            var borrower = await _borrowerRepository.GetBorrowerByIdAsync(id);
 
-            if (!borrowerExists)
+            if (borrower == null || borrower.UserId != userId)
             {
                 return OperationResult<bool>.Failure(BorrowerNotFound, ErrorType.NotFound);
             }

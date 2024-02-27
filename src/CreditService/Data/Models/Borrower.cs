@@ -31,6 +31,10 @@
 
         public bool IsDeleted { get; set; }
 
+        [Required]
+        [MaxLength(UserIdMaxLength)]
+        public string UserId { get; set; } = null!;
+
         public ICollection<Purchase> Purchases { get; set; }
     }
 }

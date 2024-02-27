@@ -3,7 +3,6 @@
     using Contracts;
     using Microsoft.EntityFrameworkCore;
     using Models;
-    using static Common.ExceptionMessages;
 
     public class BorrowerRepository : IBorrowerRepository
     {
@@ -19,9 +18,11 @@
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Borrower>> GetAllBorrowersAsync()
+        public async Task<IEnumerable<Borrower>> GetAllBorrowersAsync(string userId)
         {
-            return await _dbContext.Borrowers.Where(b => !b.IsDeleted).ToArrayAsync();
+            return await _dbContext.Borrowers
+                .Where(b => !b.IsDeleted && b.UserId == userId)
+                .ToArrayAsync();
         }
 
         public async Task<Borrower?> GetBorrowerByIdAsync(string id)
@@ -35,22 +36,6 @@
         public async Task AddBorrowerAsync(Borrower borrower)
         {
             await _dbContext.Borrowers.AddAsync(borrower);
-        }
-
-        public async Task<Borrower?> UpdateBorrowerAsync(string id, Borrower borrower)
-        {
-            var borrowerToUpdate = await _dbContext.Borrowers
-                .FirstOrDefaultAsync(b => b.Id.ToString() == id && !b.IsDeleted);
-
-            if (borrowerToUpdate == null) return null;
-
-            borrowerToUpdate.Name = borrower.Name;
-            borrowerToUpdate.Surname = borrower.Surname;
-            borrowerToUpdate.LastName = borrower.LastName;
-            borrowerToUpdate.CurrentCredit = borrower.CurrentCredit;
-            borrowerToUpdate.CreditLimit = borrower.CreditLimit;
-
-            return borrowerToUpdate;
         }
 
         public async Task DeleteBorrowerAsync(string id)

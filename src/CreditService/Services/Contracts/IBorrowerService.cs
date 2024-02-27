@@ -5,15 +5,15 @@
 
     public interface IBorrowerService
     {
-        Task<OperationResult<IEnumerable<BorrowerViewModel>>> GetAllBorrowersAsync();
+        Task<OperationResult<IEnumerable<BorrowerViewModel>>> GetAllBorrowersAsync(string userId);
 
-        Task<OperationResult<BorrowerViewModel>> GetBorrowerByIdAsync(string id);
+        Task<OperationResult<BorrowerViewModel>> GetBorrowerByIdAsync(string id, string userId);
 
-        Task<OperationResult<BorrowerViewModel>> CreateBorrowerAsync(BorrowerCreateModel borrower);
+        Task<OperationResult<BorrowerViewModel>> CreateBorrowerAsync(BorrowerCreateModel borrower, string userId);
 
-        Task<OperationResult<BorrowerViewModel>> UpdateBorrowerAsync(string id, BorrowerUpdateModel borrower);
+        Task<OperationResult<BorrowerViewModel>> UpdateBorrowerAsync(string id, BorrowerUpdateModel borrower, string userId);
 
-        Task<OperationResult<bool>> DeleteBorrowerAsync(string id);
+        Task<OperationResult<bool>> DeleteBorrowerAsync(string id, string userId);
 
         Task<bool> BorrowerExistsAsync(string id);
 

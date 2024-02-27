@@ -23,6 +23,8 @@
             public const string CreditLimitMinValue = "0.00";
 
             public const string CreditLimitMaxValue = "99999";
+
+            public const int UserIdMaxLength = 50;
         }
 
         public static class PurchaseProduct

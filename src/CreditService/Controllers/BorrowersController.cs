@@ -23,7 +23,7 @@ namespace CreditService.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBorrowers()
         {
-            var result = await _borrowerService.GetAllBorrowersAsync();
+            var result = await _borrowerService.GetAllBorrowersAsync(User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -33,7 +33,7 @@ namespace CreditService.Controllers
         [HttpGet("{id}", Name = "GetBorrowerById")]
         public async Task<IActionResult> GetBorrowerById(string id)
         {
-           var result = await _borrowerService.GetBorrowerByIdAsync(id);
+           var result = await _borrowerService.GetBorrowerByIdAsync(id, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -45,7 +45,7 @@ namespace CreditService.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var result = await _borrowerService.CreateBorrowerAsync(model);
+            var result = await _borrowerService.CreateBorrowerAsync(model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -57,7 +57,7 @@ namespace CreditService.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var result = await _borrowerService.UpdateBorrowerAsync(id, model);
+            var result = await _borrowerService.UpdateBorrowerAsync(id, model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -67,7 +67,7 @@ namespace CreditService.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBorrower(string id)
         {
-            var result = await _borrowerService.DeleteBorrowerAsync(id);
+            var result = await _borrowerService.DeleteBorrowerAsync(id, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
