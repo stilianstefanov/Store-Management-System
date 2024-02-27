@@ -22,7 +22,7 @@
         [HttpGet]
         public async Task<IActionResult> GetAllWarehouses()
         {
-            var result = await _warehouseService.GetAllAsync();
+            var result = await _warehouseService.GetAllAsync(User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -32,7 +32,7 @@
         [HttpGet("{id}", Name = "GetWarehouseById")]
         public async Task<IActionResult> GetWarehouseById(string id)
         {
-            var result = await _warehouseService.GetByIdAsync(id);
+            var result = await _warehouseService.GetByIdAsync(id, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -44,7 +44,7 @@
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var result = await _warehouseService.CreateAsync(model);
+            var result = await _warehouseService.CreateAsync(model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -56,7 +56,7 @@
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var result = await _warehouseService.UpdateAsync(id, model);
+            var result = await _warehouseService.UpdateAsync(id, model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 

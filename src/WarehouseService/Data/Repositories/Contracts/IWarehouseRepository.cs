@@ -6,13 +6,11 @@
     {
         Task SaveChangesAsync();
 
-        Task<IEnumerable<Warehouse>> GetAllAsync();
+        Task<IEnumerable<Warehouse>> GetAllAsync(string userId);
 
         Task<Warehouse?> GetByIdAsync(string id);
 
         Task AddAsync(Warehouse warehouse);
-
-        Task<Warehouse?> UpdateAsync(string id, Warehouse warehouse);
 
         Task<bool> ExistsByIdAsync(string id);
     }

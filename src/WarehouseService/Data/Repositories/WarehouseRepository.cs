@@ -19,9 +19,10 @@
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Warehouse>> GetAllAsync()
+        public async Task<IEnumerable<Warehouse>> GetAllAsync(string userId)
         {
             return await _dbContext.Warehouses
+                .Where(w => w.UserId == userId)
                 .ToArrayAsync();
         }
 
@@ -36,19 +37,6 @@
         public async Task AddAsync(Warehouse warehouse)
         {
             await _dbContext.Warehouses.AddAsync(warehouse);
-        }
-
-        public async Task<Warehouse?> UpdateAsync(string id, Warehouse warehouse)
-        {
-            var warehouseToUpdate = await _dbContext.Warehouses
-                .FirstOrDefaultAsync(w => w.Id.ToString() == id);
-
-            if (warehouseToUpdate == null) return null;
-
-            warehouseToUpdate.Name = warehouse.Name;
-            warehouseToUpdate.Type = warehouse.Type;
-
-            return warehouseToUpdate;
         }
 
         public async Task<bool> ExistsByIdAsync(string id)

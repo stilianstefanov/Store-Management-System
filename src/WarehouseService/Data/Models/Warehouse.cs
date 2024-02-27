@@ -22,6 +22,10 @@
         [MaxLength(TypeMaxLength)]
         public string Type { get; set; } = null!;
 
+        [Required]
+        [MaxLength(UserIdMaxLength)]
+        public string UserId { get; set; } = null!;
+
 
         public ICollection<Product> Products { get; set; }
     }
