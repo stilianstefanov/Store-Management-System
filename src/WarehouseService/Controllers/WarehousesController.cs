@@ -5,7 +5,7 @@
     using Data.ViewModels;
     using Microsoft.AspNetCore.Authorization;
     using Services.Contracts;
-    using Utilities;
+    using Utilities.Extensions;
 
     [Route("api/[controller]")]
     [ApiController]

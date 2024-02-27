@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CreditService.Controllers
 {
+    using Utilities.Extensions;
     using Data.ViewModels.PurchasedProduct;
     using Microsoft.AspNetCore.Authorization;
     using Services.Contracts;
-    using Utilities;
 
     [Route("api/borrowers/{borrowerId}/[controller]")]
     [ApiController]

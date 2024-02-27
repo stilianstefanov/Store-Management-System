@@ -1,4 +1,4 @@
-﻿namespace ProductService.Utilities
+﻿namespace IdentityService.Utilities.Extensions
 {
     using Enums;
     using Microsoft.AspNetCore.Mvc;
@@ -6,12 +6,13 @@
 
     public static class ControllerExtensions
     {
-        public static IActionResult Error(this ControllerBase controller, 
+        public static IActionResult Error(this ControllerBase controller,
             ErrorType errorType = ErrorType.Internal, string errorMessage = GeneralErrorMessage)
         {
             return errorType switch
             {
-                ErrorType.NotFound => controller.NotFound(errorMessage),
+                ErrorType.BadRequest => controller.BadRequest(errorMessage),
+                ErrorType.Unauthorized => controller.Unauthorized(errorMessage),
                 _ => controller.StatusCode(StatusCodes.Status500InternalServerError, new { Error = GeneralErrorMessage })
             };
         }

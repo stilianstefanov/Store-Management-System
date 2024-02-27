@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Contracts;
-    using Utilities;
+    using Utilities.Extensions;
 
     [Route("api/warehouses/{warehouseId}/[controller]")]
     [ApiController]

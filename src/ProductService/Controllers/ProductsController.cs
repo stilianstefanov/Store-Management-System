@@ -5,8 +5,8 @@ namespace ProductService.Controllers
 {
     using Data.ViewModels;
     using Microsoft.AspNetCore.Authorization;
-    using Utilities;
     using Services.Contracts;
+    using Utilities.Extensions;
 
     [Route("api/[controller]")]
     [ApiController]

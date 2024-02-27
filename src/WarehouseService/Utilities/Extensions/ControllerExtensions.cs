@@ -1,4 +1,4 @@
-﻿namespace WarehouseService.Utilities
+﻿namespace WarehouseService.Utilities.Extensions
 {
     using Microsoft.AspNetCore.Mvc;
     using Enums;

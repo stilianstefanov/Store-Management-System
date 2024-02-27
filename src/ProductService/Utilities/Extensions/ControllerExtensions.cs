@@ -1,4 +1,4 @@
-﻿namespace IdentityService.Utilities
+﻿namespace ProductService.Utilities.Extensions
 {
     using Enums;
     using Microsoft.AspNetCore.Mvc;
@@ -11,8 +11,7 @@
         {
             return errorType switch
             {
-                ErrorType.BadRequest => controller.BadRequest(errorMessage),
-                ErrorType.Unauthorized => controller.Unauthorized(errorMessage),
+                ErrorType.NotFound => controller.NotFound(errorMessage),
                 _ => controller.StatusCode(StatusCodes.Status500InternalServerError, new { Error = GeneralErrorMessage })
             };
         }

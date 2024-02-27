@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace IdentityService.Controllers
 {
     using Data.ViewModels;
+    using Utilities.Extensions;
     using Services.Contracts;
-    using Utilities;
 
     [Route("api/[controller]")]
     [ApiController]

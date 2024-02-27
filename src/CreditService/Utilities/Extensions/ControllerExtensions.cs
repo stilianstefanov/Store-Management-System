@@ -1,4 +1,4 @@
-﻿namespace CreditService.Utilities
+﻿namespace CreditService.Utilities.Extensions
 {
     using Enums;
     using Microsoft.AspNetCore.Mvc;
