@@ -1,10 +1,13 @@
 
 namespace IdentityService
 {
+    using System.Text;
     using Data;
     using Data.Models;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.IdentityModel.Tokens;
     using Services;
     using Services.Contracts;
     using Utilities.Middleware;
@@ -35,6 +38,28 @@ namespace IdentityService
                 options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:Password:RequiredLength");
             });
 
+            builder.Services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+                        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!))
+                    };
+                });
+
             builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
 
@@ -55,6 +80,7 @@ namespace IdentityService
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
