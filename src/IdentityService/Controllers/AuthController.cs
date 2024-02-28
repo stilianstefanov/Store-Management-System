@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace IdentityService.Controllers
 {
     using Data.ViewModels;
+    using Microsoft.AspNetCore.Authorization;
     using Utilities.Extensions;
     using Services.Contracts;
 
@@ -34,6 +35,18 @@ namespace IdentityService.Controllers
         public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
             var result = await _authService.LoginAsync(loginModel);
+
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return this.Ok(result.Data);
+        }
+
+        [HttpPost]
+        [Route(nameof(ChangePassword))]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel changePasswordModel)
+        {
+            var result = await _authService.ChangePasswordAsync(User.GetId()!, changePasswordModel);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
