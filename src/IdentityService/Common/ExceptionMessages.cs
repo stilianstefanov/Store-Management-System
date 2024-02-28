@@ -9,5 +9,7 @@
         public const string EmailAlreadyExists = "User with the provided email already exists!";
 
         public const string InvalidCredentials = "Invalid credentials!";
+
+        public const string PasswordConfirmationError = "Password and confirmation password do not match!";
     }
 }
