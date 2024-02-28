@@ -45,11 +45,11 @@
                 SecurityStamp = Guid.NewGuid().ToString()
             };
 
-            var createUserResult = await _userManager.CreateAsync(newUser, registerModel.Password);
+            var identityResult = await _userManager.CreateAsync(newUser, registerModel.Password);
 
-            if (!createUserResult.Succeeded)
+            if (!identityResult.Succeeded)
             {
-                var errorString = string.Join(Environment.NewLine, createUserResult.Errors.Select(e => e.Description));
+                var errorString = string.Join(Environment.NewLine, identityResult.Errors.Select(e => e.Description));
 
                 return OperationResult<string>.Failure(errorString, ErrorType.BadRequest);
             }
@@ -75,6 +75,26 @@
             var token = _tokenGenerator.GenerateToken(user, _configuration, userRoles);
 
             return OperationResult<string>.Success(token);
+        }
+
+        public async Task<OperationResult<string>> ChangePasswordAsync(string userId, ChangePasswordModel changePasswordModel)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return OperationResult<string>.Failure(InvalidUserId, ErrorType.BadRequest);
+
+            var identityResult = await _userManager
+                .ChangePasswordAsync(user, changePasswordModel.CurrentPassword, changePasswordModel.NewPassword);
+
+            if (!identityResult.Succeeded)
+            {
+                var errorString = string.Join(Environment.NewLine, identityResult.Errors.Select(e => e.Description));
+
+                return OperationResult<string>.Failure(errorString, ErrorType.BadRequest);
+            }
+
+            return OperationResult<string>.Success(PasswordChanged);
         }
     }
 }

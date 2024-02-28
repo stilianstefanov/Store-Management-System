@@ -11,5 +11,7 @@
         public const string InvalidCredentials = "Invalid credentials!";
 
         public const string PasswordConfirmationError = "Password and confirmation password do not match!";
+
+        public const string InvalidUserId = "Invalid user id";
     }
 }

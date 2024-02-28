@@ -8,5 +8,7 @@
         Task<OperationResult<string>> RegisterAsync(RegisterModel registerModel);
 
         Task<OperationResult<string>> LoginAsync(LoginModel loginModel);
+
+        Task<OperationResult<string>> ChangePasswordAsync(string userId, ChangePasswordModel changePasswordModel);
     }
 }

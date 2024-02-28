@@ -4,6 +4,8 @@
     {
         public const string UserCreated = "User registered successfully!";
 
+        public const string PasswordChanged = "Password changed successfully!";
+
         public const int TokenExpirationInHours = 16;
 
         public const int CompanyNameMaxLength = 50;
