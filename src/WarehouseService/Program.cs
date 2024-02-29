@@ -3,14 +3,14 @@ namespace WarehouseService
     using System.Text;
     using Data;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.IdentityModel.Tokens;
     using Services;
     using Services.Contracts;
     using Data.Repositories.Contracts;
     using Data.Repositories;
     using Messaging;
     using Messaging.Contracts;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.IdentityModel.Tokens;
     using Services.GrpcServices;
     using Utilities.Middleware;
 

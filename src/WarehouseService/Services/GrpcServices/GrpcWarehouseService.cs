@@ -1,9 +1,9 @@
 ﻿namespace WarehouseService.Services.GrpcServices
 {
+    using Grpc.Core;
     using AutoMapper;
     using Data.Repositories.Contracts;
-    using Grpc.Core;
-
+    
     public class GrpcWarehouseService : WarehouseServiceGrpc.WarehouseServiceGrpcBase
     {
         private readonly IWarehouseRepository _repository;

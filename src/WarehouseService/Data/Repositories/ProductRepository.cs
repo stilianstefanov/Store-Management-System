@@ -1,8 +1,9 @@
 ﻿namespace WarehouseService.Data.Repositories
 {
+    using Microsoft.EntityFrameworkCore;
+
     using Contracts;
     using Messaging.Models;
-    using Microsoft.EntityFrameworkCore;
     using Models;
 
     public class ProductRepository : IProductRepository

@@ -1,9 +1,9 @@
 ﻿namespace WarehouseService.Data.Repositories
 {
-    using Contracts;
     using Microsoft.EntityFrameworkCore;
+
+    using Contracts;
     using Models;
-    using static Common.ExceptionMessages;
 
     public class WarehouseRepository : IWarehouseRepository
     {

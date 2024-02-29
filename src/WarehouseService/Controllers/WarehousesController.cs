@@ -1,9 +1,9 @@
 ﻿namespace WarehouseService.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
 
     using Data.ViewModels;
-    using Microsoft.AspNetCore.Authorization;
     using Services.Contracts;
     using Utilities.Extensions;
 

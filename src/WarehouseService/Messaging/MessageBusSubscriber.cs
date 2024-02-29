@@ -1,9 +1,9 @@
 ﻿namespace WarehouseService.Messaging
 {
     using System.Text;
-    using Contracts;
     using RabbitMQ.Client;
     using RabbitMQ.Client.Events;
+    using Contracts;
 
     public class MessageBusSubscriber : BackgroundService
     {
