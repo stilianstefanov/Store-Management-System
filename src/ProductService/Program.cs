@@ -1,17 +1,17 @@
 namespace ProductService
 {
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.IdentityModel.Tokens;
+    using System.Text;
     using Data;
     using Data.Contracts;
     using Messaging;
     using Messaging.Contracts;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.IdentityModel.Tokens;
     using Services;
     using Services.Contracts;
     using Services.GrpcServices;
     using Services.GrpcServices.Contracts;
-    using System.Text;
     using Utilities.Middleware;
 
     public class Program

@@ -1,10 +1,10 @@
 ﻿namespace ProductService.Services.GrpcServices
 {
+    using Grpc.Core;
+    using Grpc.Net.Client;
     using AutoMapper;
     using Contracts;
     using Data.ViewModels;
-    using Grpc.Core;
-    using Grpc.Net.Client;
     using WarehouseService;
 
     public class WarehouseGrpcClientService : IWarehouseGrpcClientService

@@ -1,8 +1,8 @@
 ﻿namespace ProductService.Messaging
 {
+    using System.Text.Json;
     using Contracts;
     using Models;
-    using System.Text.Json;
     using static EventTypes;
 
     public class MessageSenderService : IMessageSenderService

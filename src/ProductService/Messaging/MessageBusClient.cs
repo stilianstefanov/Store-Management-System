@@ -1,8 +1,8 @@
 ﻿namespace ProductService.Messaging
 {
+    using RabbitMQ.Client;
     using System.Text;
     using Contracts;
-    using RabbitMQ.Client;
 
     public class MessageBusClient : IMessageBusClient
     {

@@ -1,9 +1,9 @@
 ﻿namespace ProductService.Services.GrpcServices
 {
+    using Grpc.Core;
     using AutoMapper;
     using Data.Contracts;
-    using Grpc.Core;
-
+    
     public class GrpcProductService : ProductServiceGrpc.ProductServiceGrpcBase
     {
         private readonly IProductRepository _productRepository;

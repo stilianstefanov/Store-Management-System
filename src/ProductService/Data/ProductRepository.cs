@@ -1,7 +1,7 @@
 ﻿namespace ProductService.Data
 {
-    using Contracts;
     using Microsoft.EntityFrameworkCore;
+    using Contracts;
     using Models;
 
     public class ProductRepository : IProductRepository

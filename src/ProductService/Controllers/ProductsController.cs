@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace ProductService.Controllers
+﻿namespace ProductService.Controllers
 {
-    using Data.ViewModels;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
+
+    using Data.ViewModels;
     using Services.Contracts;
     using Utilities.Extensions;
 
