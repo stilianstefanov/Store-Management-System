@@ -1,11 +1,11 @@
 ﻿namespace IdentityService.Services
 {
     using System.IdentityModel.Tokens.Jwt;
+    using Microsoft.IdentityModel.Tokens;
     using System.Security.Claims;
     using System.Text;
     using Contracts;
     using Data.Models;
-    using Microsoft.IdentityModel.Tokens;
     using static Common.ApplicationConstants;
 
     public class TokenGeneratorService : ITokenGeneratorService

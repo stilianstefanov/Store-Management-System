@@ -1,9 +1,9 @@
 ﻿namespace IdentityService.Services
 {
+    using Microsoft.AspNetCore.Identity;
     using Contracts;
     using Data.Models;
     using Data.ViewModels;
-    using Microsoft.AspNetCore.Identity;
     using Utilities;
     using Utilities.Enums;
     using static Common.ExceptionMessages;

@@ -1,13 +1,12 @@
-
 namespace IdentityService
 {
-    using System.Text;
-    using Data;
-    using Data.Models;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
+    using System.Text;
+    using Data;
+    using Data.Models;
     using Services;
     using Services.Contracts;
     using Utilities.Middleware;

@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace IdentityService.Controllers
+﻿namespace IdentityService.Controllers
 {
-    using Data.ViewModels;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
+    using Data.ViewModels;
     using Utilities.Extensions;
     using Services.Contracts;
 
