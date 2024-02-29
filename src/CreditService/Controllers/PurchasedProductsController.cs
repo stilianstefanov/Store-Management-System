@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace CreditService.Controllers
+﻿namespace CreditService.Controllers
 {
-    using Utilities.Extensions;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
     using Services.Contracts;
+    using Utilities.Extensions;
 
     [Route("api/borrowers/{borrowerId}/purchases/{purchaseId}/[controller]")]
     [ApiController]

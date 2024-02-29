@@ -1,11 +1,10 @@
 ﻿namespace CreditService.Services.GrpcServices
 {
     using AutoMapper;
-    using Contracts;
-    using CreditService.Services.GrpcServices.Contracts;
-    using Data.ViewModels.PurchasedProduct;
     using Grpc.Core;
     using Grpc.Net.Client;
+    using Contracts;
+    using Data.ViewModels.PurchasedProduct;
     using ProductService;
 
     public class ProductGrpcClientService : IProductGrpcClientService

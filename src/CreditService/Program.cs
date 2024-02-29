@@ -1,12 +1,12 @@
 namespace CreditService
 {
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.IdentityModel.Tokens;
     using System.Text;
     using Data;
     using Data.Repositories;
     using Data.Repositories.Contracts;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.IdentityModel.Tokens;
     using Services;
     using Services.Contracts;
     using Services.GrpcServices;
