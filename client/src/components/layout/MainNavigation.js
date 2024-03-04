@@ -5,7 +5,7 @@ function MainNavigation() {
     return (
     <header className={classes.header}>
         <div className={classes.logo}>
-            <Link to='/'>Store Management</Link>
+            <Link to='/'>STORE<span>management</span></Link>
         </div>
         <nav>
             <ul>
