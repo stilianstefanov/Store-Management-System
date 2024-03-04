@@ -2,6 +2,11 @@ import { Link } from 'react-router-dom';
 import classes from './MainNavigation.module.css';
 
 function MainNavigation() {
+
+    function logoutHandler() {
+        //ToDo 
+    }
+
     return (
     <header className={classes.header}>
         <div className={classes.logo}>
@@ -17,6 +22,9 @@ function MainNavigation() {
                 </li>
                 <li>
                     <Link to='/borrowers'>Borrowers</Link>
+                </li>
+                <li>
+                    <button onClick={logoutHandler}>Logout</button>
                 </li>
             </ul>
         </nav>
