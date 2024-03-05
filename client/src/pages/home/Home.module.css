@@ -1,7 +1,10 @@
-.image{
-    width: 100%;
-    height: 100vh;
-}
+.image {
+    display: block;
+    width: 100%; 
+    height: calc(100vh - 6rem);
+    object-fit: cover; 
+  }
+
 .inscription {
     position: absolute;
     top: 15%;

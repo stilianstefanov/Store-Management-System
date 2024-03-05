@@ -3,7 +3,7 @@ import styles from './Home.module.css'
 
 function HomePage() {
     return (
-    <div>
+    <div>      
         <img className={styles.image} src={image} alt='homeimage'/>
         <h1 className={styles.inscription}>Manage your store easy and secure!</h1>
     </div>
