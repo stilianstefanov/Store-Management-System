@@ -25,26 +25,32 @@ function MainNavigation() {
             </div>
             <nav>
                 {isActive ? (
-                <ul>
-                    <li>
-                        <Link to='/products'>Products</Link>
-                    </li>
-                    <li>
-                        <Link to='/warehouses'>Warehouses</Link>
-                    </li>
-                    <li>
-                        <Link to='/borrowers'>Borrowers</Link>
-                    </li>
-                    <li>
-                        <button onClick={logoutHandler}>Logout</button>
-                    </li>
-                </ul>
+                    <ul>
+                        <li>
+                            <Link to='/products'>Products</Link>
+                        </li>
+                        <li>
+                            <Link to='/warehouses'>Warehouses</Link>
+                        </li>
+                        <li>
+                            <Link to='/borrowers'>Borrowers</Link>
+                        </li>
+                        <li>
+                            <button onClick={logoutHandler}>Logout</button>
+                        </li>
+                    </ul>
                 ) : (
                     <ul>
+                        <li>
+                            <Link to='/login'>Login</Link>
+                        </li>
+                        <li>
+                            <Link to='/register'>Register</Link>
+                        </li>
 
                     </ul>
                 )
-            }
+                }
             </nav>
         </header>
     );
