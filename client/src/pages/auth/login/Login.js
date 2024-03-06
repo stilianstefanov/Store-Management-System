@@ -1,16 +1,29 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Login.module.css"
+import * as UserService from '../../../services/UserService'
+import styles from "./Login.module.css";
 
 function LoginPage() {
     const navigate = useNavigate();
     const [emailOrUserName, setEmailOrUserName] = useState("");
     const [password, setPassword] = useState("");
 
-    function handleLogin() {
+    async function handleLogin(event) {
+        event.preventDefault();
 
+        if (emailOrUserName && password) {
+            const loginRequest = {
+                emailOrUserName,
+                password
+            };
+
+            const data = await UserService.Login(loginRequest);
+
+            sessionStorage.setItem('token', data);
+            navigate('/');
+            window.location.reload();
+        }
     }
-
 
     return (
         <div className={styles["Auth-container"]}>
