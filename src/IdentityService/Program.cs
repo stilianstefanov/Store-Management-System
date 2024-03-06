@@ -59,6 +59,15 @@ namespace IdentityService
                     };
                 });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    b => b
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
+
             builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
 
@@ -78,6 +87,7 @@ namespace IdentityService
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowAll");
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -1,21 +1,15 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import classes from './MainNavigation.module.css';
 
 function MainNavigation() {
-    const [isActive, setIsActive] = useState(true);
-
-    useEffect(() => {
-        const token = sessionStorage.getItem('token');
-        if (!token) {
-            setIsActive(false);
-        }
-    }, []);
+    const navigate = useNavigate();
+    const { isLoggedIn, logout } = useAuth();
 
     function logoutHandler() {
-        sessionStorage.removeItem('token');
-        setIsActive(false);
+        logout();
+        navigate('/');
     }
 
     return (
@@ -24,7 +18,7 @@ function MainNavigation() {
                 <Link to='/'>STORE<span>management</span></Link>
             </div>
             <nav>
-                {isActive ? (
+                {isLoggedIn ? (
                     <ul>
                         <li>
                             <Link to='/products'>Products</Link>
