@@ -61,9 +61,9 @@ namespace IdentityService
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll",
+                options.AddPolicy("AllowClient",
                     b => b
-                        .AllowAnyOrigin()
+                        .WithOrigins(builder.Configuration["ClientUrl"]!)
                         .AllowAnyMethod()
                         .AllowAnyHeader());
             });
@@ -87,7 +87,7 @@ namespace IdentityService
             }
 
             app.UseHttpsRedirection();
-            app.UseCors("AllowAll");
+            app.UseCors("AllowClient");
 
             app.UseAuthentication();
             app.UseAuthorization();
