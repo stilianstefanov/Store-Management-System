@@ -47,6 +47,15 @@ namespace CreditService
                     };
                 });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowClient",
+                    b => b
+                        .WithOrigins(builder.Configuration["ClientUrl"]!)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
+
             builder.Services.AddScoped<IBorrowerRepository, BorrowerRepository>();
             builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
             builder.Services.AddScoped<IPurchasedProductRepository, PurchasedProductRepository>();
@@ -70,6 +79,7 @@ namespace CreditService
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowClient");
 
             app.UseAuthentication();
             app.UseAuthorization();
