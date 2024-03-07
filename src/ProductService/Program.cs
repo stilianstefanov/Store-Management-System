@@ -48,6 +48,15 @@ namespace ProductService
                     };
                 });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowClient",
+                    b => b
+                        .WithOrigins(builder.Configuration["ClientUrl"]!)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
+
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IWarehouseGrpcClientService, WarehouseGrpcClientService>();
@@ -71,6 +80,7 @@ namespace ProductService
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowClient");
 
             app.UseAuthentication();
             app.UseAuthorization();
