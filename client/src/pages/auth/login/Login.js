@@ -9,6 +9,7 @@ function LoginPage() {
     const { login } = useAuth();
     const [userNameOrEmail, setuserNameOrEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loginError, setLoginError] = useState("");
 
     async function handleLogin(event) {
         event.preventDefault();
@@ -19,9 +20,17 @@ function LoginPage() {
                 password
             };
 
-            const data = await UserService.Login(loginRequest);
-            login(data);
-            navigate('/');
+            try {
+                const data = await UserService.Login(loginRequest);
+                login(data);
+                navigate('/');
+            } catch (error) {
+                if (error.response && error.response.status === 400) {
+                    setLoginError("Incorrect username or password.");
+                    return;
+                }
+                console.log(error);
+            }
         }
     }
 
@@ -29,6 +38,7 @@ function LoginPage() {
         <div className={styles["Auth-container"]}>
             <div className={styles["Auth-card"]}>
                 <h1 className={styles["Auth-header"]}>Login</h1>
+                {loginError && <p className={styles["Error-message"]}>{loginError}</p>}
                 <form>
                     <input
                         placeholder="Email or Username"
@@ -43,7 +53,7 @@ function LoginPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button type="button" className={styles["Auth-button"]} onClick={handleLogin}>
+                    <button type="submit" className={styles["Auth-button"]} onClick={handleLogin}>
                         Login
                     </button>
                 </form>
