@@ -47,6 +47,15 @@ namespace WarehouseService
                     };
                 });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowClient",
+                    b => b
+                        .WithOrigins(builder.Configuration["ClientUrl"]!)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
+
             builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
             builder.Services.AddScoped<IWarehouseService, WarehouseService>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -72,6 +81,7 @@ namespace WarehouseService
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowClient");
 
             app.UseAuthentication();
             app.UseAuthorization();
