@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import * as UserService from '../../../services/UserService'
+import * as UserService from '../../../services/userService'
 import styles from "./Login.module.css";
+import { toast } from "react-toastify";
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -27,6 +28,7 @@ function LoginPage() {
             } catch (error) {
                 if (error.response && error.response.status === 400) {
                     setLoginError("Incorrect username or password.");
+                    toast.error('Some error');
                     return;
                 }
                 console.log(error);
@@ -38,7 +40,7 @@ function LoginPage() {
         <div className={styles["Auth-container"]}>
             <div className={styles["Auth-card"]}>
                 <h1 className={styles["Auth-header"]}>Login</h1>
-                {loginError && <p className={styles["Error-message"]}>{loginError}</p>}
+                 {loginError && <p className={styles["Error-message"]}>{loginError}</p>}
                 <form>
                     <input
                         placeholder="Email or Username"

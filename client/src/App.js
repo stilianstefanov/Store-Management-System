@@ -1,5 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Layout from './components/layout/Layout';
 import HomePage from './pages/home/Home';
@@ -10,11 +12,13 @@ import LoginPage from './pages/auth/login/Login';
 import RegisterPage from './pages/auth/register/Register';
 
 
+
 function App() {
   const { isLoggedIn } = useAuth();
 
   return (
     <Layout>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
       <Routes>
         <Route path='/' element={<HomePage />} exact />
         {isLoggedIn ? (
