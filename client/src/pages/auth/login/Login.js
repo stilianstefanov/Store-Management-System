@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import * as UserService from '../../../services/userService'
+import * as UserService from "../../../services/userService";
 import styles from "./Login.module.css";
 import { toast } from "react-toastify";
 
 function LoginPage() {
-    const navigate = useNavigate();
-    const { login } = useAuth();
     const [userNameOrEmail, setuserNameOrEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginError, setLoginError] = useState("");
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     async function handleLogin(event) {
         event.preventDefault();
@@ -20,17 +20,13 @@ function LoginPage() {
                 userNameOrEmail,
                 password
             };
-
+            
             try {
                 const data = await UserService.Login(loginRequest);
                 login(data);
                 navigate('/');
-            } catch (error) {
-                if (error.response && error.response.status === 400) {
-                    setLoginError("Incorrect username or password.");
-                    toast.error('Some error');
-                    return;
-                }
+            }
+            catch (error) {
                 console.log(error);
             }
         }
