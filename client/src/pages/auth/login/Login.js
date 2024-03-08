@@ -12,7 +12,7 @@ function LoginPage() {
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    async function handleLogin(event) {
+    const loginHadler = async (event) => {
         event.preventDefault();
 
         if (userNameOrEmail && password) {
@@ -20,14 +20,19 @@ function LoginPage() {
                 userNameOrEmail,
                 password
             };
-            
             try {
                 const data = await UserService.Login(loginRequest);
                 login(data);
                 navigate('/');
-            }
-            catch (error) {
-                console.log(error);
+
+            } catch (error) {
+                if (error.response && error.response.status === 400) {
+                    setLoginError("Invalid username or password!");
+                    toast.error("Invalid Credentials!");
+                } else {
+                    toast.error("An unexpected error occurred. Please try again later.");
+                }
+                console.error(error);
             }
         }
     }
@@ -36,7 +41,7 @@ function LoginPage() {
         <div className={styles["Auth-container"]}>
             <div className={styles["Auth-card"]}>
                 <h1 className={styles["Auth-header"]}>Login</h1>
-                 {loginError && <p className={styles["Error-message"]}>{loginError}</p>}
+                {loginError && <p className={styles["Error-message"]}>{loginError}</p>}
                 <form>
                     <input
                         placeholder="Email or Username"
@@ -51,7 +56,7 @@ function LoginPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button type="submit" className={styles["Auth-button"]} onClick={handleLogin}>
+                    <button type="submit" className={styles["Auth-button"]} onClick={loginHadler}>
                         Login
                     </button>
                 </form>
