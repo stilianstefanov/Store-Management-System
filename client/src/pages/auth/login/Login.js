@@ -42,7 +42,7 @@ function LoginPage() {
             <div className={styles["Auth-card"]}>
                 <h1 className={styles["Auth-header"]}>Login</h1>
                 {loginError && <p className={styles["Error-message"]}>{loginError}</p>}
-                <form>
+                <form onSubmit={loginHadler}>
                     <input
                         placeholder="Email or Username"
                         className={styles["Auth-input"]}
@@ -56,7 +56,7 @@ function LoginPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button type="submit" className={styles["Auth-button"]} onClick={loginHadler}>
+                    <button type="submit" className={styles["Auth-button"]}>
                         Login
                     </button>
                 </form>

@@ -11,11 +11,11 @@
         public string Email { get; set; } = null!;
 
         [Required]
-        [StringLength(CompanyNameMaxLength, MinimumLength = CompanyNameMinLength)]
+        [StringLength(CompanyNameMaxLength, MinimumLength = CompanyNameMinLength, ErrorMessage = CompanyNameLengthError)]
         public string CompanyName { get; set; } = null!;
 
         [Required]
-        [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength)]
+        [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength, ErrorMessage = UserNameLengthError)]
         public string UserName { get; set; } = null!;
 
         [Required]

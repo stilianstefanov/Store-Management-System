@@ -13,5 +13,9 @@
         public const string PasswordConfirmationError = "Password and confirmation password do not match!";
 
         public const string InvalidUserId = "Invalid user id";
+
+        public const string CompanyNameLengthError = "Company name must be between 3 and 50 characters long!";
+
+        public const string UserNameLengthError = "Username must be between 3 and 50 characters long!";
     }
 }

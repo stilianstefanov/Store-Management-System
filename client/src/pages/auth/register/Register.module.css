@@ -49,3 +49,8 @@
 .Auth-button:hover {
     background-color: black;
 }
+
+.Error-message {
+    color: red;
+    margin-top: 0;
+}
