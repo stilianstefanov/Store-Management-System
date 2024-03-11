@@ -2,6 +2,7 @@ import { useState } from "react";
 import * as UserService from '../../../services/userService';
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import styles from './Register.module.css';
 
 function RegisterPage() {
     const [email, setEmail] = useState("");
@@ -72,7 +73,7 @@ function RegisterPage() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                 />
                 <button type="submit" className={styles["Auth-button"]} onClick={registerHandler}>
-                    Login
+                    Confirm
                 </button>
             </form>
         </div>
