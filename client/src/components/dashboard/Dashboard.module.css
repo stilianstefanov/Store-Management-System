@@ -9,6 +9,12 @@
     padding: 2em;
 }
 
+.dash-title {
+    font-family: "Angkor", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
 .barcode-input {
     font-size: 16px;
     padding: 10px;
@@ -18,14 +24,19 @@
 }
 
 .table-wrapper {
-    border: solid;
+    border: 1px solid;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     height: 70%;
 }
 
-.products-header {
-    display: flex;
-    
-    justify-content: space-between;
+.tableCustom {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.tableHeader,
+.tableRow {
+    text-align: center;
+    font-size: 1.2rem;
 }
