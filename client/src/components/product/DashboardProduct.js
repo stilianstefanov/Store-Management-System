@@ -1,12 +1,12 @@
 import styles from './DashboardProduct.module.css'
 
-function DashboardProduct(props) {
+function DashboardProduct({ product }) {
     return (
-        <li key={props.product.id}>
-            <p>{props.product.name}</p>
-            <p>{props.product.price}</p>
-            <p>{props.quantity}</p>
-        </li>
+        <tr>
+            <td>{product.name}</td>
+            <td>{product.price}</td>
+            <td>{product.quantity}</td>
+        </tr>
     );
 }
 
