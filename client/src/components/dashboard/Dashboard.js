@@ -44,6 +44,7 @@ function DashBoard() {
                 </table>
             </div>
             <div className={styles['button-wrapper']}>
+                <p className={styles['total-p']}>Total: </p>
                 <button type="button" className={`btn btn-success ${styles['button-custom']}`}>Finish Transaction</button>
                 <button type="button" className={`btn btn-warning ${styles['button-custom']}`}>Delayed Payment</button>
             </div>
