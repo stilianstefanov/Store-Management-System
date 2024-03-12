@@ -43,6 +43,10 @@ function DashBoard() {
                     </tbody>
                 </table>
             </div>
+            <div className={styles['button-wrapper']}>
+                <button type="button" className={`btn btn-success ${styles['button-custom']}`}>Finish Transaction</button>
+                <button type="button" className={`btn btn-warning ${styles['button-custom']}`}>Delayed Payment</button>
+            </div>
         </div>
     );
 }
