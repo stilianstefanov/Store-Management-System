@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Contracts;
     using Models;
+    using ViewModels;
 
     public class ProductRepository : IProductRepository
     {
@@ -28,6 +29,14 @@
         public async Task<Product?> GetByIdAsync(string id)
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id.ToString() == id && !p.IsDeleted);
+
+            return product;
+        }
+
+        public async Task<Product?> GetByBarcodeAsync(string barcode)
+        {
+            var product = await _dbContext.Products
+                .FirstOrDefaultAsync(p => p.Barcode == barcode && !p.IsDeleted);
 
             return product;
         }

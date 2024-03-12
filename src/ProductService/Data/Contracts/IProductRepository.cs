@@ -10,6 +10,8 @@
 
         Task<Product?> GetByIdAsync(string id);
 
+        Task<Product?> GetByBarcodeAsync(string barcode);
+
         Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<string> ids);
 
         Task AddAsync(Product product);

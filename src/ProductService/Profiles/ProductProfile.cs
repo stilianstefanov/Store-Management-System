@@ -35,6 +35,8 @@
 
             CreateMap<Product, GrpcProductModel>()
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id.ToString()));
+
+            CreateMap<Product, ProductDashViewModel>();
         }
     }
 }

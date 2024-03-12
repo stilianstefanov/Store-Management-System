@@ -39,6 +39,16 @@
             return Ok(result.Data);
         }
 
+        [HttpGet("barcode/{barcode}")]
+        public async Task<IActionResult> GetProductByBarcode(string barcode)
+        {
+            var result = await _productService.GetByBarcodeAsync(barcode, User.GetId()!);
+
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return Ok(result.Data);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateProduct(ProductCreateModel model)
         {

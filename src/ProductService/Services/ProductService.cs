@@ -74,6 +74,18 @@
             return OperationResult<ProductDetailsViewModel>.Success(await MapProductDetailsModelWithWarehouse(product));
         }
 
+        public async Task<OperationResult<ProductDashViewModel>> GetByBarcodeAsync(string barcode, string userId)
+        {
+            var product = await _productRepository.GetByBarcodeAsync(barcode);
+
+            if (product == null || product.UserId != userId)
+            {
+                return OperationResult<ProductDashViewModel>.Failure(ProductNotFound, ErrorType.NotFound);
+            }
+
+            return OperationResult<ProductDashViewModel>.Success(_mapper.Map<ProductDashViewModel>(product));
+        }
+
         public async Task<OperationResult<ProductDetailsViewModel>> UpdateAsync(string id, ProductUpdateModel model, string userId)
         {
             var productToUpdate = await _productRepository.GetByIdAsync(id);
