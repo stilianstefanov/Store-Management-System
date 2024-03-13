@@ -9,7 +9,7 @@ function DashboardProduct({ product, updateQty }) {
     return (
         <tr>
             <td>{product.name}</td>
-            <td>{product.price}</td>
+            <td>{product.price.toFixed(2)}</td>
             <td className={styles.inputContainer}>
                 <input
                     value={product.quantity}
