@@ -4,11 +4,15 @@ import { useState } from 'react';
 import * as ProductService from '../../services/productService'
 import { toast } from 'react-toastify';
 import ReactLoading from 'react-loading';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext'
 
 function DashBoard() {
     const [products, setProducts] = useState([]);
     const [currentBarcode, setCurrentBarcode] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const { logout } = useAuth();
+    const navigate = useNavigate();
 
     const getProductHandler = async (event) => {
         const barcode = event.target.value;
@@ -32,7 +36,13 @@ function DashBoard() {
                     }
                 });
             } catch (error) {
-                toast.error(error.response.data);
+                if (error.response && error.response.status === 401) {
+                    logout();
+                    navigate('/login');
+                    toast.warning('Your session has expired. Please login again.')
+                } else {
+                    toast.error(error.response.data);
+                }
                 console.error(error);
             } finally {
                 setIsLoading(false);
