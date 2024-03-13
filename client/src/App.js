@@ -8,9 +8,9 @@ import Layout from './components/layout/Layout';
 import HomePage from './pages/home/Home';
 import ProductsPage from './pages/products/Products';
 import WarehousePage from './pages/warehouses/Warehouses';
-import BorrowersPage from './pages/borrowers/Borrowers';
 import LoginPage from './pages/auth/login/Login';
 import RegisterPage from './pages/auth/register/Register';
+import DelayedPaymentsPage from './pages/delayedPayments/DelayedPayments';
 
 
 
@@ -26,7 +26,7 @@ function App() {
           <>
             <Route path='/products' element={<ProductsPage />} />
             <Route path='/warehouses' element={<WarehousePage />} />
-            <Route path='/borrowers' element={<BorrowersPage />} />
+            <Route path='/delayedpayments' element={<DelayedPaymentsPage />} />
           </>
         ) : (
           <>

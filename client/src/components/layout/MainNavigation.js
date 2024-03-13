@@ -27,7 +27,7 @@ function MainNavigation() {
                             <Link to='/warehouses'>Warehouses</Link>
                         </li>
                         <li>
-                            <Link to='/borrowers'>Borrowers</Link>
+                            <Link to='/delayedpayments'>Delayed Payments</Link>
                         </li>
                         <li>
                             <button onClick={logoutHandler}>Logout</button>
