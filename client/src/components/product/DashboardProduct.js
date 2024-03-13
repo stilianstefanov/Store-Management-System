@@ -10,12 +10,14 @@ function DashboardProduct({ product, updateQty }) {
         <tr>
             <td>{product.name}</td>
             <td>{product.price}</td>
-            <td> <input
-                value={product.quantity}
-                onChange={qtyChangeHandler}
-                type="number"
-                className='form-control'
-            /></td>
+            <td className={styles.inputContainer}>
+                <input
+                    value={product.quantity}
+                    onChange={qtyChangeHandler}
+                    type="number"
+                    className={`form-control ${styles.inputField}`}
+                />
+            </td>
         </tr>
     );
 }

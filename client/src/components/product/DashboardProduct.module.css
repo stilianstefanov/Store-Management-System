@@ -1,0 +1,10 @@
+.inputContainer {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.inputField {
+    width: 50%;
+    text-align: center;
+}
