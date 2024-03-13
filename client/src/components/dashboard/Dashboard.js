@@ -17,8 +17,20 @@ function DashBoard() {
         if (barcode.length === 13) {
             setIsLoading(true);
             try {
-                const product = await ProductService.GetByBarcode(barcode);
-                setProducts(prevProducts => [...prevProducts, product]);
+                let product = await ProductService.GetByBarcode(barcode);
+                product = { ...product, quantity: 1 };
+                setProducts(prevProducts => {
+                    const existingProductIndex = prevProducts.findIndex(p => p.id === product.id);
+
+                    if (existingProductIndex !== -1) {
+                        const updatedProducts = [...prevProducts];
+                        updatedProducts[existingProductIndex].quantity += 1;
+                        return updatedProducts;
+
+                    } else {
+                        return [...prevProducts, product];
+                    }
+                });
             } catch (error) {
                 toast.error(error.response.data);
                 console.error(error);
@@ -28,6 +40,14 @@ function DashBoard() {
             }
         }
     };
+
+    const updateProductQty = (productId, newQty) => {
+        setProducts(currentProducts =>
+            currentProducts.map(product =>
+                product.id === productId ? { ...product, quantity: newQty } : product
+            )
+        );
+    }
 
     return (
         <div className={`container ${styles['dash-container']}`}>
@@ -55,13 +75,13 @@ function DashBoard() {
                             <tr>
                                 <td colSpan="3">
                                     <div className={styles['loading-container']}>
-                                        <ReactLoading type="spin" color="#808080"/>
+                                        <ReactLoading type="spin" color="#808080" />
                                     </div>
                                 </td>
                             </tr>
                         ) : (
                             products.map(product => (
-                                <DashboardProduct key={product.id} product={product} />
+                                <DashboardProduct key={product.id} product={product} updateQty={updateProductQty} />
                             ))
                         )}
                     </tbody>
