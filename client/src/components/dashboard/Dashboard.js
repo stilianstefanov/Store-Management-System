@@ -59,6 +59,10 @@ function DashBoard() {
         );
     }
 
+    const calculateTotalCost = (productsArr) => {
+        return productsArr.reduce((total, product) => total + product.price * product.quantity, 0);
+    }
+
     return (
         <div className={`container ${styles['dash-container']}`}>
             <h1 className={`text-center ${styles['dash-title']}`}>DASHBOARD</h1>
@@ -98,7 +102,7 @@ function DashBoard() {
                 </table>
             </div>
             <div className={styles['button-wrapper']}>
-                <p className={styles['total-p']}>Total: </p>
+                <p className={styles['total-p']}>Total: {calculateTotalCost(products).toFixed(2)} </p>
                 <button type="button" className={`btn btn-success ${styles['button-custom']}`}>Finish Transaction</button>
                 <button type="button" className={`btn btn-warning ${styles['button-custom']}`}>Delayed Payment</button>
             </div>
