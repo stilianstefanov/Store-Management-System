@@ -24,7 +24,7 @@ spec:
                 name: product-clusterip-srv
                 port:
                   number: 8080
-          - path: /api/delayedpayment/clients
+          - path: /api/clients
             pathType: Prefix
             backend:
               service:
