@@ -1,4 +1,4 @@
-﻿namespace CreditService.Utilities
+﻿namespace DelayedPaymentService.Utilities
 {
     using Enums;
 

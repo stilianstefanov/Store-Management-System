@@ -1,4 +1,4 @@
-﻿namespace CreditService.Data.Repositories.Contracts
+﻿namespace DelayedPaymentService.Data.Repositories.Contracts
 {
     using Models;
 

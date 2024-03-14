@@ -1,4 +1,4 @@
-﻿namespace CreditService.Services
+﻿namespace DelayedPaymentService.Services
 {
     using AutoMapper;
     using Contracts;

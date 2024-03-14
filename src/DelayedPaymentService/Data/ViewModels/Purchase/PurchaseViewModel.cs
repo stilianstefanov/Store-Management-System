@@ -1,4 +1,4 @@
-﻿namespace CreditService.Data.ViewModels.Purchase
+﻿namespace DelayedPaymentService.Data.ViewModels.Purchase
 {
     public class PurchaseViewModel
     {

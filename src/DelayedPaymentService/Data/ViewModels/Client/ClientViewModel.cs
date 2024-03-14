@@ -1,4 +1,4 @@
-﻿namespace CreditService.Data.ViewModels.Client
+﻿namespace DelayedPaymentService.Data.ViewModels.Client
 {
     public class ClientViewModel
     {

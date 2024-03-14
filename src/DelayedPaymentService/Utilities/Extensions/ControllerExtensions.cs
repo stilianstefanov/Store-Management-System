@@ -1,4 +1,4 @@
-﻿namespace CreditService.Utilities.Extensions
+﻿namespace DelayedPaymentService.Utilities.Extensions
 {
     using Enums;
     using Microsoft.AspNetCore.Mvc;

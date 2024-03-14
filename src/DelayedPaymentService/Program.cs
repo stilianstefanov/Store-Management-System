@@ -1,4 +1,4 @@
-namespace CreditService
+namespace DelayedPaymentService
 {
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;

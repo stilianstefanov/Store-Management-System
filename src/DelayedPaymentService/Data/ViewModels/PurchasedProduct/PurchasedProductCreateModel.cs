@@ -1,4 +1,4 @@
-﻿namespace CreditService.Data.ViewModels.PurchasedProduct
+﻿namespace DelayedPaymentService.Data.ViewModels.PurchasedProduct
 {
     using System.ComponentModel.DataAnnotations;
     using static Common.EntityValidationConstants.PurchaseProduct;

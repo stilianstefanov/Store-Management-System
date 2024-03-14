@@ -1,4 +1,4 @@
-﻿namespace CreditService.Controllers
+﻿namespace DelayedPaymentService.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;

@@ -1,4 +1,4 @@
-﻿namespace CreditService.Services.Contracts
+﻿namespace DelayedPaymentService.Services.Contracts
 {
     using Data.ViewModels.Client;
     using Utilities;

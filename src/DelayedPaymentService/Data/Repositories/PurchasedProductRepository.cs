@@ -1,4 +1,4 @@
-﻿namespace CreditService.Data.Repositories
+﻿namespace DelayedPaymentService.Data.Repositories
 {
     using Contracts;
     using Microsoft.EntityFrameworkCore;

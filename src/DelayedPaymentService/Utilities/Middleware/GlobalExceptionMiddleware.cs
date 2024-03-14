@@ -1,4 +1,4 @@
-﻿namespace CreditService.Utilities.Middleware
+﻿namespace DelayedPaymentService.Utilities.Middleware
 {
     using System.Text.Json;
     using static Common.ExceptionMessages;

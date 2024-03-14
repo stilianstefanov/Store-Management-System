@@ -1,4 +1,4 @@
-﻿namespace CreditService.Profiles
+﻿namespace DelayedPaymentService.Profiles
 {
     using AutoMapper;
     using Data.Models;

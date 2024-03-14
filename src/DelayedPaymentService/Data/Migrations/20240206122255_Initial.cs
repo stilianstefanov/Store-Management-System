@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CreditService.Migrations
+namespace DelayedPaymentService.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

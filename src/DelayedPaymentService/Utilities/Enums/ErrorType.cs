@@ -1,4 +1,4 @@
-﻿namespace CreditService.Utilities.Enums
+﻿namespace DelayedPaymentService.Utilities.Enums
 {
     public enum ErrorType
     {

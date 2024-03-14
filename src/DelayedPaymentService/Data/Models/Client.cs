@@ -1,4 +1,4 @@
-﻿namespace CreditService.Data.Models
+﻿namespace DelayedPaymentService.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
     using static Common.EntityValidationConstants.Client;

@@ -1,4 +1,4 @@
-﻿namespace CreditService.Services.GrpcServices
+﻿namespace DelayedPaymentService.Services.GrpcServices
 {
     using AutoMapper;
     using Grpc.Core;

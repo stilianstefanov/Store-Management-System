@@ -1,4 +1,4 @@
-﻿namespace CreditService.Common
+﻿namespace DelayedPaymentService.Common
 {
     public static class EntityValidationConstants
     {

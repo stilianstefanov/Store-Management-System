@@ -1,4 +1,4 @@
-﻿namespace CreditService.Data
+﻿namespace DelayedPaymentService.Data
 {
     using Microsoft.EntityFrameworkCore;
     using Models;
