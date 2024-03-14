@@ -69,6 +69,27 @@
             return OperationResult<ClientViewModel>.Success(_mapper.Map<ClientViewModel>(clientToUpdate)!);
         }
 
+        public async Task<OperationResult<ClientViewModel>> DecreaseClientCreditAsync(string id, decimal amount, string userId)
+        {
+            var client = await _clientRepository.GetClientByIdAsync(id);
+
+            if (client == null || client.UserId != userId)
+            {
+                return OperationResult<ClientViewModel>.Failure(ClientNotFound, ErrorType.NotFound);
+            }
+
+            client.CurrentCredit -= amount;
+
+            if (client.CurrentCredit < 0)
+            {
+                client.CurrentCredit = 0;
+            }
+
+            await _clientRepository.SaveChangesAsync();
+
+            return OperationResult<ClientViewModel>.Success(_mapper.Map<ClientViewModel>(client)!);
+        }
+
         public async Task<OperationResult<bool>> DeleteClientAsync(string id, string userId)
         {
             var client = await _clientRepository.GetClientByIdAsync(id);

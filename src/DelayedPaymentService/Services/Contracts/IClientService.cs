@@ -13,12 +13,14 @@
 
         Task<OperationResult<ClientViewModel>> UpdateClientAsync(string id, ClientUpdateModel client, string userId);
 
+        Task<OperationResult<ClientViewModel>> DecreaseClientCreditAsync(string id, decimal amount, string userId);
+
+        Task DecreaseClientCreditAsync(string id, decimal amount);
+
         Task<OperationResult<bool>> DeleteClientAsync(string id, string userId);
 
         Task<bool> ClientExistsAsync(string id);
 
         Task<bool> IncreaseClientCreditAsync(string id, decimal amount);
-
-        Task DecreaseClientCreditAsync(string id, decimal amount);
     }
 }

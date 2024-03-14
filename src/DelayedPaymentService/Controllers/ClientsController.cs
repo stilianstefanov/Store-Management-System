@@ -62,6 +62,16 @@
             return Ok(result.Data);
         }
 
+        [HttpPatch("{id}/decreaseCredit")]
+        public async Task<IActionResult> DecreaseClientCredit(string id, [FromBody] ClientDecreaseCreditModel model)
+        {
+            var result = await _clientService.DecreaseClientCreditAsync(id, model.Amount, User.GetId()!);
+
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return Ok(result.Data);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteClient(string id)
         {
