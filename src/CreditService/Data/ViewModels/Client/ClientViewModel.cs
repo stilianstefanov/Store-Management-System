@@ -1,6 +1,6 @@
-﻿namespace CreditService.Data.ViewModels.Borrower
+﻿namespace CreditService.Data.ViewModels.Client
 {
-    public class BorrowerViewModel
+    public class ClientViewModel
     {
         public string Id { get; set; } = null!;
 

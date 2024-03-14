@@ -5,7 +5,7 @@
     using Services.Contracts;
     using Utilities.Extensions;
 
-    [Route("api/borrowers/{borrowerId}/purchases/{purchaseId}/[controller]")]
+    [Route("api/clients/{clientId}/purchases/{purchaseId}/[controller]")]
     [ApiController]
     [Authorize]
     public class PurchasedProductsController : ControllerBase
@@ -28,9 +28,9 @@
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBoughtProductById(string borrowerId, string id)
+        public async Task<IActionResult> DeleteBoughtProductById(string clientId, string id)
         {
-            var result = await _purchaseProductService.DeleteBoughtProductByIdAsync(borrowerId, id);
+            var result = await _purchaseProductService.DeleteBoughtProductByIdAsync(clientId, id);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 

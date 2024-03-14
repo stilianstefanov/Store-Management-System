@@ -1,11 +1,11 @@
 ﻿namespace CreditService.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
-    using static Common.EntityValidationConstants.Borrower;
+    using static Common.EntityValidationConstants.Client;
 
-    public class Borrower
+    public class Client
     {
-        public Borrower()
+        public Client()
         {
             Id = Guid.NewGuid();
             Purchases = new HashSet<Purchase>();

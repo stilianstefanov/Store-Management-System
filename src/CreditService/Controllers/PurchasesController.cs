@@ -6,7 +6,7 @@
     using Data.ViewModels.PurchasedProduct;
     using Services.Contracts;
 
-    [Route("api/borrowers/{borrowerId}/[controller]")]
+    [Route("api/clients/{clientId}/[controller]")]
     [ApiController]
     [Authorize]
     public class PurchasesController : ControllerBase
@@ -19,9 +19,9 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPurchasesByBorrowerId(string borrowerId)
+        public async Task<IActionResult> GetPurchasesByClientId(string clientId)
         {
-            var result = await _purchaseService.GetPurchasesByBorrowerIdAsync(borrowerId);
+            var result = await _purchaseService.GetPurchasesByClientIdAsync(clientId);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
@@ -39,22 +39,22 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePurchase(string borrowerId,
+        public async Task<IActionResult> CreatePurchase(string clientId,
             [FromBody] IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var result = await _purchaseService.CreatePurchaseAsync(borrowerId, purchasedProducts);
+            var result = await _purchaseService.CreatePurchaseAsync(clientId, purchasedProducts);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
-            return CreatedAtRoute("GetPurchaseById", new { borrowerId = borrowerId, id = result.Data!.Id }, result.Data);
+            return CreatedAtRoute("GetPurchaseById", new { clientId = clientId, id = result.Data!.Id }, result.Data);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePurchase(string borrowerId, string id)
+        public async Task<IActionResult> DeletePurchase(string clientId, string id)
         {
-            var result = await _purchaseService.DeletePurchaseAsync(id, borrowerId);
+            var result = await _purchaseService.DeletePurchaseAsync(id, clientId);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 

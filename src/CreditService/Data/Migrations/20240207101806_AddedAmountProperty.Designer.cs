@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CreditService.Migrations
 {
-    [DbContext(typeof(CreditDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240207101806_AddedAmountProperty")]
     partial class AddedAmountProperty
     {

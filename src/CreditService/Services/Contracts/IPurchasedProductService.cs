@@ -7,6 +7,6 @@
     {
         Task<OperationResult<IEnumerable<PurchasedProductViewModel>>> GetBoughtProductsByPurchaseIdAsync(string purchaseId);
 
-        Task<OperationResult<bool>> DeleteBoughtProductByIdAsync(string borrowerId, string id);
+        Task<OperationResult<bool>> DeleteBoughtProductByIdAsync(string clientId, string id);
     }
 }

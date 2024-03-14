@@ -6,9 +6,9 @@
 
     public class PurchasedProductRepository : IPurchasedProductRepository
     {
-        private readonly CreditDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
-        public PurchasedProductRepository(CreditDbContext dbContext)
+        public PurchasedProductRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

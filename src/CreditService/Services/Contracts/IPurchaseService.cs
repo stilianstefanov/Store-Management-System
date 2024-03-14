@@ -6,12 +6,12 @@
 
     public interface IPurchaseService
     {
-        Task<OperationResult<IEnumerable<PurchaseViewModel>>> GetPurchasesByBorrowerIdAsync(string borrowerId);
+        Task<OperationResult<IEnumerable<PurchaseViewModel>>> GetPurchasesByClientIdAsync(string clientId);
 
         Task<OperationResult<PurchaseViewModel>> GetPurchaseByIdAsync(string id);
         
-        Task<OperationResult<PurchaseViewModel>> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts);
+        Task<OperationResult<PurchaseViewModel>> CreatePurchaseAsync(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts);
         
-        Task<OperationResult<bool>> DeletePurchaseAsync(string id, string borrowerId);
+        Task<OperationResult<bool>> DeletePurchaseAsync(string id, string clientId);
     }
 }

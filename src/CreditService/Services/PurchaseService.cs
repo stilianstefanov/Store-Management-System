@@ -15,29 +15,29 @@
     {
         private readonly IPurchaseRepository _purchaseRepository;
         private readonly IMapper _mapper;
-        private readonly IBorrowerService _borrowerService;
+        private readonly IClientService _clientService;
         private readonly IProductGrpcClientService _productGrpcClient;
 
         public PurchaseService(
             IPurchaseRepository purchaseRepository, 
-            IBorrowerService borrowerService,
+            IClientService clientService,
             IProductGrpcClientService productGrpcClient,
             IMapper mapper)
         {
             _purchaseRepository = purchaseRepository;
-            _borrowerService = borrowerService;
+            _clientService = clientService;
             _productGrpcClient = productGrpcClient;
             _mapper = mapper;
         }
 
-        public async Task<OperationResult<IEnumerable<PurchaseViewModel>>> GetPurchasesByBorrowerIdAsync(string borrowerId)
+        public async Task<OperationResult<IEnumerable<PurchaseViewModel>>> GetPurchasesByClientIdAsync(string clientId)
         {
-            if (!await BorrowerExistsAsync(borrowerId))
+            if (!await ClientExistsAsync(clientId))
             {
-                return OperationResult<IEnumerable<PurchaseViewModel>>.Failure(BorrowerNotFound, ErrorType.NotFound);
+                return OperationResult<IEnumerable<PurchaseViewModel>>.Failure(ClientNotFound, ErrorType.NotFound);
             }
 
-            var purchases = await _purchaseRepository.GetPurchasesByBorrowerIdAsync(borrowerId);
+            var purchases = await _purchaseRepository.GetPurchasesByClientIdAsync(clientId);
 
             return OperationResult<IEnumerable<PurchaseViewModel>>.Success(
                 _mapper.Map<IEnumerable<PurchaseViewModel>>(purchases)!);
@@ -55,13 +55,13 @@
             return OperationResult<PurchaseViewModel>.Success(_mapper.Map<PurchaseViewModel>(purchase)!);
         }
 
-        public async Task<OperationResult<PurchaseViewModel>> CreatePurchaseAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        public async Task<OperationResult<PurchaseViewModel>> CreatePurchaseAsync(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
             var purchasedProductModels = purchasedProducts.ToArray();
 
-            if (!await BorrowerExistsAsync(borrowerId))
+            if (!await ClientExistsAsync(clientId))
             {
-                return OperationResult<PurchaseViewModel>.Failure(BorrowerNotFound, ErrorType.NotFound);
+                return OperationResult<PurchaseViewModel>.Failure(ClientNotFound, ErrorType.NotFound);
             }
 
             if (!await ValidateProductsAsync(purchasedProductModels))
@@ -69,21 +69,21 @@
                 return OperationResult<PurchaseViewModel>.Failure(ProductsNotFound, ErrorType.NotFound);
             }
 
-            if (!await TryIncreaseBorrowerCreditAsync(borrowerId, purchasedProductModels))
+            if (!await TryIncreaseClientCreditAsync(clientId, purchasedProductModels))
             {
                 return OperationResult<PurchaseViewModel>.Failure(InsufficientCredit, ErrorType.BadRequest);
             }
 
-            var newPurchase = await CreateNewPurchase(borrowerId, purchasedProductModels);
+            var newPurchase = await CreateNewPurchase(clientId, purchasedProductModels);
 
             return OperationResult<PurchaseViewModel>.Success(_mapper.Map<PurchaseViewModel>(newPurchase)!);
         }
 
-        public async Task<OperationResult<bool>> DeletePurchaseAsync(string id, string borrowerId)
+        public async Task<OperationResult<bool>> DeletePurchaseAsync(string id, string clientId)
         {
-            if (!await BorrowerExistsAsync(borrowerId))
+            if (!await ClientExistsAsync(clientId))
             {
-                return OperationResult<bool>.Failure(BorrowerNotFound, ErrorType.NotFound);
+                return OperationResult<bool>.Failure(ClientNotFound, ErrorType.NotFound);
             }
 
             var purchaseExists = await _purchaseRepository.PurchaseExistsAsync(id);
@@ -95,13 +95,13 @@
             
             var purchaseAmount = await _purchaseRepository.DeletePurchaseAsync(id);
 
-            await _borrowerService.DecreaseBorrowerCreditAsync(borrowerId, purchaseAmount);
+            await _clientService.DecreaseClientCreditAsync(clientId, purchaseAmount);
 
             return OperationResult<bool>.Success(true);
         }
 
-        private async Task<bool> BorrowerExistsAsync(string borrowerId)
-            => await _borrowerService.BorrowerExistsAsync(borrowerId);
+        private async Task<bool> ClientExistsAsync(string clientId)
+            => await _clientService.ClientExistsAsync(clientId);
 
         private async Task<bool> ValidateProductsAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
@@ -111,19 +111,19 @@
             return productsExist;
         }
 
-        private async Task<bool> TryIncreaseBorrowerCreditAsync(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        private async Task<bool> TryIncreaseClientCreditAsync(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
             var totalAmount = purchasedProducts.Sum(p => p.PurchasePrice * p.BoughtQuantity);
 
-            return await _borrowerService.IncreaseBorrowerCreditAsync(borrowerId, totalAmount);
+            return await _clientService.IncreaseClientCreditAsync(clientId, totalAmount);
         }
 
-        private async Task<Purchase> CreateNewPurchase(string borrowerId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        private async Task<Purchase> CreateNewPurchase(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
             var newPurchase = new Purchase
             {
-                BorrowerId = Guid.Parse(borrowerId),
-                Date = DateTime.UtcNow,
+                ClientId = Guid.Parse(clientId),
+                Date = DateTime.Now,
                 Products = _mapper.Map<ICollection<PurchasedProduct>>(purchasedProducts)!
             };
 

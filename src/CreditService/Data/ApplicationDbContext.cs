@@ -3,15 +3,15 @@
     using Microsoft.EntityFrameworkCore;
     using Models;
 
-    public class CreditDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public CreditDbContext(DbContextOptions<CreditDbContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
             
         }
 
-        public DbSet<Borrower> Borrowers { get; set; } = null!;
+        public DbSet<Client> Clients { get; set; } = null!;
 
         public DbSet<Purchase> Purchases { get; set; } = null!;
 
@@ -19,11 +19,11 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Borrower>()
+            modelBuilder.Entity<Client>()
                 .Property(p => p.CreditLimit)
                 .HasColumnType("decimal(18,2)");
 
-            modelBuilder.Entity<Borrower>()
+            modelBuilder.Entity<Client>()
                 .Property(p => p.CurrentCredit)
                 .HasColumnType("decimal(18,2)");
 

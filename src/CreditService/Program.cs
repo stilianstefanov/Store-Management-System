@@ -22,7 +22,7 @@ namespace CreditService
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services
-                .AddDbContext<CreditDbContext>(opt =>
+                .AddDbContext<ApplicationDbContext>(opt =>
                     opt.UseSqlServer(connectionString));
 
             builder.Services
@@ -56,10 +56,10 @@ namespace CreditService
                         .AllowAnyHeader());
             });
 
-            builder.Services.AddScoped<IBorrowerRepository, BorrowerRepository>();
+            builder.Services.AddScoped<IClientRepository, ClientRepository>();
             builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
             builder.Services.AddScoped<IPurchasedProductRepository, PurchasedProductRepository>();
-            builder.Services.AddScoped<IBorrowerService, BorrowerService>();
+            builder.Services.AddScoped<IClientService, ClientService>();
             builder.Services.AddScoped<IPurchaseService, PurchaseService>();
             builder.Services.AddScoped<IPurchasedProductService, PurchasedProductService>();
             builder.Services.AddScoped<IProductGrpcClientService, ProductGrpcClientService>();

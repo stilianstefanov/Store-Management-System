@@ -2,7 +2,7 @@
 {
     public static class EntityValidationConstants
     {
-        public static class Borrower    
+        public static class Client    
         {
             public const int NameMaxLength = 50;
 

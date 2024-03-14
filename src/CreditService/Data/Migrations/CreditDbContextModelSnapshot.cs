@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CreditService.Migrations
 {
-    [DbContext(typeof(CreditDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class CreditDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

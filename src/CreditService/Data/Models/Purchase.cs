@@ -19,10 +19,10 @@
         public bool IsDeleted { get; set; }
 
 
-        [ForeignKey(nameof(Borrower))]
-        public Guid BorrowerId { get; set; }
+        [ForeignKey(nameof(Client))]
+        public Guid ClientId { get; set; }
 
-        public Borrower Borrower { get; set; } = null!;
+        public Client Client { get; set; } = null!;
 
         public ICollection<PurchasedProduct> Products { get; set; }
     }

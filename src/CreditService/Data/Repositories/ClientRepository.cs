@@ -4,11 +4,11 @@
     using Microsoft.EntityFrameworkCore;
     using Models;
 
-    public class BorrowerRepository : IBorrowerRepository
+    public class ClientRepository : IClientRepository
     {
-        private readonly CreditDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
-        public BorrowerRepository(CreditDbContext dbContext)
+        public ClientRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -18,36 +18,36 @@
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Borrower>> GetAllBorrowersAsync(string userId)
+        public async Task<IEnumerable<Client>> GetAllClientsAsync(string userId)
         {
-            return await _dbContext.Borrowers
+            return await _dbContext.Clients
                 .Where(b => !b.IsDeleted && b.UserId == userId)
                 .ToArrayAsync();
         }
 
-        public async Task<Borrower?> GetBorrowerByIdAsync(string id)
+        public async Task<Client?> GetClientByIdAsync(string id)
         {
-            var borrower = await _dbContext.Borrowers
+            var client = await _dbContext.Clients
                 .FirstOrDefaultAsync(b => b.Id.ToString() == id && !b.IsDeleted);
 
-            return borrower;
+            return client;
         }
 
-        public async Task AddBorrowerAsync(Borrower borrower)
+        public async Task AddClientAsync(Client client)
         {
-            await _dbContext.Borrowers.AddAsync(borrower);
+            await _dbContext.Clients.AddAsync(client);
         }
 
-        public async Task DeleteBorrowerAsync(string id)
+        public async Task DeleteClientAsync(string id)
         {
-            var borrowerToDelete = await _dbContext.Borrowers
+            var clientToDelete = await _dbContext.Clients
                 .Include(b => b.Purchases)
                 .ThenInclude(p => p.Products)
                 .FirstAsync(b => b.Id.ToString() == id && !b.IsDeleted);
 
-            borrowerToDelete.IsDeleted = true;
+            clientToDelete.IsDeleted = true;
 
-            foreach (var purchase in borrowerToDelete.Purchases)
+            foreach (var purchase in clientToDelete.Purchases)
             {
                 purchase.IsDeleted = true;
 
@@ -58,9 +58,9 @@
             }
         }
 
-        public async Task<bool> BorrowerExistsAsync(string id)
+        public async Task<bool> ClientExistsAsync(string id)
         {
-            return await _dbContext.Borrowers.AnyAsync(b => b.Id.ToString() == id && !b.IsDeleted);
+            return await _dbContext.Clients.AnyAsync(b => b.Id.ToString() == id && !b.IsDeleted);
         }
     }
 }

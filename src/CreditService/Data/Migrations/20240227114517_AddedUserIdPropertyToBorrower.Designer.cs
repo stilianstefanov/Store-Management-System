@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CreditService.Migrations
 {
-    [DbContext(typeof(CreditDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240227114517_AddedUserIdPropertyToBorrower")]
     partial class AddedUserIdPropertyToBorrower
     {

@@ -7,9 +7,9 @@
 
     public class PurchaseRepository : IPurchaseRepository
     {
-        private readonly CreditDbContext _dbContext;
+        private readonly ApplicationDbContext _dbContext;
 
-        public PurchaseRepository(CreditDbContext dbContext)
+        public PurchaseRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -19,10 +19,10 @@
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Purchase>> GetPurchasesByBorrowerIdAsync(string borrowerId)
+        public async Task<IEnumerable<Purchase>> GetPurchasesByClientIdAsync(string clientId)
         {
             var purchases = await _dbContext.Purchases
-                .Where(p => p.BorrowerId.ToString() == borrowerId && !p.IsDeleted)
+                .Where(p => p.ClientId.ToString() == clientId && !p.IsDeleted)
                 .Include(p => p.Products)
                 .ToArrayAsync();
 

@@ -1,9 +1,9 @@
-﻿namespace CreditService.Data.ViewModels.Borrower
+﻿namespace CreditService.Data.ViewModels.Client
 {
     using System.ComponentModel.DataAnnotations;
-    using static Common.EntityValidationConstants.Borrower;
+    using static Common.EntityValidationConstants.Client;
 
-    public class BorrowerUpdateModel
+    public class ClientUpdateModel
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]

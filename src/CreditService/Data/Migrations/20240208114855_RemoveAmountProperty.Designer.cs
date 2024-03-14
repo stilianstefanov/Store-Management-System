@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CreditService.Migrations
 {
-    [DbContext(typeof(CreditDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240208114855_RemoveAmountProperty")]
     partial class RemoveAmountProperty
     {

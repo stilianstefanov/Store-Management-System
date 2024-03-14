@@ -6,7 +6,7 @@
     {
         Task SaveChangesAsync();
 
-        Task<IEnumerable<Purchase>> GetPurchasesByBorrowerIdAsync(string borrowerId);
+        Task<IEnumerable<Purchase>> GetPurchasesByClientIdAsync(string clientId);
 
         Task<Purchase?> GetPurchaseByIdAsync(string id);
 

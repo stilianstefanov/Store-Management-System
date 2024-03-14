@@ -15,7 +15,7 @@
         private readonly IPurchasedProductRepository _purchaseProductRepository;
         private readonly IProductGrpcClientService _productGrpcClient;
         private readonly IPurchaseRepository _purchaseRepository;
-        private readonly IBorrowerService _borrowerService;
+        private readonly IClientService _clientService;
         private readonly IMapper _mapper;
     
 
@@ -23,13 +23,13 @@
             IPurchasedProductRepository purchaseProductRepository,
             IPurchaseRepository purchaseRepository,
             IProductGrpcClientService productGrpcClient,
-            IBorrowerService borrowerService,
+            IClientService clientService,
             IMapper mapper)
         {
             _purchaseProductRepository = purchaseProductRepository;
             _productGrpcClient = productGrpcClient;
             _purchaseRepository = purchaseRepository;
-            _borrowerService = borrowerService;
+            _clientService = clientService;
             _mapper = mapper;
         }
 
@@ -57,11 +57,11 @@
             return OperationResult<IEnumerable<PurchasedProductViewModel>>.Success(resultProducts);
         }
 
-        public async Task<OperationResult<bool>> DeleteBoughtProductByIdAsync(string borrowerId, string id)
+        public async Task<OperationResult<bool>> DeleteBoughtProductByIdAsync(string clientId, string id)
         {
-            var borrowerExists = await _borrowerService.BorrowerExistsAsync(borrowerId);
+            var clientExists = await _clientService.ClientExistsAsync(clientId);
 
-            if (!borrowerExists) return OperationResult<bool>.Failure(BorrowerNotFound);
+            if (!clientExists) return OperationResult<bool>.Failure(ClientNotFound);
 
             var productExists = await _purchaseProductRepository.ProductExistsAsync(id);
 
@@ -71,7 +71,7 @@
 
             await _purchaseProductRepository.SaveChangesAsync();
 
-            await _borrowerService.DecreaseBorrowerCreditAsync(borrowerId, amount);
+            await _clientService.DecreaseClientCreditAsync(clientId, amount);
 
             return OperationResult<bool>.Success(true);
         }
