@@ -24,11 +24,11 @@ spec:
                 name: product-clusterip-srv
                 port:
                   number: 8080
-          - path: /api/borrowers
+          - path: /api/delayedpayment/clients
             pathType: Prefix
             backend:
               service:
-                name: credit-clusterip-srv
+                name: delayedpayment-clusterip-srv
                 port:
                   number: 8080
           - path: /api/auth

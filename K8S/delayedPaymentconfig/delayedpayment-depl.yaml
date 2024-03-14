@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: credit-depl
+  name: delayedpayment-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: creditservice
+      app: delayedpaymentservice
   template:
     metadata:
       labels:
-        app: creditservice
+        app: delayedpaymentservice
     spec:
       containers:
-        - name: creditservice
-          image: stilianstefanov/creditservice:latest
+        - name: delayedpaymentservice
+          image: stilianstefanov/delayedpaymentservice:latest
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: credit-clusterip-srv
+  name: delayedpayment-clusterip-srv
 spec:
   type: ClusterIP
   selector:
-    app: creditservice
+    app: delayedpaymentservice
   ports:
-  - name: creditservice
+  - name: delayedpaymentservice
     protocol: TCP
     port: 8080
     targetPort: 8080
