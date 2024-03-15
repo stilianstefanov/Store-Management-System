@@ -7,16 +7,19 @@ function DashboardProduct({ product, updateQty }) {
     }
 
     return (
-        <tr>
+        <tr className={styles.row}>
             <td>{product.name}</td>
             <td>{product.price.toFixed(2)}</td>
             <td className={styles.inputContainer}>
-                <input
-                    value={product.quantity}
-                    onChange={qtyChangeHandler}
-                    type="number"
-                    className={`form-control ${styles.inputField}`}
-                />
+                <div className={styles.quantityWrapper}>
+                    <input
+                        value={product.quantity}
+                        onChange={qtyChangeHandler}
+                        type="number"
+                        className={`form-control ${styles.inputField}`}
+                    />
+                    <button className={styles.removeButton}>X</button>
+                </div>
             </td>
         </tr>
     );

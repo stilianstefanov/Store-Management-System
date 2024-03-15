@@ -5,6 +5,31 @@
 }
 
 .inputField {
-    width: 50%;
+    width: 60%;
     text-align: center;
+}
+
+.row:hover .removeButton {
+    visibility: visible; 
+}
+
+.removeButton {
+    visibility: hidden; 
+    position: absolute; 
+    right: 0; 
+    top: 50%; 
+    transform: translateY(-50%);
+    cursor: pointer;
+    background-color: red;
+    border: 1px solid black;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+}
+
+.quantityWrapper {
+    position: relative;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
 }
