@@ -59,6 +59,10 @@ function DashBoard() {
         );
     }
 
+    const removeProduct = (productId) => {
+        setProducts(products => products.filter(product => product.id !== productId));
+    };
+
     const calculateTotalCost = (productsArr) => {
         return productsArr.reduce((total, product) => total + product.price * product.quantity, 0);
     }
@@ -95,7 +99,12 @@ function DashBoard() {
                             </tr>
                         ) : (
                             products.map(product => (
-                                <DashboardProduct key={product.id} product={product} updateQty={updateProductQty} />
+                                <DashboardProduct
+                                    key={product.id}
+                                    product={product}
+                                    updateQty={updateProductQty}
+                                    removeProduct={removeProduct}
+                                />
                             ))
                         )}
                     </tbody>

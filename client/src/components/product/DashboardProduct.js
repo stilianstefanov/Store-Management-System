@@ -1,10 +1,14 @@
 import styles from './DashboardProduct.module.css'
 
-function DashboardProduct({ product, updateQty }) {
+function DashboardProduct({ product, updateQty, removeProduct }) {
     const qtyChangeHandler = (event) => {
         const newQty = event.target.value;
         updateQty(product.id, newQty);
-    }
+    };
+
+    const removeProductHandler = () => {
+        removeProduct(product.id);
+    };
 
     return (
         <tr className={styles.row}>
@@ -18,7 +22,7 @@ function DashboardProduct({ product, updateQty }) {
                         type="number"
                         className={`form-control ${styles.inputField}`}
                     />
-                    <button className={styles.removeButton}>X</button>
+                    <button onClick={removeProductHandler} className={styles.removeButton}>X</button>
                 </div>
             </td>
         </tr>
