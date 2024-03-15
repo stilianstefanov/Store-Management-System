@@ -36,20 +36,28 @@ function DashBoard() {
                     }
                 });
             } catch (error) {
-                if (error.response && error.response.status === 401) {
-                    logout();
-                    navigate('/login');
-                    toast.warning('Your session has expired. Please login again.')
-                } else {
-                    toast.error(error.response.data);
-                }
-                console.error(error);
+                handleError(error);
             } finally {
                 setIsLoading(false);
                 setCurrentBarcode("");
             }
         }
     };
+
+    const updateStocksHandler = async () => {
+        if (products.length > 0) {
+            setIsLoading(true);
+            try {
+                await ProductService.UpdateStocks(products);
+                setProducts([]);
+                toast.success("Successful operation!")
+            } catch (error) {
+                handleError(error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    }
 
     const updateProductQty = (productId, newQty) => {
         setProducts(currentProducts =>
@@ -65,6 +73,17 @@ function DashBoard() {
 
     const calculateTotalCost = (productsArr) => {
         return productsArr.reduce((total, product) => total + product.price * product.quantity, 0);
+    }
+
+    const handleError = (error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response.data);
+        }
+        console.error(error);
     }
 
     return (
@@ -112,7 +131,12 @@ function DashBoard() {
             </div>
             <div className={styles['button-wrapper']}>
                 <p className={styles['total-p']}>Total: {calculateTotalCost(products).toFixed(2)} </p>
-                <button type="button" className={`btn btn-success ${styles['button-custom']}`}>Finish Transaction</button>
+                <button
+                    onClick={updateStocksHandler}
+                    type="button"
+                    className={`btn btn-success ${styles['button-custom']}`}>
+                    Finish Transaction
+                </button>
                 <button type="button" className={`btn btn-warning ${styles['button-custom']}`}>Delayed Payment</button>
             </div>
         </div>
