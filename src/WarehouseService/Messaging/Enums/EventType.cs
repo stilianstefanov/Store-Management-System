@@ -6,6 +6,7 @@
         ProductUpdated = 1,
         ProductDeleted = 2,
         ProductPartiallyUpdated = 3,
-        Undefined = 4
+        MultipleProductsStockUpdated= 4,
+        Undefined = 5
     }
 }

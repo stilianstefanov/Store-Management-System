@@ -38,7 +38,31 @@
                 case EventType.ProductPartiallyUpdated:
                     await ProcessProductPartiallyUpdatedEventAsync(message);
                     break;
+                case EventType.MultipleProductsStockUpdated:
+                    await ProcessMultipleProductsStockUpdatedEventAsync(message);
+                    break;
             }
+        }
+
+        private async Task ProcessMultipleProductsStockUpdatedEventAsync(string message)
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var productRepository = scope.ServiceProvider.GetRequiredService<IProductRepository>();
+
+
+            var multipleProductsStockUpdateDto = JsonSerializer.Deserialize<MultipleProductsStockUpdateDto>(message);
+
+            foreach (var productUpdatedDto in multipleProductsStockUpdateDto!.Products)
+            {
+                var productToUpdate = await productRepository.GetProductByExternalId(productUpdatedDto.Id);
+
+                if (productToUpdate == null) continue;
+
+                productToUpdate.Quantity = productUpdatedDto.Quantity!.Value;
+            }
+
+            await productRepository.SaveChangesAsync();
         }
 
         private async Task ProcessProductCreatedEventAsync(string message)
@@ -74,7 +98,7 @@
 
             if (!productExists) return;
 
-            await productRepository.UpdateProductAsync(productUpdatedDto!);
+            await productRepository.UpdateProductAsync(productUpdatedDto);
 
             await productRepository.SaveChangesAsync();
         }
@@ -118,7 +142,7 @@
 
             if (!productExists) return;
 
-            await productRepository.DeleteProductAsync(productDeletedDto!.Id);
+            await productRepository.DeleteProductAsync(productDeletedDto.Id);
 
             await productRepository.SaveChangesAsync();
         }
