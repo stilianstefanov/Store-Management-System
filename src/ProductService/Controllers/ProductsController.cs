@@ -92,7 +92,7 @@
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
-            return Ok(result.Data);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
