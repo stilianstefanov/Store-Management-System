@@ -137,6 +137,42 @@
             return OperationResult<ProductDetailsViewModel>.Success(await MapProductDetailsModelWithWarehouse(productToUpdate));
         }
 
+        public async Task<OperationResult<bool>> DecreaseStocksAsync(IEnumerable<ProductStockUpdateModel> models, string userId)
+        {
+            var updatedProducts = new List<Product>();
+
+            foreach (var model in models)
+            {
+                var productToUpdate = await _productRepository.GetByIdAsync(model.Id);
+
+                if (productToUpdate == null || productToUpdate.UserId != userId)
+                {
+                    return OperationResult<bool>.Failure(ProductNotFound, ErrorType.NotFound);
+                }
+
+                productToUpdate.Quantity -= model.Quantity;
+
+                if (productToUpdate.Quantity < 0)
+                {
+                    productToUpdate.Quantity = 0;
+
+                    return OperationResult<bool>.Failure
+                        (string.Format(InsufficientStock, productToUpdate.Name, productToUpdate.Barcode), ErrorType.BadRequest);
+                }
+
+                updatedProducts.Add(productToUpdate);
+            }
+
+            await _productRepository.SaveChangesAsync();
+
+            _messageSender.PublishMultipleProductsStockUpdate(new MultipleProductsStockUpdateDto
+            {
+                Products = _mapper.Map<IEnumerable<ProductPartialUpdatedDto>>(updatedProducts)
+            });
+
+            return OperationResult<bool>.Success(true);
+        }
+
         public async Task<OperationResult<bool>> DeleteAsync(string id, string userId)
         {
             var productToDelete = await _productRepository.GetByIdAsync(id);

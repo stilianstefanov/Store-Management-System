@@ -11,5 +11,7 @@
         void PublishPartiallyUpdatedProduct(ProductPartialUpdatedDto productPartialUpdatedDto);
 
         void PublishDeletedProduct(ProductDeletedDto productDeletedDto);
+
+        void PublishMultipleProductsStockUpdate(MultipleProductsStockUpdateDto productStockUpdatedDto);
     }
 }

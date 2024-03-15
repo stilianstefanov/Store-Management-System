@@ -85,6 +85,16 @@
             return Ok(result.Data);
         }
 
+        [HttpPatch("decrease-stocks")]
+        public async Task<IActionResult> DecreaseStocks([FromBody] IEnumerable<ProductStockUpdateModel> models)
+        {
+            var result = await _productService.DecreaseStocksAsync(models, User.GetId()!);
+
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return Ok(result.Data);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(string id)
         {

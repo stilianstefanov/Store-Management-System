@@ -9,5 +9,7 @@
         public const string ProductDeleted = "ProductDeleted";
 
         public const string ProductPartiallyUpdated = "ProductPartiallyUpdated";
+
+        public const string MultipleProductsStockUpdated = "MultipleProductsStockUpdated";
     }
 }

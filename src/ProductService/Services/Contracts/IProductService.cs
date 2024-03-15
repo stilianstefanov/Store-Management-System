@@ -17,6 +17,8 @@
 
         Task<OperationResult<ProductDetailsViewModel>> PartialUpdateAsync(string id, ProductPartialUpdateModel model, string userId);
 
+        Task<OperationResult<bool>> DecreaseStocksAsync(IEnumerable<ProductStockUpdateModel> models, string userId);
+
         Task<OperationResult<bool>> DeleteAsync(string id, string userId);
     }
 }

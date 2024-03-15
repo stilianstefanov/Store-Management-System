@@ -49,5 +49,14 @@
 
             _messageBusClient.SendMessage(message);
         }
+
+        public void PublishMultipleProductsStockUpdate(MultipleProductsStockUpdateDto productStockUpdatedDto)
+        {
+            productStockUpdatedDto.Event = MultipleProductsStockUpdated;
+
+            var message = JsonSerializer.Serialize(productStockUpdatedDto);
+
+            _messageBusClient.SendMessage(message);
+        }
     }
 }
