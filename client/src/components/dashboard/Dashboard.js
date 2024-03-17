@@ -44,7 +44,7 @@ function DashBoard() {
         }
     };
 
-    const updateStocksHandler = async () => {
+    const finishTransactionHandler = async () => {
         if (products.length > 0) {
             setIsLoading(true);
             try {
@@ -132,7 +132,7 @@ function DashBoard() {
             <div className={styles['button-wrapper']}>
                 <p className={styles['total-p']}>Total: {calculateTotalCost(products).toFixed(2)} </p>
                 <button
-                    onClick={updateStocksHandler}
+                    onClick={finishTransactionHandler}
                     type="button"
                     className={`btn btn-success ${styles['button-custom']}`}>
                     Finish Transaction
