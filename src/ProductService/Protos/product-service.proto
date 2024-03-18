@@ -1,20 +1,21 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 option csharp_namespace = "ProductService";
 
 service ProductServiceGrpc {
     rpc GetProductsByMultipleIds (GetProductByMultipleIdsRequest) returns (GetProductsByMultipleIdsResponse);
-    rpc ProductsExist (ProductsExistRequest) returns (ProductsExistResponse);
+    rpc DecreaseProductsStocks (DecreaseProductsStocksRequest) returns (google.protobuf.Empty);
 }
 
 message GetProductByMultipleIdsRequest {
     repeated string ids = 1;
 }
 
-message ProductsExistRequest {
-	repeated string ids = 1;
+message DecreaseProductsStocksRequest {
+	repeated GrpcProductStockDecreaseModel products = 1;
 }
-
 
 message GrpcProductModel{
     string productId = 1;
@@ -22,10 +23,12 @@ message GrpcProductModel{
     string description = 3;
 }
 
-message GetProductsByMultipleIdsResponse {
-    repeated GrpcProductModel products = 1;
+message GrpcProductStockDecreaseModel {
+    string productId = 1;
+    int32 quantity = 2;
+    string price = 3;
 }
 
-message ProductsExistResponse {
-    bool productsExist = 1;
+message GetProductsByMultipleIdsResponse {
+    repeated GrpcProductModel products = 1;
 }
