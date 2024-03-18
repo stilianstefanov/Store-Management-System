@@ -1,5 +1,6 @@
 ﻿namespace ProductService.Services.Contracts
 {
+    using Data.Models;
     using Data.ViewModels;
     using Utilities;
 
@@ -20,5 +21,7 @@
         Task<OperationResult<bool>> DecreaseStocksAsync(IEnumerable<ProductStockUpdateModel> models, string userId);
 
         Task<OperationResult<bool>> DeleteAsync(string id, string userId);
+
+        Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<string> ids);
     }
 }

@@ -2,16 +2,19 @@
 {
     using Grpc.Core;
     using AutoMapper;
-    using Data.Contracts;
-    
+    using Data.ViewModels;
+    using Google.Protobuf.WellKnownTypes;
+    using Services.Contracts;
+    using Utilities.Enums;
+
     public class GrpcProductService : ProductServiceGrpc.ProductServiceGrpcBase
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IProductService _productService;
         private readonly IMapper _mapper;
 
-        public GrpcProductService(IProductRepository productRepository, IMapper mapper)
+        public GrpcProductService(IProductService productService, IMapper mapper)
         {
-            _productRepository = productRepository;
+            _productService = productService;
             _mapper = mapper;
         }
 
@@ -20,7 +23,7 @@
         {
             try
             {
-                var products = await _productRepository.GetByIdsAsync(request.Ids);
+                var products = await _productService.GetByIdsAsync(request.Ids);
 
                 var response = new GetProductsByMultipleIdsResponse();
 
@@ -30,6 +33,35 @@
                 }
 
                 return response;
+            }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Internal, ex.Message));
+            }
+        }
+
+        public override async Task<Empty> DecreaseProductsStocks(DecreaseProductsStocksRequest request, ServerCallContext context)
+        {
+            try
+            {
+                var productsToUpdate = _mapper.Map<IEnumerable<ProductStockUpdateModel>>(request.Products);
+
+                var result = await _productService.DecreaseStocksAsync(productsToUpdate, request.UserId);
+
+                if (!result.IsSuccess)
+                {
+                    switch (result.ErrorType)
+                    {
+                        case ErrorType.NotFound:
+                            throw new RpcException(new Status(StatusCode.NotFound, result.ErrorMessage!));
+                        case ErrorType.BadRequest:
+                            throw new RpcException(new Status(StatusCode.InvalidArgument, result.ErrorMessage!));
+                        default:
+                            throw new RpcException(new Status(StatusCode.Internal, result.ErrorMessage!));
+                    }
+                }
+
+                return new Empty();
             }
             catch (Exception ex)
             {

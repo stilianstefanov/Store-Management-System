@@ -191,6 +191,9 @@
             return OperationResult<bool>.Success(true);
         }
 
+        public async Task<IEnumerable<Product>> GetByIdsAsync(IEnumerable<string> ids)
+            => await _productRepository.GetByIdsAsync(ids);
+
         private async Task<ProductDetailsViewModel> MapProductDetailsModelWithWarehouse(Product? product)
         {
             var productDetailsModel = _mapper.Map<ProductDetailsViewModel>(product);

@@ -15,6 +15,7 @@ message GetProductByMultipleIdsRequest {
 
 message DecreaseProductsStocksRequest {
 	repeated GrpcProductStockDecreaseModel products = 1;
+    string userId = 2;
 }
 
 message GrpcProductModel{

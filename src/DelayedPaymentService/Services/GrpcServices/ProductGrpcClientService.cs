@@ -41,7 +41,7 @@
             }
         }
 
-        public async Task DecreaseProductsStocksAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        public async Task DecreaseProductsStocksAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts, string userId)
         {
             var channel = GrpcChannel.ForAddress(_configuration["GrpcProductService"]!);
 
@@ -49,7 +49,8 @@
 
             var request = new DecreaseProductsStocksRequest()
             {
-                Products = { purchasedProducts.Select(p => _mapper.Map<GrpcProductStockDecreaseModel>(p)) }
+                Products = { purchasedProducts.Select(p => _mapper.Map<GrpcProductStockDecreaseModel>(p)) },
+                UserId = userId
             };
 
             try

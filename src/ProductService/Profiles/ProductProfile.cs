@@ -37,6 +37,10 @@
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id.ToString()));
 
             CreateMap<Product, ProductDashViewModel>();
+
+            CreateMap<GrpcProductStockDecreaseModel, ProductStockUpdateModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ProductId))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => decimal.Parse(src.Price)));
         }
     }
 }
