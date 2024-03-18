@@ -41,22 +41,20 @@
             }
         }
 
-        public async Task<bool> ProductsExistAsync(IEnumerable<string> ids)
+        public async Task DecreaseProductsStocksAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
             var channel = GrpcChannel.ForAddress(_configuration["GrpcProductService"]!);
 
             var client = new ProductServiceGrpc.ProductServiceGrpcClient(channel);
 
-            var request = new ProductsExistRequest
+            var request = new DecreaseProductsStocksRequest()
             {
-                Ids = { ids }
+                Products = { purchasedProducts.Select(p => _mapper.Map<GrpcProductStockDecreaseModel>(p)) }
             };
 
             try
-            {
-                var response = await client.ProductsExistAsync(request);
-
-                return response.ProductsExist;
+            { 
+                await client.DecreaseProductsStocksAsync(request);
             }
             catch (RpcException e)
             {

@@ -6,6 +6,6 @@
     {
         public Task<IEnumerable<ProductDetailsViewModel>> GetProductsAsync(IEnumerable<string> ids);
 
-        public Task<bool> ProductsExistAsync(IEnumerable<string> ids);
+        public Task DecreaseProductsStocksAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts);
     }
 }

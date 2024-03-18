@@ -62,15 +62,5 @@
 
             productToDelete.IsDeleted = true;
         }
-
-        public async Task<bool> ProductsExistAsync(IEnumerable<string> ids)
-        {
-            var uniqueProductIds = ids.Distinct();
-
-            var productsCount = await _dbContext.Products
-                .CountAsync(p => uniqueProductIds.Contains(p.Id.ToString()) && !p.IsDeleted);
-
-            return uniqueProductIds.Count() == productsCount;
-        }
     }
 }

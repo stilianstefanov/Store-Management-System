@@ -64,11 +64,6 @@
                 return OperationResult<PurchaseViewModel>.Failure(ClientNotFound, ErrorType.NotFound);
             }
 
-            if (!await ValidateProductsAsync(purchasedProductModels))
-            {
-                return OperationResult<PurchaseViewModel>.Failure(ProductsNotFound, ErrorType.NotFound);
-            }
-
             if (!await TryIncreaseClientCreditAsync(clientId, purchasedProductModels))
             {
                 return OperationResult<PurchaseViewModel>.Failure(InsufficientCredit, ErrorType.BadRequest);
@@ -102,14 +97,6 @@
 
         private async Task<bool> ClientExistsAsync(string clientId)
             => await _clientService.ClientExistsAsync(clientId);
-
-        private async Task<bool> ValidateProductsAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts)
-        {
-            var productsExist =
-                await _productGrpcClient.ProductsExistAsync(purchasedProducts.Select(p => p.ExternalId));
-
-            return productsExist;
-        }
 
         private async Task<bool> TryIncreaseClientCreditAsync(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
