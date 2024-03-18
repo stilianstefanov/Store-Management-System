@@ -10,7 +10,7 @@
 
         Task<OperationResult<PurchaseViewModel>> GetPurchaseByIdAsync(string id);
         
-        Task<OperationResult<PurchaseViewModel>> CreatePurchaseAsync(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts);
+        Task<OperationResult<PurchaseViewModel>> CreatePurchaseAsync(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts, string userId);
         
         Task<OperationResult<bool>> DeletePurchaseAsync(string id, string clientId);
     }

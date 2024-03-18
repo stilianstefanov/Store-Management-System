@@ -111,7 +111,16 @@
             return await _clientRepository.ClientExistsAsync(id);
         }
 
-        public async Task<bool> IncreaseClientCreditAsync(string id, decimal amount)
+        public async Task IncreaseClientCreditAsync(string id, decimal amount)
+        {
+            var client = await _clientRepository.GetClientByIdAsync(id);
+
+            client!.CurrentCredit += amount;
+
+            await _clientRepository.SaveChangesAsync();
+        }
+
+        public async Task<bool> ClientHasEnoughCreditAsync(string id, decimal amount)
         {
             var client = await _clientRepository.GetClientByIdAsync(id);
 
@@ -119,10 +128,6 @@
             {
                 return false;
             }
-
-            client.CurrentCredit += amount;
-
-            await _clientRepository.SaveChangesAsync();
 
             return true;
         }

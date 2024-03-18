@@ -55,7 +55,8 @@
             return OperationResult<PurchaseViewModel>.Success(_mapper.Map<PurchaseViewModel>(purchase)!);
         }
 
-        public async Task<OperationResult<PurchaseViewModel>> CreatePurchaseAsync(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        public async Task<OperationResult<PurchaseViewModel>> CreatePurchaseAsync(
+            string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts, string userId)
         {
             var purchasedProductModels = purchasedProducts.ToArray();
 
@@ -64,10 +65,19 @@
                 return OperationResult<PurchaseViewModel>.Failure(ClientNotFound, ErrorType.NotFound);
             }
 
-            if (!await TryIncreaseClientCreditAsync(clientId, purchasedProductModels))
+            if (!await ClientHasEnoughCreditAsync(clientId, purchasedProductModels))
             {
                 return OperationResult<PurchaseViewModel>.Failure(InsufficientCredit, ErrorType.BadRequest);
             }
+
+            var productsStocksUpdated = await UpdateProductsStocksAsync(purchasedProductModels, userId);
+
+            if (!productsStocksUpdated.IsSuccess)
+            {
+                return OperationResult<PurchaseViewModel>.Failure(productsStocksUpdated.ErrorMessage!, productsStocksUpdated.ErrorType);
+            }
+
+            await IncreaseClientCreditAsync(clientId, purchasedProductModels);
 
             var newPurchase = await CreateNewPurchase(clientId, purchasedProductModels);
 
@@ -98,11 +108,19 @@
         private async Task<bool> ClientExistsAsync(string clientId)
             => await _clientService.ClientExistsAsync(clientId);
 
-        private async Task<bool> TryIncreaseClientCreditAsync(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        private async Task IncreaseClientCreditAsync(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
+        {
+            var totalAmount = purchasedProducts.Sum(p => p.PurchasePrice * p.BoughtQuantity);
+            
+            await _clientService.IncreaseClientCreditAsync(clientId, totalAmount);
+        }
+
+        private async Task<bool> ClientHasEnoughCreditAsync(string clientId,
+            IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
             var totalAmount = purchasedProducts.Sum(p => p.PurchasePrice * p.BoughtQuantity);
 
-            return await _clientService.IncreaseClientCreditAsync(clientId, totalAmount);
+            return await _clientService.ClientHasEnoughCreditAsync(clientId, totalAmount);
         }
 
         private async Task<Purchase> CreateNewPurchase(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
@@ -119,6 +137,24 @@
             await _purchaseRepository.SaveChangesAsync();
 
             return newPurchase;
+        }
+
+        private async Task<OperationResult<bool>> UpdateProductsStocksAsync(IEnumerable<PurchasedProductCreateModel> purchasedProducts, string userId)
+        {
+            try
+            {
+                await _productGrpcClient.DecreaseProductsStocksAsync(purchasedProducts, userId);
+
+                return OperationResult<bool>.Success(true);
+            }
+            catch (KeyNotFoundException e)
+            {
+                return OperationResult<bool>.Failure(e.Message, ErrorType.NotFound);
+            }
+            catch (ArgumentException e)
+            {
+                return OperationResult<bool>.Failure(e.Message, ErrorType.BadRequest);
+            }
         }
     }
 }

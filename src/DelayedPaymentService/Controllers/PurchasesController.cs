@@ -44,7 +44,7 @@
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var result = await _purchaseService.CreatePurchaseAsync(clientId, purchasedProducts);
+            var result = await _purchaseService.CreatePurchaseAsync(clientId, purchasedProducts, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 

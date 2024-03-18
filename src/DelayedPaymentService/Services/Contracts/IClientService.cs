@@ -21,6 +21,8 @@
 
         Task<bool> ClientExistsAsync(string id);
 
-        Task<bool> IncreaseClientCreditAsync(string id, decimal amount);
+        Task IncreaseClientCreditAsync(string id, decimal amount);
+
+        Task<bool> ClientHasEnoughCreditAsync(string id, decimal amount);
     }
 }

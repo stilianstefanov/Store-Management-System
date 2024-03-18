@@ -59,7 +59,15 @@
             }
             catch (RpcException e)
             {
-                throw new Exception(e.Message);
+                switch (e.StatusCode)
+                {
+                    case StatusCode.NotFound:
+                        throw new KeyNotFoundException(e.Message);
+                    case StatusCode.InvalidArgument:
+                        throw new ArgumentException(e.Message);
+                    default:
+                        throw new Exception(e.Message);
+                }
             }
         }
     }
