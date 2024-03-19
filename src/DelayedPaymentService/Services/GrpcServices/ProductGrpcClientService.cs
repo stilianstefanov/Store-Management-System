@@ -62,9 +62,9 @@
                 switch (e.StatusCode)
                 {
                     case StatusCode.NotFound:
-                        throw new KeyNotFoundException(e.Message);
+                        throw new KeyNotFoundException(e.Status.Detail);
                     case StatusCode.InvalidArgument:
-                        throw new ArgumentException(e.Message);
+                        throw new ArgumentException(e.Status.Detail);
                     default:
                         throw new Exception(e.Message);
                 }

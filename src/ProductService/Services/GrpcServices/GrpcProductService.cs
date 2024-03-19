@@ -63,6 +63,10 @@
 
                 return new Empty();
             }
+            catch (RpcException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 throw new RpcException(new Status(StatusCode.Internal, ex.Message));
