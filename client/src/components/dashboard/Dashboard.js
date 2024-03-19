@@ -1,5 +1,6 @@
 import styles from './Dashboard.module.css'
 import DashboardProduct from '../product/DashboardProduct';
+import DelayedPaymentModal from '../dashboard/delayedPaymentModal/DelayedPaymentModal'
 import { useState } from 'react';
 import * as ProductService from '../../services/productService'
 import { toast } from 'react-toastify';
@@ -11,6 +12,7 @@ function DashBoard() {
     const [products, setProducts] = useState([]);
     const [currentBarcode, setCurrentBarcode] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [dPaymentModalIsOpen, setDPaymentModalIsOpen] = useState(false);
     const { logout } = useAuth();
     const navigate = useNavigate();
 
@@ -58,6 +60,12 @@ function DashBoard() {
             }
         }
     }
+
+    const openDPaymentModalHandler = () => {
+        if (products.length > 0) {
+            setDPaymentModalIsOpen(true);
+        }
+    };
 
     const updateProductQty = (productId, newQty) => {
         setProducts(currentProducts =>
@@ -137,8 +145,14 @@ function DashBoard() {
                     className={`btn btn-success ${styles['button-custom']}`}>
                     Finish Transaction
                 </button>
-                <button type="button" className={`btn btn-warning ${styles['button-custom']}`}>Delayed Payment</button>
+                <button
+                    onClick={openDPaymentModalHandler}
+                    type="button"
+                    className={`btn btn-warning ${styles['button-custom']}`}>
+                    Delayed Payment
+                </button>
             </div>
+            {dPaymentModalIsOpen && (<DelayedPaymentModal onCancel={() => setDPaymentModalIsOpen(false)} />)}
         </div>
     );
 }
