@@ -5,7 +5,7 @@
 
     public interface IClientService
     {
-        Task<OperationResult<IEnumerable<ClientViewModel>>> GetAllClientsAsync(string userId);
+        Task<OperationResult<ClientsAllQueryModel>> GetAllClientsAsync(ClientsAllQueryModel queryModel, string userId);
 
         Task<OperationResult<ClientViewModel>> GetClientByIdAsync(string id, string userId);
 

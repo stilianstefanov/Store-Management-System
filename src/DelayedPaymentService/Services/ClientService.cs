@@ -5,6 +5,7 @@
     using Data.Models;
     using Data.ViewModels.Client;
     using Data.Repositories.Contracts;
+    using Microsoft.EntityFrameworkCore;
     using Utilities;
     using Utilities.Enums;
     using static Common.ExceptionMessages;
@@ -20,12 +21,31 @@
             _mapper = mapper;
         }
 
-        public async Task<OperationResult<IEnumerable<ClientViewModel>>> GetAllClientsAsync(string userId)
+        public async Task<OperationResult<ClientsAllQueryModel>> GetAllClientsAsync(ClientsAllQueryModel queryModel, string userId)
         {
             var clientsQuery =  _clientRepository.GetAllClientsAsync(userId);
 
-            return OperationResult<IEnumerable<ClientViewModel>>.Success(
-                _mapper.Map<IEnumerable<ClientViewModel>>(clientsQuery)!);
+            if (!string.IsNullOrWhiteSpace(queryModel.SearchTerm))
+            {
+                var wildCardSearchTerm = $"{queryModel.SearchTerm}%";
+
+                clientsQuery = clientsQuery
+                    .Where(c => EF.Functions.Like(c.Name, wildCardSearchTerm) ||
+                                      EF.Functions.Like(c.Surname, wildCardSearchTerm) ||
+                                      EF.Functions.Like(c.LastName, wildCardSearchTerm));
+            }
+
+            var clients = await clientsQuery
+                .Skip((queryModel.CurrentPage - 1) * queryModel.ClientsPerPage)
+                .Take(queryModel.ClientsPerPage)
+                .ToArrayAsync();
+
+            var totalPages = (int)Math.Ceiling(await clientsQuery.CountAsync() / (double)queryModel.ClientsPerPage);
+
+            queryModel.TotalPages = totalPages;
+            queryModel.Clients = _mapper.Map<IEnumerable<ClientViewModel>>(clients)!;
+
+            return OperationResult<ClientsAllQueryModel>.Success(queryModel);
         }
 
         public async Task<OperationResult<ClientViewModel>> GetClientByIdAsync(string id, string userId)
