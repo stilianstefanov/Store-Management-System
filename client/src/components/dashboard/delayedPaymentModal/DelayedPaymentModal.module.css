@@ -4,11 +4,11 @@
     background-color: white;
     padding: 1rem;
     text-align: center;
-    width: 30rem;
+    width: 40rem;
     z-index: 10;
     position: fixed;
-    top: 40vh;
-    left: calc(50% - 15rem);
+    top: 31vh;
+    left: calc(50% - 20rem);
 }
 
 .backdrop {
@@ -19,4 +19,73 @@
     height: 100vh;
     top: 0;
     left: 0;
+}
+
+.header {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 16px;
+}
+
+.input {
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid black;
+}
+
+.table-wrapper {
+    border: 1px solid;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    height: 200px;
+    margin-bottom: 10px;
+}
+
+.tableCustom {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-cancel {
+    background-color: red;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.button-confirm {
+    background-color: green;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.button-cancel:hover {
+    background-color: black;
+}
+
+.button-confirm:hover {
+    background-color: black;
+}
+
+.loading-container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 50px;
+    width: 100%;
 }
