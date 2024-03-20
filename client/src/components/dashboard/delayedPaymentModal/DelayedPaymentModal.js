@@ -1,6 +1,6 @@
 import styles from './DelayedPaymentModal.module.css'
 import ReactLoading from 'react-loading'
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
@@ -14,11 +14,38 @@ function DelayedPaymentModal(props) {
     const { logout } = useAuth();
     const navigate = useNavigate();
 
+    const handleError = useCallback((error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response ? error.response.data : "An error occurred");
+        }
+        console.error(error);
+    }, [logout, navigate]);
+
+    useEffect(() => {
+        const getInitialClients = async () => {
+            setIsLoading(true);
+            try {
+                const response = await ClientService.GetAll();
+                setClients(response.clients);
+            } catch (error) {
+                handleError(error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        getInitialClients();
+    }, [handleError]);
+
     const getClientsHandler = async (event) => {
         const searchTerm = event.target.value;
         setCurrentSearchTerm(searchTerm);
 
-        if (searchTerm && searchTerm !== ' ') {
+        if (searchTerm.trim()) {
             setIsLoading(true);
             try {
                 const requestParams = { searchTerm };
@@ -31,17 +58,6 @@ function DelayedPaymentModal(props) {
             }
         }
     };
-
-    const handleError = (error) => {
-        if (error.response && error.response.status === 401) {
-            logout();
-            navigate('/login');
-            toast.warning('Your session has expired. Please login again.');
-        } else {
-            toast.error(error.response.data);
-        }
-        console.error(error);
-    }
 
     return (
         <div>
