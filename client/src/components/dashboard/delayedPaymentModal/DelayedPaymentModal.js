@@ -10,6 +10,7 @@ import * as ClientService from '../../../services/clientService'
 function DelayedPaymentModal(props) {
     const [clients, setClients] = useState([]);
     const [currentsearchTerm, setCurrentSearchTerm] = useState("");
+    const [selectedClientId, setSelectedClientId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const { logout } = useAuth();
     const navigate = useNavigate();
@@ -59,6 +60,10 @@ function DelayedPaymentModal(props) {
         }
     };
 
+    const selectClientHandler = (clientId) => {
+        setSelectedClientId(clientId);
+    };
+
     return (
         <div>
             <div className={styles['modal']}>
@@ -71,7 +76,7 @@ function DelayedPaymentModal(props) {
                     onChange={getClientsHandler}
                 />
                 <div className={`table-responsive ${styles['table-wrapper']}`}>
-                    <table className={`table table-striped ${styles.tableCustom}`}>
+                    <table className={styles.tableCustom}>
                         <thead className={styles.tableHeader}>
                             <tr>
                                 <th>Name</th>
@@ -84,7 +89,7 @@ function DelayedPaymentModal(props) {
                         <tbody>
                             {isLoading ? (
                                 <tr>
-                                    <td colSpan="3">
+                                    <td colSpan="5">
                                         <div className={styles['loading-container']}>
                                             <ReactLoading type="spin" color="#808080" />
                                         </div>
@@ -95,6 +100,8 @@ function DelayedPaymentModal(props) {
                                     <DashboardClient
                                         key={client.id}
                                         client={client}
+                                        isSelected={selectedClientId === client.id}
+                                        select={selectClientHandler}
                                     />
                                 ))
                             )}

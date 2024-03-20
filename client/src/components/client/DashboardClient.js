@@ -1,6 +1,8 @@
-function DashboardClient({ client }) {
+import styles from './DashboardClient.module.css'
+
+function DashboardClient({ client, isSelected, select }) {
     return (
-        <tr>
+        <tr className={`${styles['row']} ${isSelected ? styles['selected-row'] : ''}`} onClick={() => select(client.id)}>
             <td>{client.name}</td>
             <td>{client.surname}</td>
             <td>{client.lastName}</td>
