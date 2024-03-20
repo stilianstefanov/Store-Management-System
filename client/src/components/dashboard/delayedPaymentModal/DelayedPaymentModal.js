@@ -1,12 +1,47 @@
 import styles from './DelayedPaymentModal.module.css'
 import ReactLoading from 'react-loading'
 import { useState } from 'react';
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext';
 import DashboardClient from '../../client/DashboardClient';
+import * as ClientService from '../../../services/clientService'
 
 function DelayedPaymentModal(props) {
     const [clients, setClients] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [currentsearchTerm, setCurrentSearchTerm] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    const getClientsHandler = async (event) => {
+        const searchTerm = event.target.value;
+        setCurrentSearchTerm(searchTerm);
+
+        if (searchTerm && searchTerm !== ' ') {
+            setIsLoading(true);
+            try {
+                const requestParams = { searchTerm };
+                const response = await ClientService.GetAll(requestParams);
+                setClients(response.clients);
+            } catch (error) {
+                handleError(error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    };
+
+    const handleError = (error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response.data);
+        }
+        console.error(error);
+    }
 
     return (
         <div>
@@ -14,9 +49,10 @@ function DelayedPaymentModal(props) {
                 <h1 className={styles['header']}>Select client</h1>
                 <input
                     type='text'
-                    value={searchTerm}
+                    value={currentsearchTerm}
                     placeholder='Search'
                     className={`form-control ${styles.input}`}
+                    onChange={getClientsHandler}
                 />
                 <div className={`table-responsive ${styles['table-wrapper']}`}>
                     <table className={`table table-striped ${styles.tableCustom}`}>

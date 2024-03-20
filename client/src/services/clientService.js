@@ -1,8 +1,9 @@
 import axios from "axios"
 
-const baseUrl = new URL('http://acme.com/api/Clients');
+
 
 export const GetAll = async (params) => {
+    const baseUrl = new URL('http://acme.com/api/Clients');
     const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
 
     Object.entries(params).forEach(([key, value]) => {
