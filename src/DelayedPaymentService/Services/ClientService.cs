@@ -22,10 +22,10 @@
 
         public async Task<OperationResult<IEnumerable<ClientViewModel>>> GetAllClientsAsync(string userId)
         {
-            var clients = await _clientRepository.GetAllClientsAsync(userId);
+            var clientsQuery =  _clientRepository.GetAllClientsAsync(userId);
 
             return OperationResult<IEnumerable<ClientViewModel>>.Success(
-                _mapper.Map<IEnumerable<ClientViewModel>>(clients)!);
+                _mapper.Map<IEnumerable<ClientViewModel>>(clientsQuery)!);
         }
 
         public async Task<OperationResult<ClientViewModel>> GetClientByIdAsync(string id, string userId)

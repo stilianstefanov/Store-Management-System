@@ -18,11 +18,10 @@
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Client>> GetAllClientsAsync(string userId)
+        public IQueryable<Client> GetAllClientsAsync(string userId)
         {
-            return await _dbContext.Clients
-                .Where(b => !b.IsDeleted && b.UserId == userId)
-                .ToArrayAsync();
+            return _dbContext.Clients
+                .Where(b => !b.IsDeleted && b.UserId == userId);
         }
 
         public async Task<Client?> GetClientByIdAsync(string id)

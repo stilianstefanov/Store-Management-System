@@ -6,7 +6,7 @@
     {
         Task SaveChangesAsync();
 
-        Task<IEnumerable<Client>> GetAllClientsAsync(string userId);
+        IQueryable<Client> GetAllClientsAsync(string userId);
 
         Task<Client?> GetClientByIdAsync(string id);
 
