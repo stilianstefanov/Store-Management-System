@@ -4,11 +4,11 @@
     background-color: white;
     padding: 1rem;
     text-align: center;
-    width: 40rem;
+    width: 43rem;
     z-index: 10;
     position: fixed;
     top: 31vh;
-    left: calc(50% - 20rem);
+    left: calc(50% - 21rem);
 }
 
 .backdrop {
