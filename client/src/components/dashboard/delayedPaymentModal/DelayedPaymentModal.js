@@ -5,6 +5,7 @@ import DashboardClient from '../../client/DashboardClient';
 
 function DelayedPaymentModal(props) {
     const [clients, setClients] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     return (
@@ -13,6 +14,7 @@ function DelayedPaymentModal(props) {
                 <h1 className={styles['header']}>Select client</h1>
                 <input
                     type='text'
+                    value={searchTerm}
                     placeholder='Search'
                     className={`form-control ${styles.input}`}
                 />
