@@ -19,9 +19,9 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllClients()
+        public async Task<IActionResult> GetAllClients([FromQuery] ClientsAllQueryModel queryModel)
         {
-            var result = await _clientService.GetAllClientsAsync(User.GetId()!);
+            var result = await _clientService.GetAllClientsAsync(queryModel, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
