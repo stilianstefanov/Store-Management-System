@@ -42,7 +42,7 @@ function DelayedPaymentModal(props) {
         getInitialClients();
     }, [handleError]);
 
-    const getClientsHandler = async (event) => {
+    const searchClientsHandler = async (event) => {
         const searchTerm = event.target.value;
         setCurrentSearchTerm(searchTerm);
 
@@ -60,6 +60,10 @@ function DelayedPaymentModal(props) {
         }
     };
 
+    const confirmHandler = async () => {
+
+    }
+
     const selectClientHandler = (clientId) => {
         setSelectedClientId(clientId);
     };
@@ -73,7 +77,7 @@ function DelayedPaymentModal(props) {
                     value={currentsearchTerm}
                     placeholder='Search'
                     className={`form-control ${styles.input}`}
-                    onChange={getClientsHandler}
+                    onChange={searchClientsHandler}
                 />
                 <div className={`table-responsive ${styles['table-wrapper']}`}>
                     <table className={styles.tableCustom}>
