@@ -110,7 +110,7 @@
 
         private async Task IncreaseClientCreditAsync(string clientId, IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
-            var totalAmount = purchasedProducts.Sum(p => p.PurchasePrice * p.BoughtQuantity);
+            var totalAmount = purchasedProducts.Sum(p => p.Price * p.Quantity);
             
             await _clientService.IncreaseClientCreditAsync(clientId, totalAmount);
         }
@@ -118,7 +118,7 @@
         private async Task<bool> ClientHasEnoughCreditAsync(string clientId,
             IEnumerable<PurchasedProductCreateModel> purchasedProducts)
         {
-            var totalAmount = purchasedProducts.Sum(p => p.PurchasePrice * p.BoughtQuantity);
+            var totalAmount = purchasedProducts.Sum(p => p.Price * p.Quantity);
 
             return await _clientService.ClientHasEnoughCreditAsync(clientId, totalAmount);
         }

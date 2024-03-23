@@ -5,12 +5,12 @@
 
     public class PurchasedProductCreateModel
     {
-        public string ExternalId { get; set; } = null!;
+        public string Id { get; set; } = null!;
 
         [Range(BoughtQuantityMinValue, BoughtQuantityMaxValue)]
-        public int BoughtQuantity { get; set; }
+        public int Quantity { get; set; }
 
         [Range(typeof(decimal), PurchasePriceMinValue, PurchasePriceMaxValue)]
-        public decimal PurchasePrice { get; set; }
+        public decimal Price { get; set; }
     }
 }
