@@ -152,7 +152,9 @@ function DashBoard() {
                     Delayed Payment
                 </button>
             </div>
-            {dPaymentModalIsOpen && (<DelayedPaymentModal onCancel={() => setDPaymentModalIsOpen(false)} />)}
+            {dPaymentModalIsOpen && (<DelayedPaymentModal
+                onCancel={() => setDPaymentModalIsOpen(false)} 
+                products = {products}/>)}
         </div>
     );
 }

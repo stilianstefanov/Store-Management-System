@@ -61,7 +61,7 @@ function DelayedPaymentModal(props) {
     };
 
     const confirmHandler = async () => {
-
+        
     }
 
     const selectClientHandler = (clientId) => {
