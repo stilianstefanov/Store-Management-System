@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import DashboardClient from '../../client/DashboardClient';
 import * as ClientService from '../../../services/clientService'
+import * as PurchaseService from '../../../services/purchaseService'
 
 function DelayedPaymentModal(props) {
     const [clients, setClients] = useState([]);
@@ -61,7 +62,20 @@ function DelayedPaymentModal(props) {
     };
 
     const confirmHandler = async () => {
-        
+        if (!selectedClientId) {
+            toast.warning('Please select a client!');
+        }
+        try {
+            setIsLoading(true);
+            await PurchaseService.CreatePurchase(props.products, selectedClientId);
+            props.clearProducts();
+            props.closeDPaymentModal();
+            toast.success("Successful operation!");
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     const selectClientHandler = (clientId) => {
@@ -113,10 +127,10 @@ function DelayedPaymentModal(props) {
                     </table>
                 </div>
                 <div className={styles['buttons-container']}>
-                    <button className={styles['button-cancel']} onClick={props.onCancel} >
+                    <button className={styles['button-cancel']} onClick={props.closeDPaymentModal} >
                         Cancel
                     </button>
-                    <button className={styles['button-confirm']}>
+                    <button className={styles['button-confirm']} onClick={confirmHandler}>
                         Confirm
                     </button>
                 </div>

@@ -153,8 +153,10 @@ function DashBoard() {
                 </button>
             </div>
             {dPaymentModalIsOpen && (<DelayedPaymentModal
-                onCancel={() => setDPaymentModalIsOpen(false)} 
-                products = {products}/>)}
+                closeDPaymentModal={() => setDPaymentModalIsOpen(false)}
+                products={products}
+                clearProducts={() => setProducts([])}
+            />)}
         </div>
     );
 }
