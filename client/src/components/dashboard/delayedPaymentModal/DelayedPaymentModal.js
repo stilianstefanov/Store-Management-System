@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import DashboardClient from '../../client/DashboardClient';
+import InsufficientCreditModal from './InsufficientCreditModal/InsufficientCreditModal';
 import * as ClientService from '../../../services/clientService'
 import * as PurchaseService from '../../../services/purchaseService'
 
@@ -13,6 +14,7 @@ function DelayedPaymentModal(props) {
     const [currentsearchTerm, setCurrentSearchTerm] = useState("");
     const [selectedClientId, setSelectedClientId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [creditModalIsOpen, setCreditModalIsOpen] = useState(false);
     const { logout } = useAuth();
     const navigate = useNavigate();
 
@@ -64,7 +66,15 @@ function DelayedPaymentModal(props) {
     const confirmHandler = async () => {
         if (!selectedClientId) {
             toast.warning('Please select a client!');
+            return;
         }
+        let selectedClient = clients.find(c => c.id === selectedClientId);
+        let creditLeft = selectedClient.creditLimit - selectedClient.currentCredit;
+        if (calculateTotalCost(props.products) > creditLeft) {
+            setCreditModalIsOpen(true);
+            return;
+        }
+       
         try {
             setIsLoading(true);
             await PurchaseService.CreatePurchase(props.products, selectedClientId);
@@ -81,6 +91,10 @@ function DelayedPaymentModal(props) {
     const selectClientHandler = (clientId) => {
         setSelectedClientId(clientId);
     };
+
+    const calculateTotalCost = (productsArr) => {
+        return productsArr.reduce((total, product) => total + product.price * product.quantity, 0);
+    }
 
     return (
         <div>
@@ -136,6 +150,11 @@ function DelayedPaymentModal(props) {
                 </div>
             </div>
             <div className={styles['backdrop']} />
+            {creditModalIsOpen && (<InsufficientCreditModal 
+                closeCreditModal={() => setCreditModalIsOpen(false)}
+                client={clients.find(c => c.id === selectedClientId)}
+                totalCost={calculateTotalCost(props.products)}
+            />)}
         </div>
     );
 }
