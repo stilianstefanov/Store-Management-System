@@ -11,6 +11,7 @@
         public PurchasedProductProfile()
         {
             CreateMap<PurchasedProductCreateModel, PurchasedProduct>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.ExternalId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.BoughtQuantity, opt => opt.MapFrom(src => src.Quantity))
                 .ForMember(dest => dest.PurchasePrice, opt => opt.MapFrom(src => src.Price));
