@@ -70,7 +70,7 @@ function DashBoard() {
     const updateProductQty = (productId, newQty) => {
         setProducts(currentProducts =>
             currentProducts.map(product =>
-                product.id === productId ? { ...product, quantity: newQty } : product
+                product.id === productId ? { ...product, quantity: Number(newQty) } : product
             )
         );
     }
