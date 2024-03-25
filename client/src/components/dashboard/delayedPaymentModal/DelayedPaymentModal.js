@@ -74,7 +74,7 @@ function DelayedPaymentModal(props) {
             setCreditModalIsOpen(true);
             return;
         }
-       
+
         try {
             setIsLoading(true);
             await PurchaseService.CreatePurchase(props.products, selectedClientId);
@@ -87,6 +87,13 @@ function DelayedPaymentModal(props) {
             setIsLoading(false);
         }
     }
+
+    const updateClientCreditLimit = (clientId, newLimit) => {
+        setClients(currentClients => 
+            currentClients.map(client => client.id === clientId ? {...client, creditLimit: Number(newLimit)} : client
+            )
+        );
+    };
 
     const selectClientHandler = (clientId) => {
         setSelectedClientId(clientId);
@@ -150,10 +157,11 @@ function DelayedPaymentModal(props) {
                 </div>
             </div>
             <div className={styles['backdrop']} />
-            {creditModalIsOpen && (<InsufficientCreditModal 
+            {creditModalIsOpen && (<InsufficientCreditModal
                 closeCreditModal={() => setCreditModalIsOpen(false)}
                 client={clients.find(c => c.id === selectedClientId)}
                 totalCost={calculateTotalCost(props.products)}
+                updateCreditLimit={updateClientCreditLimit}
             />)}
         </div>
     );
