@@ -41,8 +41,6 @@
         [HttpPost]
         public async Task<IActionResult> CreateClient(ClientCreateModel model)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
             var result = await _clientService.CreateClientAsync(model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
@@ -53,9 +51,17 @@
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateClient(string id, [FromBody]ClientUpdateModel model)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
             var result = await _clientService.UpdateClientAsync(id, model, User.GetId()!);
+
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return Ok(result.Data);
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PartialUpdateClient(string id, [FromBody] ClientPartialUpdateModel model)
+        {
+            var result = await _clientService.PartialUpdateClientAsync(id, model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 

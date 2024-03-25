@@ -89,6 +89,31 @@
             return OperationResult<ClientViewModel>.Success(_mapper.Map<ClientViewModel>(clientToUpdate)!);
         }
 
+        public async Task<OperationResult<ClientViewModel>> PartialUpdateClientAsync(
+            string id, ClientPartialUpdateModel model, string userId)
+        {
+            var clientToUpdate = await _clientRepository.GetClientByIdAsync(id);
+
+            if (clientToUpdate == null || clientToUpdate.UserId != userId)
+            {
+                return OperationResult<ClientViewModel>.Failure(ClientNotFound, ErrorType.NotFound);
+            }
+
+            if (model.CurrentCredit.HasValue)
+            {
+                clientToUpdate.CurrentCredit = model.CurrentCredit.Value;
+            }
+
+            if (model.CreditLimit.HasValue)
+            {
+                clientToUpdate.CreditLimit = model.CreditLimit.Value;
+            }
+
+            await _clientRepository.SaveChangesAsync();
+
+            return OperationResult<ClientViewModel>.Success(_mapper.Map<ClientViewModel>(clientToUpdate)!);
+        }
+
         public async Task<OperationResult<ClientViewModel>> DecreaseClientCreditAsync(string id, decimal amount, string userId)
         {
             var client = await _clientRepository.GetClientByIdAsync(id);
