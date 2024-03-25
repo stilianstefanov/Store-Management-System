@@ -1,6 +1,30 @@
 import styles from './InsufficientCreditModal.module.css'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../context/AuthContext';
+import { useState } from 'react';
+import * as ClientService from '../../../../services/clientService'
 
 function InsufficientCreditModal(props) {
+    const [newCreditLimit, setNewCreditLimit] = useState(null);
+    const [validationError, setValidationError] = useState("");
+
+    const inputHandler = (event) => {
+        const inputNewCreditLimit = event.target.value;
+        setNewCreditLimit(inputNewCreditLimit);
+
+        if (!inputNewCreditLimit || inputNewCreditLimit < 0 || inputNewCreditLimit > 99999) {
+            setValidationError('The new credit limit should be between 0 and 99999!');
+            return;
+        }
+        setValidationError("");
+    };
+
+    const confirmHandler = async (event) => {
+        event.preventDefault();
+        
+    };
+
     return (
         <div className={styles["modal"]}>
             <h1 className={styles["header"]}>
@@ -23,13 +47,15 @@ function InsufficientCreditModal(props) {
                     </p>
                 </li>
             </ul>
-            <form>
+            <form onSubmit={confirmHandler}>
                 <input
                     type='number'
+                    value={newCreditLimit}
                     placeholder="New credit limit"
                     className={`form-control ${styles.input}`}
-
+                    onChange={inputHandler}
                 />
+                {validationError && <p className={styles["Error-message"]}>{validationError}</p>}
                 <div className={styles['buttons-container']}>
                     <button className={styles['button-cancel']} onClick={props.closeCreditModal}>
                         Cancel
