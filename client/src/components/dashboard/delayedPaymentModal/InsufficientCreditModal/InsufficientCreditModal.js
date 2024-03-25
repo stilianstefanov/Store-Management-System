@@ -22,6 +22,7 @@ function InsufficientCreditModal(props) {
 
     const confirmHandler = async (event) => {
         event.preventDefault();
+        if (validationError) return;
         
     };
 
