@@ -3,6 +3,7 @@ import * as UserService from '../../../services/userService';
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import styles from './Register.module.css';
+import { commonValidationRules, registerValidationRules } from "../../../validationRules";
 
 function RegisterPage() {
     const [email, setEmail] = useState("");
@@ -13,10 +14,51 @@ function RegisterPage() {
     const [validationErrors, setValidationErrors] = useState({});
     const navigate = useNavigate();
 
+    const validate = () => {
+        const errors = {};
+
+        if (!email) {
+            errors.email = commonValidationRules.required('Email').message;
+        } else if (!registerValidationRules.email.pattern.test(email)) {
+            errors.email = registerValidationRules.email.message;
+        }
+
+        if (!userName) {
+            errors.userName = commonValidationRules.required('Username').message;
+        } else if (userName.length < registerValidationRules.userName.minLength
+            || userName.length > registerValidationRules.userName.maxLength) {
+
+            errors.userName = commonValidationRules.length(
+                'Username', registerValidationRules.userName.minLength, registerValidationRules.userName.maxLength).message;
+        }
+
+        if (!companyName) {
+            errors.companyName = commonValidationRules.required("Company name").message;
+        } else if (companyName < registerValidationRules.companyName.minLength
+            || companyName > registerValidationRules.companyName.maxLength) {
+
+            errors.companyName = commonValidationRules.length(
+                'Company name', registerValidationRules.companyName.minLength, registerValidationRules.companyName.maxLength).message;
+        }
+
+        if (!password) {
+            errors.password = commonValidationRules.required('Password').message;
+        } else if (!registerValidationRules.password.pattern.test(password)) {
+            errors.password = registerValidationRules.password.message;
+        }
+
+        if (password !== confirmPassword) {
+            errors.confirmPassword = registerValidationRules.confirmPassword.message;
+        }
+
+        setValidationErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
+
     const registerHandler = async (event) => {
         event.preventDefault();
 
-        if (email && companyName && userName && password && confirmPassword) {
+        if (validate()) {
             const registerRequest = {
                 email,
                 companyName,
@@ -30,12 +72,7 @@ function RegisterPage() {
                 toast.success(data);
                 navigate('/login');
             } catch (error) {
-                if (error.response && error.response.data.errors) {
-                    setValidationErrors(error.response.data.errors);
-                    
-                } else {
-                    toast.error(error.response.data);
-                }
+                toast.error(error.response.data)
                 console.error(error);
             }
         }
@@ -43,52 +80,52 @@ function RegisterPage() {
 
     return (
         <div className={styles["Auth-container"]}>
-        <div className={styles["Auth-card"]}>
-            <h1 className={styles["Auth-header"]}>Register</h1>
-            <form onSubmit={registerHandler}>
-                <input
-                    placeholder="Email"
-                    className={styles["Auth-input"]}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                 {validationErrors.Email && <p className={styles["Error-message"]}>{validationErrors.Email.join(", ")}</p>}
-                 <input
-                    placeholder="Company name"
-                    className={styles["Auth-input"]}
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                />
-                  {validationErrors.CompanyName && <p className={styles["Error-message"]}>{validationErrors.CompanyName.join(", ")}</p>}
-                  <input
-                    placeholder="Username"
-                    className={styles["Auth-input"]}
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
-                />
-                 {validationErrors.UserName && <p className={styles["Error-message"]}>{validationErrors.UserName.join(", ")}</p>}
-                <input
-                    type="password"
-                    placeholder="Password"
-                    className={styles["Auth-input"]}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                {validationErrors.Password && <p className={styles["Error-message"]}>{validationErrors.Password.join(", ")}</p>}
-                 <input
-                    type="password"
-                    placeholder="Confirm password"
-                    className={styles["Auth-input"]}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                 {validationErrors.ConfirmPassword && <p className={styles["Error-message"]}>{validationErrors.ConfirmPassword.join(", ")}</p>}
-                <button type="submit" className={styles["Auth-button"]}>
-                    Confirm
-                </button>
-            </form>
+            <div className={styles["Auth-card"]}>
+                <h1 className={styles["Auth-header"]}>Register</h1>
+                <form onSubmit={registerHandler}>
+                    <input
+                        placeholder="Email"
+                        className={styles["Auth-input"]}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    {validationErrors.email && <p className={styles["Error-message"]}>{validationErrors.email}</p>}
+                    <input
+                        placeholder="Company name"
+                        className={styles["Auth-input"]}
+                        value={companyName}
+                        onChange={(e) => setCompanyName(e.target.value)}
+                    />
+                    {validationErrors.companyName && <p className={styles["Error-message"]}>{validationErrors.companyName}</p>}
+                    <input
+                        placeholder="Username"
+                        className={styles["Auth-input"]}
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
+                    />
+                    {validationErrors.userName && <p className={styles["Error-message"]}>{validationErrors.userName}</p>}
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        className={styles["Auth-input"]}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    {validationErrors.password && <p className={styles["Error-message"]}>{validationErrors.password}</p>}
+                    <input
+                        type="password"
+                        placeholder="Confirm password"
+                        className={styles["Auth-input"]}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                    {validationErrors.confirmPassword && <p className={styles["Error-message"]}>{validationErrors.confirmPassword}</p>}
+                    <button type="submit" className={styles["Auth-button"]}>
+                        Confirm
+                    </button>
+                </form>
+            </div>
         </div>
-    </div>
     );
 }
 
