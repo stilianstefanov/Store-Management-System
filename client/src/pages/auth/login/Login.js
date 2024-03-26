@@ -26,15 +26,19 @@ function LoginPage() {
                 navigate('/');
 
             } catch (error) {
-                if (error.response && error.response.status === 400) {
-                    setLoginError("Invalid username or password!");
-                    toast.error("Invalid Credentials!");
-                } else {
-                    toast.error("An unexpected error occurred. Please try again later.");
-                }
-                console.error(error);
+                handleError(error);
             }
         }
+    }
+
+    const handleError = (error) => {
+        if (error.response && error.response.status === 400) {
+            setLoginError("Invalid username or password!");
+            toast.error("Invalid Credentials!");
+        } else {
+            toast.error("An unexpected error occurred. Please try again later.");
+        }
+        console.error(error);
     }
 
     return (
