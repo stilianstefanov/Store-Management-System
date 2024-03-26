@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthContext';
 import { useState } from 'react';
+import { clientValidationRules, commonValidationRules } from '../../../../validationRules';
 import * as ClientService from '../../../../services/clientService'
 
 function InsufficientCreditModal(props) {
@@ -14,12 +15,7 @@ function InsufficientCreditModal(props) {
     const inputHandler = (event) => {
         const inputNewCreditLimit = event.target.value;
         setNewCreditLimit(inputNewCreditLimit);
-
-        if (!inputNewCreditLimit || inputNewCreditLimit < 0 || inputNewCreditLimit > 99999) {
-            setValidationError('The new credit limit should be between 0 and 99999!');
-            return;
-        }
-        setValidationError("");
+        validateNewLimitInput(inputNewCreditLimit);
     };
 
     const confirmHandler = async (event) => {
@@ -36,6 +32,20 @@ function InsufficientCreditModal(props) {
         } catch (error) {
             handleError(error);
         }
+    };
+
+    const validateNewLimitInput = (input) => {
+        if (!input) {
+            setValidationError(commonValidationRules.required("New credit limit").message);
+            return;
+        }
+        
+        if (input < clientValidationRules.creditLimit.minValue || input > clientValidationRules.creditLimit.maxValue) {
+            setValidationError(commonValidationRules.range(
+                "New credit limit", clientValidationRules.creditLimit.minValue, clientValidationRules.creditLimit.maxValue).message);
+            return;
+        }
+        setValidationError("");
     };
 
     const handleError = (error) => {
