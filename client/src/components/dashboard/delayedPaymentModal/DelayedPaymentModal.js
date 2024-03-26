@@ -48,6 +48,7 @@ function DelayedPaymentModal(props) {
     const searchClientsHandler = async (event) => {
         const searchTerm = event.target.value;
         setCurrentSearchTerm(searchTerm);
+        setSelectedClientId(null);
 
         if (searchTerm.trim()) {
             setIsLoading(true);
@@ -68,9 +69,7 @@ function DelayedPaymentModal(props) {
             toast.warning('Please select a client!');
             return;
         }
-        let selectedClient = clients.find(c => c.id === selectedClientId);
-        let creditLeft = selectedClient.creditLimit - selectedClient.currentCredit;
-        if (calculateTotalCost(props.products) > creditLeft) {
+        if (!validateClientCredit()) {
             setCreditModalIsOpen(true);
             return;
         }
@@ -88,9 +87,18 @@ function DelayedPaymentModal(props) {
         }
     }
 
+    const validateClientCredit = () => {
+        let selectedClient = clients.find(c => c.id === selectedClientId);
+        let creditLeft = selectedClient.creditLimit - selectedClient.currentCredit;
+        if (calculateTotalCost(props.products) > creditLeft) {
+            return false;
+        }
+        return true;
+    }
+
     const updateClientCreditLimit = (clientId, newLimit) => {
-        setClients(currentClients => 
-            currentClients.map(client => client.id === clientId ? {...client, creditLimit: Number(newLimit)} : client
+        setClients(currentClients =>
+            currentClients.map(client => client.id === clientId ? { ...client, creditLimit: Number(newLimit) } : client
             )
         );
     };
