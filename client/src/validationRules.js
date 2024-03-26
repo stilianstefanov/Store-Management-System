@@ -31,3 +31,25 @@ export const registerValidationRules = {
         maxLength: 50
     }
 };
+
+export const clientValidationRules = {
+    name: {
+        minLength: 3,
+        maxLength: 50
+    },
+    surname: {
+        maxLength: 50
+    },
+    lastName: {
+        minLength: 3,
+        maxLength: 50
+    },
+    currentCredit: {
+        minValue: 0,
+        maxValue: 99999
+    },
+    creditLimit: {
+        minValue: 0,
+        maxValue: 99999
+    }
+};
