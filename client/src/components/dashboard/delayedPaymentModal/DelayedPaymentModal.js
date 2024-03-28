@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
-import DashboardClient from '../../client/DashboardClient';
+import DashboardClient from '../../client/DashboardClient/DashboardClient';
 import InsufficientCreditModal from './InsufficientCreditModal/InsufficientCreditModal';
 import * as ClientService from '../../../services/clientService'
 import * as PurchaseService from '../../../services/purchaseService'
