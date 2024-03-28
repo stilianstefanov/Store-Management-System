@@ -38,6 +38,7 @@ export const clientValidationRules = {
         maxLength: 50
     },
     surname: {
+        minLength: 0,
         maxLength: 50
     },
     lastName: {

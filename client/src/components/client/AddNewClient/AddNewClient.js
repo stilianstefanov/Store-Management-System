@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { clientValidationRules, commonValidationRules } from "../../../validationRules";
 
 function AddNewClient() {
     const [name, setName] = useState("");
@@ -27,6 +28,82 @@ function AddNewClient() {
     const inputCreditLimitHandler = (event) => {
 
     };
+
+    const validateNameInput = (input) => {
+        const errors = { ...validationErrors };
+        const minLength = clientValidationRules.name.minLength;
+        const maxLength = clientValidationRules.name.maxLength;
+        if (!input) {
+            errors.name = commonValidationRules.required('Name').message;
+            return;
+        };
+        if (input.length < minLength || input.length > maxLength) {
+            errors.name = commonValidationRules.length('Name', minLength, maxLength).message;
+            return;
+        }
+        delete errors.name;
+        setValidationErrors(errors);
+    }
+
+    const validateSurnameInput = (input) => {
+        const errors = { ...validationErrors };
+        const minLength = clientValidationRules.surname.minLength;
+        const maxLength = clientValidationRules.surname.maxLength;
+        if (input.length > maxLength) {
+            errors.surname = commonValidationRules.length('Surname', minLength, maxLength).message;
+            return;
+        }
+        delete errors.surname;
+        setValidationErrors(errors);
+    }
+
+    const validateLastNameInput = (input) => {
+        const errors = { ...validationErrors };
+        const minLength = clientValidationRules.lastName.minLength;
+        const maxLength = clientValidationRules.lastName.maxLength;
+        if (!input) {
+            errors.lastName = commonValidationRules.required('Lastname').message;
+            return;
+        };
+        if (input.length < minLength || input.length > maxLength) {
+            errors.lastName = commonValidationRules.length('Lastname', minLength, maxLength).message;
+            return;
+        }
+        delete errors.lastName;
+        setValidationErrors(errors);
+    }
+
+    const validateCurrentCreditInput = (input) => {
+        const errors = { ...validationErrors };
+        const minValue = clientValidationRules.currentCredit.minValue;
+        const maxValue = clientValidationRules.currentCredit.maxValue;
+        if (!input) {
+            errors.currentCredit = commonValidationRules.required('Current credit').message;
+            return;
+        };
+        if (input < minValue || input > maxValue) {
+            errors.currentCredit = commonValidationRules.range('Current credit', minValue, maxValue).message;
+            return;
+        }
+        delete errors.currentCredit;
+        setValidationErrors(errors);
+    }
+
+    const validateCreditLimitInput = (input) => {
+        const errors = { ...validationErrors };
+        const minValue = clientValidationRules.creditLimit.minValue;
+        const maxValue = clientValidationRules.creditLimit.maxValue;
+        if (!input) {
+            errors.creditLimit = commonValidationRules.required('Credit limit').message;
+            return;
+        };
+        if (input < minValue || input > maxValue) {
+            errors.creditLimit = commonValidationRules.range('Credit limit', minValue, maxValue).message;
+            return;
+        }
+        delete errors.creditLimit;
+        setValidationErrors(errors);
+    }
 
     return (
         <div className={styles["container"]}>
