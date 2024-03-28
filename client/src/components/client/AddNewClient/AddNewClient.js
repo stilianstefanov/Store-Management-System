@@ -10,23 +10,33 @@ function AddNewClient() {
     const [validationErrors, setValidationErrors] = useState({});
 
     const inputNameHandler = (event) => {
-
+        const inputName = event.target.value;
+        setName(inputName);
+        validateNameInput(inputName);
     };
 
     const inputSurnameHandler = (event) => {
-
+        const inputSurname = event.target.value;
+        setSurname(inputSurname);
+        validateSurnameInput(inputSurname);
     };
 
     const inputLastNameHandler = (event) => {
-
+        const inputLastName = event.target.value;
+        setLastName(inputLastName);
+        validateLastNameInput(inputLastName);
     };
 
     const inputCurrentCreditHandler = (event) => {
-
+        const inputCurrentCredit = event.target.value;
+        setCurrentCredit(inputCurrentCredit);
+        validateCurrentCreditInput(inputCurrentCredit);
     };
 
     const inputCreditLimitHandler = (event) => {
-
+        const inputCreditLimit = event.target.value;
+        setCreditLimit(inputCreditLimit);
+        validateCreditLimitInput(inputCreditLimit);
     };
 
     const validateNameInput = (input) => {
