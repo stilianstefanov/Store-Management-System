@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import DashboardClient from '../../client/DashboardClient/DashboardClient';
 import InsufficientCreditModal from './InsufficientCreditModal/InsufficientCreditModal';
+import AddNewClient from '../../client/AddNewClient/AddNewClient';
 import * as ClientService from '../../../services/clientService'
 import * as PurchaseService from '../../../services/purchaseService'
 
@@ -15,6 +16,7 @@ function DelayedPaymentModal(props) {
     const [selectedClientId, setSelectedClientId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [creditModalIsOpen, setCreditModalIsOpen] = useState(false);
+    const [addNewClientIsOpen, setAddNewClientIsOpen] = useState(false);
     const { logout } = useAuth();
     const navigate = useNavigate();
 
@@ -159,6 +161,9 @@ function DelayedPaymentModal(props) {
                     <button className={styles['button-cancel']} onClick={props.closeDPaymentModal} >
                         Cancel
                     </button>
+                    <button className={styles['button-add']} onClick={() => setAddNewClientIsOpen(true)}>
+                        Add New Client
+                    </button>
                     <button className={styles['button-confirm']} onClick={confirmHandler}>
                         Confirm
                     </button>
@@ -171,6 +176,7 @@ function DelayedPaymentModal(props) {
                 totalCost={calculateTotalCost(props.products)}
                 updateCreditLimit={updateClientCreditLimit}
             />)}
+            {addNewClientIsOpen && <AddNewClient closeAddNewClient={() => setAddNewClientIsOpen(false)} />}
         </div>
     );
 }

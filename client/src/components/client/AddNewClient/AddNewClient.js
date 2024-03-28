@@ -1,12 +1,13 @@
+import styles from './AddNewClient.module.css'
 import { useState } from "react";
 import { clientValidationRules, commonValidationRules } from "../../../validationRules";
 
-function AddNewClient() {
+function AddNewClient(props) {
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [lastName, setLastName] = useState("");
-    const [currentCredit, setCurrentCredit] = useState(0);
-    const [creditLimit, setCreditLimit] = useState(0);
+    const [currentCredit, setCurrentCredit] = useState("");
+    const [creditLimit, setCreditLimit] = useState("");
     const [validationErrors, setValidationErrors] = useState({});
 
     const inputNameHandler = (event) => {
@@ -45,14 +46,14 @@ function AddNewClient() {
         const maxLength = clientValidationRules.name.maxLength;
         if (!input) {
             errors.name = commonValidationRules.required('Name').message;
-            return;
-        };
-        if (input.length < minLength || input.length > maxLength) {
+            setValidationErrors(errors);
+        } else if (input.length < minLength || input.length > maxLength) {
             errors.name = commonValidationRules.length('Name', minLength, maxLength).message;
-            return;
+            setValidationErrors(errors);
+        } else {
+            delete errors.name;
+            setValidationErrors(errors);
         }
-        delete errors.name;
-        setValidationErrors(errors);
     }
 
     const validateSurnameInput = (input) => {
@@ -61,10 +62,11 @@ function AddNewClient() {
         const maxLength = clientValidationRules.surname.maxLength;
         if (input.length > maxLength) {
             errors.surname = commonValidationRules.length('Surname', minLength, maxLength).message;
-            return;
+            setValidationErrors(errors);
+        } else {
+            delete errors.surname;
+            setValidationErrors(errors);
         }
-        delete errors.surname;
-        setValidationErrors(errors);
     }
 
     const validateLastNameInput = (input) => {
@@ -73,14 +75,14 @@ function AddNewClient() {
         const maxLength = clientValidationRules.lastName.maxLength;
         if (!input) {
             errors.lastName = commonValidationRules.required('Lastname').message;
-            return;
-        };
-        if (input.length < minLength || input.length > maxLength) {
+            setValidationErrors(errors);
+        } else if (input.length < minLength || input.length > maxLength) {
             errors.lastName = commonValidationRules.length('Lastname', minLength, maxLength).message;
-            return;
+            setValidationErrors(errors);
+        } else {
+            delete errors.lastName;
+            setValidationErrors(errors);
         }
-        delete errors.lastName;
-        setValidationErrors(errors);
     }
 
     const validateCurrentCreditInput = (input) => {
@@ -89,14 +91,14 @@ function AddNewClient() {
         const maxValue = clientValidationRules.currentCredit.maxValue;
         if (!input) {
             errors.currentCredit = commonValidationRules.required('Current credit').message;
-            return;
-        };
-        if (input < minValue || input > maxValue) {
+            setValidationErrors(errors);
+        } else if (input < minValue || input > maxValue) {
             errors.currentCredit = commonValidationRules.range('Current credit', minValue, maxValue).message;
-            return;
+            setValidationErrors(errors);
+        } else {
+            delete errors.currentCredit;
+            setValidationErrors(errors);
         }
-        delete errors.currentCredit;
-        setValidationErrors(errors);
     }
 
     const validateCreditLimitInput = (input) => {
@@ -105,68 +107,66 @@ function AddNewClient() {
         const maxValue = clientValidationRules.creditLimit.maxValue;
         if (!input) {
             errors.creditLimit = commonValidationRules.required('Credit limit').message;
-            return;
-        };
-        if (input < minValue || input > maxValue) {
+            setValidationErrors(errors);
+        } else if (input < minValue || input > maxValue) {
             errors.creditLimit = commonValidationRules.range('Credit limit', minValue, maxValue).message;
-            return;
+            setValidationErrors(errors);
+        } else {
+            delete errors.creditLimit;
+            setValidationErrors(errors);
         }
-        delete errors.creditLimit;
-        setValidationErrors(errors);
     }
 
     return (
         <div className={styles["container"]}>
-            <div className={styles["card"]}>
-                <h1 className={styles["header"]}>Add New Client</h1>
-                <form>
-                    <input
-                        placeholder="Name"
-                        className={styles["input"]}
-                        value={name}
-                        onChange={inputNameHandler}
-                    />
-                    {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
-                    <input
-                        placeholder="Surname"
-                        className={styles["input"]}
-                        value={surname}
-                        onChange={inputSurnameHandler}
-                    />
-                    {validationErrors.surname && <p className={styles["error-message"]}>{validationErrors.surname}</p>}
-                    <input
-                        placeholder="Lastname"
-                        className={styles["input"]}
-                        value={lastName}
-                        onChange={inputLastNameHandler}
-                    />
-                    {validationErrors.lastName && <p className={styles["error-message"]}>{validationErrors.lastName}</p>}
-                    <input
-                        type="number"
-                        placeholder="Current credit"
-                        className={styles["input"]}
-                        value={currentCredit}
-                        onChange={inputCurrentCreditHandler}
-                    />
-                    {validationErrors.currentCredit && <p className={styles["error-message"]}>{validationErrors.currentCredit}</p>}
-                    <input
-                        type="number"
-                        placeholder="Credit limit"
-                        className={styles["input"]}
-                        value={creditLimit}
-                        onChange={inputCreditLimitHandler}
-                    />
-                    {validationErrors.creditLimit && <p className={styles["error-message"]}>{validationErrors.creditLimit}</p>}
-                    <div className={styles['buttons-container']}>
-                        <button className={styles['button-cancel']}>
-                            Cancel
-                        </button>
-                        <button type="submit" className={styles["button-confirm"]}>
-                            Add
-                        </button>
-                    </div>
-                </form>
-            </div>
+            <h1 className={styles["header"]}>Add New Client</h1>
+            <form>
+                <input
+                    placeholder="Name"
+                    className={styles["input"]}
+                    value={name}
+                    onChange={inputNameHandler}
+                />
+                {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
+                <input
+                    placeholder="Surname"
+                    className={styles["input"]}
+                    value={surname}
+                    onChange={inputSurnameHandler}
+                />
+                {validationErrors.surname && <p className={styles["error-message"]}>{validationErrors.surname}</p>}
+                <input
+                    placeholder="Lastname"
+                    className={styles["input"]}
+                    value={lastName}
+                    onChange={inputLastNameHandler}
+                />
+                {validationErrors.lastName && <p className={styles["error-message"]}>{validationErrors.lastName}</p>}
+                <input
+                    type="number"
+                    placeholder="Current credit"
+                    className={styles["input"]}
+                    value={currentCredit}
+                    onChange={inputCurrentCreditHandler}
+                />
+                {validationErrors.currentCredit && <p className={styles["error-message"]}>{validationErrors.currentCredit}</p>}
+                <input
+                    type="number"
+                    placeholder="Credit limit"
+                    className={styles["input"]}
+                    value={creditLimit}
+                    onChange={inputCreditLimitHandler}
+                />
+                {validationErrors.creditLimit && <p className={styles["error-message"]}>{validationErrors.creditLimit}</p>}
+                <div className={styles['buttons-container']}>
+                    <button className={styles['button-cancel']} onClick={props.closeAddNewClient}>
+                        Cancel
+                    </button>
+                    <button type="submit" className={styles["button-confirm"]}>
+                        Add
+                    </button>
+                </div>
+            </form>
         </div>
     );
 };
