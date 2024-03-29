@@ -20,3 +20,10 @@ export const PartialUpdate = async (clientId, request) => {
     const response = await axios.patch(`${baseUrl}/${clientId}`, request, config);
     return response.data;
 };
+
+export const Create = async (request) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    const response = await axios.post(baseUrl, request, config);
+    return response.data;
+};
