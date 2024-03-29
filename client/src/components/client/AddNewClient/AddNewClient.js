@@ -10,6 +10,10 @@ function AddNewClient(props) {
     const [creditLimit, setCreditLimit] = useState("");
     const [validationErrors, setValidationErrors] = useState({});
 
+    const submitHandler = async (event) => {
+        event.preventDefault();
+    };
+
     const inputNameHandler = (event) => {
         const inputName = event.target.value;
         setName(inputName);
@@ -120,7 +124,7 @@ function AddNewClient(props) {
     return (
         <div className={styles["container"]}>
             <h1 className={styles["header"]}>Add New Client</h1>
-            <form>
+            <form onSubmit={submitHandler}>
                 <input
                     placeholder="Name"
                     className={styles["input"]}
