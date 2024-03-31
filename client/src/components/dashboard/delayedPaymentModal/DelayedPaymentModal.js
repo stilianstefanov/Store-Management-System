@@ -31,21 +31,21 @@ function DelayedPaymentModal(props) {
         console.error(error);
     }, [logout, navigate]);
 
-    useEffect(() => {
-        const getInitialClients = async () => {
-            setIsLoading(true);
-            try {
-                const response = await ClientService.GetAll();
-                setClients(response.clients);
-            } catch (error) {
-                handleError(error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        getInitialClients();
+    const getInitialClients = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const response = await ClientService.GetAll();
+            setClients(response.clients);
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsLoading(false);
+        }
     }, [handleError]);
+
+    useEffect(() => {
+        getInitialClients();
+    }, [getInitialClients]);
 
     const searchClientsHandler = async (event) => {
         const searchTerm = event.target.value;
@@ -176,7 +176,9 @@ function DelayedPaymentModal(props) {
                 totalCost={calculateTotalCost(props.products)}
                 updateCreditLimit={updateClientCreditLimit}
             />)}
-            {addNewClientIsOpen && <AddNewClient closeAddNewClient={() => setAddNewClientIsOpen(false)} />}
+            {addNewClientIsOpen && <AddNewClient 
+            closeAddNewClient={() => setAddNewClientIsOpen(false)} 
+            refreshClients={() => getInitialClients()}/>}
         </div>
     );
 }

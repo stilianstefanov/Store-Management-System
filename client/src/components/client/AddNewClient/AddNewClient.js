@@ -1,6 +1,10 @@
 import styles from './AddNewClient.module.css'
 import { useState } from "react";
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext';
 import { clientValidationRules, commonValidationRules } from "../../../validationRules";
+import * as ClientService from "../../../services/clientService"
 
 function AddNewClient(props) {
     const [name, setName] = useState("");
@@ -9,9 +13,28 @@ function AddNewClient(props) {
     const [currentCredit, setCurrentCredit] = useState("");
     const [creditLimit, setCreditLimit] = useState("");
     const [validationErrors, setValidationErrors] = useState({});
+    const { logout } = useAuth();
+    const navigate = useNavigate();
 
     const submitHandler = async (event) => {
         event.preventDefault();
+
+        if (Object.entries(validationErrors).length === 0) {
+            try {
+                const request = {
+                    name,
+                    surname,
+                    lastName,
+                    currentCredit,
+                    creditLimit
+                };
+                await ClientService.Create(request);
+                props.closeAddNewClient();
+                props.refreshClients();
+            } catch (error) {
+                handleError(error);
+            }
+        }
     };
 
     const inputNameHandler = (event) => {
@@ -119,6 +142,17 @@ function AddNewClient(props) {
             delete errors.creditLimit;
             setValidationErrors(errors);
         }
+    }
+
+    const handleError = (error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response.data);
+        }
+        console.error(error);
     }
 
     return (
