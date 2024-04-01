@@ -3,14 +3,14 @@ import TableClient from '../../components/client/TableClient/TableClient';
 
 function DelayedPaymentsPage() {
     const clients = [
-        { id: "1", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
-        { id: "2", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
-        { id: "3", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
-        { id: "4", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
-        { id: "5", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
-        { id: "6", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
-        { id: "7", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
-        { id: "8", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
+        { id: "1", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
+        { id: "2", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
+        { id: "3", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
+        { id: "4", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
+        { id: "5", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
+        { id: "6", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
+        { id: "7", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
+        { id: "8", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
     ];
 
     return (
@@ -47,25 +47,25 @@ function DelayedPaymentsPage() {
                 </div>
             </div>
             <div className={`table-responsive ${styles['table-wrapper']}`}>
-            <table className={styles['table-fill']}>
-                <thead>
-                    <tr>
-                        <th className={styles['text-left']}>Name</th>
-                        <th className={styles['text-left']}>Surname</th>
-                        <th className={styles['text-left']}>Lastname</th>
-                        <th className={styles['text-left']}>Current credit</th>
-                        <th className={styles['text-left']}>Credit limit</th>
-                    </tr>
-                </thead>
-                <tbody className={styles['table-hover']}>
-                    {clients.map(client => (
-                        <TableClient 
-                            key={client.id}
-                            client={client}
-                        />
-                    ))}
-                </tbody>
-            </table>
+                <table className={styles['table-fill']}>
+                    <thead>
+                        <tr>
+                            <th className={styles['text-left']}>Name</th>
+                            <th className={styles['text-left']}>Surname</th>
+                            <th className={styles['text-left']}>Lastname</th>
+                            <th className={styles['text-left']}>Current credit</th>
+                            <th className={styles['text-left']}>Credit limit</th>
+                        </tr>
+                    </thead>
+                    <tbody className={styles['table-hover']}>
+                        {clients.map(client => (
+                            <TableClient
+                                key={client.id}
+                                client={client}
+                            />
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
