@@ -35,6 +35,13 @@
     border: 1px solid black;
 }
 
+.table-wrapper {
+    border: 1px solid;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    height: 70%;
+}
+
 .table-fill {
     background: white;
     border-radius: 3px;
@@ -44,9 +51,10 @@
     width: 100%;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     animation: float 5s infinite;
+    max-height: 20em;
 }
 
-th {
+.table-fill th {
     color: #D5DDE5;
     background: #1b1e24;
     border-bottom: 4px solid #9ea7af;
@@ -59,16 +67,16 @@ th {
     vertical-align: middle;
 }
 
-th:first-child {
+.table-fill th:first-child {
     border-top-left-radius: 3px;
 }
 
-th:last-child {
+.table-fill th:last-child {
     border-top-right-radius: 3px;
     border-right: none;
 }
 
-tr {
+.table-fill tr {
     border-top: 1px solid #C1C3D1;
     border-bottom: 1px solid #C1C3D1;
     color: #666B85;
@@ -77,37 +85,38 @@ tr {
     text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
 }
 
-tr:hover td {
+.table-fill tr:hover td {
     background: #4E5066;
     color: #FFFFFF;
     border-top: 1px solid #22262e;
+    cursor: pointer;
 }
 
-tr:first-child {
+.table-fill tr:first-child {
     border-top: none;
 }
 
-tr:last-child {
+.table-fill tr:last-child {
     border-bottom: none;
 }
 
-tr:nth-child(odd) td {
+.table-fill tr:nth-child(odd) td {
     background: #EBEBEB;
 }
 
-tr:nth-child(odd):hover td {
+.table-fill tr:nth-child(odd):hover td {
     background: #4E5066;
 }
 
-tr:last-child td:first-child {
+.table-fill tr:last-child td:first-child {
     border-bottom-left-radius: 3px;
 }
 
-tr:last-child td:last-child {
+.table-fill tr:last-child td:last-child {
     border-bottom-right-radius: 3px;
 }
 
-td {
+.table-fill td {
     background: #FFFFFF;
     padding: 20px;
     text-align: left;
@@ -118,30 +127,30 @@ td {
     border-right: 1px solid #C1C3D1;
 }
 
-td:last-child {
+.table-fill td:last-child {
     border-right: 0px;
 }
 
-th.text-left {
+.table-fill th.text-left {
     text-align: left;
 }
 
-th.text-center {
+.table-fill th.text-center {
     text-align: center;
 }
 
-th.text-right {
+.table-fill th.text-right {
     text-align: right;
 }
 
-td.text-left {
+.table-fill td.text-left {
     text-align: left;
 }
 
-td.text-center {
+.table-fill td.text-center {
     text-align: center;
 }
 
-td.text-right {
+.table-fill td.text-right {
     text-align: right;
 }

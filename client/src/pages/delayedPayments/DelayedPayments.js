@@ -1,6 +1,18 @@
 import styles from './DelayedPayments.module.css'
+import TableClient from '../../components/client/TableClient/TableClient';
 
 function DelayedPaymentsPage() {
+    const clients = [
+        { id: "1", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
+        { id: "2", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
+        { id: "3", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
+        { id: "4", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
+        { id: "5", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
+        { id: "6", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
+        { id: "7", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
+        { id: "8", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150},
+    ];
+
     return (
         <div className={`container ${styles['table-container']}`}>
             <h1 className={`text-center ${styles['title']}`}>Clients</h1>
@@ -28,12 +40,13 @@ function DelayedPaymentsPage() {
                 <div className={styles['input-group']}>
                     <label htmlFor="order-select">Clients per Page :</label>
                     <select id="order-select" className={`form-control ${styles['input-field']}`}>
-                        <option value="0">10</option>
-                        <option value="1">15</option>
-                        <option value="2">20</option>
+                        <option value="0">5</option>
+                        <option value="1">10</option>
+                        <option value="2">15</option>
                     </select>
                 </div>
             </div>
+            <div className={`table-responsive ${styles['table-wrapper']}`}>
             <table className={styles['table-fill']}>
                 <thead>
                     <tr>
@@ -45,9 +58,15 @@ function DelayedPaymentsPage() {
                     </tr>
                 </thead>
                 <tbody className={styles['table-hover']}>
-                    
+                    {clients.map(client => (
+                        <TableClient 
+                            key={client.id}
+                            client={client}
+                        />
+                    ))}
                 </tbody>
             </table>
+            </div>
         </div>
     );
 }
