@@ -14,3 +14,23 @@
     font-weight: 400;
     font-style: italic;
 }
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns labels to the start */
+    margin: 25px;
+    width: 40%;
+}
+
+.input-group label {
+    margin-bottom: 0px; /* Spacing between label and input/select */
+    font-weight: bold; /* Optional: Makes the label text bold */
+}
+
+.input-field {
+    font-size: 16px;
+    padding: 10px;
+    max-width: 100%;
+    border: 1px solid black;
+}
