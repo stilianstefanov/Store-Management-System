@@ -40,9 +40,9 @@ function DelayedPaymentsPage() {
                 <div className={styles['input-group']}>
                     <label htmlFor="order-select">Clients per Page :</label>
                     <select id="order-select" className={`form-control ${styles['input-field']}`}>
-                        <option value="0">10</option>
-                        <option value="1">15</option>
-                        <option value="2">20</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
                     </select>
                 </div>
             </div>
