@@ -15,7 +15,7 @@ function DelayedPaymentsPage() {
                 />
             </div>
             <div className={styles['input-group']}>
-                <label htmlFor="order-select">Order by:</label>
+                <label htmlFor="order-select">Sort by:</label>
                 <select id="order-select" className={`form-control ${styles['input-field']}`}>
                     <option value="0">Name (Ascending)</option>
                     <option value="1">Name (Descending)</option>
@@ -23,6 +23,14 @@ function DelayedPaymentsPage() {
                     <option value="3">Current credit (Ascending)</option>
                     <option value="4">Credit limit (Descending)</option>
                     <option value="4">Credit limit (Ascending)</option>
+                </select>
+            </div>
+            <div className={styles['input-group']}>
+                <label htmlFor="order-select">Clients per Page :</label>
+                <select id="order-select" className={`form-control ${styles['input-field']}`}>
+                    <option value="0">10</option>
+                    <option value="1">15</option>
+                    <option value="2">20</option>
                 </select>
             </div>
         </div>
