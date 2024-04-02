@@ -5,7 +5,7 @@ function TableClient ({ client }) {
         <tr>
             <td className={styles['text-left']}>{client.name}</td>
             <td className={styles['text-left']}>{client.surname}</td>
-            <td className={styles['text-left']}>{client.lastname}</td>
+            <td className={styles['text-left']}>{client.lastName}</td>
             <td className={styles['text-left']}>{client.currentCredit}</td>
             <td className={styles['text-left']}>{client.creditLimit}</td>
         </tr>
