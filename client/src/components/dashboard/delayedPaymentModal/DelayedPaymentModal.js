@@ -12,7 +12,7 @@ import * as PurchaseService from '../../../services/purchaseService'
 
 function DelayedPaymentModal(props) {
     const [clients, setClients] = useState([]);
-    const [currentsearchTerm, setCurrentSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
     const [selectedClientId, setSelectedClientId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [creditModalIsOpen, setCreditModalIsOpen] = useState(false);
@@ -31,40 +31,23 @@ function DelayedPaymentModal(props) {
         console.error(error);
     }, [logout, navigate]);
 
-    const getInitialClients = useCallback(async () => {
+    const getClients = useCallback(async () => {
         setIsLoading(true);
         try {
-            const response = await ClientService.GetAll();
+            const request = { searchTerm };
+            const response = await ClientService.GetAll(request);
             setClients(response.clients);
+            setSelectedClientId(null);
         } catch (error) {
             handleError(error);
         } finally {
             setIsLoading(false);
         }
-    }, [handleError]);
+    }, [handleError, searchTerm]);
 
     useEffect(() => {
-        getInitialClients();
-    }, [getInitialClients]);
-
-    const searchClientsHandler = async (event) => {
-        const searchTerm = event.target.value;
-        setCurrentSearchTerm(searchTerm);
-        setSelectedClientId(null);
-
-        if (searchTerm.trim()) {
-            setIsLoading(true);
-            try {
-                const requestParams = { searchTerm };
-                const response = await ClientService.GetAll(requestParams);
-                setClients(response.clients);
-            } catch (error) {
-                handleError(error);
-            } finally {
-                setIsLoading(false);
-            }
-        }
-    };
+        getClients();
+    }, [getClients]);
 
     const confirmHandler = async () => {
         if (!selectedClientId) {
@@ -119,10 +102,10 @@ function DelayedPaymentModal(props) {
                 <h1 className={styles['header']}>Select client</h1>
                 <input
                     type='text'
-                    value={currentsearchTerm}
+                    value={searchTerm}
                     placeholder='Search'
                     className={`form-control ${styles.input}`}
-                    onChange={searchClientsHandler}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <div className={`table-responsive ${styles['table-wrapper']}`}>
                     <table className={styles.tableCustom}>
@@ -178,7 +161,7 @@ function DelayedPaymentModal(props) {
             />)}
             {addNewClientIsOpen && <AddNewClient 
             closeAddNewClient={() => setAddNewClientIsOpen(false)} 
-            refreshClients={() => getInitialClients()}/>}
+            refreshClients={() => getClients()}/>}
         </div>
     );
 }
