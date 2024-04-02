@@ -52,6 +52,12 @@ function DelayedPaymentsPage() {
         getClients();
     }, [getClients]);
 
+    const PAGE_BUTTONS_DISPLAY_LIMIT = 5;
+    const startPage = Math.max(currentPage - Math.floor(PAGE_BUTTONS_DISPLAY_LIMIT / 2), 1);
+    const endPage = Math.min(startPage + PAGE_BUTTONS_DISPLAY_LIMIT - 1, totalPages);
+
+    const pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
+
     return (
         <div className={`container ${styles['table-container']}`}>
             <h1 className={`text-center ${styles['title']}`}>Clients</h1>
@@ -132,28 +138,15 @@ function DelayedPaymentsPage() {
                         Prev
                     </button>
                 )}
-                {Array.from({ length: Math.min(5, totalPages) }, (_, index) => {
-                    const pageNumber = index + 1;
-                    const isCurrentPage = pageNumber === currentPage;
-                    return (
-                        <button
-                            className={`${styles['page-button']} ${isCurrentPage ? styles['current-page'] : ''}`}
-                            key={pageNumber}
-                            onClick={() => setCurrentPage(pageNumber)}>
-                            {pageNumber}
-                        </button>
-                    );
-                })}
-                {totalPages > 5 && (
-                    <>
-                        <span>...</span>
-                        <button
-                            className={`${styles['page-button']} ${currentPage === totalPages ? styles['current-page'] : ''}`}
-                            onClick={() => setCurrentPage(totalPages)}>
-                            {totalPages}
-                        </button>
-                    </>
-                )}
+                {pageNumbers.map(pageNumber => (
+                    <button
+                        className={`${styles['page-button']} ${currentPage === pageNumber ? styles['current-page'] : ''}`}
+                        key={pageNumber}
+                        onClick={() => setCurrentPage(pageNumber)}
+                    >
+                        {pageNumber}
+                    </button>
+                ))}
                 {currentPage < totalPages && (
                     <button
                         onClick={() => setCurrentPage(currentPage + 1)}
