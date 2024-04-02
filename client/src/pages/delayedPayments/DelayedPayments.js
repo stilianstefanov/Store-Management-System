@@ -70,7 +70,10 @@ function DelayedPaymentsPage() {
                         value={searchTerm}
                         placeholder="Search client"
                         className={`form-control ${styles['input-field']}`}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onChange={(e) => {
+                            setCurrentPage(1);
+                            setSearchTerm(e.target.value);
+                        }}
                     />
                 </div>
                 <div className={styles['input-group']}>
@@ -78,7 +81,10 @@ function DelayedPaymentsPage() {
                     <select
                         id="order-select"
                         className={`form-control ${styles['input-field']}`}
-                        onChange={(e) => setOrderBy(e.target.value)}>
+                        onChange={(e) => {
+                            setCurrentPage(1);
+                            setOrderBy(e.target.value);
+                        }}>
                         <option value="0">Name (Ascending)</option>
                         <option value="1">Name (Descending)</option>
                         <option value="2">Current credit (Descending)</option>
@@ -92,7 +98,10 @@ function DelayedPaymentsPage() {
                     <select
                         id="order-select"
                         className={`form-control ${styles['input-field']}`}
-                        onChange={(e) => setClientsPerPage(e.target.value)}>
+                        onChange={(e) => {
+                            setCurrentPage(1);
+                            setClientsPerPage(e.target.value)
+                        }}>
                         <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
