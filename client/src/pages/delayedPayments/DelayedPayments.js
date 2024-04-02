@@ -126,7 +126,11 @@ function DelayedPaymentsPage() {
             </div>
             <div className={styles['buttons-wrapper']}>
                 {currentPage > 1 && (
-                    <button onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                    <button
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        className={styles['page-control-button']}>
+                        Prev
+                    </button>
                 )}
                 {Array.from({ length: Math.min(5, totalPages) }, (_, index) => {
                     const pageNumber = index + 1;
@@ -143,13 +147,19 @@ function DelayedPaymentsPage() {
                 {totalPages > 5 && (
                     <>
                         <span>...</span>
-                        <button onClick={() => setCurrentPage(totalPages)}>
+                        <button
+                            className={`${styles['page-button']} ${currentPage === totalPages ? styles['current-page'] : ''}`}
+                            onClick={() => setCurrentPage(totalPages)}>
                             {totalPages}
                         </button>
                     </>
                 )}
                 {currentPage < totalPages && (
-                    <button onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                    <button
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        className={styles['page-control-button']}>
+                        Next
+                    </button>
                 )}
             </div>
         </div>
