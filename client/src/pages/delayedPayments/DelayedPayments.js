@@ -69,7 +69,10 @@ function DelayedPaymentsPage() {
                 </div>
                 <div className={styles['input-group']}>
                     <label htmlFor="order-select">Sort by:</label>
-                    <select id="order-select" className={`form-control ${styles['input-field']}`}>
+                    <select
+                        id="order-select"
+                        className={`form-control ${styles['input-field']}`}
+                        onChange={(e) => setOrderBy(e.target.value)}>
                         <option value="0">Name (Ascending)</option>
                         <option value="1">Name (Descending)</option>
                         <option value="2">Current credit (Descending)</option>
@@ -80,7 +83,10 @@ function DelayedPaymentsPage() {
                 </div>
                 <div className={styles['input-group']}>
                     <label htmlFor="order-select">Clients per Page :</label>
-                    <select id="order-select" className={`form-control ${styles['input-field']}`}>
+                    <select
+                        id="order-select"
+                        className={`form-control ${styles['input-field']}`}
+                        onChange={(e) => setClientsPerPage(e.target.value)}>
                         <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
@@ -118,8 +124,33 @@ function DelayedPaymentsPage() {
                     </tbody>
                 </table>
             </div>
-            <div>
-
+            <div className={styles['buttons-wrapper']}>
+                {currentPage > 1 && (
+                    <button onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                )}
+                {Array.from({ length: Math.min(5, totalPages) }, (_, index) => {
+                    const pageNumber = index + 1;
+                    const isCurrentPage = pageNumber === currentPage;
+                    return (
+                        <button
+                            className={`${styles['page-button']} ${isCurrentPage ? styles['current-page'] : ''}`}
+                            key={pageNumber}
+                            onClick={() => setCurrentPage(pageNumber)}>
+                            {pageNumber}
+                        </button>
+                    );
+                })}
+                {totalPages > 5 && (
+                    <>
+                        <span>...</span>
+                        <button onClick={() => setCurrentPage(totalPages)}>
+                            {totalPages}
+                        </button>
+                    </>
+                )}
+                {currentPage < totalPages && (
+                    <button onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                )}
             </div>
         </div>
     );
