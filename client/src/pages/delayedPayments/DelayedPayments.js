@@ -1,17 +1,18 @@
+import { useState } from 'react';
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import styles from './DelayedPayments.module.css'
 import TableClient from '../../components/client/TableClient/TableClient';
+import * as ClientService from '../../services/clientService'
 
 function DelayedPaymentsPage() {
-    const clients = [
-        { id: "1", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
-        { id: "2", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
-        { id: "3", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
-        { id: "4", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
-        { id: "5", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
-        { id: "6", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
-        { id: "7", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
-        { id: "8", name: 'Gosh', surname: 'Ivanov', lastname: 'Georgiev', currentCredit: 50, creditLimit: 150 },
-    ];
+    const [clients, setClients] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const [clientsPerPage, setClientsPerPage] = useState(10);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [orderBy, setOrderBy] = useState(0);
 
     return (
         <div className={`container ${styles['table-container']}`}>
@@ -34,7 +35,7 @@ function DelayedPaymentsPage() {
                         <option value="2">Current credit (Descending)</option>
                         <option value="3">Current credit (Ascending)</option>
                         <option value="4">Credit limit (Descending)</option>
-                        <option value="4">Credit limit (Ascending)</option>
+                        <option value="5">Credit limit (Ascending)</option>
                     </select>
                 </div>
                 <div className={styles['input-group']}>
@@ -66,6 +67,9 @@ function DelayedPaymentsPage() {
                         ))}
                     </tbody>
                 </table>
+            </div>
+            <div>
+
             </div>
         </div>
     );
