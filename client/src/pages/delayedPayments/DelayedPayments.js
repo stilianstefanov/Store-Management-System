@@ -61,8 +61,10 @@ function DelayedPaymentsPage() {
                     <input
                         id="search-input"
                         type="text"
+                        value={searchTerm}
                         placeholder="Search client"
                         className={`form-control ${styles['input-field']}`}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </div>
                 <div className={styles['input-group']}>
