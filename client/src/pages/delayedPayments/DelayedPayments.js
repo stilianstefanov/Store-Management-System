@@ -13,7 +13,7 @@ function DelayedPaymentsPage() {
     const [totalPages, setTotalPages] = useState(0);
     const [clientsPerPage, setClientsPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState("");
-    const [orderBy, setOrderBy] = useState(0);
+    const [sorting, setSorting] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
@@ -36,7 +36,7 @@ function DelayedPaymentsPage() {
                 currentPage,
                 clientsPerPage,
                 searchTerm,
-                orderBy
+                sorting
             };
             const response = await ClientService.GetAll(request);
             setClients(response.clients);
@@ -46,7 +46,7 @@ function DelayedPaymentsPage() {
         } finally {
             setIsLoading(false);
         }
-    }, [handleError, currentPage, clientsPerPage, orderBy, searchTerm]);
+    }, [handleError, currentPage, clientsPerPage, sorting, searchTerm]);
 
     useEffect(() => {
         getClients();
@@ -83,7 +83,7 @@ function DelayedPaymentsPage() {
                         className={`form-control ${styles['input-field']}`}
                         onChange={(e) => {
                             setCurrentPage(1);
-                            setOrderBy(e.target.value);
+                            setSorting(e.target.value);
                         }}>
                         <option value="0">Name (Ascending)</option>
                         <option value="1">Name (Descending)</option>
