@@ -5,6 +5,7 @@
     using Data.Models;
     using Data.ViewModels.Client;
     using Data.Repositories.Contracts;
+    using Data.ViewModels.Client.Enums;
     using Microsoft.EntityFrameworkCore;
     using Utilities;
     using Utilities.Enums;
@@ -34,6 +35,17 @@
                                       EF.Functions.Like(c.Surname, wildCardSearchTerm) ||
                                       EF.Functions.Like(c.LastName, wildCardSearchTerm));
             }
+
+            clientsQuery = queryModel.Sorting switch
+            {
+                ClientSorting.NameAscending => clientsQuery.OrderBy(c => c.Name),
+                ClientSorting.NameDescending => clientsQuery.OrderByDescending(c => c.Name),
+                ClientSorting.CurrentCreditDescending => clientsQuery.OrderByDescending(c => c.CurrentCredit),
+                ClientSorting.CurrentCreditAscending => clientsQuery.OrderBy(c => c.CurrentCredit),
+                ClientSorting.CreditLimitDescending => clientsQuery.OrderByDescending(c => c.CreditLimit),
+                ClientSorting.CreditLimitAscending => clientsQuery.OrderBy(c => c.CreditLimit),
+                _ => clientsQuery.OrderBy(c => c.Name)
+            };
 
             var clients = await clientsQuery
                 .Skip((queryModel.CurrentPage - 1) * queryModel.ClientsPerPage)
