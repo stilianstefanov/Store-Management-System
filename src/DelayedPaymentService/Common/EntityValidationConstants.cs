@@ -25,6 +25,14 @@
             public const string CreditLimitMaxValue = "99999";
 
             public const int UserIdMaxLength = 50;
+
+            public const int ClientSortingMinValue = 0;
+
+            public const int ClientSortingMaxValue = 5;
+
+            public const int PerPageMinValue = 10;
+
+            public const int PerPageMaxValue = 20;
         }
 
         public static class PurchaseProduct
