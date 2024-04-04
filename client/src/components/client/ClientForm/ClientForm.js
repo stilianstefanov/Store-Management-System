@@ -1,4 +1,4 @@
-import styles from './AddNewClient.module.css'
+import styles from './ClientForm.module.css'
 import { useState } from "react";
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { clientValidationRules, commonValidationRules } from "../../../validationRules";
 import * as ClientService from "../../../services/clientService"
 
-function AddNewClient(props) {
+function ClientForm(props) {
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [lastName, setLastName] = useState("");
@@ -209,4 +209,4 @@ function AddNewClient(props) {
     );
 };
 
-export default AddNewClient;
+export default ClientForm;
