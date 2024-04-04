@@ -6,6 +6,7 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
             <div className={styles['modal']}>
                 {client.name}
             </div>
+            <div className={styles['backdrop']} />
         </div>
     );
 };
