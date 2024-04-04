@@ -1,8 +1,8 @@
 import styles from './TableClient.module.css'
 
-function TableClient ({ client }) {
+function TableClient ({ client, openClientDetails }) {
     return (
-        <tr>
+        <tr onClick={() => openClientDetails(client.id)}>
             <td className={styles['text-left']}>{client.name}</td>
             <td className={styles['text-left']}>{client.surname}</td>
             <td className={styles['text-left']}>{client.lastName}</td>

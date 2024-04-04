@@ -6,6 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 import styles from './DelayedPayments.module.css'
 import TableClient from '../../components/client/TableClient/TableClient';
 import ClientForm from '../../components/client/ClientForm/ClientForm'
+import ClientDetails from '../../components/client/ClientDetails/ClientDetails';
 import * as ClientService from '../../services/clientService'
 
 function DelayedPaymentsPage() {
@@ -17,6 +18,8 @@ function DelayedPaymentsPage() {
     const [sorting, setSorting] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [clientFormIsOpen, setClientFormIsOpen] = useState(false);
+    const [clientDetailsIsOpen, setClientDetailsIsOpen] = useState(false);
+    const [selectedClientId, setSelectedClientId] = useState("");
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -53,6 +56,11 @@ function DelayedPaymentsPage() {
     useEffect(() => {
         getClients();
     }, [getClients]);
+
+    const openClientDetailsHandler = (clientId) => {
+        setSelectedClientId(clientId);
+        setClientDetailsIsOpen(true);
+    };
 
     const PAGE_BUTTONS_DISPLAY_LIMIT = 5;
     const startPage = Math.max(currentPage - Math.floor(PAGE_BUTTONS_DISPLAY_LIMIT / 2), 1);
@@ -143,6 +151,7 @@ function DelayedPaymentsPage() {
                                 <TableClient
                                     key={client.id}
                                     client={client}
+                                    openClientDetails={openClientDetailsHandler}
                                 />
                             ))
                         )}
@@ -176,6 +185,10 @@ function DelayedPaymentsPage() {
             </div>
             {clientFormIsOpen && <ClientForm
                 closeAddNewClient={() => setClientFormIsOpen(false)}
+                refreshClients={() => getClients()} />}
+            {clientDetailsIsOpen && <ClientDetails
+                client={clients.find(c => c.id === selectedClientId)}
+                closeClientDetails={() => setClientDetailsIsOpen(false)}
                 refreshClients={() => getClients()} />}
         </div>
     );
