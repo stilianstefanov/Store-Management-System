@@ -11,7 +11,7 @@
 
 .header-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     position: relative;
 }
@@ -20,17 +20,14 @@
     font-family: "Angkor", serif;
     font-weight: 400;
     font-style: italic;
-    flex: 1;
     text-align: center;
 }
 
 .spacer {
-    flex: 1;
+    margin-right: 10%;
 }
 
 .add-client-button {
-    position: absolute;
-    right: 0;
     background-color: #ffc107;
     color: black;
     padding: 8px 16px;
