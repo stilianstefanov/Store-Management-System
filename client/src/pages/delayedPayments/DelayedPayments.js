@@ -5,6 +5,7 @@ import ReactLoading from 'react-loading'
 import { useAuth } from '../../context/AuthContext';
 import styles from './DelayedPayments.module.css'
 import TableClient from '../../components/client/TableClient/TableClient';
+import ClientForm from '../../components/client/ClientForm/ClientForm'
 import * as ClientService from '../../services/clientService'
 
 function DelayedPaymentsPage() {
@@ -15,6 +16,7 @@ function DelayedPaymentsPage() {
     const [searchTerm, setSearchTerm] = useState("");
     const [sorting, setSorting] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [clientFormIsOpen, setClientFormIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -63,7 +65,11 @@ function DelayedPaymentsPage() {
             <div className={styles['header-container']}>
                 <div className={styles['spacer']}></div>
                 <h1 className={`text-center ${styles['title']}`}>Clients</h1>
-                <button className={styles['add-client-button']}>Add New Client</button>
+                <button
+                    className={styles['add-client-button']}
+                    onClick={() => setClientFormIsOpen(true)}>
+                    Add New Client
+                </button>
             </div>
             <div className="d-flex justify-content-center flex-wrap">
                 <div className={styles['input-group']}>
@@ -168,6 +174,9 @@ function DelayedPaymentsPage() {
                     </button>
                 )}
             </div>
+            {clientFormIsOpen && <ClientForm
+                closeAddNewClient={() => setClientFormIsOpen(false)}
+                refreshClients={() => getClients()} />}
         </div>
     );
 }
