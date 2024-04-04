@@ -60,7 +60,11 @@ function DelayedPaymentsPage() {
 
     return (
         <div className={`container ${styles['table-container']}`}>
-            <h1 className={`text-center ${styles['title']}`}>Clients</h1>
+            <div className={styles['header-container']}>
+                <div className={styles['spacer']}></div>
+                <h1 className={`text-center ${styles['title']}`}>Clients</h1>
+                <button className={styles['add-client-button']}>Add New Client</button>
+            </div>
             <div className="d-flex justify-content-center flex-wrap">
                 <div className={styles['input-group']}>
                     <label htmlFor="search-input">Search:</label>

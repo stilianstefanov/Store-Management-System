@@ -9,10 +9,41 @@
     padding: 2em;
 }
 
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
 .title {
     font-family: "Angkor", serif;
     font-weight: 400;
     font-style: italic;
+    flex: 1;
+    text-align: center;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.add-client-button {
+    position: absolute;
+    right: 0;
+    background-color: #ffc107;
+    color: black;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.add-client-button:hover {
+    background-color: black;
+    color: white;
 }
 
 .input-group {
