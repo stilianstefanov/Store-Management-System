@@ -1,18 +1,53 @@
-import styles from './ClientDetails.module.css'
+import { useState, useEffect, useCallback } from 'react';
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom';
+import ReactLoading from 'react-loading'
+import { useAuth } from '../../../context/AuthContext';
+import styles from './ClientDetails.module.css';
+import * as PurchaseService from '../../../services/purchaseService';
 
 function ClientDetails({ client, closeClientDetails, refreshClients }) {
-    const testPurchases = [
-        { date: '19-12-2022', amount: 20.54 },
-        { date: '19-12-2022', amount: 20.54 },
-        { date: '19-12-2022', amount: 20.54 },
-        { date: '19-12-2022', amount: 20.54 },
-        { date: '19-12-2022', amount: 20.54 },
-        { date: '19-12-2022', amount: 20.54 },
-        { date: '19-12-2022', amount: 20.54 },
-        { date: '19-12-2022', amount: 20.54 },
-        { date: '19-12-2022', amount: 20.54 },
-        { date: '19-12-2022', amount: 20.54 }
-    ]
+    const [purchases, setPurchases] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [date, setDate] = useState("");
+    const [sorting, setSorting] = useState(0);
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
+    const handleError = useCallback((error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response ? error.response.data : "An error occurred");
+        }
+        console.error(error);
+    }, [logout, navigate]);
+
+    const getPurchases = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const request = {
+                currentPage,
+                date,
+                sorting
+            };
+            const response = await PurchaseService.GetAll(client.id, request);
+            setPurchases(response.purchases);
+            setTotalPages(response.totalPages);
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [handleError, client, currentPage, date, sorting]);
+
+    useEffect(() => {
+        getPurchases();
+    }, [getPurchases]);
 
     return (
         <div>
@@ -74,7 +109,7 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                             </tr>
                         </thead>
                         <tbody className={styles['table-hover']}>
-                            {testPurchases.map(p => {
+                            {purchases.map(p => {
                                 return (
                                     <tr>
                                         <td>{p.date}</td>
