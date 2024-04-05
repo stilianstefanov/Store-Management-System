@@ -4,11 +4,11 @@
     background-color: white;
     padding: 1rem;
     text-align: center;
-    width: 43rem;
+    width: 33rem;
     z-index: 10;
     position: fixed;
     top: 31vh;
-    left: calc(50% - 21rem);
+    left: calc(50% - 16rem);
 }
 
 .backdrop {
@@ -19,4 +19,22 @@
     height: 100vh;
     top: 0;
     left: 0;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid black;
+    padding: 30px;
+}
+
+.list-info {
+    text-align: left;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
 }
