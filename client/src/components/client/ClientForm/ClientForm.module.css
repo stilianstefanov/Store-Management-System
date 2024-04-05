@@ -1,7 +1,8 @@
 .container {
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    border: 1px solid black;
     border-radius: 6px;
-    background-color: white;
+    background-color: wheat;
     padding: 1rem;
     text-align: center;
     width: 44rem;
@@ -23,6 +24,7 @@
 }
 
 .input {
+    background-color: wheat;
     font-size: 16px;
     padding: 8px;
     margin-bottom: 16px;

@@ -7,19 +7,19 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                 <div className={styles['flex-container']}>
                     <ul className={styles['list-info']}>
                         <li>
-                            <p>Name: {client.name}</p>
+                            <p>Name: <span className={styles['list-info-span']}>{client.name}</span></p>
                         </li>
                         <li>
-                            <p>Surname: {client.surname}</p>
+                            <p>Surname: <span className={styles['list-info-span']}>{client.surname ? client.surname : 'N/A'}</span></p>
                         </li>
                         <li>
-                            <p>Lastname: {client.lastName}</p>
+                            <p>Lastname: <span className={styles['list-info-span']}>{client.lastName}</span></p>
                         </li>
                         <li>
-                            <p>Current credit: {client.currentCredit}</p>
+                            <p>Current credit: <span className={styles['list-info-span']}>{client.currentCredit}</span></p>
                         </li>
                         <li>
-                            <p>Credit limit: {client.creditLimit}</p>
+                            <p>Credit limit: <span className={styles['list-info-span']}>{client.creditLimit}</span></p>
                         </li>
                     </ul>
                     <div className={styles['buttons-container']}>
