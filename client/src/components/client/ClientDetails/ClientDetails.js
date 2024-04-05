@@ -85,6 +85,10 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                             type="date"
                             placeholder="Select date"
                             className={`form-control ${styles['input-field']}`}
+                            onChange={(e) => {
+                                setCurrentPage(1);
+                                setDate(e.target.value);
+                            }}
                         />
                     </div>
                     <div className={styles['input-group']}>
@@ -92,6 +96,10 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                         <select
                             id="order-select"
                             className={`form-control ${styles['input-field']}`}
+                            onChange={(e) => {
+                                setCurrentPage(1);
+                                setSorting(e.target.value);
+                            }}
                         >
                             <option value="0">Date (Latest)</option>
                             <option value="1">Date (Oldest)</option>
