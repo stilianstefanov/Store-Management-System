@@ -38,3 +38,51 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-style: italic;
 }
+
+.update-button {
+    background-color: #ffc107;
+    color: black;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    margin-bottom: 10px;
+}
+
+.decr-credit-button {
+    background-color: green;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    margin-bottom: 10px;
+}
+
+.delete-button {
+    background-color: #d43331;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.update-button:hover {
+    background-color: black;
+    color: white;
+}
+
+.decr-credit-button:hover {
+    background-color: black;
+}
+
+.delete-button:hover {
+    background-color: black;
+}
