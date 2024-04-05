@@ -19,12 +19,11 @@
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Purchase>> GetPurchasesByClientIdAsync(string clientId)
+        public IQueryable<Purchase> GetPurchasesByClientIdAsync(string clientId)
         {
-            var purchases = await _dbContext.Purchases
+            var purchases = _dbContext.Purchases
                 .Where(p => p.ClientId.ToString() == clientId && !p.IsDeleted)
-                .Include(p => p.Products)
-                .ToArrayAsync();
+                .Include(p => p.Products);
 
             return purchases;
         }

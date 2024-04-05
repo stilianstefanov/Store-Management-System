@@ -6,7 +6,7 @@
 
     public interface IPurchaseService
     {
-        Task<OperationResult<IEnumerable<PurchaseViewModel>>> GetPurchasesByClientIdAsync(string clientId);
+        Task<OperationResult<PurchasesAllQueryModel>> GetPurchasesByClientIdAsync(string clientId, PurchasesAllQueryModel queryModel);
 
         Task<OperationResult<PurchaseViewModel>> GetPurchaseByIdAsync(string id);
         

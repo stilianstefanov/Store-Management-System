@@ -5,11 +5,14 @@
     using Data.Models;
     using Data.Repositories.Contracts;
     using Data.ViewModels.Purchase;
+    using Data.ViewModels.Purchase.Enums;
     using Data.ViewModels.PurchasedProduct;
     using GrpcServices.Contracts;
+    using Microsoft.EntityFrameworkCore;
     using Utilities;
     using Utilities.Enums;
     using static Common.ExceptionMessages;
+    using static Common.ApplicationConstants;
 
     public class PurchaseService : IPurchaseService
     {
@@ -30,17 +33,40 @@
             _mapper = mapper;
         }
 
-        public async Task<OperationResult<IEnumerable<PurchaseViewModel>>> GetPurchasesByClientIdAsync(string clientId)
+        public async Task<OperationResult<PurchasesAllQueryModel>> GetPurchasesByClientIdAsync(string clientId, PurchasesAllQueryModel queryModel)
         {
             if (!await ClientExistsAsync(clientId))
             {
-                return OperationResult<IEnumerable<PurchaseViewModel>>.Failure(ClientNotFound, ErrorType.NotFound);
+                return OperationResult<PurchasesAllQueryModel>.Failure(ClientNotFound, ErrorType.NotFound);
             }
 
-            var purchases = await _purchaseRepository.GetPurchasesByClientIdAsync(clientId);
+            var purchasesQuery = _purchaseRepository.GetPurchasesByClientIdAsync(clientId);
 
-            return OperationResult<IEnumerable<PurchaseViewModel>>.Success(
-                _mapper.Map<IEnumerable<PurchaseViewModel>>(purchases)!);
+            if (queryModel.Date != default)
+            {
+                purchasesQuery = purchasesQuery.Where(p => p.Date.Date == queryModel.Date.Date);
+            }
+
+            purchasesQuery = queryModel.Sorting switch
+            {
+                PurchaseSorting.DateLatest => purchasesQuery.OrderByDescending(p => p.Date),
+                PurchaseSorting.DateOldest => purchasesQuery.OrderBy(p => p.Date),
+                PurchaseSorting.AmountDescending => purchasesQuery.OrderByDescending(p => p.Products.Sum(pp => pp.PurchasePrice * pp.BoughtQuantity)),
+                PurchaseSorting.AmountAscending => purchasesQuery.OrderBy(p => p.Products.Sum(pp => pp.PurchasePrice * pp.BoughtQuantity)),
+                _ => purchasesQuery.OrderByDescending(p => p.Date)
+            };
+
+            var purchases = await purchasesQuery
+                .Skip((queryModel.CurrentPage - 1) * DefaultItemsPerPage)
+                .Take(DefaultItemsPerPage)
+                .ToArrayAsync();
+
+            var totalPages = (int)Math.Ceiling(await purchasesQuery.CountAsync() / (double)DefaultItemsPerPage);
+
+            queryModel.TotalPages = totalPages;
+            queryModel.Purchases = _mapper.Map<IEnumerable<PurchaseViewModel>>(purchases)!;
+
+            return OperationResult<PurchasesAllQueryModel>.Success(queryModel);
         }
 
         public async Task<OperationResult<PurchaseViewModel>> GetPurchaseByIdAsync(string id)

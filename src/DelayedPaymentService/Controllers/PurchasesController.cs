@@ -1,5 +1,6 @@
 ﻿namespace DelayedPaymentService.Controllers
 {
+    using Data.ViewModels.Purchase;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
     using Utilities.Extensions;
@@ -19,9 +20,9 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPurchasesByClientId(string clientId)
+        public async Task<IActionResult> GetPurchasesByClientId(string clientId, [FromQuery]PurchasesAllQueryModel queryModel)
         {
-            var result = await _purchaseService.GetPurchasesByClientIdAsync(clientId);
+            var result = await _purchaseService.GetPurchasesByClientIdAsync(clientId, queryModel);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 
