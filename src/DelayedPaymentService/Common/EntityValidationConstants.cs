@@ -35,6 +35,13 @@
             public const int PerPageMaxValue = 20;
         }
 
+        public static class Purchase
+        {
+            public const int PurchaseSortingMinValue = 0;
+
+            public const int PurchaseSortingMaxValue = 3;
+        }
+
         public static class PurchaseProduct
         {
             public const int BoughtQuantityMinValue = 1;
