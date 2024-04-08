@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ReactLoading from 'react-loading'
 import { useAuth } from '../../../context/AuthContext';
 import styles from './ClientDetails.module.css';
+import TablePurchase from '../../purchase/TablePurchase/TablePurchase';
 import * as PurchaseService from '../../../services/purchaseService';
 
 function ClientDetails({ client, closeClientDetails, refreshClients }) {
@@ -123,14 +124,23 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                             </tr>
                         </thead>
                         <tbody className={styles['table-hover']}>
-                            {purchases.map(p => {
-                                return (
-                                    <tr>
-                                        <td>{p.date}</td>
-                                        <td>{p.amount}</td>
-                                    </tr>
-                                )
-                            })}
+                            {isLoading ? (
+                                <tr>
+                                    <td colSpan="2">
+                                        <div className={styles['loading-container']}>
+                                            <ReactLoading type="spin" color="#808080" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            ) : (
+                                purchases.map(purchase => (
+                                    <TablePurchase
+                                        key={purchase.id}
+                                        purchase={purchase}
+                                        //Todo Implement purchase details
+                                    />
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
