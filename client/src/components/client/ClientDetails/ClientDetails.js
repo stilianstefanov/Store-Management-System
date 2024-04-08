@@ -59,115 +59,120 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
     return (
         <div>
             <div className={styles['modal']}>
-                <div className={styles['flex-container']}>
-                    <ul className={styles['list-info']}>
-                        <li>
-                            <p>Name: <span className={styles['list-info-span']}>{client.name}</span></p>
-                        </li>
-                        <li>
-                            <p>Surname: <span className={styles['list-info-span']}>{client.surname ? client.surname : 'N/A'}</span></p>
-                        </li>
-                        <li>
-                            <p>Lastname: <span className={styles['list-info-span']}>{client.lastName}</span></p>
-                        </li>
-                        <li>
-                            <p>Current credit: <span className={styles['list-info-span']}>{client.currentCredit}</span></p>
-                        </li>
-                        <li>
-                            <p>Credit limit: <span className={styles['list-info-span']}>{client.creditLimit}</span></p>
-                        </li>
-                    </ul>
-                    <div className={styles['buttons-container']}>
-                        <button className={styles['update-button']}>Update</button>
-                        <button className={styles['decr-credit-button']}>Decrease credit</button>
-                        <button className={styles['delete-button']}>Delete</button>
+                <div className={styles['client-info-wrapper']}>
+                    <div className={styles['flex-container']}>
+                        <ul className={styles['list-info']}>
+                            <li>
+                                <p>Name: <span className={styles['list-info-span']}>{client.name}</span></p>
+                            </li>
+                            <li>
+                                <p>Surname: <span className={styles['list-info-span']}>{client.surname ? client.surname : 'N/A'}</span></p>
+                            </li>
+                            <li>
+                                <p>Lastname: <span className={styles['list-info-span']}>{client.lastName}</span></p>
+                            </li>
+                            <li>
+                                <p>Current credit: <span className={styles['list-info-span']}>{client.currentCredit}</span></p>
+                            </li>
+                            <li>
+                                <p>Credit limit: <span className={styles['list-info-span']}>{client.creditLimit}</span></p>
+                            </li>
+                        </ul>
+                        <div className={styles['buttons-container']}>
+                            <button className={styles['update-button']}>Update</button>
+                            <button className={styles['decr-credit-button']}>Decrease credit</button>
+                            <button className={styles['delete-button']}>Delete</button>
+                        </div>
+                        <button className={styles['close-button']}>Close</button>
                     </div>
                 </div>
-                <h2 className={styles['list-info-span']}>Purchases</h2>
-                <div className="d-flex justify-content-center flex-wrap">
-                    <div className={styles['input-group']}>
-                        <label htmlFor="select-date">Date:</label>
-                        <input
-                            id="select-date"
-                            type="date"
-                            placeholder="Select date"
-                            className={`form-control ${styles['input-field']}`}
-                            onChange={(e) => {
-                                setCurrentPage(1);
-                                setDate(e.target.value);
-                            }}
-                        />
+                <div className={styles['purchases-wrapper']}>
+                    <h2 className={styles['list-info-span']}>Purchases</h2>
+                    <div className="d-flex justify-content-center flex-wrap">
+                        <div className={styles['input-group']}>
+                            <label htmlFor="select-date">Date:</label>
+                            <input
+                                id="select-date"
+                                type="date"
+                                placeholder="Select date"
+                                className={`form-control ${styles['input-field']}`}
+                                onChange={(e) => {
+                                    setCurrentPage(1);
+                                    setDate(e.target.value);
+                                }}
+                            />
+                        </div>
+                        <div className={styles['input-group']}>
+                            <label htmlFor="order-select">Sort by:</label>
+                            <select
+                                id="order-select"
+                                className={`form-control ${styles['input-field']}`}
+                                onChange={(e) => {
+                                    setCurrentPage(1);
+                                    setSorting(e.target.value);
+                                }}
+                            >
+                                <option value="0">Date (Latest)</option>
+                                <option value="1">Date (Oldest)</option>
+                                <option value="2">Amount (Descending)</option>
+                                <option value="3">Amount (Ascending)</option>
+                            </select>
+                        </div>
                     </div>
-                    <div className={styles['input-group']}>
-                        <label htmlFor="order-select">Sort by:</label>
-                        <select
-                            id="order-select"
-                            className={`form-control ${styles['input-field']}`}
-                            onChange={(e) => {
-                                setCurrentPage(1);
-                                setSorting(e.target.value);
-                            }}
-                        >
-                            <option value="0">Date (Latest)</option>
-                            <option value="1">Date (Oldest)</option>
-                            <option value="2">Amount (Descending)</option>
-                            <option value="3">Amount (Ascending)</option>
-                        </select>
-                    </div>
-                </div>
-                <div className={`table-responsive ${styles['table-wrapper']}`}>
-                    <table className={styles['table-fill']}>
-                        <thead>
-                            <tr>
-                                <th className={styles['text-left']}>Date</th>
-                                <th className={styles['text-left']}>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody className={styles['table-hover']}>
-                            {isLoading ? (
+                    <div className={`table-responsive ${styles['table-wrapper']}`}>
+                        <table className={styles['table-fill']}>
+                            <thead>
                                 <tr>
-                                    <td colSpan="2">
-                                        <div className={styles['loading-container']}>
-                                            <ReactLoading type="spin" color="#808080" />
-                                        </div>
-                                    </td>
+                                    <th className={styles['text-left']}>Date</th>
+                                    <th className={styles['text-left']}>Amount</th>
                                 </tr>
-                            ) : (
-                                purchases.map(purchase => (
-                                    <TablePurchase
-                                        key={purchase.id}
-                                        purchase={purchase}
+                            </thead>
+                            <tbody className={styles['table-hover']}>
+                                {isLoading ? (
+                                    <tr>
+                                        <td colSpan="2">
+                                            <div className={styles['loading-container']}>
+                                                <ReactLoading type="spin" color="#808080" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    purchases.map(purchase => (
+                                        <TablePurchase
+                                            key={purchase.id}
+                                            purchase={purchase}
                                         //Todo Implement purchase details
-                                    />
-                                ))
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-                <div className={styles['buttons-wrapper']}>
-                    {currentPage > 1 && (
-                        <button
-                            onClick={() => setCurrentPage(currentPage - 1)}
-                            className={styles['page-control-button']}>
-                            Prev
-                        </button>
-                    )}
-                    {pageNumbers.map(pageNumber => (
-                        <button
-                            className={`${styles['page-button']} ${currentPage === pageNumber ? styles['current-page'] : ''}`}
-                            key={pageNumber}
-                            onClick={() => setCurrentPage(pageNumber)}
-                        >
-                            {pageNumber}
-                        </button>
-                    ))}
-                    {currentPage < totalPages && (
-                        <button
-                            onClick={() => setCurrentPage(currentPage + 1)}
-                            className={styles['page-control-button']}>
-                            Next
-                        </button>
-                    )}
+                                        />
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className={styles['buttons-wrapper']}>
+                        {currentPage > 1 && (
+                            <button
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                                className={styles['page-control-button']}>
+                                Prev
+                            </button>
+                        )}
+                        {pageNumbers.map(pageNumber => (
+                            <button
+                                className={`${styles['page-button']} ${currentPage === pageNumber ? styles['current-page'] : ''}`}
+                                key={pageNumber}
+                                onClick={() => setCurrentPage(pageNumber)}
+                            >
+                                {pageNumber}
+                            </button>
+                        ))}
+                        {currentPage < totalPages && (
+                            <button
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                                className={styles['page-control-button']}>
+                                Next
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
             <div className={styles['backdrop']} />
