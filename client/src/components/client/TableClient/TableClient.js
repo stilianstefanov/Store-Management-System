@@ -6,8 +6,8 @@ function TableClient ({ client, openClientDetails }) {
             <td className={styles['text-left']}>{client.name}</td>
             <td className={styles['text-left']}>{client.surname}</td>
             <td className={styles['text-left']}>{client.lastName}</td>
-            <td className={styles['text-left']}>{client.currentCredit}</td>
-            <td className={styles['text-left']}>{client.creditLimit}</td>
+            <td className={styles['text-left']}>{client.currentCredit.toFixed(2)}</td>
+            <td className={styles['text-left']}>{client.creditLimit.toFixed(2)}</td>
         </tr>
     );
 };
