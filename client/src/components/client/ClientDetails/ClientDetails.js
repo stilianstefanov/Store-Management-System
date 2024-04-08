@@ -72,10 +72,10 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                                 <p>Lastname: <span className={styles['list-info-span']}>{client.lastName}</span></p>
                             </li>
                             <li>
-                                <p>Current credit: <span className={styles['list-info-span']}>{client.currentCredit}</span></p>
+                                <p>Current credit: <span className={styles['list-info-span']}>{client.currentCredit.toFixed(2)}</span></p>
                             </li>
                             <li>
-                                <p>Credit limit: <span className={styles['list-info-span']}>{client.creditLimit}</span></p>
+                                <p>Credit limit: <span className={styles['list-info-span']}>{client.creditLimit.toFixed(2)}</span></p>
                             </li>
                         </ul>
                         <div className={styles['buttons-container']}>
@@ -83,7 +83,11 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                             <button className={styles['decr-credit-button']}>Decrease credit</button>
                             <button className={styles['delete-button']}>Delete</button>
                         </div>
-                        <button className={styles['close-button']}>Close</button>
+                        <button
+                            className={styles['close-button']}
+                            onClick={() => closeClientDetails()}>
+                            Close
+                        </button>
                     </div>
                 </div>
                 <div className={styles['purchases-wrapper']}>
