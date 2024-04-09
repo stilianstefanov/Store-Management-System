@@ -157,75 +157,78 @@ function ClientForm(props) {
     }
 
     return (
-        <div className={styles["container"]}>
-            <h1 className={styles["header"]}>{`${props.client ? "Update Client" : "Add New Client"}`}</h1>
-            <form onSubmit={submitHandler}>
-                <div className={styles['input-group']}>
-                    <label htmlFor="name-input">Name:</label>
-                    <input
-                        id="name-input"
-                        placeholder="Enter name"
-                        className={styles["input"]}
-                        value={name}
-                        onChange={inputNameHandler}
-                    />
-                    {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
-                </div>
-                <div className={styles['input-group']}>
-                    <label htmlFor="surname-input">Surname:</label>
-                    <input
-                        id="surname-input"
-                        placeholder="Enter surname"
-                        className={styles["input"]}
-                        value={surname}
-                        onChange={inputSurnameHandler}
-                    />
-                    {validationErrors.surname && <p className={styles["error-message"]}>{validationErrors.surname}</p>}
-                </div>
-                <div className={styles['input-group']}>
-                    <label htmlFor="lastname-input">Lastname:</label>
-                    <input
-                        id="lastname-input"
-                        placeholder="Enter lastname"
-                        className={styles["input"]}
-                        value={lastName}
-                        onChange={inputLastNameHandler}
-                    />
-                    {validationErrors.lastName && <p className={styles["error-message"]}>{validationErrors.lastName}</p>}
-                </div>
-                <div className={styles['input-group']}>
-                    <label htmlFor="current-credit-input">Current credit:</label>
-                    <input
-                        id="current-credit-input"
-                        type="number"
-                        placeholder="Enter current credit"
-                        className={styles["input"]}
-                        value={currentCredit}
-                        onChange={inputCurrentCreditHandler}
-                    />
-                    {validationErrors.currentCredit && <p className={styles["error-message"]}>{validationErrors.currentCredit}</p>}
-                </div>
-                <div className={styles['input-group']}>
-                    <label htmlFor="credit-limit-input">Credit limit:</label>
-                    <input
-                        id="credit-limit-input"
-                        type="number"
-                        placeholder="Enter credit limit"
-                        className={styles["input"]}
-                        value={creditLimit}
-                        onChange={inputCreditLimitHandler}
-                    />
-                </div>
-                {validationErrors.creditLimit && <p className={styles["error-message"]}>{validationErrors.creditLimit}</p>}
-                <div className={styles['buttons-container']}>
-                    <button className={styles['button-cancel']} onClick={props.closeAddNewClient}>
-                        Cancel
-                    </button>
-                    <button type="submit" className={styles["button-confirm"]}>
-                        {`${props.client ? "Update" : "Add"}`}
-                    </button>
-                </div>
-            </form>
+        <div>
+            <div className={styles["container"]}>
+                <h1 className={styles["header"]}>{`${props.client ? "Update Client" : "Add New Client"}`}</h1>
+                <form onSubmit={submitHandler}>
+                    <div className={styles['input-group']}>
+                        <label htmlFor="name-input">Name:</label>
+                        <input
+                            id="name-input"
+                            placeholder="Enter name"
+                            className={styles["input"]}
+                            value={name}
+                            onChange={inputNameHandler}
+                        />
+                        {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
+                    </div>
+                    <div className={styles['input-group']}>
+                        <label htmlFor="surname-input">Surname:</label>
+                        <input
+                            id="surname-input"
+                            placeholder="Enter surname"
+                            className={styles["input"]}
+                            value={surname}
+                            onChange={inputSurnameHandler}
+                        />
+                        {validationErrors.surname && <p className={styles["error-message"]}>{validationErrors.surname}</p>}
+                    </div>
+                    <div className={styles['input-group']}>
+                        <label htmlFor="lastname-input">Lastname:</label>
+                        <input
+                            id="lastname-input"
+                            placeholder="Enter lastname"
+                            className={styles["input"]}
+                            value={lastName}
+                            onChange={inputLastNameHandler}
+                        />
+                        {validationErrors.lastName && <p className={styles["error-message"]}>{validationErrors.lastName}</p>}
+                    </div>
+                    <div className={styles['input-group']}>
+                        <label htmlFor="current-credit-input">Current credit:</label>
+                        <input
+                            id="current-credit-input"
+                            type="number"
+                            placeholder="Enter current credit"
+                            className={styles["input"]}
+                            value={currentCredit}
+                            onChange={inputCurrentCreditHandler}
+                        />
+                        {validationErrors.currentCredit && <p className={styles["error-message"]}>{validationErrors.currentCredit}</p>}
+                    </div>
+                    <div className={styles['input-group']}>
+                        <label htmlFor="credit-limit-input">Credit limit:</label>
+                        <input
+                            id="credit-limit-input"
+                            type="number"
+                            placeholder="Enter credit limit"
+                            className={styles["input"]}
+                            value={creditLimit}
+                            onChange={inputCreditLimitHandler}
+                        />
+                    </div>
+                    {validationErrors.creditLimit && <p className={styles["error-message"]}>{validationErrors.creditLimit}</p>}
+                    <div className={styles['buttons-container']}>
+                        <button className={styles['button-cancel']} onClick={props.closeAddNewClient}>
+                            Cancel
+                        </button>
+                        <button type="submit" className={styles["button-confirm"]}>
+                            {`${props.client ? "Update" : "Add"}`}
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div className={styles['backdrop']} />
         </div>
     );
 };
