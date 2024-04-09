@@ -15,6 +15,7 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
     const [isLoading, setIsLoading] = useState(false);
     const [date, setDate] = useState("");
     const [sorting, setSorting] = useState(0);
+    const [clientFormIsOpen, setclientFormIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -80,7 +81,11 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                             </li>
                         </ul>
                         <div className={styles['buttons-container']}>
-                            <button className={styles['update-button']}>Update</button>
+                            <button
+                                className={styles['update-button']}
+                                onClick={() => setclientFormIsOpen(true)}>
+                                Update
+                            </button>
                             <button className={styles['decr-credit-button']}>Decrease credit</button>
                             <button className={styles['delete-button']}>Delete</button>
                         </div>
@@ -181,6 +186,10 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                 </div>
             </div>
             <div className={styles['backdrop']} />
+            {clientFormIsOpen && <ClientForm
+                client={client}
+                closeAddNewClient={() => setclientFormIsOpen(false)}
+                refreshClients={() => refreshClients()} />}
         </div>
     );
 };

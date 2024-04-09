@@ -8,7 +8,7 @@ import * as ClientService from "../../../services/clientService"
 
 function ClientForm(props) {
     const [name, setName] = useState(`${props.client ? props.client.name : ""}`);
-    const [surname, setSurname] = useState(`${props.client ? props.client.surname : ""}`);
+    const [surname, setSurname] = useState(`${props.client ? (props.client.surname ? props.client.surname : "") : ""}`);
     const [lastName, setLastName] = useState(`${props.client ? props.client.lastName : ""}`);;
     const [currentCredit, setCurrentCredit] = useState(`${props.client ? props.client.currentCredit.toFixed(2) : ""}`);
     const [creditLimit, setCreditLimit] = useState(`${props.client ? props.client.creditLimit.toFixed(2) : ""}`);
@@ -160,42 +160,62 @@ function ClientForm(props) {
         <div className={styles["container"]}>
             <h1 className={styles["header"]}>{`${props.client ? "Update Client" : "Add New Client"}`}</h1>
             <form onSubmit={submitHandler}>
-                <input
-                    placeholder="Name"
-                    className={styles["input"]}
-                    value={name}
-                    onChange={inputNameHandler}
-                />
-                {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
-                <input
-                    placeholder="Surname"
-                    className={styles["input"]}
-                    value={surname}
-                    onChange={inputSurnameHandler}
-                />
-                {validationErrors.surname && <p className={styles["error-message"]}>{validationErrors.surname}</p>}
-                <input
-                    placeholder="Lastname"
-                    className={styles["input"]}
-                    value={lastName}
-                    onChange={inputLastNameHandler}
-                />
-                {validationErrors.lastName && <p className={styles["error-message"]}>{validationErrors.lastName}</p>}
-                <input
-                    type="number"
-                    placeholder="Current credit"
-                    className={styles["input"]}
-                    value={currentCredit}
-                    onChange={inputCurrentCreditHandler}
-                />
-                {validationErrors.currentCredit && <p className={styles["error-message"]}>{validationErrors.currentCredit}</p>}
-                <input
-                    type="number"
-                    placeholder="Credit limit"
-                    className={styles["input"]}
-                    value={creditLimit}
-                    onChange={inputCreditLimitHandler}
-                />
+                <div className={styles['input-group']}>
+                    <label htmlFor="name-input">Name:</label>
+                    <input
+                        id="name-input"
+                        placeholder="Enter name"
+                        className={styles["input"]}
+                        value={name}
+                        onChange={inputNameHandler}
+                    />
+                    {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
+                </div>
+                <div className={styles['input-group']}>
+                    <label htmlFor="surname-input">Surname:</label>
+                    <input
+                        id="surname-input"
+                        placeholder="Enter surname"
+                        className={styles["input"]}
+                        value={surname}
+                        onChange={inputSurnameHandler}
+                    />
+                    {validationErrors.surname && <p className={styles["error-message"]}>{validationErrors.surname}</p>}
+                </div>
+                <div className={styles['input-group']}>
+                    <label htmlFor="lastname-input">Lastname:</label>
+                    <input
+                        id="lastname-input"
+                        placeholder="Enter lastname"
+                        className={styles["input"]}
+                        value={lastName}
+                        onChange={inputLastNameHandler}
+                    />
+                    {validationErrors.lastName && <p className={styles["error-message"]}>{validationErrors.lastName}</p>}
+                </div>
+                <div className={styles['input-group']}>
+                    <label htmlFor="current-credit-input">Current credit:</label>
+                    <input
+                        id="current-credit-input"
+                        type="number"
+                        placeholder="Enter current credit"
+                        className={styles["input"]}
+                        value={currentCredit}
+                        onChange={inputCurrentCreditHandler}
+                    />
+                    {validationErrors.currentCredit && <p className={styles["error-message"]}>{validationErrors.currentCredit}</p>}
+                </div>
+                <div className={styles['input-group']}>
+                    <label htmlFor="credit-limit-input">Credit limit:</label>
+                    <input
+                        id="credit-limit-input"
+                        type="number"
+                        placeholder="Enter credit limit"
+                        className={styles["input"]}
+                        value={creditLimit}
+                        onChange={inputCreditLimitHandler}
+                    />
+                </div>
                 {validationErrors.creditLimit && <p className={styles["error-message"]}>{validationErrors.creditLimit}</p>}
                 <div className={styles['buttons-container']}>
                     <button className={styles['button-cancel']} onClick={props.closeAddNewClient}>

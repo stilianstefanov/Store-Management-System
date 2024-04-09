@@ -8,7 +8,7 @@
     width: 44rem;
     z-index: 20;
     position: fixed;
-    top: 30vh;
+    top: 7.4vh;
     left: calc(50% - 21.5rem);
     max-height: 45.5rem;
     display: flex;
@@ -23,14 +23,25 @@
     margin-bottom: 16px;
 }
 
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.input-group label {
+    margin-bottom: 0px;
+    font-weight: bold;
+}
+
 .input {
-    background-color: wheat;
+    background-color: white;
     font-size: 16px;
     padding: 8px;
     margin-bottom: 16px;
     width: 100%;
-    border: none;
-    border-bottom: 1px solid black;
+    border: 1px solid black;
+    border-radius: 6px;
 }
 
 .buttons-container {
