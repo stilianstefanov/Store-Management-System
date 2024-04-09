@@ -28,9 +28,10 @@ function ClientForm(props) {
                     currentCredit,
                     creditLimit
                 };
-                await ClientService.Create(request);
+                props.client ? await ClientService.Update(props.client.id, request) : await ClientService.Create(request);
                 props.closeAddNewClient();
                 props.refreshClients();
+                toast.success(`${props.client ? "Client updated successfully!" : "Client added successfully!"}`);
             } catch (error) {
                 handleError(error);
             }
@@ -201,7 +202,7 @@ function ClientForm(props) {
                         Cancel
                     </button>
                     <button type="submit" className={styles["button-confirm"]}>
-                        Add
+                        {`${props.client ? "Update" : "Add"}`}
                     </button>
                 </div>
             </form>

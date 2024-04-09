@@ -27,3 +27,10 @@ export const Create = async (request) => {
     const response = await axios.post(baseUrl, request, config);
     return response.data;
 };
+
+export const Update = async (clientId, request) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    const response = await axios.put(`${baseUrl}/${clientId}`, request, config);
+    return response.data;
+};
