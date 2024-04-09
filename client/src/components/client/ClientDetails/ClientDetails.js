@@ -5,6 +5,7 @@ import ReactLoading from 'react-loading'
 import { useAuth } from '../../../context/AuthContext';
 import styles from './ClientDetails.module.css';
 import TablePurchase from '../../purchase/TablePurchase/TablePurchase';
+import ClientForm from '../ClientForm/ClientForm'
 import * as PurchaseService from '../../../services/purchaseService';
 
 function ClientDetails({ client, closeClientDetails, refreshClients }) {

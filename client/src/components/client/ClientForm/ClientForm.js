@@ -7,11 +7,11 @@ import { clientValidationRules, commonValidationRules } from "../../../validatio
 import * as ClientService from "../../../services/clientService"
 
 function ClientForm(props) {
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [currentCredit, setCurrentCredit] = useState("");
-    const [creditLimit, setCreditLimit] = useState("");
+    const [name, setName] = useState(`${props.client ? props.client.name : ""}`);
+    const [surname, setSurname] = useState(`${props.client ? props.client.surname : ""}`);
+    const [lastName, setLastName] = useState(`${props.client ? props.client.lastName : ""}`);;
+    const [currentCredit, setCurrentCredit] = useState(`${props.client ? props.client.currentCredit.toFixed(2) : ""}`);
+    const [creditLimit, setCreditLimit] = useState(`${props.client ? props.client.creditLimit.toFixed(2) : ""}`);
     const [validationErrors, setValidationErrors] = useState({});
     const { logout } = useAuth();
     const navigate = useNavigate();
@@ -157,7 +157,7 @@ function ClientForm(props) {
 
     return (
         <div className={styles["container"]}>
-            <h1 className={styles["header"]}>Add New Client</h1>
+            <h1 className={styles["header"]}>{`${props.client ? "Update Client" : "Add New Client"}`}</h1>
             <form onSubmit={submitHandler}>
                 <input
                     placeholder="Name"
