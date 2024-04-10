@@ -6,6 +6,7 @@ import { useAuth } from '../../../context/AuthContext';
 import styles from './ClientDetails.module.css';
 import TablePurchase from '../../purchase/TablePurchase/TablePurchase';
 import ClientForm from '../ClientForm/ClientForm'
+import DecreaseCreditModal from './DecreaseCreditModal/DecreaseCreditModal';
 import * as PurchaseService from '../../../services/purchaseService';
 
 function ClientDetails({ client, closeClientDetails, refreshClients }) {
@@ -16,6 +17,7 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
     const [date, setDate] = useState("");
     const [sorting, setSorting] = useState(0);
     const [clientFormIsOpen, setclientFormIsOpen] = useState(false);
+    const [decreaseCreditModalIsOpen, setDecreaseCreditModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -86,7 +88,11 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                                 onClick={() => setclientFormIsOpen(true)}>
                                 Update
                             </button>
-                            <button className={styles['decr-credit-button']}>Decrease credit</button>
+                            <button
+                                className={styles['decr-credit-button']}
+                                onClick={() => setDecreaseCreditModalIsOpen(true)}>
+                                Decrease credit
+                            </button>
                             <button className={styles['delete-button']}>Delete</button>
                         </div>
                         <button
@@ -189,6 +195,10 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
             {clientFormIsOpen && <ClientForm
                 client={client}
                 closeAddNewClient={() => setclientFormIsOpen(false)}
+                refreshClients={() => refreshClients()} />}
+            {decreaseCreditModalIsOpen && <DecreaseCreditModal
+                clientId={client.id}
+                closeModal={() => setDecreaseCreditModalIsOpen(false)}
                 refreshClients={() => refreshClients()} />}
         </div>
     );
