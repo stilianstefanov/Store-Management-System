@@ -209,7 +209,8 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
             {deleteModalIsOpen && <DeleteClientModal
                 clientId={client.id}
                 closeModal={() => setDeleteModalIsOpen(false)}
-                refreshClients={() => refreshClients()} />}
+                refreshClients={() => refreshClients()}
+                closeClientDetails={() => closeClientDetails()} />}
         </div>
     );
 };

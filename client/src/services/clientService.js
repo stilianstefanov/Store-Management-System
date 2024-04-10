@@ -41,3 +41,10 @@ export const DecreaseCredit = async (clientId, request) => {
     const response = await axios.patch(`${baseUrl}/${clientId}/decrease-credit`, request, config);
     return response.data;
 };
+
+export const Delete = async (clientId) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    const response = await axios.delete(`${baseUrl}/${clientId}`, config);
+    return response.data;
+};
