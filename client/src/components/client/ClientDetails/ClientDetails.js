@@ -197,7 +197,7 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                 closeAddNewClient={() => setclientFormIsOpen(false)}
                 refreshClients={() => refreshClients()} />}
             {decreaseCreditModalIsOpen && <DecreaseCreditModal
-                clientId={client.id}
+                client={client}
                 closeModal={() => setDecreaseCreditModalIsOpen(false)}
                 refreshClients={() => refreshClients()} />}
         </div>
