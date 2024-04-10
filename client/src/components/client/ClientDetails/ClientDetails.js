@@ -7,6 +7,7 @@ import styles from './ClientDetails.module.css';
 import TablePurchase from '../../purchase/TablePurchase/TablePurchase';
 import ClientForm from '../ClientForm/ClientForm'
 import DecreaseCreditModal from './DecreaseCreditModal/DecreaseCreditModal';
+import DeleteClientModal from './DeleteClientModal/DeleteClientModal';
 import * as PurchaseService from '../../../services/purchaseService';
 
 function ClientDetails({ client, closeClientDetails, refreshClients }) {
@@ -18,6 +19,7 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
     const [sorting, setSorting] = useState(0);
     const [clientFormIsOpen, setclientFormIsOpen] = useState(false);
     const [decreaseCreditModalIsOpen, setDecreaseCreditModalIsOpen] = useState(false);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -93,7 +95,11 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                                 onClick={() => setDecreaseCreditModalIsOpen(true)}>
                                 Decrease credit
                             </button>
-                            <button className={styles['delete-button']}>Delete</button>
+                            <button
+                                className={styles['delete-button']}
+                                onClick={() => setDeleteModalIsOpen(true)}>
+                                Delete
+                            </button>
                         </div>
                         <button
                             className={styles['close-button']}
@@ -199,6 +205,10 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
             {decreaseCreditModalIsOpen && <DecreaseCreditModal
                 client={client}
                 closeModal={() => setDecreaseCreditModalIsOpen(false)}
+                refreshClients={() => refreshClients()} />}
+            {deleteModalIsOpen && <DeleteClientModal
+                clientId={client.id}
+                closeModal={() => setDeleteModalIsOpen(false)}
                 refreshClients={() => refreshClients()} />}
         </div>
     );
