@@ -25,6 +25,7 @@ function DecreaseCreditModal({ clientId, closeModal, refreshClients }) {
                     </div>
                 </form>
             </div>
+            <div className={styles['backdrop']} />
         </div>
     );
 }
