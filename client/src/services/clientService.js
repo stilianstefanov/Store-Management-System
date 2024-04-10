@@ -34,3 +34,10 @@ export const Update = async (clientId, request) => {
     const response = await axios.put(`${baseUrl}/${clientId}`, request, config);
     return response.data;
 };
+
+export const DecreaseCredit = async (clientId, request) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    const response = await axios.patch(`${baseUrl}/${clientId}/decrease-credit`, request, config);
+    return response.data;
+};

@@ -4,12 +4,28 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthContext';
 import { clientValidationRules, commonValidationRules } from '../../../../validationRules';
+import * as ClientService from '../../../../services/clientService'
 
 function DecreaseCreditModal({ client, closeModal, refreshClients }) {
     const [decreaseAmount, setDecreaseAmount] = useState("");
     const [validationError, setValidationError] = useState("");
     const navigate = useNavigate();
     const { logout } = useAuth();
+
+    const submitHandler = async (event) => {
+        event.preventDefault();
+        if (validationError) return;
+
+        try {
+            const request = { amount: decreaseAmount };
+            await ClientService.DecreaseCredit(client.id, request);
+            closeModal();
+            refreshClients();
+            toast.success("Credit decreased successfully!");
+        } catch (error) {
+            handleError(error);
+        }
+    };
 
     const inputAmountHandler = (event) => {
         const inputAmount = event.target.value;
@@ -44,7 +60,7 @@ function DecreaseCreditModal({ client, closeModal, refreshClients }) {
         <div>
             <div className={styles["container"]}>
                 <h1 className={styles["header"]}>Decrease current credit</h1>
-                <form>
+                <form onSubmit={submitHandler}>
                     <div className={styles['input-group']}>
                         <label htmlFor="amount-input">Amount:</label>
                         <input
