@@ -8,7 +8,7 @@
     width: 44rem;
     z-index: 20;
     position: fixed;
-    top: 33vh;
+    top: 17vh;
     left: calc(50% - 21.5rem);
     max-height: 45.5rem;
     display: flex;
@@ -52,6 +52,17 @@
 
 .delete-button:hover {
     background-color: black;
+}
+
+.text {
+    font-style: italic;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: large;
+}
+
+.table-header {
+    font-style: italic;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .table-wrapper {

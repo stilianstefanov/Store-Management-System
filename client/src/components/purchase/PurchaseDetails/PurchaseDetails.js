@@ -14,14 +14,14 @@ function PurchaseDetails({ purchase, refreshClients, closePurchaseDetails }) {
         <div>
             <div className={styles["container"]}>
                 <div className={styles['header-container']}>
-                    <p>Date: {purchase.date}</p>
-                    <p>Amount: {purchase.amount.toFixed(2)}</p>
+                    <p className={styles['text']}>Date: {purchase.date}</p>
+                    <p className={styles['text']}>Total amount: {purchase.amount.toFixed(2)}</p>
                     <button
                         className={styles['delete-button']}>
                         Delete
                     </button>
                 </div>
-                <h2>Purchased products</h2>
+                <h2 className={styles['table-header']}>Purchased products</h2>
                 <div className={`table-responsive ${styles['table-wrapper']}`}>
                     <table className={styles['table-fill']}>
                         <thead>
