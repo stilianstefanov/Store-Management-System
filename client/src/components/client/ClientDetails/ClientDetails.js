@@ -8,6 +8,7 @@ import TablePurchase from '../../purchase/TablePurchase/TablePurchase';
 import ClientForm from '../ClientForm/ClientForm'
 import DecreaseCreditModal from './DecreaseCreditModal/DecreaseCreditModal';
 import DeleteClientModal from './DeleteClientModal/DeleteClientModal';
+import PurchaseDetails from '../../purchase/PurchaseDetails/PurchaseDetails';
 import * as PurchaseService from '../../../services/purchaseService';
 
 function ClientDetails({ client, closeClientDetails, refreshClients }) {
@@ -20,6 +21,8 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
     const [clientFormIsOpen, setclientFormIsOpen] = useState(false);
     const [decreaseCreditModalIsOpen, setDecreaseCreditModalIsOpen] = useState(false);
     const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const [purchaseDetailsIsOpen, setPurchaseDetailsIsOpen] = useState(false);
+    const [selectedPurchaseId, setSelectedPurchaseId] = useState("");
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -55,6 +58,11 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
     useEffect(() => {
         getPurchases();
     }, [getPurchases]);
+
+    const openPurchaseDetailsHandler = (purchaseId) => {
+        setSelectedPurchaseId(purchaseId);
+        setPurchaseDetailsIsOpen(true);
+    };
 
     const PAGE_BUTTONS_DISPLAY_LIMIT = 5;
     const startPage = Math.max(currentPage - Math.floor(PAGE_BUTTONS_DISPLAY_LIMIT / 2), 1);
@@ -163,7 +171,7 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                                         <TablePurchase
                                             key={purchase.id}
                                             purchase={purchase}
-                                        //Todo Implement purchase details
+                                            openPurchaseDetails={openPurchaseDetailsHandler}
                                         />
                                     ))
                                 )}
@@ -211,6 +219,10 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                 closeModal={() => setDeleteModalIsOpen(false)}
                 refreshClients={() => refreshClients()}
                 closeClientDetails={() => closeClientDetails()} />}
+            {purchaseDetailsIsOpen && <PurchaseDetails
+                purchase={purchases.find(p => p.id === selectedPurchaseId)}
+                refreshClients={() => refreshClients()}
+                closePurchaseDetails={() => setPurchaseDetailsIsOpen(false)} />}
         </div>
     );
 };

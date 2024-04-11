@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import TablePurchasedProduct from '../../purchasedProduct/TablePurchasedProduct';
 
-function PurchaseDetails({ purchase, refreshClients, closeModal }) {
+function PurchaseDetails({ purchase, refreshClients, closePurchaseDetails }) {
     const [purchasedProducts, setPurchasedProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
