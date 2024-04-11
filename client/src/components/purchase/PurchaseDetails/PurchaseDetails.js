@@ -63,6 +63,7 @@ function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDeta
                                 <th className={styles['text-left']}>Description</th>
                                 <th className={styles['text-left']}>Bought Quantity</th>
                                 <th className={styles['text-left']}>Purchase Price</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody className={styles['table-hover']}>

@@ -1,3 +1,17 @@
 .text-left {
     text-align: left;
 }
+
+.removeButton {
+    cursor: pointer;
+    background-color: red;
+    border: 1px solid black;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    font-size: medium;
+}
+
+.removeButton:hover {
+    background-color: black;
+}
