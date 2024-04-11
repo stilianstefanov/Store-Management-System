@@ -20,3 +20,10 @@ export const CreatePurchase = async (products, clientId) => {
     const response = await axios.post(`${baseUrl}/${clientId}/Purchases`, products, config);
     return response.data;
 };
+
+export const Delete = async (clientId, purchaseId) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }};
+
+    const response = await axios.delete(`${baseUrl}/${clientId}/Purchases/${purchaseId}`, config);
+    return response.data;
+};

@@ -5,11 +5,13 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import TablePurchasedProduct from '../../purchasedProduct/TablePurchasedProduct';
+import DeletePurchaseModal from './DeletePurchaseModal/DeletePurchaseModal';
 import * as PurchasedProductService from '../../../services/purchasedProductService'
 
 function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDetails }) {
     const [purchasedProducts, setPurchasedProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -40,7 +42,6 @@ function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDeta
         getPurchasedProducts();
     }, [getPurchasedProducts]);
 
-
     return (
         <div>
             <div className={styles["container"]}>
@@ -48,7 +49,8 @@ function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDeta
                     <p className={styles['text']}>Date: {purchase.date}</p>
                     <p className={styles['text']}>Total amount: {purchase.amount.toFixed(2)}</p>
                     <button
-                        className={styles['delete-button']}>
+                        className={styles['delete-button']}
+                        onClick={() => setDeleteModalIsOpen(true)}>
                         Delete
                     </button>
                 </div>
@@ -90,6 +92,12 @@ function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDeta
                 </button>
             </div>
             <div className={styles['backdrop']} />
+            {deleteModalIsOpen && <DeletePurchaseModal
+                clientId={clientId}
+                purchaseId={purchase.id}
+                closeModal={() => setDeleteModalIsOpen(false)}
+                refreshClients={() => refreshClients()}
+                closePurchaseDetails={() => closePurchaseDetails()} />}
         </div>
     );
 }
