@@ -8,7 +8,7 @@
     width: 44rem;
     z-index: 20;
     position: fixed;
-    top: 17vh;
+    top: 16vh;
     left: calc(50% - 21.5rem);
     max-height: 45.5rem;
     display: flex;
@@ -52,6 +52,24 @@
 
 .delete-button:hover {
     background-color: black;
+}
+
+.close-button {
+    background-color: #d43331;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    margin-top: 7px;
+    max-width: 10em;
+}
+
+.close-button:hover {
+    background-color: black;
+    color: white;
 }
 
 .text {

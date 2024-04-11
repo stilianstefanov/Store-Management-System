@@ -5,10 +5,41 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import TablePurchasedProduct from '../../purchasedProduct/TablePurchasedProduct';
+import * as PurchasedProductService from '../../../services/purchasedProductService'
 
-function PurchaseDetails({ purchase, refreshClients, closePurchaseDetails }) {
+function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDetails }) {
     const [purchasedProducts, setPurchasedProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
+    const handleError = useCallback((error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response ? error.response.data : "An error occurred");
+        }
+        console.error(error);
+    }, [logout, navigate]);
+
+    const getPurchasedProducts = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const response = await PurchasedProductService.GetAll(clientId, purchase.id);
+            setPurchasedProducts(response);
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [handleError, purchase, clientId]);
+
+    useEffect(() => {
+        getPurchasedProducts();
+    }, [getPurchasedProducts]);
+
 
     return (
         <div>
@@ -52,6 +83,11 @@ function PurchaseDetails({ purchase, refreshClients, closePurchaseDetails }) {
                         </tbody>
                     </table>
                 </div>
+                <button
+                    className={styles['close-button']}
+                    onClick={() => closePurchaseDetails()}>
+                    Close
+                </button>
             </div>
             <div className={styles['backdrop']} />
         </div>

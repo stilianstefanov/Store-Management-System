@@ -220,6 +220,7 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                 refreshClients={() => refreshClients()}
                 closeClientDetails={() => closeClientDetails()} />}
             {purchaseDetailsIsOpen && <PurchaseDetails
+                clientId={client.id}
                 purchase={purchases.find(p => p.id === selectedPurchaseId)}
                 refreshClients={() => refreshClients()}
                 closePurchaseDetails={() => setPurchaseDetailsIsOpen(false)} />}
