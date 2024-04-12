@@ -6,12 +6,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import TablePurchasedProduct from '../../purchasedProduct/TablePurchasedProduct/TablePurchasedProduct';
 import DeletePurchaseModal from './DeletePurchaseModal/DeletePurchaseModal';
+import DeletePurchasedProductModal from '../../purchasedProduct/DeletePurchasedProductModal/DeletePurchasedProductModal';
 import * as PurchasedProductService from '../../../services/purchasedProductService'
 
 function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDetails }) {
     const [purchasedProducts, setPurchasedProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
+    const [selectedProductId, setSelectedProductId] = useState("");
+    const [deleteProductModalIsOpen, setDeleteProductModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -41,6 +44,11 @@ function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDeta
     useEffect(() => {
         getPurchasedProducts();
     }, [getPurchasedProducts]);
+
+    const deletePurchasedProductHandler = (productId) => {
+        setSelectedProductId(productId);
+        setDeleteProductModalIsOpen(true);
+    };
 
     return (
         <div>
@@ -80,6 +88,7 @@ function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDeta
                                     <TablePurchasedProduct
                                         key={product.id}
                                         product={product}
+                                        deleteProductHandler={deletePurchasedProductHandler}
                                     />
                                 ))
                             )}
@@ -99,6 +108,12 @@ function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDeta
                 closeModal={() => setDeleteModalIsOpen(false)}
                 refreshClients={() => refreshClients()}
                 closePurchaseDetails={() => closePurchaseDetails()} />}
+            {deleteProductModalIsOpen && <DeletePurchasedProductModal
+                clientId={clientId}
+                purchaseId={purchase.id}
+                purchasedProductId={selectedProductId}
+                closeModal={() => setDeleteProductModalIsOpen(false)}
+                refreshClients={() => refreshClients()} />}
         </div>
     );
 }
