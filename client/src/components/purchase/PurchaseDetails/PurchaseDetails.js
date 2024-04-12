@@ -42,16 +42,6 @@ function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDeta
         getPurchasedProducts();
     }, [getPurchasedProducts]);
 
-    const deletePurchasedProduct = async (productId) => {
-        try {
-            await PurchasedProductService.Delete(clientId, purchase.id, productId);
-            refreshClients();
-            toast.success('Purchased product removed successfully!');
-        } catch (error) {
-            handleError(error);
-        }
-    };
-
     return (
         <div>
             <div className={styles["container"]}>
