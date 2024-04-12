@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
-import TablePurchasedProduct from '../../purchasedProduct/TablePurchasedProduct';
+import TablePurchasedProduct from '../../purchasedProduct/TablePurchasedProduct/TablePurchasedProduct';
 import DeletePurchaseModal from './DeletePurchaseModal/DeletePurchaseModal';
 import * as PurchasedProductService from '../../../services/purchasedProductService'
 
@@ -41,6 +41,16 @@ function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDeta
     useEffect(() => {
         getPurchasedProducts();
     }, [getPurchasedProducts]);
+
+    const deletePurchasedProduct = async (productId) => {
+        try {
+            await PurchasedProductService.Delete(clientId, purchase.id, productId);
+            refreshClients();
+            toast.success('Purchased product removed successfully!');
+        } catch (error) {
+            handleError(error);
+        }
+    };
 
     return (
         <div>
