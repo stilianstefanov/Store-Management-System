@@ -1,5 +1,10 @@
+import styles from './Products.module.css'
+
 function ProductsPage() {
-    return <div>Test Product Page</div>
+    return (
+        <div className={`container ${styles['table-container']}`}>
+        </div>
+    );
 }
 
 export default ProductsPage;
