@@ -8,3 +8,57 @@
     width: 70vw;
     padding: 2em;
 }
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.title {
+    font-family: "Angkor", serif;
+    font-weight: 400;
+    font-style: italic;
+    text-align: center;
+}
+
+.spacer {
+    margin-right: 10%;
+}
+
+.add-product-button {
+    background-color: #ffc107;
+    color: black;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.add-product-button:hover {
+    background-color: black;
+    color: white;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 25px;
+    width: 26%;
+}
+
+.input-group label {
+    margin-bottom: 0px;
+    font-weight: bold;
+}
+
+.input-field {
+    font-size: 16px;
+    padding: 10px;
+    max-width: 100%;
+    border: 1px solid black;
+}
