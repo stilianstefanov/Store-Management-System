@@ -63,6 +63,14 @@
     border: 1px solid black;
 }
 
+.loading-container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 50px;
+    width: 100%;
+}
+
 .table-wrapper {
     border: 1px solid;
     border-radius: 8px;

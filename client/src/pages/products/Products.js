@@ -1,11 +1,15 @@
 import styles from './Products.module.css';
 import { useState, useEffect, useCallback } from 'react';
 import ReactLoading from 'react-loading';
+import TableProduct from '../../components/product/TableProduct/TableProduct'
 
 function ProductsPage() {
     const [isLoading, setIsLoading] = useState(false);
     const products =
         [{ id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
+        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
+        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
+        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
         { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
         { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
         { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
@@ -84,7 +88,7 @@ function ProductsPage() {
                         </tr>
                     </thead>
                     <tbody className={styles['table-hover']}>
-                        {/* {isLoading ? (
+                        {isLoading ? (
                             <tr>
                                 <td colSpan="4">
                                     <div className={styles['loading-container']}>
@@ -100,7 +104,7 @@ function ProductsPage() {
                                 //ToDO Implement product details
                                 />
                             ))
-                        )} */}
+                        )}
                     </tbody>
                 </table>
             </div>
