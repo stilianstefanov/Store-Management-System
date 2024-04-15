@@ -1,6 +1,16 @@
-import styles from './Products.module.css'
+import styles from './Products.module.css';
+import { useState, useEffect, useCallback } from 'react';
+import ReactLoading from 'react-loading';
 
 function ProductsPage() {
+    const [isLoading, setIsLoading] = useState(false);
+    const products =
+        [{ id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
+        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
+        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
+        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
+        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 }]
+
     return (
         <div className={`container ${styles['table-container']}`}>
             <div className={styles['header-container']}>
@@ -62,6 +72,37 @@ function ProductsPage() {
                         <option value="20">20</option>
                     </select>
                 </div>
+            </div>
+            <div className={`table-responsive ${styles['table-wrapper']}`}>
+                <table className={styles['table-fill']}>
+                    <thead>
+                        <tr>
+                            <th className={styles['text-left']}>Name</th>
+                            <th className={styles['text-left']}>Description</th>
+                            <th className={styles['text-left']}>Price</th>
+                            <th className={styles['text-left']}>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody className={styles['table-hover']}>
+                        {isLoading ? (
+                            <tr>
+                                <td colSpan="4">
+                                    <div className={styles['loading-container']}>
+                                        <ReactLoading type="spin" color="#808080" />
+                                    </div>
+                                </td>
+                            </tr>
+                        ) : (
+                            products.map(product => (
+                                <TableProduct
+                                    key={product.id}
+                                    product={product}
+                                //ToDO Implement product details
+                                />
+                            ))
+                        )}
+                    </tbody>
+                </table>
             </div>
         </div>
     );
