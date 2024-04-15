@@ -1,5 +1,5 @@
 import styles from './Dashboard.module.css'
-import DashboardProduct from '../product/DashboardProduct';
+import DashboardProduct from '../product/DashboardProduct/DashboardProduct';
 import DelayedPaymentModal from '../dashboard/delayedPaymentModal/DelayedPaymentModal'
 import { useState } from 'react';
 import * as ProductService from '../../services/productService'

@@ -84,7 +84,7 @@ function ProductsPage() {
                         </tr>
                     </thead>
                     <tbody className={styles['table-hover']}>
-                        {isLoading ? (
+                        {/* {isLoading ? (
                             <tr>
                                 <td colSpan="4">
                                     <div className={styles['loading-container']}>
@@ -100,7 +100,7 @@ function ProductsPage() {
                                 //ToDO Implement product details
                                 />
                             ))
-                        )}
+                        )} */}
                     </tbody>
                 </table>
             </div>
