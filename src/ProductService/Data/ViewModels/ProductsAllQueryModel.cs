@@ -25,7 +25,7 @@
         [Range(PerPageMinValue, PerPageMaxValue)]
         public int ProductsPerPage { get; set; }
 
-        public int TotalProducts { get; set; }
+        public int TotalPages { get; set; }
 
         public ICollection<ProductViewModel> Products { get; set; }
     }

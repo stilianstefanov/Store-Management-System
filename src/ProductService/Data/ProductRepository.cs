@@ -3,7 +3,6 @@
     using Microsoft.EntityFrameworkCore;
     using Contracts;
     using Models;
-    using ViewModels;
 
     public class ProductRepository : IProductRepository
     {
@@ -19,11 +18,10 @@
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync(string userId)
+        public IQueryable<Product> GetAllAsync(string userId)
         {
-            return await _dbContext.Products
-                .Where(p => !p.IsDeleted && p.UserId == userId)
-                .ToArrayAsync();
+            return _dbContext.Products
+                .Where(p => !p.IsDeleted && p.UserId == userId);
         }
 
         public async Task<Product?> GetByIdAsync(string id)

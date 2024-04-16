@@ -5,9 +5,11 @@
     using Data.Contracts;
     using Data.Models;
     using Data.ViewModels;
+    using Data.ViewModels.Enums;
     using GrpcServices.Contracts;
     using Messaging.Contracts;
     using Messaging.Models;
+    using Microsoft.EntityFrameworkCore;
     using Utilities;
     using Utilities.Enums;
     using static Common.ExceptionMessages;
@@ -31,12 +33,44 @@
             _grpcClient = grpcClient;
         }
 
-        public async Task<OperationResult<IEnumerable<ProductViewModel>>> GetAllAsync(string userId)
+        public async Task<OperationResult<ProductsAllQueryModel>> GetAllAsync(string userId, ProductsAllQueryModel queryModel)
         {
-            var products = await _productRepository.GetAllAsync(userId);
+            var productsQuery = _productRepository.GetAllAsync(userId);
 
-            return OperationResult<IEnumerable<ProductViewModel>>
-                .Success(_mapper.Map<IEnumerable<ProductViewModel>>(products));
+            if (!string.IsNullOrWhiteSpace(queryModel.SearchTerm))
+            {
+                var wildCardSearchTerm = $"{queryModel.SearchTerm}%";
+
+                productsQuery = productsQuery
+                    .Where(p => EF.Functions.Like(p.Name, wildCardSearchTerm) ||
+                                EF.Functions.Like(p.Description, wildCardSearchTerm) ||
+                                EF.Functions.Like(p.Barcode, wildCardSearchTerm));
+            }
+
+            productsQuery = queryModel.Sorting switch
+            {
+                ProductSorting.NameAscending => productsQuery.OrderBy(p => p.Name),
+                ProductSorting.NameDescending => productsQuery.OrderByDescending(p => p.Name),
+                ProductSorting.PriceAscending => productsQuery.OrderBy(p => p.Price),
+                ProductSorting.PriceDescending => productsQuery.OrderByDescending(p => p.Price),
+                ProductSorting.QuantityAscending => productsQuery.OrderBy(p => p.Quantity),
+                ProductSorting.QuantityDescending => productsQuery.OrderByDescending(p => p.Quantity),
+                ProductSorting.DeliveryPriceAscending => productsQuery.OrderBy(p => p.DeliveryPrice),
+                ProductSorting.DeliveryPriceDescending => productsQuery.OrderByDescending(p => p.DeliveryPrice),
+                _ => productsQuery.OrderBy(p => p.Name)
+            };
+
+            var products = await productsQuery                
+                .Skip((queryModel.CurrentPage - 1) * queryModel.ProductsPerPage)
+                .Take(queryModel.ProductsPerPage)
+                .ToArrayAsync();
+
+            var totalPages = (int)Math.Ceiling(await productsQuery.CountAsync() / (double)queryModel.ProductsPerPage);
+
+            queryModel.TotalPages = totalPages;
+            queryModel.Products = _mapper.Map<ICollection<ProductViewModel>>(products);
+
+            return OperationResult<ProductsAllQueryModel>.Success(queryModel);
         }
 
         public async Task<OperationResult<ProductDetailsViewModel>> CreateAsync(ProductCreateModel model, string userId)

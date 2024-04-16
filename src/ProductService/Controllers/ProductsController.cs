@@ -20,9 +20,9 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts(ProductsAllQueryModel queryModel)
         {
-            var result = await _productService.GetAllAsync(User.GetId()!);
+            var result = await _productService.GetAllAsync(User.GetId()!, queryModel);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 

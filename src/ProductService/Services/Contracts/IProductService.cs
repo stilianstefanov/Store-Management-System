@@ -6,7 +6,7 @@
 
     public interface IProductService
     {
-        Task<OperationResult<IEnumerable<ProductViewModel>>> GetAllAsync(string userId);
+        Task<OperationResult<ProductsAllQueryModel>> GetAllAsync(string userId, ProductsAllQueryModel queryModel);
 
         Task<OperationResult<ProductDetailsViewModel>> CreateAsync(ProductCreateModel model, string userId);
 
