@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'
 import TableProduct from '../../components/product/TableProduct/TableProduct';
 import ProductForm from '../../components/product/ProductForm/ProductForm';
+import ProductDetails from '../../components/product/ProductDetails/ProductDetails';
 import * as ProductService from '../../services/productService';
 
 function ProductsPage() {
@@ -17,6 +18,8 @@ function ProductsPage() {
     const [sorting, setSorting] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [productFormIsOpen, setProductFormIsopen] = useState(false);
+    const [productDetailsIsOpen, setProductDetailsIsOpen] = useState(false);
+    const [selectedProductId, setSelectedProductId] = useState("");
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -53,6 +56,11 @@ function ProductsPage() {
     useEffect(() => {
         getProducts();
     }, [getProducts]);
+
+    const openProductDetailsHandler = (productId) => {
+        setSelectedProductId(productId);
+        setProductDetailsIsOpen(true);
+    };
 
 
     const PAGE_BUTTONS_DISPLAY_LIMIT = 5;
@@ -144,7 +152,7 @@ function ProductsPage() {
                                 <TableProduct
                                     key={product.id}
                                     product={product}
-                                //ToDO Implement product details
+                                    openProductDetails={openProductDetailsHandler}
                                 />
                             ))
                         )}
@@ -178,6 +186,10 @@ function ProductsPage() {
             </div>
             {productFormIsOpen && <ProductForm
                 closeForm={() => setProductFormIsopen(false)}
+                refreshProducts={() => getProducts()} />}
+            {productDetailsIsOpen && <ProductDetails
+                productId={selectedProductId}
+                closeProductDetails={() => setProductDetailsIsOpen(false)}
                 refreshProducts={() => getProducts()} />}
         </div>
     );
