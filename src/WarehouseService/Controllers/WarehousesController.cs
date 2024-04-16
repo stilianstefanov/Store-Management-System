@@ -42,8 +42,6 @@
         [HttpPost]
         public async Task<IActionResult> CreateWarehouse(WarehouseReadModel model)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
             var result = await _warehouseService.CreateAsync(model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
@@ -54,8 +52,6 @@
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateWarehouse(string id, [FromBody]WarehouseReadModel model)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
             var result = await _warehouseService.UpdateAsync(id, model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);

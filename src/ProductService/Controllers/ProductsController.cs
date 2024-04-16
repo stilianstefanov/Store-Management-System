@@ -52,8 +52,6 @@
         [HttpPost]
         public async Task<IActionResult> CreateProduct(ProductCreateModel model)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
             var result = await _productService.CreateAsync(model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
@@ -64,8 +62,6 @@
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(string id, [FromBody]ProductUpdateModel model)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            
             var result = await _productService.UpdateAsync(id, model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
@@ -76,8 +72,6 @@
         [HttpPatch("{id}")]
         public async Task<IActionResult> PartialUpdateProduct(string id, [FromBody] ProductPartialUpdateModel model)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            
             var result = await _productService.PartialUpdateAsync(id, model, User.GetId()!);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
