@@ -177,7 +177,8 @@ function ProductsPage() {
                 )}
             </div>
             {productFormIsOpen && <ProductForm
-                closeForm={() => setProductFormIsopen(false)} />}
+                closeForm={() => setProductFormIsopen(false)}
+                refreshProducts={() => getProducts()} />}
         </div>
     );
 }

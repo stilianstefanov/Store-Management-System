@@ -1,5 +1,6 @@
 import styles from './ProductForm.module.css'
 import { useState } from 'react';
+import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { productValidationRules, commonValidationRules } from '../../../validationRules';
@@ -21,8 +22,59 @@ function ProductForm(props) {
     const { logout } = useAuth();
     const navigate = useNavigate();
 
+    const submitHandler = async (event) => {
+        event.preventDefault();
+
+        if (!isUpdate) {
+            if (!validateWarehouseId()) return;
+        }
+
+        if (Object.entries(validationErrors).length === 0) {
+            try {
+                const request = {
+                    name,
+                    description,
+                    barcode,
+                    deliveryPrice,
+                    price,
+                    quantity,
+                    minQuantity,
+                    maxQuantity,
+                    warehouseId: selectedWarehouseId
+                };
+                isUpdate ? await ProductService.Update(props.product.id, request) : await ProductService.Create(request);
+                props.closeForm();
+                props.refreshProducts();
+                toast.success(`${isUpdate ? "Product updated successfully!" : "Product added successfully!"}`);
+            } catch (error) {
+                handleError(error);
+            }
+        }
+    };
+
+    const handleError = (error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response.data);
+        }
+        console.error(error);
+    }
+
     const selectWarehouseHandler = (id) => {
         setSelectedWarehouseId(id);
+    };
+
+    const validateWarehouseId = () => {
+        if (!selectedWarehouseId) {
+            const errors = { ...validationErrors };
+            errors.warehouse = commonValidationRules.required('Warehouse').message;
+            setValidationErrors(errors);
+            return false;
+        }
+        return true;
     };
 
     const inputBarcodeHandler = (event) => {
@@ -202,7 +254,7 @@ function ProductForm(props) {
         <div>
             <div className={styles["container"]}>
                 <h1 className={styles["header"]}>{`${isUpdate ? "Update Product" : "Add New Product"}`}</h1>
-                <form>
+                <form onSubmit={submitHandler}>
                     <div className={styles['wrapper']}>
                         <div className={styles['left-section']}>
                             <div className={styles['input-group']}>

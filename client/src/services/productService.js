@@ -21,6 +21,20 @@ export const GetByBarcode = async (barcode) => {
     return response.data;
 };
 
+export const Create = async (request) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    const response = await axios.post(baseUrl, request, config);
+    return response.data;
+};
+
+export const Update = async (productId, request) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    const response = await axios.put(`${baseUrl}/${productId}`, request, config);
+    return response.data;
+};
+
 export const UpdateStocks = async (products) => {
     const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }};
 
