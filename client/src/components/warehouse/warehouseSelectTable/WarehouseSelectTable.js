@@ -45,7 +45,7 @@ function WarehouseSelectTable({ selectedWarehouseId, selectWarehouseHandler }) {
 
     return (
         <div className={styles['main-container']}>
-            <h1 className={styles['header']}>Select warehouse</h1>
+            <h3 className={styles['header']}>Select warehouse:</h3>
             <input
                 type='text'
                 value={searchTerm}

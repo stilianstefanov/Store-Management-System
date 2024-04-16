@@ -23,6 +23,179 @@ function ProductForm(props) {
 
     const selectWarehouseHandler = (id) => {
         setSelectedWarehouseId(id);
+    };
+
+    const inputBarcodeHandler = (event) => {
+        const input = event.target.value;
+        setBarcode(input);
+        validateBarcodeInput(input);
+    };
+
+    const inputNameHandler = (event) => {
+        const input = event.target.value;
+        setName(input);
+        validateNameInput(input);
+    };
+
+    const inputDescriptionHandler = (event) => {
+        const input = event.target.value;
+        setDescription(input);
+        validateDescriptionInput(input);
+    };
+
+    const inputPriceHandler = (event) => {
+        const input = event.target.value;
+        setPrice(input);
+        validatePriceInput(input);
+    };
+
+    const inputDeliveryPriceHandler = (event) => {
+        const input = event.target.value;
+        setDeliveryPrice(input);
+        validateDeliveryPriceInput(input);
+    };
+
+    const inputQuantityHandler = (event) => {
+        const input = event.target.value;
+        setQuantity(input);
+        validateQuantityInput(input);
+    };
+
+    const inputMinQuantityHandler = (event) => {
+        const input = event.target.value;
+        setMinQuantity(input);
+        validateMinQuantityInput(input);
+    };
+
+    const inputMaxQuantityHandler = (event) => {
+        const input = event.target.value;
+        setMaxQuantity(input);
+        validateMaxQuantityInput(input);
+    };
+
+    const validateBarcodeInput = (input) => {
+        const errors = { ...validationErrors };
+        const minLength = productValidationRules.barcode.minLength;
+        const maxLength = productValidationRules.barcode.maxLength;
+        if (!input) {
+            errors.barcode = commonValidationRules.required('Barcode').message;
+            setValidationErrors(errors);
+        } else if (input.length < minLength || input.length > maxLength) {
+            errors.barcode = commonValidationRules.length('Barcode', minLength, maxLength).message;
+            setValidationErrors(errors);
+        } else {
+            delete errors.barcode;
+            setValidationErrors(errors);
+        }
+    }
+
+    const validateNameInput = (input) => {
+        const errors = { ...validationErrors };
+        const minLength = productValidationRules.name.minLength;
+        const maxLength = productValidationRules.name.maxLength;
+        if (!input) {
+            errors.name = commonValidationRules.required('Name').message;
+            setValidationErrors(errors);
+        } else if (input.length < minLength || input.length > maxLength) {
+            errors.name = commonValidationRules.length('Name', minLength, maxLength).message;
+            setValidationErrors(errors);
+        } else {
+            delete errors.name;
+            setValidationErrors(errors);
+        }
+    }
+
+    const validateDescriptionInput = (input) => {
+        const errors = { ...validationErrors };
+        const minLength = productValidationRules.description.minLength;
+        const maxLength = productValidationRules.description.maxLength;
+        if (input.length > maxLength) {
+            errors.description = commonValidationRules.length('Description', minLength, maxLength).message;
+            setValidationErrors(errors);
+        } else {
+            delete errors.description;
+            setValidationErrors(errors);
+        }
+    }
+
+    const validatePriceInput = (input) => {
+        const errors = { ...validationErrors };
+        const minValue = productValidationRules.price.minValue;
+        const maxValue = productValidationRules.price.maxValue;
+        if (!input) {
+            errors.price = commonValidationRules.required('Price').message;
+            setValidationErrors(errors);
+        } else if (input < minValue || input > maxValue) {
+            errors.price = commonValidationRules.range('Price', minValue, maxValue).message;
+            setValidationErrors(errors);
+        } else {
+            delete errors.price;
+            setValidationErrors(errors);
+        }
+    }
+
+    const validateDeliveryPriceInput = (input) => {
+        const errors = { ...validationErrors };
+        const minValue = productValidationRules.price.minValue;
+        const maxValue = productValidationRules.price.maxValue;
+        if (!input) {
+            errors.deliveryPrice = commonValidationRules.required('Delivery Price').message;
+            setValidationErrors(errors);
+        } else if (input < minValue || input > maxValue) {
+            errors.deliveryPrice = commonValidationRules.range('Delivery Price', minValue, maxValue).message;
+            setValidationErrors(errors);
+        } else {
+            delete errors.deliveryPrice;
+            setValidationErrors(errors);
+        }
+    }
+
+    const validateQuantityInput = (input) => {
+        const errors = { ...validationErrors };
+        const minValue = productValidationRules.quantity.minValue;
+        const maxValue = productValidationRules.quantity.maxValue;
+        if (!input) {
+            errors.quantity = commonValidationRules.required('Quantity').message;
+            setValidationErrors(errors);
+        } else if (input < minValue || input > maxValue) {
+            errors.quantity = commonValidationRules.range('Quantity', minValue, maxValue).message;
+            setValidationErrors(errors);
+        } else {
+            delete errors.quantity;
+            setValidationErrors(errors);
+        }
+    }
+
+    const validateMinQuantityInput = (input) => {
+        const errors = { ...validationErrors };
+        const minValue = productValidationRules.quantity.minValue;
+        const maxValue = productValidationRules.quantity.maxValue;
+        if (!input) {
+            errors.minQuantity = commonValidationRules.required('Minimum Quantity').message;
+            setValidationErrors(errors);
+        } else if (input < minValue || input > maxValue) {
+            errors.minQuantity = commonValidationRules.range('Minimum Quantity', minValue, maxValue).message;
+            setValidationErrors(errors);
+        } else {
+            delete errors.minQuantity;
+            setValidationErrors(errors);
+        }
+    }
+
+    const validateMaxQuantityInput = (input) => {
+        const errors = { ...validationErrors };
+        const minValue = productValidationRules.quantity.minValue;
+        const maxValue = productValidationRules.quantity.maxValue;
+        if (!input) {
+            errors.maxQuantity = commonValidationRules.required('Maximum Quantity').message;
+            setValidationErrors(errors);
+        } else if (input < minValue || input > maxValue) {
+            errors.maxQuantity = commonValidationRules.range('Maximum Quantity', minValue, maxValue).message;
+            setValidationErrors(errors);
+        } else {
+            delete errors.maxQuantity;
+            setValidationErrors(errors);
+        }
     }
 
     return (
@@ -30,98 +203,112 @@ function ProductForm(props) {
             <div className={styles["container"]}>
                 <h1 className={styles["header"]}>{`${isUpdate ? "Update Product" : "Add New Product"}`}</h1>
                 <form>
-                    <div className={styles['input-group']}>
-                        <label htmlFor="barcode-input">Barcode:</label>
-                        <input
-                            id="barcode-input"
-                            placeholder="Enter barcode"
-                            className={styles["input"]}
-                            value={barcode}
-                        // onChange={inputBarcodeHandler}
-                        />
-                        {validationErrors.barcode && <p className={styles["error-message"]}>{validationErrors.barcode}</p>}
+                    <div className={styles['wrapper']}>
+                        <div className={styles['left-section']}>
+                            <div className={styles['input-group']}>
+                                <label htmlFor="barcode-input">Barcode:</label>
+                                <input
+                                    id="barcode-input"
+                                    placeholder="Enter barcode"
+                                    className={styles["input"]}
+                                    value={barcode}
+                                    onChange={inputBarcodeHandler}
+                                />
+                                {validationErrors.barcode && <p className={styles["error-message"]}>{validationErrors.barcode}</p>}
+                            </div>
+                            <div className={styles['input-group']}>
+                                <label htmlFor="name-input">Name:</label>
+                                <input
+                                    id="name-input"
+                                    placeholder="Enter name"
+                                    className={styles["input"]}
+                                    value={name}
+                                    onChange={inputNameHandler}
+                                />
+                                {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
+                            </div>
+                            <div className={styles['input-group']}>
+                                <label htmlFor="description-input">Description:</label>
+                                <input
+                                    id="description-input"
+                                    placeholder="Enter description (optional)"
+                                    className={styles["input"]}
+                                    value={description}
+                                    onChange={inputDescriptionHandler}
+                                />
+                                {validationErrors.description && <p className={styles["error-message"]}>{validationErrors.description}</p>}
+                            </div>
+                            <div className={styles['input-group']}>
+                                <label htmlFor="price-input">Price:</label>
+                                <input
+                                    id="price-input"
+                                    type='number'
+                                    placeholder="Enter price"
+                                    className={styles["input"]}
+                                    value={price}
+                                    onChange={inputPriceHandler}
+                                />
+                                {validationErrors.price && <p className={styles["error-message"]}>{validationErrors.price}</p>}
+                            </div>
+                        </div>
+                        <div className={styles['middle-section']}>
+                            <div className={styles['input-group']}>
+                                <label htmlFor="delivery-price-input">Delivery price:</label>
+                                <input
+                                    id="delivery-price-input"
+                                    type='number'
+                                    placeholder="Enter delivery price"
+                                    className={styles["input"]}
+                                    value={deliveryPrice}
+                                    onChange={inputDeliveryPriceHandler}
+                                />
+                                {validationErrors.deliveryPrice && <p className={styles["error-message"]}>{validationErrors.deliveryPrice}</p>}
+                            </div>
+                            <div className={styles['input-group']}>
+                                <label htmlFor="quantity-input">Quantity:</label>
+                                <input
+                                    id="quantity-input"
+                                    type='number'
+                                    placeholder="Enter quantity"
+                                    className={styles["input"]}
+                                    value={quantity}
+                                    onChange={inputQuantityHandler}
+                                />
+                                {validationErrors.quantity && <p className={styles["error-message"]}>{validationErrors.quantity}</p>}
+                            </div>
+                            <div className={styles['input-group']}>
+                                <label htmlFor="quantity-min-input">Min Quantity:</label>
+                                <input
+                                    id="quantity-min-input"
+                                    type='number'
+                                    placeholder="Enter min quantity"
+                                    className={styles["input"]}
+                                    value={minQuantity}
+                                    onChange={inputMinQuantityHandler}
+                                />
+                                {validationErrors.minQuantity && <p className={styles["error-message"]}>{validationErrors.minQuantity}</p>}
+                            </div>
+                            <div className={styles['input-group']}>
+                                <label htmlFor="quantity-max-input">Max Quantity:</label>
+                                <input
+                                    id="quantity-max-input"
+                                    type='number'
+                                    placeholder="Enter max quantity"
+                                    className={styles["input"]}
+                                    value={maxQuantity}
+                                    onChange={inputMaxQuantityHandler}
+                                />
+                                {validationErrors.maxQuantity && <p className={styles["error-message"]}>{validationErrors.maxQuantity}</p>}
+                            </div>
+                        </div>
+                        <div className={styles['right-section']}>
+                            {!isUpdate && <WarehouseSelectTable
+                                selectedWarehouseId={selectedWarehouseId}
+                                selectWarehouseHandler={selectWarehouseHandler}
+                            />}
+                            {validationErrors.warehouse && <p className={styles["error-message"]}>{validationErrors.warehouse}</p>}
+                        </div>
                     </div>
-                    <div className={styles['input-group']}>
-                        <label htmlFor="name-input">Name:</label>
-                        <input
-                            id="name-input"
-                            placeholder="Enter name"
-                            className={styles["input"]}
-                            value={name}
-                        // onChange={inputNameHandler}
-                        />
-                        {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
-                    </div>
-                    <div className={styles['input-group']}>
-                        <label htmlFor="description-input">Description:</label>
-                        <input
-                            id="description-input"
-                            placeholder="Enter description (optional)"
-                            className={styles["input"]}
-                            value={description}
-                        // onChange={inputDescriptionHandler}
-                        />
-                        {validationErrors.description && <p className={styles["error-message"]}>{validationErrors.description}</p>}
-                    </div>
-                    <div className={styles['input-group']}>
-                        <label htmlFor="delivery-price-input">Delivery price:</label>
-                        <input
-                            id="delivery-price-input"
-                            placeholder="Enter delivery price"
-                            className={styles["input"]}
-                            value={deliveryPrice}
-                        // onChange={inputDeliveryPriceHandler}
-                        />
-                        {validationErrors.deliveryPrice && <p className={styles["error-message"]}>{validationErrors.deliveryPrice}</p>}
-                    </div>
-                    <div className={styles['input-group']}>
-                        <label htmlFor="price-input">Price:</label>
-                        <input
-                            id="price-input"
-                            placeholder="Enter price"
-                            className={styles["input"]}
-                            value={price}
-                        // onChange={inputPriceHandler}
-                        />
-                        {validationErrors.price && <p className={styles["error-message"]}>{validationErrors.price}</p>}
-                    </div>
-                    <div className={styles['input-group']}>
-                        <label htmlFor="quantity-input">Quantity:</label>
-                        <input
-                            id="quantity-input"
-                            placeholder="Enter quantity"
-                            className={styles["input"]}
-                            value={quantity}
-                        // onChange={inputQuantityHandler}
-                        />
-                        {validationErrors.quantity && <p className={styles["error-message"]}>{validationErrors.quantity}</p>}
-                    </div>
-                    <div className={styles['input-group']}>
-                        <label htmlFor="quantity-min-input">Min Quantity:</label>
-                        <input
-                            id="quantity-min-input"
-                            placeholder="Enter minimum quantity"
-                            className={styles["input"]}
-                            value={minQuantity}
-                        // onChange={inputMinQuantityHandler}
-                        />
-                        {validationErrors.minQuantity && <p className={styles["error-message"]}>{validationErrors.minQuantity}</p>}
-                    </div>
-                    <div className={styles['input-group']}>
-                        <label htmlFor="quantity-max-input">Max Quantity:</label>
-                        <input
-                            id="quantity-max-input"
-                            placeholder="Enter maximum quantity"
-                            className={styles["input"]}
-                            value={maxQuantity}
-                        // onChange={inputMaxQuantityHandler}
-                        />
-                        {validationErrors.maxQuantity && <p className={styles["error-message"]}>{validationErrors.maxQuantity}</p>}
-                    </div>
-                    {!isUpdate && <WarehouseSelectTable
-                        selectedWarehouseId={selectedWarehouseId}
-                        selectWarehouseHandler={selectWarehouseHandler}
-                    />}
                     <div className={styles['buttons-container']}>
                         <button className={styles['button-cancel']} onClick={props.closeForm}>
                             Cancel
