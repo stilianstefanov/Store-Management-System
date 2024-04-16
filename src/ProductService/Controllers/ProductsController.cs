@@ -20,7 +20,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts(ProductsAllQueryModel queryModel)
+        public async Task<IActionResult> GetAllProducts([FromQuery] ProductsAllQueryModel queryModel)
         {
             var result = await _productService.GetAllAsync(User.GetId()!, queryModel);
 

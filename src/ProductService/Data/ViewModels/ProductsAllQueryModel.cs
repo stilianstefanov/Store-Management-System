@@ -15,7 +15,7 @@
             Products = new HashSet<ProductViewModel>();
         }
 
-        public string SearchTerm { get; set; } = null!;
+        public string? SearchTerm { get; set; }
 
         [Range(ProductSortingMinValue, ProductSortingMaxValue)]
         public ProductSorting Sorting { get; set; }

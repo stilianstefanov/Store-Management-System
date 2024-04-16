@@ -1,24 +1,56 @@
 import styles from './Products.module.css';
 import { useState, useEffect, useCallback } from 'react';
 import ReactLoading from 'react-loading';
-import TableProduct from '../../components/product/TableProduct/TableProduct'
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext'
+import TableProduct from '../../components/product/TableProduct/TableProduct';
+import * as ProductService from '../../services/productService';
 
 function ProductsPage() {
-    const [isLoading, setIsLoading] = useState(false);
-    const products =
-        [{ id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
-        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
-        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
-        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
-        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
-        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
-        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 },
-        { id: 1, name: 'cola', description: 'test', price: 1.20, quantity: 1 }]
+    const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [productsPerPage, setProductsPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState("");
     const [sorting, setSorting] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
+    const handleError = useCallback((error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response ? error.response.data : "An error occurred");
+        }
+        console.error(error);
+    }, [logout, navigate]);
+
+    const getProducts = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const request = {
+                currentPage,
+                productsPerPage,
+                searchTerm,
+                sorting
+            };
+            const response = await ProductService.GetAll(request);
+            setProducts(response.products);
+            setTotalPages(response.totalPages);
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [handleError, currentPage, productsPerPage, sorting, searchTerm]);
+
+    useEffect(() => {
+        getProducts();
+    }, [getProducts]);
 
 
     const PAGE_BUTTONS_DISPLAY_LIMIT = 5;
@@ -44,25 +76,23 @@ function ProductsPage() {
                     <input
                         id="search-input"
                         type="text"
-                        // value={searchTerm}
+                        value={searchTerm}
                         placeholder="Search product"
                         className={`form-control ${styles['input-field']}`}
-                    // onChange={(e) => {
-                    //     setCurrentPage(1);
-                    //     setSearchTerm(e.target.value);
-                    // }}
-                    />
+                        onChange={(e) => {
+                            setCurrentPage(1);
+                            setSearchTerm(e.target.value);
+                        }} />
                 </div>
                 <div className={styles['input-group']}>
                     <label htmlFor="order-select">Sort by:</label>
                     <select
                         id="order-select"
                         className={`form-control ${styles['input-field']}`}
-                    // onChange={(e) => {
-                    //     setCurrentPage(1);
-                    //     setSorting(e.target.value);
-                    // }}
-                    >
+                        onChange={(e) => {
+                            setCurrentPage(1);
+                            setSorting(e.target.value);
+                        }} >
                         <option value="0">Name (Ascending)</option>
                         <option value="1">Name (Descending)</option>
                         <option value="2">Price (Ascending)</option>
@@ -78,11 +108,10 @@ function ProductsPage() {
                     <select
                         id="order-select"
                         className={`form-control ${styles['input-field']}`}
-                    // onChange={(e) => {
-                    //     setCurrentPage(1);
-                    //     setClientsPerPage(e.target.value)
-                    // }}
-                    >
+                        onChange={(e) => {
+                            setCurrentPage(1);
+                            setProductsPerPage(e.target.value)
+                        }} >
                         <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
