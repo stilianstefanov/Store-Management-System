@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'
 import TableProduct from '../../components/product/TableProduct/TableProduct';
+import ProductForm from '../../components/product/ProductForm/ProductForm';
 import * as ProductService from '../../services/productService';
 
 function ProductsPage() {
@@ -15,6 +16,7 @@ function ProductsPage() {
     const [searchTerm, setSearchTerm] = useState("");
     const [sorting, setSorting] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [productFormIsOpen, setProductFormIsopen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -66,7 +68,7 @@ function ProductsPage() {
                 <h1 className={`text-center ${styles['title']}`}>Products</h1>
                 <button
                     className={styles['add-product-button']}
-                >
+                    onClick={() => setProductFormIsopen(true)} >
                     Add New Product
                 </button>
             </div>
@@ -174,6 +176,8 @@ function ProductsPage() {
                     </button>
                 )}
             </div>
+            {productFormIsOpen && <ProductForm
+                closeForm={() => setProductFormIsopen(false)} />}
         </div>
     );
 }

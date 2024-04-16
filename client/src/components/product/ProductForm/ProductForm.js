@@ -1,9 +1,10 @@
 import styles from './ProductForm.module.css'
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { productValidationRules, commonValidationRules } from '../../../validationRules';
 import * as ProductService from '../../../services/productService'
+import WarehouseSelectTable from '../../warehouse/warehouseSelectTable/WarehouseSelectTable';
 
 function ProductForm(props) {
     const isUpdate = props.product ? true : false;
@@ -20,16 +21,9 @@ function ProductForm(props) {
     const { logout } = useAuth();
     const navigate = useNavigate();
 
-    const handleError = useCallback((error) => {
-        if (error.response && error.response.status === 401) {
-            logout();
-            navigate('/login');
-            toast.warning('Your session has expired. Please login again.');
-        } else {
-            toast.error(error.response ? error.response.data : "An error occurred");
-        }
-        console.error(error);
-    }, [logout, navigate]);
+    const selectWarehouseHandler = (id) => {
+        setSelectedWarehouseId(id);
+    }
 
     return (
         <div>
@@ -124,8 +118,21 @@ function ProductForm(props) {
                         />
                         {validationErrors.maxQuantity && <p className={styles["error-message"]}>{validationErrors.maxQuantity}</p>}
                     </div>
+                    {!isUpdate && <WarehouseSelectTable
+                        selectedWarehouseId={selectedWarehouseId}
+                        selectWarehouseHandler={selectWarehouseHandler}
+                    />}
+                    <div className={styles['buttons-container']}>
+                        <button className={styles['button-cancel']} onClick={props.closeForm}>
+                            Cancel
+                        </button>
+                        <button type="submit" className={styles["button-confirm"]}>
+                            {`${isUpdate ? "Update" : "Add"}`}
+                        </button>
+                    </div>
                 </form>
             </div>
+            <div className={styles['backdrop']} />
         </div>
     );
 };

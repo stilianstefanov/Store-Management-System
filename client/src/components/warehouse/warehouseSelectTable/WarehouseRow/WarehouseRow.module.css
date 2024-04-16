@@ -1,0 +1,13 @@
+.selected-row {
+    background-color: #FF9999 !important;
+}
+
+.row td {
+    border-bottom: 1px solid gray;
+    border-top: 1px solid gray;
+    padding: 10px;
+}
+
+.row td:hover {
+    cursor: pointer;
+}
