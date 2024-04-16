@@ -54,3 +54,30 @@ export const clientValidationRules = {
         maxValue: 99999
     }
 };
+
+export const productValidationRules = {
+    name: {
+        minLength: 3,
+        maxLength: 100
+    },
+
+    description: {
+        minLength: 0,
+        maxLength: 500
+    },
+
+    barcode: {
+        minLength: 4,
+        maxLength: 50
+    },
+
+    price: {
+        minValue: 0.01,
+        maxValue: 999999999
+    },
+
+    quantity: {
+        minValue: 0,
+        maxValue: 9999
+    }
+};
