@@ -3,9 +3,49 @@ import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import * as ProductService from '../../../services/productService'
 
 function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
-    const [product, setProduct] = useState({});
+    const [product, setProduct] = useState({
+        barcode: '',
+        name: '',
+        description: '',
+        price: 0,
+        deliveryPrice: 0,
+        quantity: 0,
+        minQuantity: 0,
+        maxQuantity: 0,
+        warehouse: {
+            name: '',
+            type: ''
+        }
+    });
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
+    const handleError = useCallback((error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response ? error.response.data : "An error occurred");
+        }
+        console.error(error);
+    }, [logout, navigate]);
+
+    const getProductDetails = useCallback(async () => {
+        try {
+            const response = await ProductService.GetById(productId);
+            setProduct(response);
+        } catch (error) {
+            handleError(error);
+        }
+    }, [handleError]);
+
+    useEffect(() => {
+        getProductDetails();
+    }, [getProductDetails]);
 
     return (
         <div>

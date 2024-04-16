@@ -15,9 +15,16 @@ export const GetAll = async (params) => {
 };
 
 export const GetByBarcode = async (barcode) => {
-    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }};
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
 
     const response = await axios.get(`${baseUrl}/barcode/${barcode}`, config);
+    return response.data;
+};
+
+export const GetById = async (id) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    const response = await axios.get(`${baseUrl}/${id}`, config);
     return response.data;
 };
 
@@ -36,7 +43,7 @@ export const Update = async (productId, request) => {
 };
 
 export const UpdateStocks = async (products) => {
-    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }};
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
 
     const response = await axios.patch(`${baseUrl}/decrease-stocks`, products, config);
     return response.data;
