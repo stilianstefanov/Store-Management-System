@@ -20,9 +20,9 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllWarehouses()
+        public async Task<IActionResult> GetAllWarehouses([FromQuery] WarehouseAllQueryModel queryModel)
         {
-            var result = await _warehouseService.GetAllAsync(User.GetId()!);
+            var result = await _warehouseService.GetAllAsync(User.GetId()!, queryModel);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 

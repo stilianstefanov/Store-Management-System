@@ -5,6 +5,8 @@
     using Data.Models;
     using Data.Repositories.Contracts;
     using Data.ViewModels;
+    using Data.ViewModels.Enums;
+    using Microsoft.EntityFrameworkCore;
     using Utilities;
     using Utilities.Enums;
     using static Common.ExceptionMessages;
@@ -20,11 +22,39 @@
             _mapper = mapper;
         }
 
-        public async Task<OperationResult<IEnumerable<WarehouseViewModel>>> GetAllAsync(string userId)
+        public async Task<OperationResult<WarehouseAllQueryModel>> GetAllAsync(string userId, WarehouseAllQueryModel queryModel)
         {
-            var warehouses = _mapper.Map<IEnumerable<WarehouseViewModel>>(await _repository.GetAllAsync(userId));
+            var warehousesQuery = _repository.GetAllAsync(userId);
 
-            return OperationResult<IEnumerable<WarehouseViewModel>>.Success(warehouses);
+            if (!string.IsNullOrWhiteSpace(queryModel.SearchTerm))
+            {
+                var wildCardSearchTerm = $"{queryModel.SearchTerm}%";
+
+                warehousesQuery = warehousesQuery
+                    .Where(w => EF.Functions.Like(w.Name, wildCardSearchTerm) ||
+                                EF.Functions.Like(w.Type, wildCardSearchTerm));
+            }
+
+            warehousesQuery = queryModel.Sorting switch
+            {
+                WarehouseSorting.NameAscending => warehousesQuery.OrderBy(w => w.Name),
+                WarehouseSorting.NameDescending => warehousesQuery.OrderByDescending(w => w.Name),
+                WarehouseSorting.ProductsCountAscending => warehousesQuery.OrderBy(w => w.Products.Count),
+                WarehouseSorting.ProductsCountDescending => warehousesQuery.OrderByDescending(w => w.Products.Count),
+                _ => warehousesQuery.OrderBy(w => w.Name)
+            };
+
+            var warehouses = await warehousesQuery
+                .Skip((queryModel.CurrentPage - 1) * queryModel.WarehousesPerPage)
+                .Take(queryModel.WarehousesPerPage)
+                .ToArrayAsync();
+
+            var totalPages = (int)Math.Ceiling(await warehousesQuery.CountAsync() / (double)queryModel.WarehousesPerPage);
+
+            queryModel.TotalPages = totalPages;
+            queryModel.Warehouses = _mapper.Map<IEnumerable<WarehouseViewModel>>(warehouses);
+
+            return OperationResult<WarehouseAllQueryModel>.Success(queryModel);
         }
 
         public async Task<OperationResult<WarehouseViewModel>> CreateAsync(WarehouseReadModel model, string userId)

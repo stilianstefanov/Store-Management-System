@@ -5,7 +5,7 @@
 
     public interface IWarehouseService
     {
-        Task<OperationResult<IEnumerable<WarehouseViewModel>>> GetAllAsync(string userId);
+        Task<OperationResult<WarehouseAllQueryModel>> GetAllAsync(string userId, WarehouseAllQueryModel queryModel);
 
         Task<OperationResult<WarehouseViewModel>> CreateAsync(WarehouseReadModel model, string userId);
 

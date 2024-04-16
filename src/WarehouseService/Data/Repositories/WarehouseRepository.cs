@@ -19,11 +19,10 @@
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Warehouse>> GetAllAsync(string userId)
+        public IQueryable<Warehouse> GetAllAsync(string userId)
         {
-            return await _dbContext.Warehouses
-                .Where(w => w.UserId == userId)
-                .ToArrayAsync();
+            return _dbContext.Warehouses
+                .Where(w => w.UserId == userId);
         }
 
         public async Task<Warehouse?> GetByIdAsync(string id)

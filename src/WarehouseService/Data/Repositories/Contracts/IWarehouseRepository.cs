@@ -6,7 +6,7 @@
     {
         Task SaveChangesAsync();
 
-        Task<IEnumerable<Warehouse>> GetAllAsync(string userId);
+        IQueryable<Warehouse> GetAllAsync(string userId);
 
         Task<Warehouse?> GetByIdAsync(string id);
 
