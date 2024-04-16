@@ -23,6 +23,14 @@
             public const int QuantityMaxValue = 9999;
 
             public const int UserIdMaxLength = 50;
+
+            public const int ProductSortingMinValue = 0;
+
+            public const int ProductSortingMaxValue = 7;
+
+            public const int PerPageMinValue = 10;
+
+            public const int PerPageMaxValue = 20;
         }
     }
 }

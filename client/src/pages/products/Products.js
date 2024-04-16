@@ -65,12 +65,12 @@ function ProductsPage() {
                     >
                         <option value="0">Name (Ascending)</option>
                         <option value="1">Name (Descending)</option>
-                        <option value="4">Price (Descending)</option>
-                        <option value="5">Price (Ascending)</option>
-                        <option value="4">Quantity (Descending)</option>
-                        <option value="5">Quantity (Ascending)</option>
-                        <option value="2">Delivery price (Descending)</option>
-                        <option value="3">Delivery price (Ascending)</option>
+                        <option value="2">Price (Ascending)</option>
+                        <option value="3">Price (Descending)</option>
+                        <option value="4">Quantity (Ascending)</option>
+                        <option value="5">Quantity (Descending)</option>
+                        <option value="6">Delivery price (Ascending)</option>
+                        <option value="7">Delivery price (Descending)</option>
                     </select>
                 </div>
                 <div className={styles['input-group']}>
