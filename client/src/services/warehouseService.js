@@ -13,3 +13,17 @@ export const GetAll = async (params) => {
     const response = await axios.get(url, config);
     return response.data;
 };
+
+export const Create = async (request) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    const response = await axios.post(baseUrl, request, config);
+    return response.data;
+};
+
+export const Update = async (warehouseId, request) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    const response = await axios.put(`${baseUrl}/${warehouseId}`, request, config);
+    return response.data;
+};
