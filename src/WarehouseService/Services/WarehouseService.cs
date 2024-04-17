@@ -47,6 +47,7 @@
             var warehouses = await warehousesQuery
                 .Skip((queryModel.CurrentPage - 1) * queryModel.WarehousesPerPage)
                 .Take(queryModel.WarehousesPerPage)
+                .Include(w => w.Products)
                 .ToArrayAsync();
 
             var totalPages = (int)Math.Ceiling(await warehousesQuery.CountAsync() / (double)queryModel.WarehousesPerPage);

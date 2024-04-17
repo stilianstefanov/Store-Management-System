@@ -72,10 +72,8 @@ function WarehousesPage() {
                         }} >
                         <option value="0">Name (Ascending)</option>
                         <option value="1">Name (Descending)</option>
-                        <option value="2">Type (Ascending)</option>
-                        <option value="3">Type (Descending)</option>
-                        <option value="4">Products count (Ascending)</option>
-                        <option value="5">Products count (Descending)</option>
+                        <option value="2">Products count (Ascending)</option>
+                        <option value="3">Products count (Descending)</option>
                     </select>
                 </div>
                 <div className={styles['input-group']}>
