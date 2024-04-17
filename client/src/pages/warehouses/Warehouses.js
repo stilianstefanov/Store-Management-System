@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import TableWarehouse from '../../components/warehouse/TableWarehouse/TableWarehouse';
 import WarehouseForm from '../../components/warehouse/WarehouseForm/WarehouseForm';
+import WarehouseDetails from '../../components/warehouse/WarehouseDetails/WarehouseDetails';
 import * as WarehouseService from '../../services/warehouseService';
 
 function WarehousesPage() {
@@ -17,6 +18,8 @@ function WarehousesPage() {
     const [sorting, setSorting] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [warehouseFormIsOpen, setWarehouseFormIsOpen] = useState(false);
+    const [warehouseDetailsIsOpen, setWarehouseDetailsIsOpen] = useState(false);
+    const [selectedWarehouseId, setSelectedWarehouseId] = useState("");
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -53,6 +56,11 @@ function WarehousesPage() {
     useEffect(() => {
         getWarehouses();
     }, [getWarehouses]);
+
+    const openWarehouseDetailsHandler = (warehouseId) => {
+        setSelectedWarehouseId(warehouseId);
+        setWarehouseDetailsIsOpen(true);
+    }
 
     const PAGE_BUTTONS_DISPLAY_LIMIT = 5;
     const startPage = Math.max(currentPage - Math.floor(PAGE_BUTTONS_DISPLAY_LIMIT / 2), 1);
@@ -139,7 +147,7 @@ function WarehousesPage() {
                                 <TableWarehouse
                                     key={warehouse.id}
                                     warehouse={warehouse}
-                                //ToDo Implement warehouse details
+                                    openWarehouseDetails={openWarehouseDetailsHandler}
                                 />
                             ))
                         )}
@@ -173,6 +181,10 @@ function WarehousesPage() {
             </div>
             {warehouseFormIsOpen && <WarehouseForm
                 closeForm={() => setWarehouseFormIsOpen(false)}
+                refreshWarehouses={() => getWarehouses()} />}
+            {warehouseDetailsIsOpen && <WarehouseDetails
+                warehouse={warehouses.find(w => w.id === selectedWarehouseId)}
+                closeWarehouseDetails={() => setWarehouseDetailsIsOpen(false)}
                 refreshWarehouses={() => getWarehouses()} />}
         </div>
     );
