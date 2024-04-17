@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import TableWarehouse from '../../components/warehouse/TableWarehouse/TableWarehouse';
+import WarehouseForm from '../../components/warehouse/WarehouseForm/WarehouseForm';
 import * as WarehouseService from '../../services/warehouseService';
 
 function WarehousesPage() {
@@ -15,6 +16,7 @@ function WarehousesPage() {
     const [searchTerm, setSearchTerm] = useState("");
     const [sorting, setSorting] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [warehouseFormIsOpen, setWarehouseFormIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -65,7 +67,7 @@ function WarehousesPage() {
                 <h1 className={`text-center ${styles['title']}`}>Warehouses</h1>
                 <button
                     className={styles['add-warehouse-button']}
-                // onClick={() => setWarehouseFormIsopen(true)} 
+                    onClick={() => setWarehouseFormIsOpen(true)}
                 >
                     Add New Warehouse
                 </button>
@@ -169,6 +171,9 @@ function WarehousesPage() {
                     </button>
                 )}
             </div>
+            {warehouseFormIsOpen && <WarehouseForm
+                closeForm={() => setWarehouseFormIsOpen(false)}
+                refreshWarehouses={() => getWarehouses()} />}
         </div>
     );
 }
