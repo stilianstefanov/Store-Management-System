@@ -7,6 +7,8 @@
     {
         Task SaveChangesAsync();
 
+        IQueryable<Product> GetProductsByWarehouseIdAsync(string warehouseId);
+
         Task AddProductAsync(Product product);
 
         Task<bool> ExternalProductExistsAsync(string externalProductId);
@@ -16,7 +18,5 @@
         Task DeleteProductAsync(string externalProductId);
 
         Task<Product?> GetProductByExternalId(string id);
-
-        Task<IEnumerable<Product>> GetProductsByWarehouseIdAsync(string warehouseId);
     }
 }

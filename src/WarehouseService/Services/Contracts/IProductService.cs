@@ -5,6 +5,6 @@
 
     public interface IProductService
     {
-        Task<OperationResult<IEnumerable<ProductViewModel>>> GetProductsByWarehouseIdAsync(string warehouseId);
+        Task<OperationResult<ProductsAllQueryModel>> GetProductsByWarehouseIdAsync(string warehouseId, ProductsAllQueryModel queryModel);
     }
 }

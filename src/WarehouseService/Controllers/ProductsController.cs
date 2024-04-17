@@ -5,6 +5,7 @@
 
     using Services.Contracts;
     using Utilities.Extensions;
+    using Data.ViewModels;
 
     [Route("api/warehouses/{warehouseId}/[controller]")]
     [ApiController]
@@ -19,9 +20,9 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProductsByWarehouseId(string warehouseId)
+        public async Task<IActionResult> GetProductsByWarehouseId(string warehouseId, [FromQuery] ProductsAllQueryModel queryModel)
         {
-            var result = await _productService.GetProductsByWarehouseIdAsync(warehouseId);
+            var result = await _productService.GetProductsByWarehouseIdAsync(warehouseId, queryModel);
 
             if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
 

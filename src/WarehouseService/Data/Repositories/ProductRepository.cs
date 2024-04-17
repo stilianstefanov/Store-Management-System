@@ -20,6 +20,14 @@
             await _dbContext.SaveChangesAsync();
         }
 
+        public IQueryable<Product> GetProductsByWarehouseIdAsync(string warehouseId)
+        {
+            var products = _dbContext.Products
+                .Where(p => p.WarehouseId.ToString() == warehouseId && !p.IsDeleted);
+
+            return products;
+        }
+
         public async Task AddProductAsync(Product product)
         {
             await _dbContext.Products.AddAsync(product);
@@ -52,15 +60,6 @@
             var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.ExternalId == id);
 
             return product;
-        }
-
-        public async Task<IEnumerable<Product>> GetProductsByWarehouseIdAsync(string warehouseId)
-        {
-            var products = await _dbContext.Products
-                .Where(p => p.WarehouseId.ToString() == warehouseId && !p.IsDeleted)
-                .ToArrayAsync();
-
-            return products;
         }
     }
 }

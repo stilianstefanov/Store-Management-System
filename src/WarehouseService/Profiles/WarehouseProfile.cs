@@ -15,7 +15,8 @@
 
             CreateMap<WarehouseReadModel, Warehouse>();
 
-            CreateMap<Product, ProductViewModel>();
+            CreateMap<Product, ProductViewModel>()
+                .ForMember(dest => dest.SuggestedOrderQty, opt => opt.MapFrom(src => src.MaxQuantity - src.Quantity));
 
             CreateMap<ProductCreatedDto, Product>()
                 .ForMember(dest => dest.ExternalId, opt => opt.MapFrom(src => src.Id))

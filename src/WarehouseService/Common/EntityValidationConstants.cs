@@ -26,6 +26,14 @@
         public static class Product
         {
             public const int ExternalIdMaxLength = 100;
+
+            public const int ProductSortingMinValue = 0;
+
+            public const int ProductSortingMaxValue = 9;
+
+            public const int PerPageMinValue = 10;
+
+            public const int PerPageMaxValue = 20;
         }
     }
 }
