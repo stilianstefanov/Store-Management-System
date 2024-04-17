@@ -4,7 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
-import ProductRow from './ProductRow/ProductRow'
+import ProductRow from './ProductRow/ProductRow';
+import WarehouseForm from '../WarehouseForm/WarehouseForm';
 
 function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses }) {
     const products = [{ externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
@@ -20,6 +21,7 @@ function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses 
     { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
     { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 }];
     const [isLoading, setIsLoading] = useState(false);
+    const [warehouseFormIsOpen, setWarehouseFormIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -33,7 +35,7 @@ function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses 
                     <p className={styles['text']}>Count of products: {warehouse.productsCount}</p>
                     <button
                         className={styles['update-button']}
-                    >
+                        onClick={() => setWarehouseFormIsOpen(true)}>
                         Update
                     </button>
                 </div>
@@ -76,6 +78,10 @@ function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses 
                 </button>
             </div>
             <div className={styles['backdrop']} />
+            {warehouseFormIsOpen && <WarehouseForm
+                warehouse={warehouse}
+                closeForm={() => setWarehouseFormIsOpen(false)}
+                refreshWarehouses={refreshWarehouses} />}
         </div>
     );
 };
