@@ -3,6 +3,7 @@ import styles from './WarehouseForm.module.css';
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import { warehouseValidationRules, commonValidationRules } from '../../../validationRules';
 
 function WarehouseForm(props) {
     const isUpdate = props.warehouse ? true : false;
@@ -11,6 +12,50 @@ function WarehouseForm(props) {
     const [validationErrors, setValidationErrors] = useState({});
     const { logout } = useAuth();
     const navigate = useNavigate();
+
+    const inputNameHandler = (event) => {
+        const inputName = event.target.value;
+        setName(inputName);
+        validateNameInput(inputName);
+    };
+
+    const inputTypeHandler = (event) => {
+        const inputType = event.target.value;
+        setType(inputType);
+        validateTypeInput(inputType);
+    };
+
+    const validateNameInput = (input) => {
+        const errors = { ...validationErrors };
+        const minLength = warehouseValidationRules.name.minLength;
+        const maxLength = warehouseValidationRules.name.maxLength;
+        if (!input) {
+            errors.name = commonValidationRules.required('Name').message;
+            setValidationErrors(errors);
+        } else if (input.length < minLength || input.length > maxLength) {
+            errors.name = commonValidationRules.length('Name', minLength, maxLength).message;
+            setValidationErrors(errors);
+        } else {
+            delete errors.name;
+            setValidationErrors(errors);
+        }
+    }
+
+    const validateTypeInput = (input) => {
+        const errors = { ...validationErrors };
+        const minLength = warehouseValidationRules.type.minLength;
+        const maxLength = warehouseValidationRules.type.maxLength;
+        if (!input) {
+            errors.type = commonValidationRules.required('Type').message;
+            setValidationErrors(errors);
+        } else if (input.length < minLength || input.length > maxLength) {
+            errors.type = commonValidationRules.length('Type', minLength, maxLength).message;
+            setValidationErrors(errors);
+        } else {
+            delete errors.type;
+            setValidationErrors(errors);
+        }
+    }
 
     return (
         <div>
@@ -24,7 +69,7 @@ function WarehouseForm(props) {
                             placeholder="Enter warehouse name"
                             className={styles["input"]}
                             value={name}
-                        // onChange={inputNameHandler}
+                            onChange={inputNameHandler}
                         />
                         {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
                     </div>
@@ -35,7 +80,7 @@ function WarehouseForm(props) {
                             placeholder="Enter warehouse type"
                             className={styles["input"]}
                             value={type}
-                        // onChange={inputTypeHandler}
+                            onChange={inputTypeHandler}
                         />
                         {validationErrors.type && <p className={styles["error-message"]}>{validationErrors.type}</p>}
                     </div>

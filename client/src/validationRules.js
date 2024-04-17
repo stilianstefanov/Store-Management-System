@@ -81,3 +81,15 @@ export const productValidationRules = {
         maxValue: 9999
     }
 };
+
+export const warehouseValidationRules = {
+    name: {
+        minLength: 3,
+        maxLength: 100
+    },
+
+    type: {
+        minLength: 3,
+        maxLength: 100
+    },
+};
