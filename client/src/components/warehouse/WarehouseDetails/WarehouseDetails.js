@@ -6,24 +6,55 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import ProductRow from './ProductRow/ProductRow';
 import WarehouseForm from '../WarehouseForm/WarehouseForm';
+import * as WarehouseService from '../../../services/warehouseService';
 
 function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses }) {
-    const products = [{ externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
-    { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
-    { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
-    { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
-    { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
-    { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
-    { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
-    { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
-    { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
-    { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
-    { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 },
-    { externalId: '1', name: 'some name', quantity: 10, minQuantity: 5, maxQuantity: 20, suggestedOrderQty: 10 }];
+    const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const [productsPerPage, setProductsPerPage] = useState(10);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [sorting, setSorting] = useState(0);
+    const [showLowStocksOnly, setShowLowStocksOnly] = useState(false);
     const [warehouseFormIsOpen, setWarehouseFormIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
+
+    const handleError = useCallback((error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response ? error.response.data : "An error occurred");
+        }
+        console.error(error);
+    }, [logout, navigate]);
+
+    const getProducts = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const request = {
+                currentPage,
+                productsPerPage,
+                searchTerm,
+                sorting,
+                belowMinQty: showLowStocksOnly
+            };
+            const response = await WarehouseService.GetProductsByWarehouse(warehouse.id, request);
+            setProducts(response.products);
+            setTotalPages(response.totalPages);
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [handleError, warehouse, currentPage, productsPerPage, sorting, searchTerm, showLowStocksOnly]);
+
+    useEffect(() => {
+        getProducts();
+    }, [getProducts]);
 
 
     return (
@@ -39,7 +70,70 @@ function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses 
                         Update
                     </button>
                 </div>
-                <h2 className={styles['table-header']}>Products</h2>
+                <div className={styles['table-header-wrapper']}>
+                    <h2 className={styles['table-header']}>Products</h2>
+                    <div className={styles["checkbox-wrapper-14"]}>
+                        <input id="s1-14" type="checkbox" className={styles["switch"]}
+                            onChange={() => setShowLowStocksOnly(!showLowStocksOnly)} />
+                        <label for="s1-14">Show Low Stock Items</label>
+                    </div>
+                    {showLowStocksOnly &&
+                        <button className={styles['export-button']}
+                        //ToDo Implement Excel export
+                        >
+                            Export
+                        </button>}
+                </div>
+                <div className={styles['input-fields-container']}>
+                    <div className={styles['input-group']}>
+                        <label htmlFor="search-input">Search:</label>
+                        <input
+                            id="search-input"
+                            placeholder="Search"
+                            className={`form-control ${styles['input-field']}`}
+                            onChange={(e) => {
+                                setCurrentPage(1);
+                                setSearchTerm(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className={styles['input-group']}>
+                        <label htmlFor="order-select">Sort by:</label>
+                        <select
+                            id="order-select"
+                            className={`form-control ${styles['input-field']}`}
+                            onChange={(e) => {
+                                setCurrentPage(1);
+                                setSorting(e.target.value);
+                            }}
+                        >
+                            <option value="0">Name (Ascending)</option>
+                            <option value="1">Name (Descending)</option>
+                            <option value="2">Quantity (Ascending)</option>
+                            <option value="3">Quantity (Descending)</option>
+                            <option value="4">Min Quantity (Ascending)</option>
+                            <option value="5">Min Quantity (Descending)</option>
+                            <option value="6">Max Quantity (Ascending)</option>
+                            <option value="7">Max Quantity (Descending)</option>
+                            <option value="8">Recommended Order Qty (Ascending)</option>
+                            <option value="9">Recommended Order Qty (Descending)</option>
+                        </select>
+                    </div>
+                    <div className={styles['input-group']}>
+                        <label htmlFor="order-select">Products per Page:</label>
+                        <select
+                            id="order-select"
+                            className={`form-control ${styles['input-field']}`}
+                            onChange={(e) => {
+                                setCurrentPage(1);
+                                setProductsPerPage(e.target.value)
+                            }} >
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+                </div>
                 <div className={`table-responsive ${styles['table-wrapper']}`}>
                     <table className={styles['table-fill']}>
                         <thead>

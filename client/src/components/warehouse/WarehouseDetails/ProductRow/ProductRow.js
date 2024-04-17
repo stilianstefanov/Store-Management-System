@@ -7,7 +7,7 @@ function ProductRow({ product }) {
             <td className={styles['text-left']}>{product.quantity}</td>
             <td className={styles['text-left']}>{product.minQuantity}</td>
             <td className={styles['text-left']}>{product.maxQuantity}</td>
-            <td className={styles['text-left']}>{product.suggestedOrderQty}</td>
+            <td className={styles['text-left']}>{product.suggestedOrderQty < 0 ? 0 : product.suggestedOrderQty}</td>
         </tr>
     );
 }

@@ -27,3 +27,15 @@ export const Update = async (warehouseId, request) => {
     const response = await axios.put(`${baseUrl}/${warehouseId}`, request, config);
     return response.data;
 };
+
+export const GetProductsByWarehouse = async (warehouseId, params) => {
+    const url = new URL(`http://acme.com/api/warehouses/${warehouseId}/Products`);
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    if (params) Object.entries(params).forEach(([key, value]) => {
+        if (value) url.searchParams.append(key, value);
+    });
+
+    const response = await axios.get(url, config);
+    return response.data;
+};
