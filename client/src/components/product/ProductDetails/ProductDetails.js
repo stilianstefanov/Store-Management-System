@@ -3,8 +3,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
-import ProductForm from '../ProductForm/ProductForm'
-import * as ProductService from '../../../services/productService'
+import ProductForm from '../ProductForm/ProductForm';
+import ChangeWarehouse from './ChangeWarehouseModal/ChangeWarehouse';
+import * as ProductService from '../../../services/productService';
 
 function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
     const [product, setProduct] = useState({
@@ -22,6 +23,7 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
         }
     });
     const [productFormIsOpen, setProductFormIsOpen] = useState(false);
+    const [changeWarehouseModalIsOpen, setChangeWarehouseModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -48,6 +50,10 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
     useEffect(() => {
         getProductDetails();
     }, [getProductDetails]);
+
+    const updateProduct = (product) => {
+        setProduct(product);
+    }
 
     return (
         <div>
@@ -106,6 +112,7 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
                     </button>
                     <button
                         className={styles['change-button']}
+                        onClick={() => setChangeWarehouseModalIsOpen(true)}
                     >
                         Change warehouse
                     </button>
@@ -124,11 +131,14 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
             <div className={styles['backdrop']} />
             {productFormIsOpen && <ProductForm
                 product={product}
+                updateProduct={updateProduct}
                 closeForm={() => setProductFormIsOpen(false)}
-                refreshProducts={() => {
-                    refreshProducts()
-                    getProductDetails()
-                }} />}
+                refreshProducts={refreshProducts} />}
+            {changeWarehouseModalIsOpen && <ChangeWarehouse
+                productId={product.id}
+                updateProduct={updateProduct}
+                closeModal={() => setChangeWarehouseModalIsOpen(false)}
+            />}
         </div>
     );
 };

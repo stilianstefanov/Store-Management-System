@@ -42,7 +42,8 @@ function ProductForm(props) {
                     maxQuantity,
                     warehouseId: selectedWarehouseId
                 };
-                isUpdate ? await ProductService.Update(props.product.id, request) : await ProductService.Create(request);
+                isUpdate ? props.updateProduct(await ProductService.Update(props.product.id, request))
+                    : await ProductService.Create(request);
                 props.closeForm();
                 props.refreshProducts();
                 toast.success(`${isUpdate ? "Product updated successfully!" : "Product added successfully!"}`);

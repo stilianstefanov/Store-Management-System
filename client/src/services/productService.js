@@ -42,6 +42,13 @@ export const Update = async (productId, request) => {
     return response.data;
 };
 
+export const PartialUpdate = async (productId, request) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    const response = await axios.patch(`${baseUrl}/${productId}`, request, config);
+    return response.data;
+};
+
 export const UpdateStocks = async (products) => {
     const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
 
