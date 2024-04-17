@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import ProductForm from '../ProductForm/ProductForm'
 import * as ProductService from '../../../services/productService'
 
 function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
@@ -20,6 +21,7 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
             type: ''
         }
     });
+    const [productFormIsOpen, setProductFormIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -93,6 +95,7 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
                 <div className={styles['buttons-container']}>
                     <button
                         className={styles['update-button']}
+                        onClick={() => setProductFormIsOpen(true)}
                     >
                         Update
                     </button>
@@ -119,6 +122,13 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
                 </button>
             </div>
             <div className={styles['backdrop']} />
+            {productFormIsOpen && <ProductForm
+                product={product}
+                closeForm={() => setProductFormIsOpen(false)}
+                refreshProducts={() => {
+                    refreshProducts()
+                    getProductDetails()
+                }} />}
         </div>
     );
 };

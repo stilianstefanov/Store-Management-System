@@ -1,4 +1,4 @@
-.container {
+.add-container {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     border: 1px solid black;
     border-radius: 6px;
@@ -10,6 +10,24 @@
     position: fixed;
     top: 12.4vh;
     left: calc(50% - 27.5rem);
+    max-height: 48rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.update-container {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    border: 1px solid black;
+    border-radius: 6px;
+    background-color: wheat;
+    padding: 1rem;
+    text-align: center;
+    max-width: 80rem;
+    z-index: 20;
+    position: fixed;
+    top: 12.4vh;
+    left: calc(50% - 16rem);
     max-height: 48rem;
     display: flex;
     flex-direction: column;
@@ -36,6 +54,7 @@
 .wrapper {
     display: flex;
     justify-content: space-between;
+    margin-left: 20px;
 }
 
 .middle-section {

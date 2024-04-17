@@ -252,7 +252,7 @@ function ProductForm(props) {
 
     return (
         <div>
-            <div className={styles["container"]}>
+            <div className={isUpdate ? styles["update-container"] : styles["add-container"]}>
                 <h1 className={styles["header"]}>{`${isUpdate ? "Update Product" : "Add New Product"}`}</h1>
                 <form onSubmit={submitHandler}>
                     <div className={styles['wrapper']}>
