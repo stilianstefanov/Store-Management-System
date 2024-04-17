@@ -5,21 +5,10 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import TableWarehouse from '../../components/warehouse/TableWarehouse/TableWarehouse';
+import * as WarehouseService from '../../services/warehouseService';
 
 function WarehousesPage() {
-    const warehouses = [{ id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 },
-    { id: '1', name: 'Kaufland', type: 'grocery', productsCount: 20 }];
+    const [warehouses, setWarehouses] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [warehousesPerPage, setWarehousesPerPage] = useState(10);
@@ -28,6 +17,40 @@ function WarehousesPage() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
+
+    const handleError = useCallback((error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response ? error.response.data : "An error occurred");
+        }
+        console.error(error);
+    }, [logout, navigate]);
+
+    const getWarehouses = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const request = {
+                currentPage,
+                warehousesPerPage,
+                searchTerm,
+                sorting
+            };
+            const response = await WarehouseService.GetAll(request);
+            setWarehouses(response.warehouses);
+            setTotalPages(response.totalPages);
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [handleError, currentPage, warehousesPerPage, sorting, searchTerm]);
+
+    useEffect(() => {
+        getWarehouses();
+    }, [getWarehouses]);
 
     const PAGE_BUTTONS_DISPLAY_LIMIT = 5;
     const startPage = Math.max(currentPage - Math.floor(PAGE_BUTTONS_DISPLAY_LIMIT / 2), 1);
