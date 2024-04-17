@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import ProductForm from '../ProductForm/ProductForm';
 import ChangeWarehouse from './ChangeWarehouseModal/ChangeWarehouse';
+import AddQuantityModal from './AddQuantityModal/AddQuantityModal';
 import * as ProductService from '../../../services/productService';
 
 function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
@@ -24,6 +25,7 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
     });
     const [productFormIsOpen, setProductFormIsOpen] = useState(false);
     const [changeWarehouseModalIsOpen, setChangeWarehouseModalIsOpen] = useState(false);
+    const [addQuantityModalIsOpen, setAddQuantityModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -107,6 +109,7 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
                     </button>
                     <button
                         className={styles['add-qty-button']}
+                        onClick={() => setAddQuantityModalIsOpen(true)}
                     >
                         Add quantity
                     </button>
@@ -139,6 +142,11 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
                 updateProduct={updateProduct}
                 closeModal={() => setChangeWarehouseModalIsOpen(false)}
             />}
+            {addQuantityModalIsOpen && <AddQuantityModal
+                product={product}
+                updateProduct={updateProduct}
+                refreshProducts={refreshProducts}
+                closeModal={() => setAddQuantityModalIsOpen(false)} />}
         </div>
     );
 };
