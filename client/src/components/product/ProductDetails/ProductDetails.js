@@ -6,6 +6,7 @@ import { useAuth } from '../../../context/AuthContext';
 import ProductForm from '../ProductForm/ProductForm';
 import ChangeWarehouse from './ChangeWarehouseModal/ChangeWarehouse';
 import AddQuantityModal from './AddQuantityModal/AddQuantityModal';
+import DeleteProductModal from './DeleteProductModal/DeleteProductModal';
 import * as ProductService from '../../../services/productService';
 
 function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
@@ -26,6 +27,7 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
     const [productFormIsOpen, setProductFormIsOpen] = useState(false);
     const [changeWarehouseModalIsOpen, setChangeWarehouseModalIsOpen] = useState(false);
     const [addQuantityModalIsOpen, setAddQuantityModalIsOpen] = useState(false);
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -121,6 +123,7 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
                     </button>
                     <button
                         className={styles['delete-button']}
+                        onClick={() => setDeleteModalIsOpen(true)}
                     >
                         Delete
                     </button>
@@ -147,6 +150,11 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
                 updateProduct={updateProduct}
                 refreshProducts={refreshProducts}
                 closeModal={() => setAddQuantityModalIsOpen(false)} />}
+            {deleteModalIsOpen && <DeleteProductModal
+                productId={product.id}
+                closeModal={() => setDeleteModalIsOpen(false)}
+                closeProductDetails={() => closeProductDetails()}
+                refreshProducts={refreshProducts} />}
         </div>
     );
 };

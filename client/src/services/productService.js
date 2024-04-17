@@ -49,6 +49,13 @@ export const PartialUpdate = async (productId, request) => {
     return response.data;
 };
 
+export const Delete = async (productId) => {
+    const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
+
+    const response = await axios.delete(`${baseUrl}/${productId}`, config);
+    return response.data;
+};
+
 export const UpdateStocks = async (products) => {
     const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
 
