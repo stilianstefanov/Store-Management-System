@@ -41,7 +41,7 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
         } catch (error) {
             handleError(error);
         }
-    }, [handleError]);
+    }, [handleError, productId]);
 
     useEffect(() => {
         getProductDetails();
@@ -91,8 +91,32 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
                     </div>
                 </div>
                 <div className={styles['buttons-container']}>
-
+                    <button
+                        className={styles['update-button']}
+                    >
+                        Update
+                    </button>
+                    <button
+                        className={styles['add-qty-button']}
+                    >
+                        Add quantity
+                    </button>
+                    <button
+                        className={styles['change-button']}
+                    >
+                        Change warehouse
+                    </button>
+                    <button
+                        className={styles['delete-button']}
+                    >
+                        Delete
+                    </button>
                 </div>
+                <button
+                    className={styles['close-button']}
+                    onClick={() => closeProductDetails()}>
+                    Close
+                </button>
             </div>
             <div className={styles['backdrop']} />
         </div>

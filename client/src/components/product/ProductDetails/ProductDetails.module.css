@@ -4,13 +4,14 @@
     background-color: wheat;
     padding: 1rem;
     text-align: center;
-    width: 62rem;
     z-index: 10;
     position: fixed;
-    top: 10vh;
-    left: calc(50% - 31rem);
+    min-width: 43em;
+    top: 20vh;
+    left: calc(50% - 21rem);
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
 }
 
 .backdrop {
@@ -23,14 +24,106 @@
     left: 0;
 }
 
+.product-info-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
 .list-info {
     text-align: left;
     padding-top: 1em;
-    width: 20em;
     font-size: large;
 }
 
 .list-info-span {
     font-style: italic;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+.close-button {
+    background-color: #d43331;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    max-width: 10em;
+}
+
+.close-button:hover {
+    background-color: black;
+    color: white;
+}
+
+.update-button {
+    background-color: #ffc107;
+    color: black;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.change-button {
+    background-color: #ffc107;
+    color: black;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.add-qty-button {
+    background-color: green;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.delete-button {
+    background-color: #d43331;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.update-button:hover {
+    background-color: black;
+    color: white;
+}
+
+.change-button:hover {
+    background-color: black;
+    color: white;
+}
+
+.add-qty-button:hover {
+    background-color: black;
+}
+
+.delete-button:hover {
+    background-color: black;
 }
