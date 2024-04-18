@@ -1,52 +1,52 @@
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import classes from './MainNavigation.module.css';
+import styles from './MainNavigation.module.css';
+import { useState } from 'react';
+import AccountDetails from '../account/accountDetails/AccountDetails';
 
 function MainNavigation() {
-    const navigate = useNavigate();
-    const { isLoggedIn, logout } = useAuth();
-
-    function logoutHandler() {
-        logout();
-        navigate('/');
-    }
+    const [accountModalIsOpen, setAccountModalIsOpen] = useState(false);
+    const { isLoggedIn } = useAuth();
 
     return (
-        <header className={classes.header}>
-            <div className={classes.logo}>
-                <Link to='/'>STORE<span>management</span></Link>
-            </div>
-            <nav>
-                {isLoggedIn ? (
-                    <ul>
-                        <li>
-                            <Link to='/products'>Products</Link>
-                        </li>
-                        <li>
-                            <Link to='/warehouses'>Warehouses</Link>
-                        </li>
-                        <li>
-                            <Link to='/delayedpayments'>Delayed Payments</Link>
-                        </li>
-                        <li>
-                            <button onClick={logoutHandler}>Logout</button>
-                        </li>
-                    </ul>
-                ) : (
-                    <ul>
-                        <li>
-                            <Link to='/login'>Login</Link>
-                        </li>
-                        <li>
-                            <Link to='/register'>Register</Link>
-                        </li>
+        <div>
+            <header className={styles.header}>
+                <div className={styles.logo}>
+                    <Link to='/'>STORE<span>management</span></Link>
+                </div>
+                <nav>
+                    {isLoggedIn ? (
+                        <ul className={styles['header-ul']}>
+                            <li>
+                                <Link to='/products'>Products</Link>
+                            </li>
+                            <li>
+                                <Link to='/warehouses'>Warehouses</Link>
+                            </li>
+                            <li>
+                                <Link to='/delayedpayments'>Delayed Payments</Link>
+                            </li>
+                            <li>
+                                <button className={styles['acc-button']} onClick={() => setAccountModalIsOpen(true)}>Account</button>
+                            </li>
+                        </ul>
+                    ) : (
+                        <ul className={styles['header-ul']}>
+                            <li>
+                                <Link to='/login'>Login</Link>
+                            </li>
+                            <li>
+                                <Link to='/register'>Register</Link>
+                            </li>
 
-                    </ul>
-                )
-                }
-            </nav>
-        </header>
+                        </ul>
+                    )
+                    }
+                </nav>
+            </header>
+            {accountModalIsOpen && <AccountDetails
+                closeModal={() => setAccountModalIsOpen(false)} />}
+        </div>
     );
 }
 

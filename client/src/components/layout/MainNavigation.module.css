@@ -21,7 +21,7 @@
     color: red;
 }
   
-  .header ul {
+  .header-ul {
     list-style: none;
     margin-left: 6rem;
     padding: 0;
@@ -29,7 +29,7 @@
     align-items: baseline;
   }
   
-  .header li {
+  .header-ul li {
     margin-left: 3rem;
   }
   
@@ -37,17 +37,26 @@
     text-decoration: none;
     font-size: 1.5rem;
     color: white;
+    padding: 7px;
+    border-radius: 5px;
   }
 
-  .header button {
+  .acc-button {
     background-color: black;
     text-decoration: none;
     font-size: 1.5rem;
     color: red;
+    border-radius: 5px;
+  }
+
+  .acc-button:hover {
+    background-color: red;
+    color: white;
   }
   
   .header a:hover,
   .header a:active,
   .header a.active {
     color: white;
+    background-color: red;
   }
