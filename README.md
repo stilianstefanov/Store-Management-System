@@ -151,3 +151,13 @@ Below are some screenshots from the Store Management System, showcasing its key 
 *The 'Update Client' form is a versatile interface designed for managing client data within the Store Management System. It allows for adjustments to be made to a client's name, credit status, and credit limit. Highlighting its user-friendly features, the form includes dynamic validation to guide correct data entry and prevent errors.*
 
 ![Update client](assets/update-client.png "Update client")
+
+### Account details
+*The Account Details pop-up serves as a personal dashboard for user account management within the Store Management System. It concisely displays the account holder's company, username, and contact information. Users are afforded the convenience of directly updating their information, changing their password, or logging out of the system with a simple click. These options ensure that account security and personal details are easily maintained, promoting a secure and personalized user experience.*
+
+![Account details](assets/account-details.png "Account details")
+
+### Change password
+*Security is paramount in the Store Management System, and the 'Change Password' interface upholds this principle by providing users with a straightforward process to update their credentials. It requires entry of the current password for verification and the new password twice for confirmation, ensuring changes are deliberate and authenticated.*
+
+![Change password](assets/change-password.png "Change password")
