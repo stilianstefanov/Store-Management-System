@@ -28,6 +28,7 @@ function AccountDetails({ closeModal }) {
     const logoutHandler = () => {
         logout();
         navigate('/');
+        closeModal();
     }
 
     return (
@@ -48,6 +49,7 @@ function AccountDetails({ closeModal }) {
                     <div className={styles['buttons-container']}>
                         <button
                             className={styles['update-button']}
+                        //ToDo 
                         >
                             Update info
                         </button>
