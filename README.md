@@ -50,3 +50,7 @@ This project utilizes a range of technologies to deliver a comprehensive and rob
 
 ### Networking
 - **Ingress NGINX**: An Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer.
+
+## Screenshots
+
+Below are some screenshots from the Store Management System, showcasing its key functionalities:
