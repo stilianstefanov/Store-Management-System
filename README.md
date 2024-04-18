@@ -111,3 +111,43 @@ Below are some screenshots from the Store Management System, showcasing its key 
 *The 'Change Warehouse' window facilitates the management of product sourcing within the system. It enables users to assign a different warehouse for a specific product with ease. The interface presents a searchable list of available warehouses, along with their types, allowing for a swift selection process. This feature ensures that the product inventory can be dynamically linked to different warehouses based on availability or strategic requirements.*
 
 ![Change warehouse](assets/change-warehouse.png "Change warehouse")
+
+### Delete modal
+*To safeguard against unintentional deletions, the 'Delete Confirmation' modal requires user confirmation before removing a product. This prompt ensures that actions are intentional, preventing accidental loss of data.*
+
+![Delete product](assets/delete-modal.png "Delete product")
+
+### Warehouses
+*The Warehouses page is the nexus for supplier management, listing the partner companies that supply the store's products. It enables users to view and sort supplier details, such as the company name and the types of products they supply, as well as the total number of distinct items sourced from each. The interface allows for intuitive navigation and management, with features like paged viewing, searching, and sorting. Additionally, the 'Add New Warehouse' function facilitates the effortless onboarding of new suppliers, ensuring that the store's product range is consistently diverse and well-stocked.*
+
+![Warehouses](assets/warehouses.png "Warehouses")
+
+### Warehouse details
+*The Warehouse Details page is an informative section that displays the profile of a selected supplier and the products they provide. It offers features for searching and sorting through the product list, along with pagination to handle extensive inventories. A specialized function is the 'Show Low Stock Items' toggle, which filters the view to products needing restock, accompanied by a recommended order quantity for each. This page also plans to include an 'Export to Excel' option, making it easy to handle ordering and inventory management offline. The implementation of the export feature is currently underway.*
+
+![Warehouse details](assets/warehouse-suggest-order.png "Warehouse details")
+
+### Clients
+*The Clients page is an essential part of the Store Management System, allowing for efficient tracking and management of customer accounts. It features a searchable and sortable table, displaying client names, current credit, and credit limits. With pagination capabilities, the system handles a vast number of client records seamlessly. The 'Add New Client' button is prominently placed for easy access to adding new customer profiles, ensuring that the business can quickly onboard new clients and maintain a high level of service.*
+
+![Clients](assets/clients.png "Clients")
+
+### Add new client
+*The 'Add Client' form is a streamlined interface for inputting new customer data into the Store Management System. Designed for ease of use, it captures essential details such as name, surname, and credit information. Dynamic validation ensures that all entered data meets the system's requirements before submission, promoting accuracy and efficiency.*
+
+![DAdd new client](assets/add-client.png "Add new client")
+
+### Client details
+*The Client Details window provides a comprehensive view of an individual client's information and transaction history. It features the client's name, current credit, and credit limit, with options to update their details, adjust their credit, or remove them from the system. On the right, the client's purchase history is listed by date and amount, offering a clear record of transactions. Clicking on a specific purchase will open a detailed breakdown of the items bought, including their prices and quantities, which is instrumental for detailed sales tracking.*
+
+![Client details](assets/client-details.png "Client details")
+
+### Purchase details
+
+![Purchase details](assets/purchase-details.png "Purchase details")
+
+
+### Update client
+*The 'Update Client' form is a versatile interface designed for managing client data within the Store Management System. It allows for adjustments to be made to a client's name, credit status, and credit limit. Highlighting its user-friendly features, the form includes dynamic validation to guide correct data entry and prevent errors.*
+
+![Update client](assets/update-client.png "Update client")
