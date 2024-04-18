@@ -81,3 +81,33 @@ Below are some screenshots from the Store Management System, showcasing its key 
 *The 'Insufficient Credit' modal is a critical feature for managing customer transactions on credit. When a client's purchases approach or exceed their allotted credit limit, this prompt appears, displaying their current credit, credit limit, total purchase cost, and the insufficient amount that prevents the transaction from completing. It offers the functionality to update the client's credit limit on the spot, enabling a seamless continuation of the checkout process.*
 
 ![Insufficient credit modal](assets/insufficient-credit-modal.png "insufficient credit modal")
+
+### Products
+*The Products page is a central feature of the Store Management System, offering a detailed and paged overview of all products. Users can effortlessly search for products, sort the list by various attributes like name, price, or quantity, and decide the number of products to display per page for customized viewing. Clicking on any product item brings up a detailed product information window, making it simple to view and manage product specifics.*
+
+![Products](assets/products.png "Products")
+
+### Add new product
+*Streamlining product entry, the 'Add New Product' form is a vital component for inventory expansion. Users can input new product details, including barcode, name, description, and price, as well as defining the quantity and setting minimum and maximum stock levels. The form also allows for selecting the supplying warehouse from a searchable dropdown, ensuring that each product is properly linked to its source. Dynamic validation is built into the form, ensuring data integrity and prompting users for any necessary corrections before submission.*
+
+![Add new product](assets/add-product.png "Add new product")
+
+### Product details
+*The Product Details window presents a comprehensive view of individual product metrics and management options. Detailed information such as barcode, name, description, price, delivery price, stock quantities, and linked warehouse is neatly displayed. Administrative actions are readily accessible, with options to update product details, add stock quantities, change the assigned warehouse, or delete the product from the inventory.*
+
+![Product details](assets/product-details.png "Product details")
+
+### Update product
+*The Update Product window allows the user to update the individual product metrics. Dynamic validation is built into the form, ensuring data integrity and prompting users for any necessary corrections before submission.*
+
+![Update product](assets/update-product.png "Update product")
+
+### Add quantity
+*The Add Quantity window allows the user to easily and quickly add a supplied quantity to the specific product.*
+
+![Add quantity](assets/add-qty.png "Add quantity")
+
+### Change warehouse
+*The 'Change Warehouse' window facilitates the management of product sourcing within the system. It enables users to assign a different warehouse for a specific product with ease. The interface presents a searchable list of available warehouses, along with their types, allowing for a swift selection process. This feature ensures that the product inventory can be dynamically linked to different warehouses based on availability or strategic requirements.*
+
+![Change warehouse](assets/change-warehouse.png "Change warehouse")
