@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
+import ChangePasswordModal from './ChangePasswordModal/ChangePasswordModal';
 
 function AccountDetails({ closeModal }) {
     const [claims, setClaims] = useState({ unique_name: "", email: "", companyName: "" });
+    const [changePasswordModalIsOpen, setChangePasswordModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -51,7 +53,7 @@ function AccountDetails({ closeModal }) {
                         </button>
                         <button
                             className={styles['change-password-button']}
-                        >
+                            onClick={() => setChangePasswordModalIsOpen(true)}>
                             Change password
                         </button>
                         <button
@@ -67,6 +69,8 @@ function AccountDetails({ closeModal }) {
                     </button>
                 </div>
             </div>
+            {changePasswordModalIsOpen && <ChangePasswordModal
+                closeModal={closeModal} />}
         </div>
     );
 };
