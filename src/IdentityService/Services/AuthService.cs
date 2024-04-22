@@ -97,9 +97,41 @@
             return OperationResult<string>.Success(PasswordChanged);
         }
 
-        public async Task<OperationResult<bool>> UpdateProfileAsync(string userId, UpdateProfileModel updateProfileModel)
+        public async Task<OperationResult<string>> UpdateProfileAsync(string userId, UpdateProfileModel updateProfileModel)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return OperationResult<string>.Failure(InvalidUserId, ErrorType.BadRequest);
+
+            var userNameExists = await _userManager.FindByNameAsync(updateProfileModel.UserName);
+
+            if (userNameExists != null)
+                return OperationResult<string>.Failure(UserNameAlreadyExists, ErrorType.BadRequest);
+
+            var userEmailExists = await _userManager.FindByEmailAsync(updateProfileModel.Email);
+
+            if (userEmailExists != null)
+                return OperationResult<string>.Failure(EmailAlreadyExists, ErrorType.BadRequest);
+
+            user.UserName = updateProfileModel.UserName;
+            user.Email = updateProfileModel.Email;
+            user.CompanyName = updateProfileModel.CompanyName;
+
+            var identityResult = await _userManager.UpdateAsync(user);
+
+            if (!identityResult.Succeeded)
+            {
+                var errorString = string.Join(Environment.NewLine, identityResult.Errors.Select(e => e.Description));
+
+                return OperationResult<string>.Failure(errorString, ErrorType.BadRequest);
+            }
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var token = _tokenGenerator.GenerateToken(user, _configuration, userRoles);
+
+            return OperationResult<string>.Success(token);
         }
     }
 }
