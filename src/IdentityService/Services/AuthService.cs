@@ -96,5 +96,10 @@
 
             return OperationResult<string>.Success(PasswordChanged);
         }
+
+        public async Task<OperationResult<bool>> UpdateProfileAsync(string userId, UpdateProfileModel updateProfileModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

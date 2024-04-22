@@ -10,5 +10,7 @@
         Task<OperationResult<string>> LoginAsync(LoginModel loginModel);
 
         Task<OperationResult<string>> ChangePasswordAsync(string userId, ChangePasswordModel changePasswordModel);
+
+        Task<OperationResult<bool>> UpdateProfileAsync(string userId, UpdateProfileModel updateProfileModel);
     }
 }
