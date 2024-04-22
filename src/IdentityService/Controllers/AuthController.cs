@@ -50,5 +50,17 @@
 
             return this.Ok(result.Data);
         }
+
+        [HttpPatch]
+        [Route(nameof(UpdateProfile))]
+        [Authorize]
+        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileModel updateProfileModel)
+        {
+            var result = await _authService.UpdateProfileAsync(User.GetId()!, updateProfileModel);
+
+            if (!result.IsSuccess) return this.Error(result.ErrorType, result.ErrorMessage!);
+
+            return this.Ok(result.Data);
+        }
     }
 }
