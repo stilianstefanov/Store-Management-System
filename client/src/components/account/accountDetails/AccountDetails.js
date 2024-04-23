@@ -4,10 +4,12 @@ import { useAuth } from '../../../context/AuthContext';
 import { useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 import ChangePasswordModal from './ChangePasswordModal/ChangePasswordModal';
+import UpdateProfileModal from './UpdadeProfileModal/UpdateProfileModal';
 
 function AccountDetails({ closeModal }) {
     const [claims, setClaims] = useState({ unique_name: "", email: "", companyName: "" });
     const [changePasswordModalIsOpen, setChangePasswordModalIsOpen] = useState(false);
+    const [updateProfileModalIsOpen, setUpdateProfileModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
 
@@ -49,8 +51,7 @@ function AccountDetails({ closeModal }) {
                     <div className={styles['buttons-container']}>
                         <button
                             className={styles['update-button']}
-                        //ToDo 
-                        >
+                            onClick={() => setUpdateProfileModalIsOpen(true)}>
                             Update info
                         </button>
                         <button
@@ -72,6 +73,9 @@ function AccountDetails({ closeModal }) {
                 </div>
             </div>
             {changePasswordModalIsOpen && <ChangePasswordModal
+                closeModal={closeModal} />}
+            {updateProfileModalIsOpen && <UpdateProfileModal
+                claims={claims}
                 closeModal={closeModal} />}
         </div>
     );
