@@ -82,21 +82,27 @@ function UpdateProfileModal({ closeModal, claims }) {
             <div className={styles["Auth-card"]}>
                 <h1 className={styles["Auth-header"]}>Update Profile</h1>
                 <form onSubmit={submitHandler}>
+                    <label htmlFor="email-input">Email:</label>
                     <input
+                        id="email-input"
                         placeholder="New email"
                         className={styles["Auth-input"]}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     {validationErrors.email && <p className={styles["Error-message"]}>{validationErrors.email}</p>}
+                    <label htmlFor="username-input">Username:</label>
                     <input
+                        id="username-input"
                         placeholder="New username"
                         className={styles["Auth-input"]}
                         value={userName}
                         onChange={(e) => setUserName(e.target.value)}
                     />
                     {validationErrors.userName && <p className={styles["Error-message"]}>{validationErrors.userName}</p>}
+                    <label htmlFor="company-input">Company:</label>
                     <input
+                        id="company-input"
                         placeholder="New company name"
                         className={styles["Auth-input"]}
                         value={companyName}
