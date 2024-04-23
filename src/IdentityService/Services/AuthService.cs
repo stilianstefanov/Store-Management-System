@@ -27,15 +27,11 @@
 
         public async Task<OperationResult<string>> RegisterAsync(RegisterModel registerModel)
         {
-            var userNameExists = await _userManager.FindByNameAsync(registerModel.UserName);
+            var usernameResult = await ValidateUsernameAsync(registerModel.UserName);
+            if (usernameResult != null) return usernameResult;
 
-            if (userNameExists != null) 
-                return OperationResult<string>.Failure(UserNameAlreadyExists, ErrorType.BadRequest);
-
-            var userEmailExists = await _userManager.FindByEmailAsync(registerModel.Email);
-
-            if (userEmailExists != null) 
-                return OperationResult<string>.Failure(EmailAlreadyExists, ErrorType.BadRequest);
+            var emailResult = await ValidateEmailAsync(registerModel.Email);
+            if (emailResult != null) return emailResult;
 
             var newUser = new ApplicationUser()
             {
@@ -104,15 +100,11 @@
             if (user == null)
                 return OperationResult<string>.Failure(InvalidUserId, ErrorType.BadRequest);
 
-            var userNameExists = await _userManager.FindByNameAsync(updateProfileModel.UserName);
+            var usernameResult = await ValidateUsernameAsync(updateProfileModel.UserName, user.UserName!);
+            if (usernameResult != null) return usernameResult;
 
-            if (userNameExists != null)
-                return OperationResult<string>.Failure(UserNameAlreadyExists, ErrorType.BadRequest);
-
-            var userEmailExists = await _userManager.FindByEmailAsync(updateProfileModel.Email);
-
-            if (userEmailExists != null)
-                return OperationResult<string>.Failure(EmailAlreadyExists, ErrorType.BadRequest);
+            var emailResult = await ValidateEmailAsync(updateProfileModel.Email, user.Email!);
+            if (emailResult != null) return emailResult;
 
             user.UserName = updateProfileModel.UserName;
             user.Email = updateProfileModel.Email;
@@ -132,6 +124,26 @@
             var token = _tokenGenerator.GenerateToken(user, _configuration, userRoles);
 
             return OperationResult<string>.Success(token);
+        }
+
+        private async Task<OperationResult<string>?> ValidateUsernameAsync(string username, string currentUsername = null!)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+
+            if (user != null && user.UserName != currentUsername)
+                return OperationResult<string>.Failure(UserNameAlreadyExists, ErrorType.BadRequest);
+
+            return null;
+        }
+
+        private async Task<OperationResult<string>?> ValidateEmailAsync(string email, string currentEmail = null!)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user != null && user.Email != currentEmail)
+                return OperationResult<string>.Failure(EmailAlreadyExists, ErrorType.BadRequest);
+
+            return null;
         }
     }
 }
