@@ -37,7 +37,7 @@ function WarehouseSelectTable({ selectedWarehouseId, selectWarehouseHandler }) {
         } finally {
             setIsLoading(false);
         }
-    }, [handleError, searchTerm]);
+    }, [handleError, searchTerm, selectWarehouseHandler]);
 
     useEffect(() => {
         getWarehouses();
