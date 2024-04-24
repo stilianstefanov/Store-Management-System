@@ -1,11 +1,19 @@
-
 namespace GMVService
 {
+    using Data;
+    using Microsoft.EntityFrameworkCore;
+
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            builder.Services
+                .AddDbContext<ApplicationDbContext>(opt =>
+                    opt.UseSqlServer(connectionString));
 
 
             builder.Services.AddControllers();
