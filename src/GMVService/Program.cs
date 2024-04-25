@@ -1,7 +1,10 @@
 namespace GMVService
 {
+    using System.Text;
     using Data;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.IdentityModel.Tokens;
     using Utilities.Middleware;
 
     public class Program
@@ -16,6 +19,28 @@ namespace GMVService
                 .AddDbContext<ApplicationDbContext>(opt =>
                     opt.UseSqlServer(connectionString));
 
+            builder.Services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+                        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!))
+                    };
+                });
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowClient",
@@ -25,8 +50,8 @@ namespace GMVService
                         .AllowAnyHeader());
             });
 
+            builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
-          
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -42,6 +67,8 @@ namespace GMVService
 
             app.UseHttpsRedirection();
             app.UseCors("AllowClient");
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
