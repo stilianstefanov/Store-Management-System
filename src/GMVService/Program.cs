@@ -2,6 +2,7 @@ namespace GMVService
 {
     using Data;
     using Microsoft.EntityFrameworkCore;
+    using Utilities.Middleware;
 
     public class Program
     {
@@ -15,6 +16,14 @@ namespace GMVService
                 .AddDbContext<ApplicationDbContext>(opt =>
                     opt.UseSqlServer(connectionString));
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowClient",
+                    b => b
+                        .WithOrigins(builder.Configuration["ClientUrl"]!)
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
 
             builder.Services.AddControllers();
           
@@ -22,8 +31,9 @@ namespace GMVService
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+            app.UseMiddleware<GlobalExceptionMiddleware>();
 
-            
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -31,7 +41,7 @@ namespace GMVService
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors("AllowClient");
             app.UseAuthorization();
 
 
