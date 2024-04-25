@@ -38,3 +38,10 @@ spec:
                 name: identity-clusterip-srv
                 port:
                   number: 8080
+          - path: /api/transactions
+            pathType: Prefix
+            backend:
+              service:
+                name: gmv-clusterip-srv
+                port:
+                  number: 8080

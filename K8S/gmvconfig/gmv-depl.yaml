@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gmv-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gmvservice
+  template:
+    metadata:
+      labels:
+        app: gmvservice
+    spec:
+      containers:
+        - name: gmvservice
+          image: stilianstefanov/gmvservice:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gmv-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: gmvservice
+  ports:
+  - name: gmvservice
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
