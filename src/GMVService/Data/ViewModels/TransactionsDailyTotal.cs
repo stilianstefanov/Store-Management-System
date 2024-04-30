@@ -2,7 +2,7 @@
 {
     public class TransactionsDailyTotal
     {
-        public DateTime Day { get; set; }
+        public DateTime Date { get; set; }
 
         public decimal TotalGmv { get; set; }
 
