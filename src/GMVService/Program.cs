@@ -2,6 +2,7 @@ namespace GMVService
 {
     using System.Text;
     using Data;
+    using Data.Contracts;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
@@ -49,6 +50,8 @@ namespace GMVService
                         .AllowAnyMethod()
                         .AllowAnyHeader());
             });
+
+            builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();

@@ -5,9 +5,17 @@
 
     public class TransactionRepository : ITransactionRepository
     {
+        private readonly ApplicationDbContext _dbContext;
+
+        public TransactionRepository(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public IQueryable<Transaction> GetAllAsync(string userId)
         {
-            throw new NotImplementedException();
+            return _dbContext.Transactions
+                .Where(t => t.UserId == userId);
         }
 
         public async Task AddAsync(Transaction transaction)
