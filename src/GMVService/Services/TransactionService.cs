@@ -22,7 +22,7 @@
             _mapper = mapper;
         }
 
-        public async Task<OperationResult<TransactionsQueryModel>> GetGmvAsync(string userId, TransactionsQueryModel queryModel)
+        public async Task<OperationResult<TransactionsQueryModel>> GetGmvDetailsAsync(string userId, TransactionsQueryModel queryModel)
         {
             switch (queryModel.Period)
             {

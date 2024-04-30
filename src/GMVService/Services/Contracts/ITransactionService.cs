@@ -5,6 +5,6 @@
 
     public interface ITransactionService
     {
-        Task<OperationResult<TransactionsQueryModel>> GetGmvAsync(string userId, TransactionsQueryModel queryModel);
+        Task<OperationResult<TransactionsQueryModel>> GetGmvDetailsAsync(string userId, TransactionsQueryModel queryModel);
     }
 }
