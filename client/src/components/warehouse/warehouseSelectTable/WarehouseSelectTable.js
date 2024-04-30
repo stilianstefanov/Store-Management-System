@@ -31,13 +31,12 @@ function WarehouseSelectTable({ selectedWarehouseId, selectWarehouseHandler }) {
             const request = { searchTerm };
             const response = await WarehouseService.GetAll(request);
             setWarehouses(response.warehouses);
-            selectWarehouseHandler("");
         } catch (error) {
             handleError(error);
         } finally {
             setIsLoading(false);
         }
-    }, [handleError, searchTerm, selectWarehouseHandler]);
+    }, [handleError, searchTerm]);
 
     useEffect(() => {
         getWarehouses();
