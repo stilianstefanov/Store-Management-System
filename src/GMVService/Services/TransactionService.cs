@@ -42,11 +42,11 @@
 
             var totalsTask = baseQuery
                 .GroupBy(t => t.Type)
-                .Select(g => new {
+                .Select(g => new
+                {
                     Type = g.Key,
                     TotalAmount = g.Sum(t => t.Amount)
-                })
-                .ToArrayAsync();
+                });
 
             var transactions = await baseQuery
                 .OrderByDescending(t => t.DateTime)
@@ -54,7 +54,7 @@
                 .Take(queryModel.ItemsPerPage)
                 .ToArrayAsync();
 
-            var totals = await totalsTask;
+            var totals = await totalsTask.ToArrayAsync();
 
             queryModel.Transactions = _mapper.Map<ICollection<TransactionDetailsModel>>(transactions);
             queryModel.TotalPages = (int)Math.Ceiling((double)await baseQuery.CountAsync() / queryModel.ItemsPerPage);
