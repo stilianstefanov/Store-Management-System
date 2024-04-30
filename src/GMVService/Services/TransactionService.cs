@@ -36,30 +36,30 @@
 
         private async Task GetTransactionsByDay(string userId, TransactionsQueryModel queryModel)
         {
-            var transactionsQuery = _transactionRepository.GetAllAsync(userId);
-            transactionsQuery = transactionsQuery
+            var baseQuery = _transactionRepository.GetAllAsync(userId)
                 .Where(t => t.DateTime.Date == queryModel.Date.Date);
 
-            queryModel.TotalGmv = await transactionsQuery.SumAsync(t => t.Amount);
-
-            queryModel.TotalRegularGmv = await transactionsQuery
-                .Where(t => t.Type == TransactionType.Regular)
-                .SumAsync(t => t.Amount);
-
-            queryModel.TotalDelayedGmv = await transactionsQuery
-                .Where(t => t.Type == TransactionType.Delayed)
-                .SumAsync(t => t.Amount);
-
-            var transactions = await transactionsQuery
-                .Skip((queryModel.CurrentPage - 1) * queryModel.ItemsPerPage)
-                .Take(queryModel.ItemsPerPage)
-                .OrderByDescending(t => t.DateTime)
+            var totalsTask = baseQuery
+                .GroupBy(t => t.Type)
+                .Select(g => new {
+                    Type = g.Key,
+                    TotalAmount = g.Sum(t => t.Amount)
+                })
                 .ToArrayAsync();
 
-            var totalPages = (int)Math.Ceiling(await transactionsQuery.CountAsync() / (double)queryModel.ItemsPerPage);
+            var transactions = await baseQuery
+                .OrderByDescending(t => t.DateTime)
+                .Skip((queryModel.CurrentPage - 1) * queryModel.ItemsPerPage)
+                .Take(queryModel.ItemsPerPage)
+                .ToArrayAsync();
 
-            queryModel.TotalPages = totalPages;
+            var totals = await totalsTask;
+
             queryModel.Transactions = _mapper.Map<ICollection<TransactionDetailsModel>>(transactions);
+            queryModel.TotalPages = (int)Math.Ceiling((double)await baseQuery.CountAsync() / queryModel.ItemsPerPage);
+            queryModel.TotalGmv = totals.Sum(t => t.TotalAmount);
+            queryModel.TotalRegularGmv = totals.Where(t => t.Type == TransactionType.Regular).Sum(t => t.TotalAmount);
+            queryModel.TotalDelayedGmv = totals.Where(t => t.Type == TransactionType.Delayed).Sum(t => t.TotalAmount);
         }
     }
 }
