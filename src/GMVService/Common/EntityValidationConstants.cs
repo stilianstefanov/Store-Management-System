@@ -15,5 +15,9 @@
         public const int TransactionTypeMinValue = 0;
 
         public const int TransactionTypeMaxValue = 1;
+
+        public const int PeriodMinValue = 0;
+
+        public const int PeriodMaxValue = 2;
     }
 }

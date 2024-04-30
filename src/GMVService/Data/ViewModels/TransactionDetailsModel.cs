@@ -8,6 +8,6 @@
 
         public decimal Amount { get; set; }
 
-        public string TransactionType { get; set; } = null!;
+        public string Type { get; set; } = null!;
     }
 }

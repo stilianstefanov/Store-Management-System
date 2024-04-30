@@ -1,6 +1,7 @@
 ﻿namespace GMVService.Data.ViewModels
 {
     using System.ComponentModel.DataAnnotations;
+    using Enums;
     using static Common.ApplicationConstants;
     using static Common.EntityValidationConstants;
 
@@ -11,10 +12,13 @@
             CurrentPage = DefaultPage;
             ItemsPerPage = DefaultItemsPerPage;
 
-            Transactions = new HashSet<object>();
+            Transactions = new HashSet<TransactionDetailsModel>();
+            TransactionDailyTotals = new HashSet<TransactionsDailyTotal>();
+            TransactionMonthlyTotals = new HashSet<TransactionsMonthlyTotal>();
         }
 
-        public string Period { get; set; } = null!;
+        [Range(PeriodMinValue, PerPageMaxValue)]
+        public Period Period { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -31,6 +35,10 @@
 
         public decimal TotalDelayedGmv { get; set; }
 
-        public IEnumerable<object> Transactions { get; set; }
+        public ICollection<TransactionDetailsModel> Transactions { get; set; }
+
+        public ICollection<TransactionsDailyTotal> TransactionDailyTotals { get; set; }
+
+        public ICollection<TransactionsMonthlyTotal> TransactionMonthlyTotals { get; set; }
     }
 }

@@ -6,6 +6,8 @@ namespace GMVService
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
+    using Services;
+    using Services.Contracts;
     using Utilities.Middleware;
 
     public class Program
@@ -52,6 +54,7 @@ namespace GMVService
             });
 
             builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+            builder.Services.AddScoped<ITransactionService, TransactionService>();
 
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
