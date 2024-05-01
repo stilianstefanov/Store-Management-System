@@ -4,6 +4,7 @@ namespace GMVService
     using Data;
     using Data.Contracts;
     using Messaging;
+    using Messaging.Contracts;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
@@ -57,6 +58,7 @@ namespace GMVService
             builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
             builder.Services.AddScoped<ITransactionService, TransactionService>();
 
+            builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
             builder.Services.AddHostedService<MessageBusSubscriber>();
