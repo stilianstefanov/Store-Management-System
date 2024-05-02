@@ -11,6 +11,7 @@ import WarehousePage from './pages/warehouses/Warehouses';
 import LoginPage from './pages/auth/login/Login';
 import RegisterPage from './pages/auth/register/Register';
 import DelayedPaymentsPage from './pages/delayedPayments/DelayedPayments';
+import GmvPage from './pages/gmv/Gmv';
 
 
 
@@ -27,6 +28,7 @@ function App() {
             <Route path='/products' element={<ProductsPage />} />
             <Route path='/warehouses' element={<WarehousePage />} />
             <Route path='/delayedpayments' element={<DelayedPaymentsPage />} />
+            <Route path='/gmv' element={<GmvPage />} />
           </>
         ) : (
           <>
