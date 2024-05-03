@@ -9,6 +9,8 @@
 
         public string TransactionType { get; set; } = null!;
 
+        public string UserId { get; set; } = null!;
+
         public IEnumerable<ProductPartialUpdatedDto> Products { get; set; } = null!;
     }
 }

@@ -204,6 +204,7 @@
             {
                 TotalAmount = productStockUpdateModels.Sum(s => s.Price * s.Quantity),
                 TransactionType = transactionType.ToString(),
+                UserId = userId,
                 Products = _mapper.Map<IEnumerable<ProductPartialUpdatedDto>>(updatedProducts)
             });
 
