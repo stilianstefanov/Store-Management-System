@@ -4,6 +4,8 @@
 
     public interface ITransactionRepository
     {
+        Task SaveChangesAsync();
+
         IQueryable<Transaction> GetAllAsync(string userId);
 
         Task AddAsync(Transaction transaction);

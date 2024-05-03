@@ -3,6 +3,8 @@
     using System.Text.Json;
     using AutoMapper;
     using Contracts;
+    using Data.Contracts;
+    using Data.Models;
     using Enums;
     using Models;
 
@@ -31,7 +33,19 @@
 
         private async Task ProcessMultipleProductsStockUpdatedEventAsync(string message)
         {
+            using var scope = _scopeFactory.CreateScope();
 
+            var transactionRepository = scope.ServiceProvider.GetRequiredService<ITransactionRepository>();
+
+
+            var transactionCreateDto = JsonSerializer.Deserialize<TransactionCreateDto>(message);
+
+            var newTransaction = _mapper.Map<Transaction>(transactionCreateDto);
+            newTransaction.DateTime = GetCurrentDateTime();
+
+            await transactionRepository.AddAsync(newTransaction);
+
+            await transactionRepository.SaveChangesAsync();
         }
 
         private EventType DetermineEventType(string notificationMessage)
@@ -46,6 +60,14 @@
             }
 
             return EventType.Undefined;
+        }
+
+        private DateTime GetCurrentDateTime()
+        {
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("FLE Standard Time");
+            var userDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
+
+            return userDateTime;
         }
     }
 }

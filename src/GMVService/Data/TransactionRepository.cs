@@ -12,6 +12,11 @@
             _dbContext = dbContext;
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _dbContext.SaveChangesAsync();
+        }
+
         public IQueryable<Transaction> GetAllAsync(string userId)
         {
             return _dbContext.Transactions
@@ -20,7 +25,7 @@
 
         public async Task AddAsync(Transaction transaction)
         {
-            throw new NotImplementedException();
+            await _dbContext.Transactions.AddAsync(transaction);
         }
     }
 }
