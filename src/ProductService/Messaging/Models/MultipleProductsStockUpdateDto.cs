@@ -1,6 +1,5 @@
 ﻿namespace ProductService.Messaging.Models
 {
-    using Enums;
 
     public class MultipleProductsStockUpdateDto
     {
@@ -8,7 +7,7 @@
 
         public decimal TotalAmount { get; set; }
 
-        public TransactionType TransactionType { get; set; }
+        public string TransactionType { get; set; } = null!;
 
         public IEnumerable<ProductPartialUpdatedDto> Products { get; set; } = null!;
     }

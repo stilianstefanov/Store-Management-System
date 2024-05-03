@@ -2,6 +2,7 @@
 {
     using Data.Models;
     using Data.ViewModels;
+    using Messaging.Models.Enums;
     using Utilities;
 
     public interface IProductService
@@ -18,7 +19,7 @@
 
         Task<OperationResult<ProductDetailsViewModel>> PartialUpdateAsync(string id, ProductPartialUpdateModel model, string userId);
 
-        Task<OperationResult<bool>> DecreaseStocksAsync(IEnumerable<ProductStockUpdateModel> models, string userId);
+        Task<OperationResult<bool>> DecreaseStocksAsync(IEnumerable<ProductStockUpdateModel> models, string userId, TransactionType transactionType = TransactionType.Regular);
 
         Task<OperationResult<bool>> DeleteAsync(string id, string userId);
 

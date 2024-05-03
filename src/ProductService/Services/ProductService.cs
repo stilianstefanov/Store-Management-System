@@ -9,6 +9,7 @@
     using GrpcServices.Contracts;
     using Messaging.Contracts;
     using Messaging.Models;
+    using Messaging.Models.Enums;
     using Microsoft.EntityFrameworkCore;
     using Utilities;
     using Utilities.Enums;
@@ -171,11 +172,13 @@
             return OperationResult<ProductDetailsViewModel>.Success(await MapProductDetailsModelWithWarehouse(productToUpdate));
         }
 
-        public async Task<OperationResult<bool>> DecreaseStocksAsync(IEnumerable<ProductStockUpdateModel> models, string userId)
+        public async Task<OperationResult<bool>> DecreaseStocksAsync(
+            IEnumerable<ProductStockUpdateModel> models, string userId, TransactionType transactionType = TransactionType.Regular)
         {
             var updatedProducts = new List<Product>();
 
-            foreach (var model in models)
+            var productStockUpdateModels = models.ToArray();
+            foreach (var model in productStockUpdateModels)
             {
                 var productToUpdate = await _productRepository.GetByIdAsync(model.Id);
 
@@ -199,6 +202,8 @@
 
             _messageSender.PublishMultipleProductsStockUpdate(new MultipleProductsStockUpdateDto
             {
+                TotalAmount = productStockUpdateModels.Sum(s => s.Price * s.Quantity),
+                TransactionType = transactionType.ToString(),
                 Products = _mapper.Map<IEnumerable<ProductPartialUpdatedDto>>(updatedProducts)
             });
 
