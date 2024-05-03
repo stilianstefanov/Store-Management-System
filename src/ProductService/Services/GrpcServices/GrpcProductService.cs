@@ -4,6 +4,7 @@
     using AutoMapper;
     using Data.ViewModels;
     using Google.Protobuf.WellKnownTypes;
+    using Messaging.Models.Enums;
     using Services.Contracts;
     using Utilities.Enums;
 
@@ -46,7 +47,7 @@
             {
                 var productsToUpdate = _mapper.Map<IEnumerable<ProductStockUpdateModel>>(request.Products);
 
-                var result = await _productService.DecreaseStocksAsync(productsToUpdate, request.UserId);
+                var result = await _productService.DecreaseStocksAsync(productsToUpdate, request.UserId, TransactionType.Delayed);
 
                 if (!result.IsSuccess)
                 {
