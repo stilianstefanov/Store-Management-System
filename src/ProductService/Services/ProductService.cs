@@ -189,12 +189,6 @@
 
                 productToUpdate.Quantity -= model.Quantity;
 
-                if (productToUpdate.Quantity < 0)
-                {
-                    return OperationResult<bool>.Failure
-                        (string.Format(InsufficientStock, productToUpdate.Name, productToUpdate.Barcode), ErrorType.BadRequest);
-                }
-
                 updatedProducts.Add(productToUpdate);
             }
 
