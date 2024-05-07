@@ -27,6 +27,9 @@ function MainNavigation() {
                                 <Link to='/delayedpayments'>Delayed Payments</Link>
                             </li>
                             <li>
+                                <Link to='/gmv'>GMV</Link>
+                            </li>
+                            <li>
                                 <button className={styles['acc-button']} onClick={() => setAccountModalIsOpen(true)}>Account</button>
                             </li>
                         </ul>
