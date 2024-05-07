@@ -1,12 +1,24 @@
 import styles from './Gmv.module.css';
 import { useState, useEffect, useCallback } from 'react';
+import ReactLoading from 'react-loading';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 function GmvPage() {
+    const [transactions, setTransactions] = useState([]);
     const [period, setPeriod] = useState('day');
     const [date, setDate] = useState(new Date());
-    const [transactions, setTransactions] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [totalPages, setTotalPages] = useState(0);
+    const [totalGmv, setTotalGmv] = useState(0);
+    const [totalRegularGmv, setTotalRegularGmv] = useState(0);
+    const [totalDelayedGmv, setTotalDelayedGmv] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleDateChange = (e) => {
+        setCurrentPage(1);
         if (period === 'day') {
             setDate(new Date(e.target.value));
         } else if (period === 'month') {
@@ -26,7 +38,11 @@ function GmvPage() {
                     <select value={period}
                         id="period-select"
                         className={`form-control ${styles['input-field']}`}
-                        onChange={(e) => setPeriod(e.target.value)}>
+                        onChange={(e) => {
+                            setCurrentPage(1)
+                            setPeriod(e.target.value)
+                        }}
+                    >
                         <option value="day">Day</option>
                         <option value="month">Month</option>
                         <option value="year">Year</option>
@@ -63,6 +79,22 @@ function GmvPage() {
                             className={`form-control ${styles['input-field']}`}
                             value={date.getFullYear()} min="2000" max="2099"
                             onChange={handleDateChange} />
+                    </div>
+                )}
+                {period !== 'year' && (
+                    <div className={styles['input-group']}>
+                        <label htmlFor="order-select">Items per Page :</label>
+                        <select
+                            id="order-select"
+                            className={`form-control ${styles['input-field']}`}
+                            onChange={(e) => {
+                                setCurrentPage(1);
+                                setItemsPerPage(e.target.value)
+                            }} >
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
                     </div>
                 )}
             </div>
