@@ -11,9 +11,9 @@ function GmvPage() {
             setDate(new Date(e.target.value));
         } else if (period === 'month') {
             const [year, month] = e.target.value.split('-');
-            setDate(new Date(year, month - 1));
+            setDate(new Date(year, month - 1, 1));
         } else if (period === 'year') {
-            setDate(new Date(e.target.value, 0));
+            setDate(new Date(e.target.value, 0, 1));
         }
     };
 
@@ -50,7 +50,7 @@ function GmvPage() {
                             id="month-select"
                             type="month"
                             className={`form-control ${styles['input-field']}`}
-                            value={`${date.getFullYear()}-${date.getMonth() + 1}`}
+                            value={`${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`}
                             onChange={handleDateChange} />
                     </div>
                 )}
