@@ -68,3 +68,19 @@
     max-width: 100%;
     border: 1px solid black;
 }
+
+.table-wrapper {
+    border: 1px solid;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    height: 70%;
+}
+
+.loading-container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 200px;
+    height: 50px;
+    width: 100%;
+}

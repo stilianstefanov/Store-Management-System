@@ -4,6 +4,7 @@ import ReactLoading from 'react-loading';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import TransactionsTable from '../../components/transaction/TransactionsTable/TransactionsTable';
 
 function GmvPage() {
     const [transactions, setTransactions] = useState([]);
@@ -26,6 +27,16 @@ function GmvPage() {
             setDate(new Date(year, month - 1, 1));
         } else if (period === 'year') {
             setDate(new Date(e.target.value, 0, 1));
+        }
+    };
+
+    const renderTable = () => {
+        switch (period) {
+            case 'day':
+                return (
+                    <TransactionsTable
+                        transactions={transactions} />
+                )
         }
     };
 
@@ -104,6 +115,15 @@ function GmvPage() {
                             <option value="20">20</option>
                         </select>
                     </div>
+                )}
+            </div>
+            <div className={`table-responsive ${styles['table-wrapper']}`}>
+                {isLoading ? (
+                    <div className={styles['loading-container']}>
+                        <ReactLoading type="spin" color="#808080" />
+                    </div>
+                ) : (
+                    renderTable()
                 )}
             </div>
         </div>
