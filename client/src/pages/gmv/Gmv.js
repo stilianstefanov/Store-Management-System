@@ -31,7 +31,15 @@ function GmvPage() {
 
     return (
         <div className={`container ${styles['table-container']}`}>
-            <h1 className={`text-center ${styles['title']}`}>GMV</h1>
+            <div className={styles['header-container']}>
+                <div className={styles['spacer']}></div>
+                <h1 className={`text-center ${styles['title']}`}>GMV</h1>
+                <div className={styles['total-gmv-container']}>
+                    <h4 className={styles['total-gmv-h']}>Total GMV: {totalGmv.toFixed(2)}</h4>
+                    <h4 className={styles['regular-gmv-h']}>Regular GMV: {totalRegularGmv.toFixed(2)}</h4>
+                    <h4 className={styles['delayed-gmv-h']}>Delayed GMV: {totalDelayedGmv.toFixed(2)}</h4>
+                </div>
+            </div>
             <div className="d-flex justify-content-center flex-wrap">
                 <div className={styles['input-group']}>
                     <label htmlFor="period-select">Period:</label>

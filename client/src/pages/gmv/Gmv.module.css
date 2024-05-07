@@ -9,11 +9,44 @@
     padding: 2em;
 }
 
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
 .title {
     font-family: "Angkor", serif;
     font-weight: 400;
     font-style: italic;
     text-align: center;
+}
+
+.spacer {
+    margin-right: 10%;
+}
+
+.total-gmv-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-gmv-h {
+    font-weight: bold;
+    color: green;
+}
+
+.regular-gmv-h {
+    margin-left: 25px;
+    margin-right: 25px;
+    font-weight: bold;
+    color: rgb(164, 164, 29);
+}
+
+.delayed-gmv-h {
+    font-weight: bold;
+    color: red;
 }
 
 .input-group {
