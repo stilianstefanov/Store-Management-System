@@ -33,15 +33,15 @@ function GmvPage() {
 
     const renderTable = () => {
         switch (period) {
-            case 'day':
-                return (
-                    <TransactionsTable
-                        transactions={transactionsData} />
-                )
             case 'month':
                 return (
                     <TransactionsDailyTotalsTable
                         transactionsDailyTotals={transactionsData} />
+                )
+            default:
+                return (
+                    <TransactionsTable
+                        transactions={transactionsData} />
                 )
         }
     };
