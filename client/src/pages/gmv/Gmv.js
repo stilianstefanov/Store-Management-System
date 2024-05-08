@@ -5,9 +5,10 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import TransactionsTable from '../../components/transaction/TransactionsTable/TransactionsTable';
+import TransactionsDailyTotalsTable from '../../components/transaction/TransactionsDailyTotalsTable/TransactionsDailyTotalsTable';
 
 function GmvPage() {
-    const [transactions, setTransactions] = useState([]);
+    const [transactionsData, setTransactionsData] = useState([]);
     const [period, setPeriod] = useState('day');
     const [date, setDate] = useState(new Date());
     const [currentPage, setCurrentPage] = useState(1);
@@ -35,7 +36,12 @@ function GmvPage() {
             case 'day':
                 return (
                     <TransactionsTable
-                        transactions={transactions} />
+                        transactions={transactionsData} />
+                )
+            case 'month':
+                return (
+                    <TransactionsDailyTotalsTable
+                        transactionsDailyTotals={transactionsData} />
                 )
         }
     };
