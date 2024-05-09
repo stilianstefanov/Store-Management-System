@@ -7,9 +7,12 @@ import { useAuth } from '../../context/AuthContext';
 import TransactionsTable from '../../components/transaction/TransactionsTable/TransactionsTable';
 import TransactionsDailyTotalsTable from '../../components/transaction/TransactionsDailyTotalsTable/TransactionsDailyTotalsTable';
 import TransactionsMonthlyTotalsTable from '../../components/transaction/TransactionsMonthlyTotalsTable/TransactionsMonthlyTotalsTable';
+import * as GmvService from '../../services/gmvService';
 
 function GmvPage() {
-    const [transactionsData, setTransactionsData] = useState([]);
+    const [transactions, setTransactions] = useState([]);
+    const [transactionsDailyTotals, setTransactionsDailyTotals] = useState([]);
+    const [transactionMonthlyTotals, settransactionMonthlyTotals] = useState([]);
     const [period, setPeriod] = useState('day');
     const [date, setDate] = useState(new Date());
     const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +22,51 @@ function GmvPage() {
     const [totalRegularGmv, setTotalRegularGmv] = useState(0);
     const [totalDelayedGmv, setTotalDelayedGmv] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
+    const handleError = useCallback((error) => {
+        if (error.response && error.response.status === 401) {
+            logout();
+            navigate('/login');
+            toast.warning('Your session has expired. Please login again.');
+        } else {
+            toast.error(error.response ? error.response.data : "An error occurred");
+        }
+        console.error(error);
+    }, [logout, navigate]);
+
+    const getTransactionsData = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const request = {
+                currentPage,
+                itemsPerPage,
+                period,
+                date: date.toISOString()
+            };
+            const response = await GmvService.GetTransactionsData(request);
+            if (period === 'day') {
+                setTransactions(response.transactions);
+            } else if (period === 'month') {
+                setTransactionsDailyTotals(response.transactionDailyTotals);
+            } else if (period === 'year') {
+                settransactionMonthlyTotals(response.transactionMonthlyTotals);
+            }
+            setTotalGmv(response.totalGmv);
+            setTotalRegularGmv(response.totalRegularGmv);
+            setTotalDelayedGmv(response.totalDelayedGmv);
+            setTotalPages(response.totalPages);
+        } catch (error) {
+            handleError(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [handleError, currentPage, itemsPerPage, period, date]);
+
+    useEffect(() => {
+        getTransactionsData();
+    }, [getTransactionsData]);
 
     const handleDateChange = (e) => {
         setCurrentPage(1);
@@ -37,17 +85,17 @@ function GmvPage() {
             case 'month':
                 return (
                     <TransactionsDailyTotalsTable
-                        transactionsDailyTotals={transactionsData} />
+                        transactionsDailyTotals={transactionsDailyTotals} />
                 )
             case 'year':
                 return (
                     <TransactionsMonthlyTotalsTable
-                        transactionsMonthlyTotals={transactionsData} />
+                        transactionsMonthlyTotals={transactionMonthlyTotals} />
                 )
             default:
                 return (
                     <TransactionsTable
-                        transactions={transactionsData} />
+                        transactions={transactions} />
                 )
         }
     };

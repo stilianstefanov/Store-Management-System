@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const GetAll = async (params) => {
+export const GetTransactionsData = async (params) => {
     const url = new URL('http://acme.com/api/Transactions');
     const config = { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } };
 
