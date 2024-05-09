@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import TransactionsTable from '../../components/transaction/TransactionsTable/TransactionsTable';
 import TransactionsDailyTotalsTable from '../../components/transaction/TransactionsDailyTotalsTable/TransactionsDailyTotalsTable';
+import TransactionsMonthlyTotalsTable from '../../components/transaction/TransactionsMonthlyTotalsTable/TransactionsMonthlyTotalsTable';
 
 function GmvPage() {
     const [transactionsData, setTransactionsData] = useState([]);
@@ -37,6 +38,11 @@ function GmvPage() {
                 return (
                     <TransactionsDailyTotalsTable
                         transactionsDailyTotals={transactionsData} />
+                )
+            case 'year':
+                return (
+                    <TransactionsMonthlyTotalsTable
+                        transactionsMonthlyTotals={transactionsData} />
                 )
             default:
                 return (
