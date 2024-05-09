@@ -154,7 +154,7 @@
             var newPurchase = new Purchase
             {
                 ClientId = Guid.Parse(clientId),
-                Date = DateTime.Now,
+                Date = GetCurrentDateTime(),
                 Products = _mapper.Map<ICollection<PurchasedProduct>>(purchasedProducts)!
             };
 
@@ -181,6 +181,14 @@
             {
                 return OperationResult<bool>.Failure(e.Message, ErrorType.BadRequest);
             }
+        }
+
+        private DateTime GetCurrentDateTime()
+        {
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("FLE Standard Time");
+            var userDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
+
+            return userDateTime;
         }
     }
 }
