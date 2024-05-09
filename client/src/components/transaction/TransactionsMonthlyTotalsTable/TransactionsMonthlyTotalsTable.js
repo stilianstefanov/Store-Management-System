@@ -7,7 +7,7 @@ const monthNames = {
     10: "October", 11: "November", 12: "December"
 };
 
-function TransactionsDailyTotalsTable({ transactionsMonthlyTotals }) {
+function TransactionsMonthlyTotalsTable({ transactionsMonthlyTotals }) {
     return (
         <table className={styles['table-fill']}>
             <thead>
@@ -32,4 +32,4 @@ function TransactionsDailyTotalsTable({ transactionsMonthlyTotals }) {
     );
 };
 
-export default TransactionsDailyTotalsTable;
+export default TransactionsMonthlyTotalsTable;
