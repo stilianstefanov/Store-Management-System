@@ -1,5 +1,6 @@
 ﻿namespace GMVService.Services
 {
+    using System.Globalization;
     using AutoMapper;
     using Contracts;
     using Data.Contracts;
@@ -93,7 +94,7 @@
                 .Take(queryModel.ItemsPerPage)
                 .Select(dt => new TransactionsDailyTotal
                 {
-                    Date = dt.Date,
+                    Date = dt.Date.ToString("D", CultureInfo.InvariantCulture),
                     TotalGmv = dt.TotalAmount,
                     TotalRegularGmv = dt.TotalRegular,
                     TotalDelayedGmv = dt.TotalDelayed
