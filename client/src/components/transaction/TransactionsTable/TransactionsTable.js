@@ -12,7 +12,7 @@ function TransactionsTable({ transactions }) {
             </thead>
             <tbody className={styles['table-hover']}>
                 {transactions.map(transaction => (
-                    <tr>
+                    <tr key={transaction.id}>
                         <td className={styles['text-left']}>{transaction.dateTime}</td>
                         <td className={styles['text-left']}>{transaction.amount.toFixed(2)}</td>
                         <td className={styles['text-left']}>{transaction.type}</td>

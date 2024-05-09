@@ -20,7 +20,7 @@ function TransactionsMonthlyTotalsTable({ transactionsMonthlyTotals }) {
             </thead>
             <tbody className={styles['table-hover']}>
                 {transactionsMonthlyTotals.map(trMonthlyTotal => (
-                    <tr>
+                    <tr key={trMonthlyTotal.month}>
                         <td className={styles['text-left']}>{monthNames[trMonthlyTotal.month]}</td>
                         <td className={styles['text-left']}>{trMonthlyTotal.totalGmv.toFixed(2)}</td>
                         <td className={styles['text-left']}>{trMonthlyTotal.totalRegularGmv.toFixed(2)}</td>

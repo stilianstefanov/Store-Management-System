@@ -13,8 +13,8 @@ function TransactionsDailyTotalsTable({ transactionsDailyTotals }) {
             </thead>
             <tbody className={styles['table-hover']}>
                 {transactionsDailyTotals.map(trDailyTotal => (
-                    <tr>
-                        <td className={styles['text-left']}>{trDailyTotal.date.toISOString().split('T')[0]}</td>
+                    <tr key={trDailyTotal.date}>
+                        <td className={styles['text-left']}>{trDailyTotal.date}</td>
                         <td className={styles['text-left']}>{trDailyTotal.totalGmv.toFixed(2)}</td>
                         <td className={styles['text-left']}>{trDailyTotal.totalRegularGmv.toFixed(2)}</td>
                         <td className={styles['text-left']}>{trDailyTotal.totalDelayedGmv.toFixed(2)}</td>
