@@ -100,6 +100,12 @@ function GmvPage() {
         }
     };
 
+    const PAGE_BUTTONS_DISPLAY_LIMIT = 5;
+    const startPage = Math.max(currentPage - Math.floor(PAGE_BUTTONS_DISPLAY_LIMIT / 2), 1);
+    const endPage = Math.min(startPage + PAGE_BUTTONS_DISPLAY_LIMIT - 1, totalPages);
+
+    const pageNumbers = Array.from({ length: (endPage - startPage) + 1 }, (_, index) => startPage + index);
+
     return (
         <div className={`container ${styles['table-container']}`}>
             <div className={styles['header-container']}>
@@ -184,6 +190,31 @@ function GmvPage() {
                     </div>
                 ) : (
                     renderTable()
+                )}
+            </div>
+            <div className={styles['buttons-wrapper']}>
+                {currentPage > 1 && (
+                    <button
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        className={styles['page-control-button']}>
+                        Prev
+                    </button>
+                )}
+                {pageNumbers.map(pageNumber => (
+                    <button
+                        className={`${styles['page-button']} ${currentPage === pageNumber ? styles['current-page'] : ''}`}
+                        key={pageNumber}
+                        onClick={() => setCurrentPage(pageNumber)}
+                    >
+                        {pageNumber}
+                    </button>
+                ))}
+                {currentPage < totalPages && (
+                    <button
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        className={styles['page-control-button']}>
+                        Next
+                    </button>
                 )}
             </div>
         </div>
