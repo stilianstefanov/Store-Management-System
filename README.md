@@ -9,7 +9,7 @@ The Store Management System is a robust application designed to streamline opera
 
 - **Product Management:** Manage product inventory with real-time updates and stock monitoring.
 - **Warehouse Oversight:** Manages the stocks of products and suggests order quantities based on current stock levels to ensure optimal inventory management.
-- **GMV Tracking:** Automatically calculate and track Gross Merchandise Value to assess sales performance and support data-driven decision-making. (In development)
+- **GMV Tracking:** Automatically calculate and track Gross Merchandise Value to assess sales performance and support data-driven decision-making.
 - **Delayed Payments:** Provide customers with deferred payment options to enhance service and financial management.
 
 ### Technical Architecture
@@ -19,7 +19,7 @@ The project is built using a microservice architecture with .NET following the R
 - **Product Service:** Manages all operations related to products.
 - **Warehouse Service:** Oversees stock management, including tracking stock levels and providing recommendations for reorder quantities to maintain optimal inventory levels.
 - **Delayed Payment Service:** Facilitates the processing and management of delayed payments.
-- **GMV Service:** Responsible for the calculation and reporting of GMV. (In development)
+- **GMV Service:** Responsible for the calculation and reporting of GMV.
 - **Identity Service:** Manages secure access and user interactions across the platform.
 
 These services utilize RabbitMQ and gRPC for efficient and reliable inter-service communication. The entire backend is deployed on Kubernetes, offering enhanced scalability and resilience. The Ingress NGINX controller serves as the gateway, facilitating smooth interaction with external systems and clients.
@@ -81,6 +81,19 @@ Below are some screenshots from the Store Management System, showcasing its key 
 *The 'Insufficient Credit' modal is a critical feature for managing customer transactions on credit. When a client's purchases approach or exceed their allotted credit limit, this prompt appears, displaying their current credit, credit limit, total purchase cost, and the insufficient amount that prevents the transaction from completing. It offers the functionality to update the client's credit limit on the spot, enabling a seamless continuation of the checkout process.*
 
 ![Insufficient credit modal](assets/insufficient-credit-modal.png "insufficient credit modal")
+
+### GMV (day)
+*The GMV (Gross Merchandise Value) Service Interface provides a dynamic analysis of sales transactions across different timeframes. It displays detailed transaction data, including date, amount, and type (Regular or Delayed), based on the selected period: day, month, or year. Users can select a specific date to view daily transactions, or choose a month or year from the dropdown menus to see aggregated data for those periods. The interface includes a total GMV summary, showcasing total, regular, and delayed transactions, facilitating comprehensive financial oversight.*
+
+![Gmv day](assets/gmv-day.png "Gmv day")
+
+### GMV (month)
+
+![Gmv month](assets/gmv-month.png "Gmv month")
+
+### GMV (year)
+
+![Gmv year](assets/gmv-year.png "Gmv year")
 
 ### Products
 *The Products page is a central feature of the Store Management System, offering a detailed and paged overview of all products. Users can effortlessly search for products, sort the list by various attributes like name, price, or quantity, and decide the number of products to display per page for customized viewing. Clicking on any product item brings up a detailed product information window, making it simple to view and manage product specifics.*
