@@ -22,13 +22,13 @@
         public string Name { get; set; } = null!;
 
         [Required]
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
 
         [Required]
-        public int MinQuantity { get; set; }
+        public decimal MinQuantity { get; set; }
 
         [Required]
-        public int MaxQuantity { get; set; }
+        public decimal MaxQuantity { get; set; }
 
         public bool IsDeleted { get; set; }
 

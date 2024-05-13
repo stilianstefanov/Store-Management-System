@@ -13,5 +13,20 @@
         public DbSet<Warehouse> Warehouses { get; set; } = null!;
 
         public DbSet<Product> Products { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Quantity)
+                .HasColumnType("decimal(18,3)");
+
+            modelBuilder.Entity<Product>()
+                .Property(p => p.MaxQuantity)
+                .HasColumnType("decimal(18,3)");
+
+            modelBuilder.Entity<Product>()
+                .Property(p => p.MinQuantity)
+                .HasColumnType("decimal(18,3)");
+        }
     }
 }

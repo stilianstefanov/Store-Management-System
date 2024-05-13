@@ -6,11 +6,11 @@
 
         public string Name { get; set; } = null!;
 
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
 
-        public int MinQuantity { get; set; }
+        public decimal MinQuantity { get; set; }
 
-        public int MaxQuantity { get; set; }
+        public decimal MaxQuantity { get; set; }
 
         public string WarehouseId { get; set; } = null!;
 
