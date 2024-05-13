@@ -14,11 +14,11 @@
 
         public decimal DeliveryPrice { get; set; }
 
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
 
-        public int MinQuantity { get; set; }
+        public decimal MinQuantity { get; set; }
 
-        public int MaxQuantity { get; set; }
+        public decimal MaxQuantity { get; set; }
 
         public WarehouseViewModel Warehouse { get; set; } = null!;
     }

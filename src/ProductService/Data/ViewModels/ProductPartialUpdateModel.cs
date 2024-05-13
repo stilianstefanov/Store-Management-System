@@ -5,8 +5,8 @@
 
     public class ProductPartialUpdateModel
     {
-        [Range(QuantityMinValue, QuantityMaxValue)]
-        public int? Quantity { get; set; }
+        [Range(typeof(decimal),QuantityMinValue, QuantityMaxValue)]
+        public decimal? Quantity { get; set; }
 
         public string? WarehouseId { get; set; }
     }

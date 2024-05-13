@@ -30,13 +30,13 @@
         public decimal Price { get; set; }
 
         [Required]
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
 
         [Required]
-        public int MinQuantity { get; set; }
+        public decimal MinQuantity { get; set; }
 
         [Required]
-        public int MaxQuantity { get; set; }
+        public decimal MaxQuantity { get; set; }
 
         [Required]
         [MaxLength(WarehouseIdMaxLength)]

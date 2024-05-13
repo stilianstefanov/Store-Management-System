@@ -40,7 +40,8 @@
 
             CreateMap<GrpcProductStockDecreaseModel, ProductStockUpdateModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ProductId))
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => decimal.Parse(src.Price)));
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => decimal.Parse(src.Price)))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => decimal.Parse(src.Quantity)));
         }
     }
 }

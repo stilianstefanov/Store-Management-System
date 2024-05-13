@@ -18,9 +18,9 @@
 
             public const string PriceMaxValue = "999999999";
 
-            public const int QuantityMinValue = 0;
+            public const string QuantityMinValue = "0.01";
 
-            public const int QuantityMaxValue = 9999;
+            public const string QuantityMaxValue = "999999999";
 
             public const int UserIdMaxLength = 50;
 

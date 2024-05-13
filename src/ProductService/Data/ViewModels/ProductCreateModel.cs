@@ -21,14 +21,14 @@
         [Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
         public decimal Price { get; set; }
 
-        [Range(QuantityMinValue, QuantityMaxValue)]
-        public int Quantity { get; set; }
+        [Range(typeof(decimal),QuantityMinValue, QuantityMaxValue)]
+        public decimal Quantity { get; set; }
 
-        [Range(QuantityMinValue, QuantityMaxValue)]
-        public int MinQuantity { get; set; }
+        [Range(typeof(decimal),QuantityMinValue, QuantityMaxValue)]
+        public decimal MinQuantity { get; set; }
 
-        [Range(QuantityMinValue, QuantityMaxValue)]
-        public int MaxQuantity { get; set; }
+        [Range(typeof(decimal),QuantityMinValue, QuantityMaxValue)]
+        public decimal MaxQuantity { get; set; }
 
         public string WarehouseId { get; set; } = null!;
     }

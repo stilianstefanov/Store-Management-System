@@ -24,7 +24,7 @@
 
             CreateMap<PurchasedProductCreateModel, GrpcProductStockDecreaseModel>()
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity.ToString("F3")))
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price.ToString(CultureInfo.InvariantCulture)));
         }
     }
