@@ -7,8 +7,8 @@
     {
         public string Id { get; set; } = null!;
 
-        [Range(BoughtQuantityMinValue, BoughtQuantityMaxValue)]
-        public int Quantity { get; set; }
+        [Range(typeof(decimal),BoughtQuantityMinValue, BoughtQuantityMaxValue)]
+        public decimal Quantity { get; set; }
 
         [Range(typeof(decimal), PurchasePriceMinValue, PurchasePriceMaxValue)]
         public decimal Price { get; set; }

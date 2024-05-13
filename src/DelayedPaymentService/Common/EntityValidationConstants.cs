@@ -44,9 +44,9 @@
 
         public static class PurchaseProduct
         {
-            public const int BoughtQuantityMinValue = 1;
+            public const string BoughtQuantityMinValue = "0.01";
 
-            public const int BoughtQuantityMaxValue = 9999;
+            public const string BoughtQuantityMaxValue = "99999";
 
             public const string PurchasePriceMinValue = "0.01";
 
