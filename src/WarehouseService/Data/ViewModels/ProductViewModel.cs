@@ -12,6 +12,6 @@
 
         public decimal MaxQuantity { get; set; }
 
-        public int SuggestedOrderQty { get; set; }
+        public decimal SuggestedOrderQty { get; set; }
     }
 }
