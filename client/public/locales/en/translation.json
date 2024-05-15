@@ -2,8 +2,8 @@
     "homeHeader": "Manage your store easy and secure!",
     "nav": {
         "notLogged": {
-            "login": "login",
-            "register": "register"
+            "login": "Login",
+            "register": "Register"
         }
     }
 }

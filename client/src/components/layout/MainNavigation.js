@@ -3,10 +3,12 @@ import { useAuth } from '../../context/AuthContext';
 import styles from './MainNavigation.module.css';
 import { useState } from 'react';
 import AccountDetails from '../account/accountDetails/AccountDetails';
+import { useTranslation } from 'react-i18next';
 
 function MainNavigation() {
     const [accountModalIsOpen, setAccountModalIsOpen] = useState(false);
     const { isLoggedIn } = useAuth();
+    const { t } = useTranslation();
 
     return (
         <div>
@@ -36,10 +38,10 @@ function MainNavigation() {
                     ) : (
                         <ul className={styles['header-ul']}>
                             <li>
-                                <Link to='/login'>Login</Link>
+                                <Link to='/login'>{t('nav.notLogged.login')}</Link>
                             </li>
                             <li>
-                                <Link to='/register'>Register</Link>
+                                <Link to='/register'>{t('nav.notLogged.register')}</Link>
                             </li>
 
                         </ul>
