@@ -3,7 +3,7 @@
 
 ## Overview
 
-The Store Management System is a robust application designed to streamline operations for small to medium-sized supermarkets. At its core, the system provides comprehensive management of products and warehouses, while also facilitating the monitoring of Gross Merchandise Value (GMV). A standout feature of the system is the ability to handle delayed payments, allowing supermarkets to offer flexible payment solutions to their clients.
+The Store Management System is a robust application designed to streamline operations for small to medium-sized supermarkets. At its core, the system provides comprehensive management of products and warehouses, while also facilitating the monitoring of Gross Merchandise Value (GMV). A standout feature of the system is the ability to handle delayed payments, allowing supermarkets to offer flexible payment solutions to their clients. This project also includes multi-language support, allowing users to switch between English and Bulgarian seamlessly.
 
 ### Key Features
 
@@ -26,7 +26,7 @@ These services utilize RabbitMQ and gRPC for efficient and reliable inter-servic
 
 ### Frontend
 
-The interface is crafted with React, providing a responsive and intuitive experience that simplifies supermarket management.
+The interface is crafted with React, providing a responsive and intuitive experience that simplifies supermarket management. Leveraging React's component-based architecture ensures maintainability and scalability, while modern design principles and efficient state management enhance the user experience.
 
 ## Technologies Used
 
@@ -47,6 +47,7 @@ This project utilizes a range of technologies to deliver a comprehensive and rob
 - **React Router**: Utilized for handling navigation and routing within the React application, enhancing the single-page app (SPA) experience.
 - **React-toastify**: A library used for adding notifications to the React applications.
 - **React-loading**: Used to manage loading states in the UI, improving user experience during asynchronous operations.
+- **React-i18next**: A powerful internationalization framework for React applications, enabling seamless multi-language support and dynamic content translation.
 
 ### Networking
 - **Ingress NGINX**: An Ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer.
