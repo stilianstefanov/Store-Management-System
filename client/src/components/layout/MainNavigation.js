@@ -4,6 +4,7 @@ import styles from './MainNavigation.module.css';
 import { useState } from 'react';
 import AccountDetails from '../account/accountDetails/AccountDetails';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../i18n';
 
 function MainNavigation() {
     const [accountModalIsOpen, setAccountModalIsOpen] = useState(false);
@@ -15,6 +16,11 @@ function MainNavigation() {
             <header className={styles.header}>
                 <div className={styles.logo}>
                     <Link to='/'>STORE<span>management</span></Link>
+                    <span
+                        className={`fi fi-bg ${styles['bg-flag']}`}
+                        onClick={() => i18n.changeLanguage('bg')}></span>
+                    <span className={`fi fi-gb ${styles['gb-flag']}`}
+                        onClick={() => i18n.changeLanguage('en')}></span>
                 </div>
                 <nav>
                     {isLoggedIn ? (
