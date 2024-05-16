@@ -4,6 +4,13 @@
         "notLogged": {
             "login": "Login",
             "register": "Register"
+        },
+        "logged": {
+            "products": "Products",
+            "warehouses": "Warehouses",
+            "dPayments": "Delayed Payments",
+            "gmv": "GMV",
+            "account": "Account"
         }
     }
 }
