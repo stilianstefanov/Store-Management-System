@@ -26,19 +26,19 @@ function MainNavigation() {
                     {isLoggedIn ? (
                         <ul className={styles['header-ul']}>
                             <li>
-                                <Link to='/products'>Products</Link>
+                                <Link to='/products'>{t('nav.logged.products')}</Link>
                             </li>
                             <li>
-                                <Link to='/warehouses'>Warehouses</Link>
+                                <Link to='/warehouses'>{t('nav.logged.warehouses')}</Link>
                             </li>
                             <li>
-                                <Link to='/delayedpayments'>Delayed Payments</Link>
+                                <Link to='/delayedpayments'>{t('nav.logged.dPayments')}</Link>
                             </li>
                             <li>
-                                <Link to='/gmv'>GMV</Link>
+                                <Link to='/gmv'>{t('nav.logged.gmv')}</Link>
                             </li>
                             <li>
-                                <button className={styles['acc-button']} onClick={() => setAccountModalIsOpen(true)}>Account</button>
+                                <button className={styles['acc-button']} onClick={() => setAccountModalIsOpen(true)}>{t('nav.logged.account')}</button>
                             </li>
                         </ul>
                     ) : (
