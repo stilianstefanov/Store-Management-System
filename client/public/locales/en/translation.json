@@ -17,5 +17,14 @@
         "email": "Email or Username",
         "password": "Password",
         "login": "Login"
+    },
+    "register": {
+        "email": "Email",
+        "company": "Company name",
+        "username": "Username",
+        "password": "Password",
+        "confirmpass": "Confirm password",
+        "register": "Register",
+        "confirm": "Confirm"
     }
 }

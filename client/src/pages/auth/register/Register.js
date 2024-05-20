@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import styles from './Register.module.css';
 import { commonValidationRules, registerValidationRules } from "../../../validationRules";
+import { useTranslation } from 'react-i18next';
 
 function RegisterPage() {
     const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ function RegisterPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [validationErrors, setValidationErrors] = useState({});
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const validate = () => {
@@ -81,24 +83,24 @@ function RegisterPage() {
     return (
         <div className={styles["Auth-container"]}>
             <div className={styles["Auth-card"]}>
-                <h1 className={styles["Auth-header"]}>Register</h1>
+                <h1 className={styles["Auth-header"]}>{t('register.register')}</h1>
                 <form onSubmit={registerHandler}>
                     <input
-                        placeholder="Email"
+                        placeholder={t('register.email')}
                         className={styles["Auth-input"]}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     {validationErrors.email && <p className={styles["Error-message"]}>{validationErrors.email}</p>}
                     <input
-                        placeholder="Company name"
+                        placeholder={t('register.company')}
                         className={styles["Auth-input"]}
                         value={companyName}
                         onChange={(e) => setCompanyName(e.target.value)}
                     />
                     {validationErrors.companyName && <p className={styles["Error-message"]}>{validationErrors.companyName}</p>}
                     <input
-                        placeholder="Username"
+                        placeholder={t('register.username')}
                         className={styles["Auth-input"]}
                         value={userName}
                         onChange={(e) => setUserName(e.target.value)}
@@ -106,7 +108,7 @@ function RegisterPage() {
                     {validationErrors.userName && <p className={styles["Error-message"]}>{validationErrors.userName}</p>}
                     <input
                         type="password"
-                        placeholder="Password"
+                        placeholder={t('register.password')}
                         className={styles["Auth-input"]}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -114,14 +116,14 @@ function RegisterPage() {
                     {validationErrors.password && <p className={styles["Error-message"]}>{validationErrors.password}</p>}
                     <input
                         type="password"
-                        placeholder="Confirm password"
+                        placeholder={t('register.confirmpass')}
                         className={styles["Auth-input"]}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                     {validationErrors.confirmPassword && <p className={styles["Error-message"]}>{validationErrors.confirmPassword}</p>}
                     <button type="submit" className={styles["Auth-button"]}>
-                        Confirm
+                        {t('register.confirm')}
                     </button>
                 </form>
             </div>
