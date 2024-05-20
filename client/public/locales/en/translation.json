@@ -12,5 +12,10 @@
             "gmv": "GMV",
             "account": "Account"
         }
+    },
+    "login": {
+        "email": "Email or Username",
+        "password": "Password",
+        "login": "Login"
     }
 }
