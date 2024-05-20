@@ -7,8 +7,9 @@ import { useAuth } from '../../../context/AuthContext';
 import DashboardClient from '../../client/DashboardClient/DashboardClient';
 import InsufficientCreditModal from './InsufficientCreditModal/InsufficientCreditModal';
 import ClientForm from '../../client/ClientForm/ClientForm';
-import * as ClientService from '../../../services/clientService'
-import * as PurchaseService from '../../../services/purchaseService'
+import * as ClientService from '../../../services/clientService';
+import * as PurchaseService from '../../../services/purchaseService';
+import { useTranslation } from 'react-i18next';
 
 function DelayedPaymentModal(props) {
     const [clients, setClients] = useState([]);
@@ -19,6 +20,7 @@ function DelayedPaymentModal(props) {
     const [clientFormIsOpen, setclientFormIsOpen] = useState(false);
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleError = useCallback((error) => {
         if (error.response && error.response.status === 401) {
@@ -99,11 +101,11 @@ function DelayedPaymentModal(props) {
     return (
         <div>
             <div className={styles['modal']}>
-                <h1 className={styles['header']}>Select client</h1>
+                <h1 className={styles['header']}>{t('dPaymentModal.select')}</h1>
                 <input
                     type='text'
                     value={searchTerm}
-                    placeholder='Search'
+                    placeholder={t('dPaymentModal.search')}
                     className={`form-control ${styles.input}`}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -111,11 +113,11 @@ function DelayedPaymentModal(props) {
                     <table className={styles.tableCustom}>
                         <thead className={styles.tableHeader}>
                             <tr>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>Lastname</th>
-                                <th>Credit</th>
-                                <th>Limit</th>
+                                <th>{t('dPaymentModal.name')}</th>
+                                <th>{t('dPaymentModal.surname')}</th>
+                                <th>{t('dPaymentModal.lastname')}</th>
+                                <th>{t('dPaymentModal.credit')}</th>
+                                <th>{t('dPaymentModal.limit')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -142,13 +144,13 @@ function DelayedPaymentModal(props) {
                 </div>
                 <div className={styles['buttons-container']}>
                     <button className={styles['button-cancel']} onClick={props.closeDPaymentModal} >
-                        Cancel
+                        {t('dPaymentModal.cancel')}
                     </button>
                     <button className={styles['button-add']} onClick={() => setclientFormIsOpen(true)}>
-                        Add New Client
+                        {t('dPaymentModal.add')}
                     </button>
                     <button className={styles['button-confirm']} onClick={confirmHandler}>
-                        Confirm
+                        {t('dPaymentModal.confirm')}
                     </button>
                 </div>
             </div>
@@ -159,9 +161,9 @@ function DelayedPaymentModal(props) {
                 totalCost={calculateTotalCost(props.products)}
                 updateCreditLimit={updateClientCreditLimit}
             />)}
-            {clientFormIsOpen && <ClientForm 
-            closeAddNewClient={() => setclientFormIsOpen(false)} 
-            refreshClients={() => getClients()}/>}
+            {clientFormIsOpen && <ClientForm
+                closeAddNewClient={() => setclientFormIsOpen(false)}
+                refreshClients={() => getClients()} />}
         </div>
     );
 }

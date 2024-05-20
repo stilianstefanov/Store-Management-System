@@ -36,5 +36,17 @@
         "total": "Total",
         "finish": "Finish Transaction",
         "delayed": "Delayed Payment"
+    },
+    "dPaymentModal": {
+        "select": "Select client",
+        "search": "Search",
+        "name": "Name",
+        "surname": "Surname",
+        "lastname": "Lastname",
+        "credit": "Credit",
+        "limit": "Limit",
+        "cancel": "Cancel",
+        "add": "Add New Client",
+        "confirm": "Confirm"
     }
 }
