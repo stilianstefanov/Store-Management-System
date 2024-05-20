@@ -26,5 +26,15 @@
         "confirmpass": "Confirm password",
         "register": "Register",
         "confirm": "Confirm"
+    },
+    "dashboard": {
+        "dashboard": "DASHBOARD",
+        "barcode": "Barcode",
+        "product": "Product",
+        "price": "price",
+        "quantity": "Quantity",
+        "total": "Total",
+        "finish": "Finish Transaction",
+        "delayed": "Delayed Payment"
     }
 }

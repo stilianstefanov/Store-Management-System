@@ -6,7 +6,8 @@ import * as ProductService from '../../services/productService'
 import { toast } from 'react-toastify';
 import ReactLoading from 'react-loading';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 function DashBoard() {
     const [products, setProducts] = useState([]);
@@ -15,6 +16,7 @@ function DashBoard() {
     const [dPaymentModalIsOpen, setDPaymentModalIsOpen] = useState(false);
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const getProductHandler = async (event) => {
         const barcode = event.target.value;
@@ -96,12 +98,12 @@ function DashBoard() {
 
     return (
         <div className={`container ${styles['dash-container']}`}>
-            <h1 className={`text-center ${styles['dash-title']}`}>DASHBOARD</h1>
+            <h1 className={`text-center ${styles['dash-title']}`}>{t('dashboard.dashboard')}</h1>
             <div className="d-flex justify-content-center">
                 <input
                     type="text"
                     value={currentBarcode}
-                    placeholder="Barcode"
+                    placeholder={t('dashboard.barcode')}
                     className={`form-control ${styles['barcode-input']}`}
                     onChange={getProductHandler}
                 />
@@ -110,9 +112,9 @@ function DashBoard() {
                 <table className={`table table-striped ${styles.tableCustom}`}>
                     <thead className={styles.tableHeader}>
                         <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
+                            <th>{t('dashboard.product')}</th>
+                            <th>{t('dashboard.price')}</th>
+                            <th>{t('dashboard.quantity')}</th>
                         </tr>
                     </thead>
                     <tbody className={styles.tableRow}>
@@ -138,18 +140,18 @@ function DashBoard() {
                 </table>
             </div>
             <div className={styles['button-wrapper']}>
-                <p className={styles['total-p']}>Total: {calculateTotalCost(products).toFixed(2)} </p>
+                <p className={styles['total-p']}>{t('dashboard.total')}: {calculateTotalCost(products).toFixed(2)} </p>
                 <button
                     onClick={finishTransactionHandler}
                     type="button"
                     className={`btn btn-success ${styles['button-custom']}`}>
-                    Finish Transaction
+                    {t('dashboard.finish')}
                 </button>
                 <button
                     onClick={openDPaymentModalHandler}
                     type="button"
                     className={`btn btn-warning ${styles['button-custom']}`}>
-                    Delayed Payment
+                    {t('dashboard.delayed')}
                 </button>
             </div>
             {dPaymentModalIsOpen && (<DelayedPaymentModal

@@ -26,5 +26,15 @@
         "confirmpass": "Потвърдете парола",
         "register": "Регистрация",
         "confirm": "Потвърдете"
+    },
+    "dashboard": {
+        "dashboard": "Табло",
+        "barcode": "Баркод",
+        "product": "Продукт",
+        "price": "Цена",
+        "quantity": "Количество",
+        "total": "Общо",
+        "finish": "Завърши транзакция",
+        "delayed": "Забавено плащане"
     }
 }
