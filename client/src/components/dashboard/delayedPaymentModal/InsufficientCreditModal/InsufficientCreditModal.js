@@ -4,13 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthContext';
 import { useState } from 'react';
 import { clientValidationRules, commonValidationRules } from '../../../../validationRules';
-import * as ClientService from '../../../../services/clientService'
+import * as ClientService from '../../../../services/clientService';
+import { useTranslation } from 'react-i18next';
 
 function InsufficientCreditModal(props) {
     const [newCreditLimit, setNewCreditLimit] = useState("");
     const [validationError, setValidationError] = useState("");
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const inputHandler = (event) => {
         const inputNewCreditLimit = event.target.value;
@@ -39,7 +41,7 @@ function InsufficientCreditModal(props) {
             setValidationError(commonValidationRules.required("New credit limit").message);
             return;
         }
-        
+
         if (input < clientValidationRules.creditLimit.minValue || input > clientValidationRules.creditLimit.maxValue) {
             setValidationError(commonValidationRules.range(
                 "New credit limit", clientValidationRules.creditLimit.minValue, clientValidationRules.creditLimit.maxValue).message);
@@ -62,22 +64,22 @@ function InsufficientCreditModal(props) {
     return (
         <div className={styles["modal"]}>
             <h1 className={styles["header"]}>
-                It looks like the selected client does not have enough credit.
-                <p>Do you want to update the credit limit?</p>
+                {t('insuffModal.header')}
+                <p>{t('insuffModal.p')}</p>
             </h1>
             <ul>
                 <li>
-                    <p className={styles['p-curr-credit']}>Current credit: {props.client.currentCredit.toFixed(2)}</p>
+                    <p className={styles['p-curr-credit']}>{t('insuffModal.currCredit')} {props.client.currentCredit.toFixed(2)}</p>
                 </li>
                 <li>
-                    <p className={styles['p-cred-limit']}>Credit limit: {props.client.creditLimit.toFixed(2)}</p>
+                    <p className={styles['p-cred-limit']}>{t('insuffModal.limit')} {props.client.creditLimit.toFixed(2)}</p>
                 </li>
                 <li>
-                    <p className={styles['p-total-cost']}>Total cost: {props.totalCost.toFixed(2)}</p>
+                    <p className={styles['p-total-cost']}>{t('insuffModal.total')} {props.totalCost.toFixed(2)}</p>
                 </li>
                 <li>
                     <p className={styles['p-insuff-amount']}>
-                        Insufficient amount: {(props.totalCost - (props.client.creditLimit - props.client.currentCredit)).toFixed(2)}
+                        {t('insuffModal.insuffAmount')} {(props.totalCost - (props.client.creditLimit - props.client.currentCredit)).toFixed(2)}
                     </p>
                 </li>
             </ul>
@@ -85,17 +87,17 @@ function InsufficientCreditModal(props) {
                 <input
                     type='number'
                     value={newCreditLimit}
-                    placeholder="New credit limit"
+                    placeholder={t('insuffModal.newLimit')}
                     className={`form-control ${styles.input}`}
                     onChange={inputHandler}
                 />
                 {validationError && <p className={styles["Error-message"]}>{validationError}</p>}
                 <div className={styles['buttons-container']}>
                     <button className={styles['button-cancel']} onClick={props.closeCreditModal}>
-                        Cancel
+                        {t('insuffModal.cancel')}
                     </button>
                     <button type="submit" className={styles["button-confirm"]}>
-                        Confirm
+                        {t('insuffModal.confirm')}
                     </button>
                 </div>
             </form>

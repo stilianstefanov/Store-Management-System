@@ -48,5 +48,16 @@
         "cancel": "Cancel",
         "add": "Add New Client",
         "confirm": "Confirm"
+    },
+    "insuffModal": {
+        "header": "It looks like the selected client does not have enough credit.",
+        "p": "Do you want to update the credit limit?",
+        "currCredit": "Current credit:",
+        "limit": "Credit limit:",
+        "total": "Total cost:",
+        "insuffAmount": "Insufficient amount:",
+        "newLimit": "New credit limit",
+        "cancel": "Cancel",
+        "confirm": "Confirm"
     }
 }
