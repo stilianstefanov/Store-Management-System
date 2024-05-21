@@ -8,6 +8,7 @@ import TableProduct from '../../components/product/TableProduct/TableProduct';
 import ProductForm from '../../components/product/ProductForm/ProductForm';
 import ProductDetails from '../../components/product/ProductDetails/ProductDetails';
 import * as ProductService from '../../services/productService';
+import { useTranslation } from 'react-i18next';
 
 function ProductsPage() {
     const [products, setProducts] = useState([]);
@@ -22,6 +23,7 @@ function ProductsPage() {
     const [selectedProductId, setSelectedProductId] = useState("");
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const handleError = useCallback((error) => {
         if (error.response && error.response.status === 401) {
@@ -73,21 +75,21 @@ function ProductsPage() {
         <div className={`container ${styles['table-container']}`}>
             <div className={styles['header-container']}>
                 <div className={styles['spacer']}></div>
-                <h1 className={`text-center ${styles['title']}`}>Products</h1>
+                <h1 className={`text-center ${styles['title']}`}>{t('products.header')}</h1>
                 <button
                     className={styles['add-product-button']}
                     onClick={() => setProductFormIsopen(true)} >
-                    Add New Product
+                    {t('products.add')}
                 </button>
             </div>
             <div className="d-flex justify-content-center flex-wrap">
                 <div className={styles['input-group']}>
-                    <label htmlFor="search-input">Search:</label>
+                    <label htmlFor="search-input">{t('products.searchLabel')}</label>
                     <input
                         id="search-input"
                         type="text"
                         value={searchTerm}
-                        placeholder="Search product"
+                        placeholder={t('products.searchInput')}
                         className={`form-control ${styles['input-field']}`}
                         onChange={(e) => {
                             setCurrentPage(1);
@@ -95,7 +97,7 @@ function ProductsPage() {
                         }} />
                 </div>
                 <div className={styles['input-group']}>
-                    <label htmlFor="order-select">Sort by:</label>
+                    <label htmlFor="order-select">{t('products.sortLabel')}</label>
                     <select
                         id="order-select"
                         className={`form-control ${styles['input-field']}`}
@@ -103,18 +105,18 @@ function ProductsPage() {
                             setCurrentPage(1);
                             setSorting(e.target.value);
                         }} >
-                        <option value="0">Name (Ascending)</option>
-                        <option value="1">Name (Descending)</option>
-                        <option value="2">Price (Ascending)</option>
-                        <option value="3">Price (Descending)</option>
-                        <option value="4">Quantity (Ascending)</option>
-                        <option value="5">Quantity (Descending)</option>
-                        <option value="6">Delivery price (Ascending)</option>
-                        <option value="7">Delivery price (Descending)</option>
+                        <option value="0">{t('products.sortInput.nameAsc')}</option>
+                        <option value="1">{t('products.sortInput.nameDesc')}</option>
+                        <option value="2">{t('products.sortInput.priceAsc')}</option>
+                        <option value="3">{t('products.sortInput.priceDesc')}</option>
+                        <option value="4">{t('products.sortInput.quantityAsc')}</option>
+                        <option value="5">{t('products.sortInput.quantityDesc')}</option>
+                        <option value="6">{t('products.sortInput.dPriceAsc')}</option>
+                        <option value="7">{t('products.sortInput.dPriceDesc')}</option>
                     </select>
                 </div>
                 <div className={styles['input-group']}>
-                    <label htmlFor="order-select">Products per Page :</label>
+                    <label htmlFor="order-select">{t('products.perPageLabel')}</label>
                     <select
                         id="order-select"
                         className={`form-control ${styles['input-field']}`}
@@ -132,10 +134,10 @@ function ProductsPage() {
                 <table className={styles['table-fill']}>
                     <thead>
                         <tr>
-                            <th className={styles['text-left']}>Name</th>
-                            <th className={styles['text-left']}>Description</th>
-                            <th className={styles['text-left']}>Price</th>
-                            <th className={styles['text-left']}>Quantity</th>
+                            <th className={styles['text-left']}>{t('products.table.name')}</th>
+                            <th className={styles['text-left']}>{t('products.table.description')}</th>
+                            <th className={styles['text-left']}>{t('products.table.price')}</th>
+                            <th className={styles['text-left']}>{t('products.table.quantity')}</th>
                         </tr>
                     </thead>
                     <tbody className={styles['table-hover']}>
@@ -164,7 +166,7 @@ function ProductsPage() {
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         className={styles['page-control-button']}>
-                        Prev
+                        {t('products.prevButton')}
                     </button>
                 )}
                 {pageNumbers.map(pageNumber => (
@@ -180,7 +182,7 @@ function ProductsPage() {
                     <button
                         onClick={() => setCurrentPage(currentPage + 1)}
                         className={styles['page-control-button']}>
-                        Next
+                        {t('products.nextButton')}
                     </button>
                 )}
             </div>

@@ -59,5 +59,31 @@
         "newLimit": "New credit limit",
         "cancel": "Cancel",
         "confirm": "Confirm"
+    },
+    "products": {
+        "header": "Products",
+        "searchLabel": "Search:",
+        "searchInput": "Search product",
+        "sortLabel": "Sort by:",
+        "sortInput": {
+            "nameAsc": "Name (Ascending)",
+            "nameDesc": "Name (Descending)",
+            "priceAsc": "Price (Ascending)",
+            "priceDesc": "Price (Desscending)",
+            "quantityAsc": "Quantity (Ascending)",
+            "quantityDesc": "Quantity (Descending)",
+            "dPriceAsc": "Delivery price (Ascending)",
+            "dPriceDesc": "Delivery price (Descending)"
+        },
+        "perPageLabel": "Products per Page",
+        "add": "Add New Product",
+        "table": {
+            "name": "Name",
+            "description": "Description",
+            "price": "Price",
+            "quantity": "Quantity"
+        },
+        "prevButton": "Prev",
+        "nextButton": "Next"
     }
 }

@@ -59,5 +59,31 @@
         "newLimit": "Нов лимит",
         "cancel": "Отмяна",
         "confirm": "Потвърдете"
+    },
+    "products": {
+        "header": "Продукти",
+        "searchLabel": "Търсене:",
+        "searchInput": "Търсете продукт",
+        "sortLabel": "Сортиране:",
+        "sortInput": {
+            "nameAsc": "Име (възходящ ред)",
+            "nameDesc": "Име (низходящ ред)",
+            "priceAsc": "Цена (възходящ ред)",
+            "priceDesc": "Цена (низходящ ред)",
+            "quantityAsc": "Количество (възходящ ред)",
+            "quantityDesc": "Количество (низходящ ред)",
+            "dPriceAsc": "Доставна цена (възходящ ред)",
+            "dPriceDesc": "Доставна цена (низходящ ред)"
+        },
+        "perPageLabel": "Продукти на Страница",
+        "add": "Добави нов продукт",
+        "table": {
+            "name": "Име",
+            "description": "Описание",
+            "price": "Цена",
+            "quantity": "Количество"
+        },
+        "prevButton": "Предишна",
+        "nextButton": "Следваща"
     }
 }
