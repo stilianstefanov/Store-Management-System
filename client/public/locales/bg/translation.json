@@ -85,5 +85,26 @@
         },
         "prevButton": "Предишна",
         "nextButton": "Следваща"
+    },
+    "warehouses": {
+        "header": "Складове",
+        "searchLabel": "Търсене:",
+        "searchInput": "Търсете склад",
+        "sortLabel": "Сортиране:",
+        "sortInput": {
+            "nameAsc": "Име (възходящ ред)",
+            "nameDesc": "Име (низходящ ред)",
+            "productCntAsc": "Брой продукти (възходящ ред)",
+            "productCntDesc": "Брой продукти (низходящ ред)"
+        },
+        "perPageLabel": "Складове на Страница",
+        "add": "Добави нов склад",
+        "table": {
+            "name": "Име",
+            "type": "Тип",
+            "count": "Брой продукти"
+        },
+        "prevButton": "Предишна",
+        "nextButton": "Следваща"
     }
 }
