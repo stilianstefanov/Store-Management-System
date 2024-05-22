@@ -8,6 +8,7 @@ import TableWarehouse from '../../components/warehouse/TableWarehouse/TableWareh
 import WarehouseForm from '../../components/warehouse/WarehouseForm/WarehouseForm';
 import WarehouseDetails from '../../components/warehouse/WarehouseDetails/WarehouseDetails';
 import * as WarehouseService from '../../services/warehouseService';
+import { useTranslation } from 'react-i18next';
 
 function WarehousesPage() {
     const [warehouses, setWarehouses] = useState([]);
@@ -22,6 +23,7 @@ function WarehousesPage() {
     const [selectedWarehouseId, setSelectedWarehouseId] = useState("");
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const handleError = useCallback((error) => {
         if (error.response && error.response.status === 401) {
