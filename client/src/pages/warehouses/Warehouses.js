@@ -74,22 +74,22 @@ function WarehousesPage() {
         <div className={`container ${styles['table-container']}`}>
             <div className={styles['header-container']}>
                 <div className={styles['spacer']}></div>
-                <h1 className={`text-center ${styles['title']}`}>Warehouses</h1>
+                <h1 className={`text-center ${styles['title']}`}>{t('warehouses.header')}</h1>
                 <button
                     className={styles['add-warehouse-button']}
                     onClick={() => setWarehouseFormIsOpen(true)}
                 >
-                    Add New Warehouse
+                    {t('warehouses.add')}
                 </button>
             </div>
             <div className="d-flex justify-content-center flex-wrap">
                 <div className={styles['input-group']}>
-                    <label htmlFor="search-input">Search:</label>
+                    <label htmlFor="search-input">{t('warehouses.searchLabel')}</label>
                     <input
                         id="search-input"
                         type="text"
                         value={searchTerm}
-                        placeholder="Search product"
+                        placeholder={t('warehouses.searchInput')}
                         className={`form-control ${styles['input-field']}`}
                         onChange={(e) => {
                             setCurrentPage(1);
@@ -97,7 +97,7 @@ function WarehousesPage() {
                         }} />
                 </div>
                 <div className={styles['input-group']}>
-                    <label htmlFor="order-select">Sort by:</label>
+                    <label htmlFor="order-select">{t('warehouses.sortLabel')}</label>
                     <select
                         id="order-select"
                         className={`form-control ${styles['input-field']}`}
@@ -105,14 +105,14 @@ function WarehousesPage() {
                             setCurrentPage(1);
                             setSorting(e.target.value);
                         }} >
-                        <option value="0">Name (Ascending)</option>
-                        <option value="1">Name (Descending)</option>
-                        <option value="2">Products count (Ascending)</option>
-                        <option value="3">Products count (Descending)</option>
+                        <option value="0">{t('warehouses.sortInput.nameAsc')}</option>
+                        <option value="1">{t('warehouses.sortInput.nameDesc')}</option>
+                        <option value="2">{t('warehouses.sortInput.productCntAsc')}</option>
+                        <option value="3">{t('warehouses.sortInput.productCntDesc')}</option>
                     </select>
                 </div>
                 <div className={styles['input-group']}>
-                    <label htmlFor="order-select">Warehouses per Page :</label>
+                    <label htmlFor="order-select">{t('warehouses.perPageLabel')}</label>
                     <select
                         id="order-select"
                         className={`form-control ${styles['input-field']}`}
@@ -130,9 +130,9 @@ function WarehousesPage() {
                 <table className={styles['table-fill']}>
                     <thead>
                         <tr>
-                            <th className={styles['text-left']}>Name</th>
-                            <th className={styles['text-left']}>Type</th>
-                            <th className={styles['text-left']}>Count of products</th>
+                            <th className={styles['text-left']}>{t('warehouses.table.name')}</th>
+                            <th className={styles['text-left']}>{t('warehouses.table.type')}</th>
+                            <th className={styles['text-left']}>{t('warehouses.table.count')}</th>
                         </tr>
                     </thead>
                     <tbody className={styles['table-hover']}>
@@ -161,7 +161,7 @@ function WarehousesPage() {
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         className={styles['page-control-button']}>
-                        Prev
+                        {t('warehouses.prevButton')}
                     </button>
                 )}
                 {pageNumbers.map(pageNumber => (
@@ -177,7 +177,7 @@ function WarehousesPage() {
                     <button
                         onClick={() => setCurrentPage(currentPage + 1)}
                         className={styles['page-control-button']}>
-                        Next
+                        {t('warehouses.nextButton')}
                     </button>
                 )}
             </div>
