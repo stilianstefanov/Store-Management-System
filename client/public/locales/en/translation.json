@@ -85,5 +85,26 @@
         },
         "prevButton": "Prev",
         "nextButton": "Next"
+    },
+    "warehouses": {
+        "header": "Warehouses",
+        "searchLabel": "Search:",
+        "searchInput": "Search warehouse",
+        "sortLabel": "Sort by:",
+        "sortInput": {
+            "nameAsc": "Name (Ascending)",
+            "nameDesc": "Name (Descending)",
+            "productCntAsc": "Products count (Ascending)",
+            "productCntDesc": "Products count (Descending)"
+        },
+        "perPageLabel": "Warehouses per Page",
+        "add": "Add New Warehouse",
+        "table": {
+            "name": "Name",
+            "type": "Type",
+            "count": "Count of Products"
+        },
+        "prevButton": "Prev",
+        "nextButton": "Next"
     }
 }
