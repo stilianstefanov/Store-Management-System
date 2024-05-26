@@ -106,5 +106,30 @@
         },
         "prevButton": "Prev",
         "nextButton": "Next"
+    },
+    "clients": {
+        "header": "Clients",
+        "searchLabel": "Search:",
+        "searchInput": "Search client",
+        "sortLabel": "Sort by:",
+        "sortInput": {
+            "nameAsc": "Name (Ascending)",
+            "nameDesc": "Name (Descending)",
+            "currCreditDesc": "Current credit (Descending)",
+            "currCreditAsc": "Current credit (Ascending)",
+            "limitDesc": "Credit limit (Descending)",
+            "limitAsc": "Credit limit (Ascending)"
+        },
+        "perPageLabel": "Clients per Page",
+        "add": "Add New Client",
+        "table": {
+            "name": "Name",
+            "surname": "Surname",
+            "lastname": "Lastname",
+            "currCredit": "Current credit",
+            "limit": "Credit limit"
+        },
+        "prevButton": "Prev",
+        "nextButton": "Next"
     }
 }
