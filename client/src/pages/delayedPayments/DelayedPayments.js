@@ -74,21 +74,21 @@ function DelayedPaymentsPage() {
         <div className={`container ${styles['table-container']}`}>
             <div className={styles['header-container']}>
                 <div className={styles['spacer']}></div>
-                <h1 className={`text-center ${styles['title']}`}>Clients</h1>
+                <h1 className={`text-center ${styles['title']}`}>{t('clients.header')}</h1>
                 <button
                     className={styles['add-client-button']}
                     onClick={() => setClientFormIsOpen(true)}>
-                    Add New Client
+                    {t('clients.add')}
                 </button>
             </div>
             <div className="d-flex justify-content-center flex-wrap">
                 <div className={styles['input-group']}>
-                    <label htmlFor="search-input">Search:</label>
+                    <label htmlFor="search-input">{t('clients.searchLabel')}</label>
                     <input
                         id="search-input"
                         type="text"
                         value={searchTerm}
-                        placeholder="Search client"
+                        placeholder={t('clients.searchInput')}
                         className={`form-control ${styles['input-field']}`}
                         onChange={(e) => {
                             setCurrentPage(1);
@@ -97,7 +97,7 @@ function DelayedPaymentsPage() {
                     />
                 </div>
                 <div className={styles['input-group']}>
-                    <label htmlFor="order-select">Sort by:</label>
+                    <label htmlFor="order-select">{t('clients.sortLabel')}</label>
                     <select
                         id="order-select"
                         className={`form-control ${styles['input-field']}`}
@@ -105,16 +105,16 @@ function DelayedPaymentsPage() {
                             setCurrentPage(1);
                             setSorting(e.target.value);
                         }}>
-                        <option value="0">Name (Ascending)</option>
-                        <option value="1">Name (Descending)</option>
-                        <option value="2">Current credit (Descending)</option>
-                        <option value="3">Current credit (Ascending)</option>
-                        <option value="4">Credit limit (Descending)</option>
-                        <option value="5">Credit limit (Ascending)</option>
+                        <option value="0">{t('clients.sortInput.nameAsc')}</option>
+                        <option value="1">{t('clients.sortInput.nameDesc')}</option>
+                        <option value="2">{t('clients.sortInput.currCreditDesc')}</option>
+                        <option value="3">{t('clients.sortInput.currCreditAsc')}</option>
+                        <option value="4">{t('clients.sortInput.limitDesc')}</option>
+                        <option value="5">{t('clients.sortInput.limitAsc')}</option>
                     </select>
                 </div>
                 <div className={styles['input-group']}>
-                    <label htmlFor="order-select">Clients per Page :</label>
+                    <label htmlFor="order-select">{t('clients.perPageLabel')}</label>
                     <select
                         id="order-select"
                         className={`form-control ${styles['input-field']}`}
@@ -132,11 +132,11 @@ function DelayedPaymentsPage() {
                 <table className={styles['table-fill']}>
                     <thead>
                         <tr>
-                            <th className={styles['text-left']}>Name</th>
-                            <th className={styles['text-left']}>Surname</th>
-                            <th className={styles['text-left']}>Lastname</th>
-                            <th className={styles['text-left']}>Current credit</th>
-                            <th className={styles['text-left']}>Credit limit</th>
+                            <th className={styles['text-left']}>{t('clients.table.name')}</th>
+                            <th className={styles['text-left']}>{t('clients.table.surname')}</th>
+                            <th className={styles['text-left']}>{t('clients.table.lastname')}</th>
+                            <th className={styles['text-left']}>{t('clients.table.currCredit')}</th>
+                            <th className={styles['text-left']}>{t('clients.table.limit')}</th>
                         </tr>
                     </thead>
                     <tbody className={styles['table-hover']}>
@@ -165,7 +165,7 @@ function DelayedPaymentsPage() {
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         className={styles['page-control-button']}>
-                        Prev
+                        {t('clients.prevButton')}
                     </button>
                 )}
                 {pageNumbers.map(pageNumber => (
@@ -181,7 +181,7 @@ function DelayedPaymentsPage() {
                     <button
                         onClick={() => setCurrentPage(currentPage + 1)}
                         className={styles['page-control-button']}>
-                        Next
+                        {t('clients.nextButton')}
                     </button>
                 )}
             </div>

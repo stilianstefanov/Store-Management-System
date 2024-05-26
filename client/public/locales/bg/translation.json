@@ -126,7 +126,7 @@
             "name": "Име",
             "surname": "Презиме",
             "lastname": "Фамилия",
-            "currCredit": "Текущ кредит:",
+            "currCredit": "Текущ кредит",
             "limit": "Лимит"
         },
         "prevButton": "Предишна",
