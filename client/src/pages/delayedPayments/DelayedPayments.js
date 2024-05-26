@@ -7,7 +7,8 @@ import styles from './DelayedPayments.module.css'
 import TableClient from '../../components/client/TableClient/TableClient';
 import ClientForm from '../../components/client/ClientForm/ClientForm'
 import ClientDetails from '../../components/client/ClientDetails/ClientDetails';
-import * as ClientService from '../../services/clientService'
+import * as ClientService from '../../services/clientService';
+import { useTranslation } from 'react-i18next';
 
 function DelayedPaymentsPage() {
     const [clients, setClients] = useState([]);
@@ -22,6 +23,7 @@ function DelayedPaymentsPage() {
     const [selectedClientId, setSelectedClientId] = useState("");
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const handleError = useCallback((error) => {
         if (error.response && error.response.status === 401) {
