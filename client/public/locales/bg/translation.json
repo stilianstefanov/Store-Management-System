@@ -106,5 +106,30 @@
         },
         "prevButton": "Предишна",
         "nextButton": "Следваща"
+    },
+    "clients": {
+        "header": "Клиенти",
+        "searchLabel": "Търсене:",
+        "searchInput": "Търсете клиент",
+        "sortLabel": "Сортиране:",
+        "sortInput": {
+            "nameAsc": "Име (възходящ ред)",
+            "nameDesc": "Име (низходящ ред)",
+            "currCreditDesc": "Текущ кредит (низходящ ред)",
+            "currCreditAsc": "Текущ кредит (възходящ ред)",
+            "limitDesc": "Лимит (низходящ ред)",
+            "limitAsc": "Лимит (възходящ ред)"
+        },
+        "perPageLabel": "Клиенти на страница",
+        "add": "Добави нов клиент",
+        "table": {
+            "name": "Име",
+            "surname": "Презиме",
+            "lastname": "Фамилия",
+            "currCredit": "Текущ кредит:",
+            "limit": "Лимит"
+        },
+        "prevButton": "Предишна",
+        "nextButton": "Следваща"
     }
 }
