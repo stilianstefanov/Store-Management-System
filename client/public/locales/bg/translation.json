@@ -131,5 +131,35 @@
         },
         "prevButton": "Предишна",
         "nextButton": "Следваща"
+    },
+    "gmv": {
+        "header": "Оборот",
+        "periodLabel": "Период:",
+        "periodInput": {
+            "day": "Ден",
+            "month": "Месец",
+            "year": "Година"
+        },
+        "dateLabel": "Дата:",
+        "perPageLabel": "Елементи на страница",
+        "transactionsTable": {
+            "dateTime": "Дата/Час",
+            "amount": "Стойност",
+            "type": "Тип"
+        },
+        "dailyTotalsTable": {
+            "date": "Дата",
+            "total": "Общ оборот",
+            "totalRegular": "Общ редовен оборот",
+            "totalDelayed": "Общ забавен оборот"
+        },
+        "monthlyTotalsTable": {
+            "month": "Месец",
+            "total": "Общ оборот",
+            "totalRegular": "Общ редовен оборот",
+            "totalDelayed": "Общ забавен оборот"
+        },
+        "prevButton": "Предишна",
+        "nextButton": "Следваща"
     }
 }
