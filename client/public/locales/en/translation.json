@@ -131,5 +131,35 @@
         },
         "prevButton": "Prev",
         "nextButton": "Next"
+    },
+    "gmv": {
+        "header": "GMV",
+        "periodLabel": "Period:",
+        "periodInput": {
+            "day": "Day",
+            "month": "Month",
+            "year": "Year"
+        },
+        "dateLabel": "Date:",
+        "perPageLabel": "Items per Page",
+        "transactionsTable": {
+            "dateTime": "Date/Time",
+            "amount": "Amount",
+            "type": "Type"
+        },
+        "dailyTotalsTable": {
+            "date": "Date",
+            "total": "Total GMV",
+            "totalRegular": "Total Regular GMV",
+            "totalDelayed": "Total Delayed GMV"
+        },
+        "monthlyTotalsTable": {
+            "month": "Month",
+            "total": "Total GMV",
+            "totalRegular": "Total Regular GMV",
+            "totalDelayed": "Total Delayed GMV"
+        },
+        "prevButton": "Prev",
+        "nextButton": "Next"
     }
 }
