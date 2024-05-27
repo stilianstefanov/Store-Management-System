@@ -1,4 +1,5 @@
 import styles from './TransactionsMonthlyTotalsTable.module.css';
+import { useTranslation } from 'react-i18next';
 
 const monthNames = {
     1: "January", 2: "February", 3: "March",
@@ -8,14 +9,16 @@ const monthNames = {
 };
 
 function TransactionsMonthlyTotalsTable({ transactionsMonthlyTotals }) {
+    const { t } = useTranslation();
+
     return (
         <table className={styles['table-fill']}>
             <thead>
                 <tr>
-                    <th className={styles['text-left']}>Month</th>
-                    <th className={styles['text-left']}>Total GMV</th>
-                    <th className={styles['text-left']}>Total Regular GMV</th>
-                    <th className={styles['text-left']}>Total Delayed GMV</th>
+                    <th className={styles['text-left']}>{t('gmv.monthlyTotalsTable.month')}</th>
+                    <th className={styles['text-left']}>{t('gmv.monthlyTotalsTable.total')}</th>
+                    <th className={styles['text-left']}>{t('gmv.monthlyTotalsTable.totalRegular')}</th>
+                    <th className={styles['text-left']}>{t('gmv.monthlyTotalsTable.totalDelayed')}</th>
                 </tr>
             </thead>
             <tbody className={styles['table-hover']}>

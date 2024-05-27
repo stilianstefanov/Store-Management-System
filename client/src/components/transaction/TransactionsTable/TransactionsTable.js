@@ -1,13 +1,16 @@
-import styles from './TransactionsTable.module.css'
+import styles from './TransactionsTable.module.css';
+import { useTranslation } from 'react-i18next';
 
 function TransactionsTable({ transactions }) {
+    const { t } = useTranslation();
+
     return (
         <table className={styles['table-fill']}>
             <thead>
                 <tr>
-                    <th className={styles['text-left']}>Date/Time</th>
-                    <th className={styles['text-left']}>Amount</th>
-                    <th className={styles['text-left']}>Type</th>
+                    <th className={styles['text-left']}>{t('gmv.transactionsTable.dateTime')}</th>
+                    <th className={styles['text-left']}>{t('gmv.transactionsTable.amount')}</th>
+                    <th className={styles['text-left']}>{t('gmv.transactionsTable.type')}</th>
                 </tr>
             </thead>
             <tbody className={styles['table-hover']}>
