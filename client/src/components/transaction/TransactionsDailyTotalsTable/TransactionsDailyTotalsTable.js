@@ -1,14 +1,17 @@
-import styles from './TransactionsDailyTotalsTable.module.css'
+import styles from './TransactionsDailyTotalsTable.module.css';
+import { useTranslation } from 'react-i18next';
 
 function TransactionsDailyTotalsTable({ transactionsDailyTotals }) {
+    const { t } = useTranslation();
+    
     return (
         <table className={styles['table-fill']}>
             <thead>
                 <tr>
-                    <th className={styles['text-left']}>Date</th>
-                    <th className={styles['text-left']}>Total GMV</th>
-                    <th className={styles['text-left']}>Total Regular GMV</th>
-                    <th className={styles['text-left']}>Total Delayed GMV</th>
+                    <th className={styles['text-left']}>{t('gmv.dailyTotalsTable.date')}</th>
+                    <th className={styles['text-left']}>{t('gmv.dailyTotalsTable.total')}</th>
+                    <th className={styles['text-left']}>{t('gmv.dailyTotalsTable.totalRegular')}</th>
+                    <th className={styles['text-left']}>{t('gmv.dailyTotalsTable.totalDelayed')}</th>
                 </tr>
             </thead>
             <tbody className={styles['table-hover']}>
