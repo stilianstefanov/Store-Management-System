@@ -141,6 +141,8 @@
             "year": "Year"
         },
         "dateLabel": "Date:",
+        "monthLabel": "Month:",
+        "yearLabel": "Year:",
         "perPageLabel": "Items per Page",
         "transactionsTable": {
             "dateTime": "Date/Time",

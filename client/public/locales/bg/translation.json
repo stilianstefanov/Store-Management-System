@@ -141,6 +141,8 @@
             "year": "Година"
         },
         "dateLabel": "Дата:",
+        "monthLabel": "Месец:",
+        "yearLabel": "Година:",
         "perPageLabel": "Елементи на страница",
         "transactionsTable": {
             "dateTime": "Дата/Час",

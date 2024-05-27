@@ -8,6 +8,7 @@ import TransactionsTable from '../../components/transaction/TransactionsTable/Tr
 import TransactionsDailyTotalsTable from '../../components/transaction/TransactionsDailyTotalsTable/TransactionsDailyTotalsTable';
 import TransactionsMonthlyTotalsTable from '../../components/transaction/TransactionsMonthlyTotalsTable/TransactionsMonthlyTotalsTable';
 import * as GmvService from '../../services/gmvService';
+import { useTranslation } from 'react-i18next';
 
 function GmvPage() {
     const [transactions, setTransactions] = useState([]);
@@ -24,6 +25,7 @@ function GmvPage() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const handleError = useCallback((error) => {
         if (error.response && error.response.status === 401) {
@@ -110,16 +112,16 @@ function GmvPage() {
         <div className={`container ${styles['table-container']}`}>
             <div className={styles['header-container']}>
                 <div className={styles['spacer']}></div>
-                <h1 className={`text-center ${styles['title']}`}>GMV</h1>
+                <h1 className={`text-center ${styles['title']}`}>{t('gmv.header')}</h1>
                 <div className={styles['total-gmv-container']}>
-                    <h4 className={styles['total-gmv-h']}>Total GMV: {totalGmv.toFixed(2)}</h4>
-                    <h4 className={styles['regular-gmv-h']}>Regular GMV: {totalRegularGmv.toFixed(2)}</h4>
-                    <h4 className={styles['delayed-gmv-h']}>Delayed GMV: {totalDelayedGmv.toFixed(2)}</h4>
+                    <h4 className={styles['total-gmv-h']}>{t('gmv.dailyTotalsTable.total')} {totalGmv.toFixed(2)}</h4>
+                    <h4 className={styles['regular-gmv-h']}>{t('gmv.dailyTotalsTable.totalRegular')} {totalRegularGmv.toFixed(2)}</h4>
+                    <h4 className={styles['delayed-gmv-h']}>{t('gmv.dailyTotalsTable.totalDelayed')} {totalDelayedGmv.toFixed(2)}</h4>
                 </div>
             </div>
             <div className="d-flex justify-content-center flex-wrap">
                 <div className={styles['input-group']}>
-                    <label htmlFor="period-select">Period:</label>
+                    <label htmlFor="period-select">{t('gmv.periodLabel')}</label>
                     <select value={period}
                         id="period-select"
                         className={`form-control ${styles['input-field']}`}
@@ -128,14 +130,14 @@ function GmvPage() {
                             setPeriod(e.target.value)
                         }}
                     >
-                        <option value="day">Day</option>
-                        <option value="month">Month</option>
-                        <option value="year">Year</option>
+                        <option value="day">{t('gmv.periodInput.day')}</option>
+                        <option value="month">{t('gmv.periodInput.month')}</option>
+                        <option value="year">{t('gmv.periodInput.year')}</option>
                     </select>
                 </div>
                 {period === 'day' && (
                     <div className={styles['input-group']}>
-                        <label htmlFor="date-select">Date:</label>
+                        <label htmlFor="date-select">{t('gmv.dateLabel')}</label>
                         <input
                             id="date-select"
                             type="date"
@@ -146,7 +148,7 @@ function GmvPage() {
                 )}
                 {period === 'month' && (
                     <div className={styles['input-group']}>
-                        <label htmlFor="month-select">Month:</label>
+                        <label htmlFor="month-select">{t('gmv.monthLabel')}</label>
                         <input
                             id="month-select"
                             type="month"
@@ -157,7 +159,7 @@ function GmvPage() {
                 )}
                 {period === 'year' && (
                     <div className={styles['input-group']}>
-                        <label htmlFor="year-select">Year:</label>
+                        <label htmlFor="year-select">{t('gmv.yearLabel')}</label>
                         <input
                             id="year-select"
                             type="number"
@@ -168,7 +170,7 @@ function GmvPage() {
                 )}
                 {period !== 'year' && (
                     <div className={styles['input-group']}>
-                        <label htmlFor="order-select">Items per Page :</label>
+                        <label htmlFor="order-select">{t('gmv.perPageLabel')}</label>
                         <select
                             id="order-select"
                             className={`form-control ${styles['input-field']}`}
@@ -197,7 +199,7 @@ function GmvPage() {
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         className={styles['page-control-button']}>
-                        Prev
+                        {t('gmv.prevButton')}
                     </button>
                 )}
                 {pageNumbers.map(pageNumber => (
@@ -213,7 +215,7 @@ function GmvPage() {
                     <button
                         onClick={() => setCurrentPage(currentPage + 1)}
                         className={styles['page-control-button']}>
-                        Next
+                        {t('gmv.nextButton')}
                     </button>
                 )}
             </div>
