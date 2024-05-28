@@ -163,5 +163,14 @@
         },
         "prevButton": "Предишна",
         "nextButton": "Следваща"
+    },
+    "account": {
+        "company": "Компания",
+        "username": "Потребителско име",
+        "email": "Мейл",
+        "update": "Обнови инфо",
+        "changepass": "Смяна парола",
+        "logout": "Излизане",
+        "close": "Затвори"
     }
 }
