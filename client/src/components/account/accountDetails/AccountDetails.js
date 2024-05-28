@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 import ChangePasswordModal from './ChangePasswordModal/ChangePasswordModal';
 import UpdateProfileModal from './UpdadeProfileModal/UpdateProfileModal';
+import { useTranslation } from 'react-i18next';
 
 function AccountDetails({ closeModal }) {
     const [claims, setClaims] = useState({ unique_name: "", email: "", companyName: "" });
@@ -12,6 +13,7 @@ function AccountDetails({ closeModal }) {
     const [updateProfileModalIsOpen, setUpdateProfileModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     useEffect(() => {
         const jwtToken = sessionStorage.getItem('token');
@@ -39,36 +41,36 @@ function AccountDetails({ closeModal }) {
                 <div className={styles['flex-container']}>
                     <ul className={styles['list-info']}>
                         <li>
-                            <p>Company: <span className={styles['list-info-span']}>{claims.companyName}</span></p>
+                            <p>{t('account.company')} <span className={styles['list-info-span']}>{claims.companyName}</span></p>
                         </li>
                         <li>
-                            <p>Username: <span className={styles['list-info-span']}>{claims.unique_name}</span></p>
+                            <p>{t('account.username')} <span className={styles['list-info-span']}>{claims.unique_name}</span></p>
                         </li>
                         <li>
-                            <p>Email: <span className={styles['list-info-span']}>{claims.email}</span></p>
+                            <p>{t('account.email')} <span className={styles['list-info-span']}>{claims.email}</span></p>
                         </li>
                     </ul>
                     <div className={styles['buttons-container']}>
                         <button
                             className={styles['update-button']}
                             onClick={() => setUpdateProfileModalIsOpen(true)}>
-                            Update info
+                            {t('account.update')}
                         </button>
                         <button
                             className={styles['change-password-button']}
                             onClick={() => setChangePasswordModalIsOpen(true)}>
-                            Change password
+                            {t('account.changepass')}
                         </button>
                         <button
                             className={styles['logout-button']}
                             onClick={logoutHandler}>
-                            Logout
+                            {t('account.logout')}
                         </button>
                     </div>
                     <button
                         className={styles['close-button']}
                         onClick={closeModal} >
-                        Close
+                        {t('account.close')}
                     </button>
                 </div>
             </div>
