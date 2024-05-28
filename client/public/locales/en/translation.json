@@ -163,5 +163,14 @@
         },
         "prevButton": "Prev",
         "nextButton": "Next"
+    },
+    "account": {
+        "company": "Company",
+        "username": "Username",
+        "email": "Email",
+        "update": "Update info",
+        "changepass": "Change password",
+        "logout": "Logout",
+        "close": "Close"
     }
 }
