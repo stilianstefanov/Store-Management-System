@@ -107,6 +107,15 @@
         "prevButton": "Предишна",
         "nextButton": "Следваща"
     },
+    "addWarehouseModal": {
+        "header": "Добави нов склад",
+        "nameLabel": "Име:",
+        "nameInput": "Въведете име на склад",
+        "typeLabel": "Тип:",
+        "typeInput": "Въведете тип на склад",
+        "cancel": "Отмяна",
+        "add": "Добави"
+    },
     "clients": {
         "header": "Клиенти",
         "searchLabel": "Търсене:",
