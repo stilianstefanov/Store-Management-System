@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { warehouseValidationRules, commonValidationRules } from '../../../validationRules';
 import * as WarehouseService from '../../../services/warehouseService';
+import { useTranslation } from 'react-i18next';
 
 function WarehouseForm(props) {
     const isUpdate = props.warehouse ? true : false;
@@ -13,6 +14,7 @@ function WarehouseForm(props) {
     const [validationErrors, setValidationErrors] = useState({});
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -26,7 +28,7 @@ function WarehouseForm(props) {
                 isUpdate ? await WarehouseService.Update(props.warehouse.id, request) : await WarehouseService.Create(request);
                 props.closeForm();
                 props.refreshWarehouses();
-                toast.success(`${isUpdate? "Warehouse updated successfully!" : "Warehouse added successfully!"}`);
+                toast.success(`${isUpdate ? "Warehouse updated successfully!" : "Warehouse added successfully!"}`);
             } catch (error) {
                 handleError(error);
             }
@@ -91,13 +93,13 @@ function WarehouseForm(props) {
     return (
         <div>
             <div className={styles["container"]}>
-                <h1 className={styles["header"]}>{`${isUpdate ? "Update Warehouse" : "Add New Warehouse"}`}</h1>
+                <h1 className={styles["header"]}>{`${isUpdate ? t('warehouseForm.headerUpdate') : t('warehouseForm.headerAdd')}`}</h1>
                 <form onSubmit={submitHandler}>
                     <div className={styles['input-group']}>
-                        <label htmlFor="name-input">Name:</label>
+                        <label htmlFor="name-input">{t('warehouseForm.nameLabel')}</label>
                         <input
                             id="name-input"
-                            placeholder="Enter warehouse name"
+                            placeholder={t('warehouseForm.nameInput')}
                             className={styles["input"]}
                             value={name}
                             onChange={inputNameHandler}
@@ -105,10 +107,10 @@ function WarehouseForm(props) {
                         {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
                     </div>
                     <div className={styles['input-group']}>
-                        <label htmlFor="type-input">Type:</label>
+                        <label htmlFor="type-input">{t('warehouseForm.typeLabel')}</label>
                         <input
                             id="type-input"
-                            placeholder="Enter warehouse type"
+                            placeholder={t('warehouseForm.typeInput')}
                             className={styles["input"]}
                             value={type}
                             onChange={inputTypeHandler}
@@ -117,10 +119,10 @@ function WarehouseForm(props) {
                     </div>
                     <div className={styles['buttons-container']}>
                         <button className={styles['button-cancel']} onClick={props.closeForm}>
-                            Cancel
+                            {t('warehouseForm.cancel')}
                         </button>
                         <button type="submit" className={styles["button-confirm"]}>
-                            {`${isUpdate ? "Update" : "Add"}`}
+                            {`${isUpdate ? t('warehouseForm.update') : t('warehouseForm.add')}`}
                         </button>
                     </div>
                 </form>
