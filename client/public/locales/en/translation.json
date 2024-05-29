@@ -107,14 +107,16 @@
         "prevButton": "Prev",
         "nextButton": "Next"
     },
-    "addWarehouseModal": {
-        "header": "Add New Warehouse",
+    "warehouseForm": {
+        "headerAdd": "Add New Warehouse",
+        "headerUpdate": "Update Warehouse",
         "nameLabel": "Name:",
         "nameInput": "Enter warehouse name",
         "typeLabel": "Type:",
         "typeInput": "Enter warehouse type",
         "cancel": "Cancel",
-        "add": "Add"
+        "add": "Add",
+        "update": "Update"
     },
     "clients": {
         "header": "Clients",
