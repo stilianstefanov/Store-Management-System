@@ -28,7 +28,7 @@ function WarehouseForm(props) {
                 isUpdate ? await WarehouseService.Update(props.warehouse.id, request) : await WarehouseService.Create(request);
                 props.closeForm();
                 props.refreshWarehouses();
-                toast.success(`${isUpdate ? "Warehouse updated successfully!" : "Warehouse added successfully!"}`);
+                toast.success(`${isUpdate ? t('warehouseForm.warehouseUpdated') : t('warehouseForm.warehouseAdded')}`);
             } catch (error) {
                 handleError(error);
             }

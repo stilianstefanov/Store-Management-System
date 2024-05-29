@@ -116,7 +116,9 @@
         "typeInput": "Въведете тип на склад",
         "cancel": "Отмяна",
         "add": "Добави",
-        "update": "Обнови"
+        "update": "Обнови",
+        "warehouseUpdated": "Складът е обновен успешно!",
+        "warehouseAdded": "Складът е добавен успешно!"
     },
     "clients": {
         "header": "Клиенти",

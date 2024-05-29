@@ -116,7 +116,9 @@
         "typeInput": "Enter warehouse type",
         "cancel": "Cancel",
         "add": "Add",
-        "update": "Update"
+        "update": "Update",
+        "warehouseUpdated": "Warehouse updated successfully!",
+        "warehouseAdded": "Warehouse added successfully!"
     },
     "clients": {
         "header": "Clients",
