@@ -107,6 +107,15 @@
         "prevButton": "Prev",
         "nextButton": "Next"
     },
+    "addWarehouseModal": {
+        "header": "Add New Warehouse",
+        "nameLabel": "Name:",
+        "nameInput": "Enter warehouse name",
+        "typeLabel": "Type:",
+        "typeInput": "Enter warehouse type",
+        "cancel": "Cancel",
+        "add": "Add"
+    },
     "clients": {
         "header": "Clients",
         "searchLabel": "Search:",
