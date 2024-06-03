@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { toast } from 'react-toastify';
 import WarehouseRow from './WarehouseRow/WarehouseRow';
-import * as WarehouseService from '../../../services/warehouseService'
+import * as WarehouseService from '../../../services/warehouseService';
+import { useTranslation } from 'react-i18next';
 
 function WarehouseSelectTable({ selectedWarehouseId, selectWarehouseHandler }) {
     const [warehouses, setWarehouses] = useState([]);
@@ -13,6 +14,7 @@ function WarehouseSelectTable({ selectedWarehouseId, selectWarehouseHandler }) {
     const [isLoading, setIsLoading] = useState(false);
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleError = useCallback((error) => {
         if (error.response && error.response.status === 401) {
@@ -44,11 +46,11 @@ function WarehouseSelectTable({ selectedWarehouseId, selectWarehouseHandler }) {
 
     return (
         <div className={styles['main-container']}>
-            <h3 className={styles['header']}>Select warehouse:</h3>
+            <h3 className={styles['header']}>{t('selectWarehouseTable.header')}</h3>
             <input
                 type='text'
                 value={searchTerm}
-                placeholder='Search'
+                placeholder={t('selectWarehouseTable.searchInput')}
                 className={`form-control ${styles.input}`}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -56,8 +58,8 @@ function WarehouseSelectTable({ selectedWarehouseId, selectWarehouseHandler }) {
                 <table className={styles['tableCustom']}>
                     <thead className={styles['tableHeader']}>
                         <tr>
-                            <th>Name</th>
-                            <th>Type</th>
+                            <th>{t('selectWarehouseTable.name')}</th>
+                            <th>{t('selectWarehouseTable.type')}</th>
                         </tr>
                     </thead>
                     <tbody>
