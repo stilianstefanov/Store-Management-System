@@ -107,7 +107,9 @@
         "maxQuantityInput": "Enter max quantity",
         "cancel": "Cancel",
         "add": "Add",
-        "update": "Update"
+        "update": "Update",
+        "productUpdated": "Product updated successfully!",
+        "productAdded": "Product added successfully!"
     },
     "selectWarehouseTable": {
         "header": "Select warehouse",

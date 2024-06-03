@@ -107,7 +107,9 @@
         "maxQuantityInput": "Въведи максимално количество",
         "cancel": "Отмяна",
         "add": "Добави",
-        "update": "Обнови"
+        "update": "Обнови",
+        "productUpdated": "Продуктът е обновен успешно!",
+        "productAdded": "Продуктът е добавен успешно!"
     },
     "selectWarehouseTable": {
         "header": "Избери склад",

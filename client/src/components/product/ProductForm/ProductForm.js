@@ -48,7 +48,7 @@ function ProductForm(props) {
                     : await ProductService.Create(request);
                 props.closeForm();
                 props.refreshProducts();
-                toast.success(`${isUpdate ? "Product updated successfully!" : "Product added successfully!"}`);
+                toast.success(`${isUpdate ? t('productForm.productUpdated') : t('productForm.productAdded')}`);
             } catch (error) {
                 handleError(error);
             }
