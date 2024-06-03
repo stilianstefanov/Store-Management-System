@@ -6,6 +6,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { productValidationRules, commonValidationRules } from '../../../validationRules';
 import * as ProductService from '../../../services/productService'
 import WarehouseSelectTable from '../../warehouse/warehouseSelectTable/WarehouseSelectTable';
+import { useTranslation } from 'react-i18next';
 
 function ProductForm(props) {
     const isUpdate = props.product ? true : false;
@@ -21,6 +22,7 @@ function ProductForm(props) {
     const [validationErrors, setValidationErrors] = useState({});
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -254,15 +256,15 @@ function ProductForm(props) {
     return (
         <div>
             <div className={isUpdate ? styles["update-container"] : styles["add-container"]}>
-                <h1 className={styles["header"]}>{`${isUpdate ? "Update Product" : "Add New Product"}`}</h1>
+                <h1 className={styles["header"]}>{`${isUpdate ? t('productForm.headerUpdate') : t('productForm.headerAdd')}`}</h1>
                 <form onSubmit={submitHandler}>
                     <div className={styles['wrapper']}>
                         <div className={styles['left-section']}>
                             <div className={styles['input-group']}>
-                                <label htmlFor="barcode-input">Barcode:</label>
+                                <label htmlFor="barcode-input">{t('productForm.barcodeLabel')}</label>
                                 <input
                                     id="barcode-input"
-                                    placeholder="Enter barcode"
+                                    placeholder={t('productForm.barcodeInput')}
                                     className={styles["input"]}
                                     value={barcode}
                                     onChange={inputBarcodeHandler}
@@ -270,10 +272,10 @@ function ProductForm(props) {
                                 {validationErrors.barcode && <p className={styles["error-message"]}>{validationErrors.barcode}</p>}
                             </div>
                             <div className={styles['input-group']}>
-                                <label htmlFor="name-input">Name:</label>
+                                <label htmlFor="name-input">{t('productForm.nameLabel')}</label>
                                 <input
                                     id="name-input"
-                                    placeholder="Enter name"
+                                    placeholder={t('productForm.nameInput')}
                                     className={styles["input"]}
                                     value={name}
                                     onChange={inputNameHandler}
@@ -281,10 +283,10 @@ function ProductForm(props) {
                                 {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
                             </div>
                             <div className={styles['input-group']}>
-                                <label htmlFor="description-input">Description:</label>
+                                <label htmlFor="description-input">{t('productForm.descrLabel')}</label>
                                 <input
                                     id="description-input"
-                                    placeholder="Enter description (optional)"
+                                    placeholder={t('productForm.descrInput')}
                                     className={styles["input"]}
                                     value={description}
                                     onChange={inputDescriptionHandler}
@@ -292,11 +294,11 @@ function ProductForm(props) {
                                 {validationErrors.description && <p className={styles["error-message"]}>{validationErrors.description}</p>}
                             </div>
                             <div className={styles['input-group']}>
-                                <label htmlFor="price-input">Price:</label>
+                                <label htmlFor="price-input">{t('productForm.priceLabel')}</label>
                                 <input
                                     id="price-input"
                                     type='number'
-                                    placeholder="Enter price"
+                                    placeholder={t('productForm.priceInput')}
                                     className={styles["input"]}
                                     value={price}
                                     onChange={inputPriceHandler}
@@ -306,11 +308,11 @@ function ProductForm(props) {
                         </div>
                         <div className={styles['middle-section']}>
                             <div className={styles['input-group']}>
-                                <label htmlFor="delivery-price-input">Delivery price:</label>
+                                <label htmlFor="delivery-price-input">{t('productForm.delPriceLabel')}</label>
                                 <input
                                     id="delivery-price-input"
                                     type='number'
-                                    placeholder="Enter delivery price"
+                                    placeholder={t('productForm.delPriceInput')}
                                     className={styles["input"]}
                                     value={deliveryPrice}
                                     onChange={inputDeliveryPriceHandler}
@@ -318,11 +320,11 @@ function ProductForm(props) {
                                 {validationErrors.deliveryPrice && <p className={styles["error-message"]}>{validationErrors.deliveryPrice}</p>}
                             </div>
                             <div className={styles['input-group']}>
-                                <label htmlFor="quantity-input">Quantity:</label>
+                                <label htmlFor="quantity-input">{t('productForm.quantityLabel')}</label>
                                 <input
                                     id="quantity-input"
                                     type='number'
-                                    placeholder="Enter quantity"
+                                    placeholder={t('productForm.quantityInput')}
                                     className={styles["input"]}
                                     value={quantity}
                                     onChange={inputQuantityHandler}
@@ -330,11 +332,11 @@ function ProductForm(props) {
                                 {validationErrors.quantity && <p className={styles["error-message"]}>{validationErrors.quantity}</p>}
                             </div>
                             <div className={styles['input-group']}>
-                                <label htmlFor="quantity-min-input">Min Quantity:</label>
+                                <label htmlFor="quantity-min-input">{t('productForm.minQuantityLabel')}</label>
                                 <input
                                     id="quantity-min-input"
                                     type='number'
-                                    placeholder="Enter min quantity"
+                                    placeholder={t('productForm.minQuantityInput')}
                                     className={styles["input"]}
                                     value={minQuantity}
                                     onChange={inputMinQuantityHandler}
@@ -342,11 +344,11 @@ function ProductForm(props) {
                                 {validationErrors.minQuantity && <p className={styles["error-message"]}>{validationErrors.minQuantity}</p>}
                             </div>
                             <div className={styles['input-group']}>
-                                <label htmlFor="quantity-max-input">Max Quantity:</label>
+                                <label htmlFor="quantity-max-input">{t('productForm.maxQuantityLabel')}</label>
                                 <input
                                     id="quantity-max-input"
                                     type='number'
-                                    placeholder="Enter max quantity"
+                                    placeholder={t('productForm.maxQuantityInput')}
                                     className={styles["input"]}
                                     value={maxQuantity}
                                     onChange={inputMaxQuantityHandler}
@@ -364,10 +366,10 @@ function ProductForm(props) {
                     </div>
                     <div className={styles['buttons-container']}>
                         <button className={styles['button-cancel']} onClick={props.closeForm}>
-                            Cancel
+                            {t('productForm.cancel')}
                         </button>
                         <button type="submit" className={styles["button-confirm"]}>
-                            {`${isUpdate ? "Update" : "Add"}`}
+                            {`${isUpdate ? t('productForm.update') : t('productForm.add')}`}
                         </button>
                     </div>
                 </form>
