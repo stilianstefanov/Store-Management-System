@@ -109,6 +109,12 @@
         "add": "Добави",
         "update": "Обнови"
     },
+    "selectWarehouseTable": {
+        "header": "Избери склад",
+        "searchInput": "Търсене",
+        "name": "Име",
+        "type": "Тип"
+    },
     "warehouses": {
         "header": "Складове",
         "searchLabel": "Търсене:",

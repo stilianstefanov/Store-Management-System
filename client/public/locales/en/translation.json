@@ -109,6 +109,12 @@
         "add": "Add",
         "update": "Update"
     },
+    "selectWarehouseTable": {
+        "header": "Select warehouse",
+        "searchInput": "Search",
+        "name": "Name",
+        "type": "Type"
+    },
     "warehouses": {
         "header": "Warehouses",
         "searchLabel": "Search:",
