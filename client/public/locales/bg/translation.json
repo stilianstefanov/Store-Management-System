@@ -176,6 +176,25 @@
         "prevButton": "Предишна",
         "nextButton": "Следваща"
     },
+    "clientForm": {
+        "headerAdd": "Добави Нов Клиент",
+        "headerUpdate": "Обнови Клиент",
+        "nameLabel": "Име:",
+        "nameInput": "Въведи име",
+        "surnameLabel": "Презиме:",
+        "surnameInput": "Въведи презиме",
+        "lastnameLabel": "Фамилия:",
+        "lastnameInput": "Въведи фамилия",
+        "curCreditLabel": "Текущ кредит:",
+        "curCreditInput": "Въведи текущ кредит",
+        "limitLabel": "Лимит:",
+        "limitInput": "Въведи кредитен лимит",
+        "cancel": "Отмяна",
+        "add": "Добави",
+        "update": "Обнови",
+        "clientUpdated": "Клиентът е обновен успешно!",
+        "clientAdded": "Клиентът е добавен успешно!"
+    },
     "gmv": {
         "header": "Оборот",
         "periodLabel": "Период:",
