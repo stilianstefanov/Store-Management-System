@@ -176,6 +176,25 @@
         "prevButton": "Prev",
         "nextButton": "Next"
     },
+    "clientForm": {
+        "headerAdd": "Add New Client",
+        "headerUpdate": "Update Client",
+        "nameLabel": "Name:",
+        "nameInput": "Enter name",
+        "surnameLabel": "Surname:",
+        "surnameInput": "Enter surname",
+        "lastnameLabel": "Lastname:",
+        "lastnameInput": "Enter lastname",
+        "curCreditLabel": "Current credit:",
+        "curCreditInput": "Enter current credit",
+        "limitLabel": "Credit limit:",
+        "limitInput": "Enter credit limit",
+        "cancel": "Cancel",
+        "add": "Add",
+        "update": "Update",
+        "clientUpdated": "Client updated successfully!",
+        "clientAdded": "Client added successfully!"
+    },
     "gmv": {
         "header": "GMV",
         "periodLabel": "Period:",
