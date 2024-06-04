@@ -4,7 +4,8 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { clientValidationRules, commonValidationRules } from "../../../validationRules";
-import * as ClientService from "../../../services/clientService"
+import * as ClientService from "../../../services/clientService";
+import { useTranslation } from 'react-i18next';
 
 function ClientForm(props) {
     const [name, setName] = useState(`${props.client ? props.client.name : ""}`);
@@ -15,6 +16,7 @@ function ClientForm(props) {
     const [validationErrors, setValidationErrors] = useState({});
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const submitHandler = async (event) => {
         event.preventDefault();
