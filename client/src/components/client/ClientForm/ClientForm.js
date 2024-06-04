@@ -33,7 +33,7 @@ function ClientForm(props) {
                 props.client ? await ClientService.Update(props.client.id, request) : await ClientService.Create(request);
                 props.closeAddNewClient();
                 props.refreshClients();
-                toast.success(`${props.client ? "Client updated successfully!" : "Client added successfully!"}`);
+                toast.success(`${props.client ? t('clientForm.clientUpdated') : t('clientForm.clientAdded')}`);
             } catch (error) {
                 handleError(error);
             }
@@ -161,13 +161,13 @@ function ClientForm(props) {
     return (
         <div>
             <div className={styles["container"]}>
-                <h1 className={styles["header"]}>{`${props.client ? "Update Client" : "Add New Client"}`}</h1>
+                <h1 className={styles["header"]}>{`${props.client ? t('clientForm.headerUpdate') : t('clientForm.headerAdd')}`}</h1>
                 <form onSubmit={submitHandler}>
                     <div className={styles['input-group']}>
-                        <label htmlFor="name-input">Name:</label>
+                        <label htmlFor="name-input">{t('clientForm.nameLabel')}</label>
                         <input
                             id="name-input"
-                            placeholder="Enter name"
+                            placeholder={t('clientForm.nameInput')}
                             className={styles["input"]}
                             value={name}
                             onChange={inputNameHandler}
@@ -175,10 +175,10 @@ function ClientForm(props) {
                         {validationErrors.name && <p className={styles["error-message"]}>{validationErrors.name}</p>}
                     </div>
                     <div className={styles['input-group']}>
-                        <label htmlFor="surname-input">Surname:</label>
+                        <label htmlFor="surname-input">{t('clientForm.surnameLabel')}</label>
                         <input
                             id="surname-input"
-                            placeholder="Enter surname"
+                            placeholder={t('clientForm.surnameInput')}
                             className={styles["input"]}
                             value={surname}
                             onChange={inputSurnameHandler}
@@ -186,10 +186,10 @@ function ClientForm(props) {
                         {validationErrors.surname && <p className={styles["error-message"]}>{validationErrors.surname}</p>}
                     </div>
                     <div className={styles['input-group']}>
-                        <label htmlFor="lastname-input">Lastname:</label>
+                        <label htmlFor="lastname-input">{t('clientForm.lastnameLabel')}</label>
                         <input
                             id="lastname-input"
-                            placeholder="Enter lastname"
+                            placeholder={t('clientForm.lastnameInput')}
                             className={styles["input"]}
                             value={lastName}
                             onChange={inputLastNameHandler}
@@ -197,11 +197,11 @@ function ClientForm(props) {
                         {validationErrors.lastName && <p className={styles["error-message"]}>{validationErrors.lastName}</p>}
                     </div>
                     <div className={styles['input-group']}>
-                        <label htmlFor="current-credit-input">Current credit:</label>
+                        <label htmlFor="current-credit-input">{t('clientForm.curCreditLabel')}</label>
                         <input
                             id="current-credit-input"
                             type="number"
-                            placeholder="Enter current credit"
+                            placeholder={t('clientForm.curCreditInput')}
                             className={styles["input"]}
                             value={currentCredit}
                             onChange={inputCurrentCreditHandler}
@@ -209,11 +209,11 @@ function ClientForm(props) {
                         {validationErrors.currentCredit && <p className={styles["error-message"]}>{validationErrors.currentCredit}</p>}
                     </div>
                     <div className={styles['input-group']}>
-                        <label htmlFor="credit-limit-input">Credit limit:</label>
+                        <label htmlFor="credit-limit-input">{t('clientForm.limitLabel')}</label>
                         <input
                             id="credit-limit-input"
                             type="number"
-                            placeholder="Enter credit limit"
+                            placeholder={t('clientForm.limitInput')}
                             className={styles["input"]}
                             value={creditLimit}
                             onChange={inputCreditLimitHandler}
@@ -222,10 +222,10 @@ function ClientForm(props) {
                     {validationErrors.creditLimit && <p className={styles["error-message"]}>{validationErrors.creditLimit}</p>}
                     <div className={styles['buttons-container']}>
                         <button className={styles['button-cancel']} onClick={props.closeAddNewClient}>
-                            Cancel
+                            {t('clientForm.cancel')}
                         </button>
                         <button type="submit" className={styles["button-confirm"]}>
-                            {`${props.client ? "Update" : "Add"}`}
+                            {`${props.client ? t('clientForm.update') : t('clientForm.add')}`}
                         </button>
                     </div>
                 </form>
