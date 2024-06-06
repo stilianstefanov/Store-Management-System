@@ -8,6 +8,7 @@ import ChangeWarehouse from './ChangeWarehouseModal/ChangeWarehouse';
 import AddQuantityModal from './AddQuantityModal/AddQuantityModal';
 import DeleteProductModal from './DeleteProductModal/DeleteProductModal';
 import * as ProductService from '../../../services/productService';
+import { useTranslation } from 'react-i18next';
 
 function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
     const [product, setProduct] = useState({
@@ -30,6 +31,7 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
     const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const handleError = useCallback((error) => {
         if (error.response && error.response.status === 401) {
@@ -66,19 +68,19 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
                     <div className={styles['left-section']}>
                         <ul className={styles['list-info']}>
                             <li>
-                                <p>Barcode: <span className={styles['list-info-span']}>{product.barcode}</span></p>
+                                <p>{t('productDetails.barcode')} <span className={styles['list-info-span']}>{product.barcode}</span></p>
                             </li>
                             <li>
-                                <p>Name: <span className={styles['list-info-span']}>{product.name}</span></p>
+                                <p>{t('productDetails.name')} <span className={styles['list-info-span']}>{product.name}</span></p>
                             </li>
                             <li>
-                                <p>Description: <span className={styles['list-info-span']}>{product.description ? product.description : 'N/A'}</span></p>
+                                <p>{t('productDetails.description')} <span className={styles['list-info-span']}>{product.description ? product.description : 'N/A'}</span></p>
                             </li>
                             <li>
-                                <p>Price: <span className={styles['list-info-span']}>{product.price.toFixed(2)}</span></p>
+                                <p>{t('productDetails.price')} <span className={styles['list-info-span']}>{product.price.toFixed(2)}</span></p>
                             </li>
                             <li>
-                                <p>Delivery price: <span className={styles['list-info-span']}>{product.deliveryPrice.toFixed(2)}</span></p>
+                                <p>{t('productDetails.delPrice')} <span className={styles['list-info-span']}>{product.deliveryPrice.toFixed(2)}</span></p>
                             </li>
                         </ul>
                     </div>
