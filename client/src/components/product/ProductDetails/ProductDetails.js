@@ -87,19 +87,19 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
                     <div className={styles['right-section']}>
                         <ul className={styles['list-info']}>
                             <li>
-                                <p>Quantity: <span className={styles['list-info-span']}>{product.quantity}</span></p>
+                                <p>{t('productDetails.qty')} <span className={styles['list-info-span']}>{product.quantity}</span></p>
                             </li>
                             <li>
-                                <p>Min Quantity: <span className={styles['list-info-span']}>{product.minQuantity}</span></p>
+                                <p>{t('productDetails.minQty')} <span className={styles['list-info-span']}>{product.minQuantity}</span></p>
                             </li>
                             <li>
-                                <p>Max Quantity: <span className={styles['list-info-span']}>{product.maxQuantity}</span></p>
+                                <p>{t('productDetails.maxQty')} <span className={styles['list-info-span']}>{product.maxQuantity}</span></p>
                             </li>
                             <li>
-                                <p>Warehouse Name: <span className={styles['list-info-span']}>{product.warehouse.name}</span></p>
+                                <p>{t('productDetails.warehouseName')} <span className={styles['list-info-span']}>{product.warehouse.name}</span></p>
                             </li>
                             <li>
-                                <p>Warehouse Type: <span className={styles['list-info-span']}>{product.warehouse.type}</span></p>
+                                <p>{t('productDetails.warehouseType')} <span className={styles['list-info-span']}>{product.warehouse.type}</span></p>
                             </li>
                         </ul>
                     </div>
@@ -109,31 +109,31 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
                         className={styles['update-button']}
                         onClick={() => setProductFormIsOpen(true)}
                     >
-                        Update
+                        {t('productDetails.update')}
                     </button>
                     <button
                         className={styles['add-qty-button']}
                         onClick={() => setAddQuantityModalIsOpen(true)}
                     >
-                        Add quantity
+                        {t('productDetails.addQty')}
                     </button>
                     <button
                         className={styles['change-button']}
                         onClick={() => setChangeWarehouseModalIsOpen(true)}
                     >
-                        Change warehouse
+                        {t('productDetails.changeWarehouse')}
                     </button>
                     <button
                         className={styles['delete-button']}
                         onClick={() => setDeleteModalIsOpen(true)}
                     >
-                        Delete
+                        {t('productDetails.delete')}
                     </button>
                 </div>
                 <button
                     className={styles['close-button']}
                     onClick={() => closeProductDetails()}>
-                    Close
+                    {t('productDetails.close')}
                 </button>
             </div>
             <div className={styles['backdrop']} />
