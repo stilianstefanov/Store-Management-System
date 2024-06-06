@@ -111,6 +111,23 @@
         "productUpdated": "Продуктът е обновен успешно!",
         "productAdded": "Продуктът е добавен успешно!"
     },
+    "productDetails": {
+        "barcode": "Баркод:",
+        "name": "Име:",
+        "description": "Описание:",
+        "price": "Цена:",
+        "delPrice": "Доставна цена:",
+        "qty": "Количество:",
+        "minQty": "Минимално количество:",
+        "maxQty": "Максимално количество:",
+        "warehouseName": "Име на склад:",
+        "warehouseType": "Тип на склад:",
+        "update": "Обнови",
+        "addQty": "Добави количество",
+        "changeWarehouse": "Смяна на склад",
+        "delete": "Изтриване",
+        "close": "Затвори"
+    },
     "selectWarehouseTable": {
         "header": "Избери склад",
         "searchInput": "Търсене",
