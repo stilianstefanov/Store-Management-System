@@ -111,6 +111,23 @@
         "productUpdated": "Product updated successfully!",
         "productAdded": "Product added successfully!"
     },
+    "productDetails": {
+        "barcode": "Barcode:",
+        "name": "Name:",
+        "description": "Description:",
+        "price": "Price:",
+        "delPrice": "Delivery price:",
+        "qty": "Quantity:",
+        "minQty": "Min Quantity:",
+        "maxQty": "Max Quantity:",
+        "warehouseName": "Warehouse Name:",
+        "warehouseType": "Warehouse Type:",
+        "update": "Update",
+        "addQty": "Add quantity",
+        "changeWarehouse": "Change warehouse",
+        "delete": "Delete",
+        "close": "Close"
+    },
     "selectWarehouseTable": {
         "header": "Select warehouse",
         "searchInput": "Search",
