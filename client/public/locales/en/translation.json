@@ -1,7 +1,8 @@
 {
     "homeHeader": "Manage your store easy and secure!",
     "common": {
-        "sessionExp": "Your session has expired. Please login again."
+        "sessionExp": "Your session has expired. Please login again.",
+        "error": "An error occured"
     },
     "nav": {
         "notLogged": {
