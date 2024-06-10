@@ -42,7 +42,7 @@ function ProductDetails({ productId, closeProductDetails, refreshProducts }) {
             toast.error(error.response ? error.response.data : t('common.error'));
         }
         console.error(error);
-    }, [logout, navigate]);
+    }, [logout, navigate, t]);
 
     const getProductDetails = useCallback(async () => {
         try {
