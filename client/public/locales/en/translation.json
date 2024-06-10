@@ -138,6 +138,11 @@
         "name": "Name",
         "type": "Type"
     },
+    "addQtyModal": {
+        "header": "Add Quantity",
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+    },
     "warehouses": {
         "header": "Warehouses",
         "searchLabel": "Search:",

@@ -138,6 +138,11 @@
         "name": "Име",
         "type": "Тип"
     },
+    "addQtyModal": {
+        "header": "Добави Количество",
+        "cancel": "Отмяна",
+        "confirm": "Потвърди"
+    },
     "warehouses": {
         "header": "Складове",
         "searchLabel": "Търсене:",
