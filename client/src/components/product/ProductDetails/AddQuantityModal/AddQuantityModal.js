@@ -4,13 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthContext';
 import styles from './AddQuantityModal.module.css';
 import { productValidationRules, commonValidationRules } from '../../../../validationRules';
-import * as ProductService from '../../../../services/productService'
+import * as ProductService from '../../../../services/productService';
+import { useTranslation } from 'react-i18next';
 
 function AddQuantityModal({ product, updateProduct, refreshProducts, closeModal }) {
     const [quantityToAdd, setQuantityToAdd] = useState(0);
     const [validationError, setValidationError] = useState("");
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -64,7 +66,7 @@ function AddQuantityModal({ product, updateProduct, refreshProducts, closeModal 
     return (
         <div>
             <div className={styles['main-container']}>
-                <h3 className={styles['header']}>Add Quantity</h3>
+                <h3 className={styles['header']}>{t('addQtyModal.header')}</h3>
                 <form onSubmit={submitHandler}>
                     <input
                         type='number'
@@ -76,10 +78,10 @@ function AddQuantityModal({ product, updateProduct, refreshProducts, closeModal 
                     {validationError && <p className={styles["error-message"]}>{validationError}</p>}
                     <div className={styles['buttons-container']}>
                         <button className={styles['button-cancel']} onClick={closeModal}>
-                            Cancel
+                            {t('addQtyModal.cancel')}
                         </button>
                         <button type="submit" className={styles["button-confirm"]}>
-                            Confirm
+                            {t('addQtyModal.confirm')}
                         </button>
                     </div>
                 </form>
