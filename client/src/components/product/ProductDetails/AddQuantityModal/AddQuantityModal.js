@@ -37,7 +37,7 @@ function AddQuantityModal({ product, updateProduct, refreshProducts, closeModal 
         if (error.response && error.response.status === 401) {
             logout();
             navigate('/login');
-            toast.warning('Your session has expired. Please login again.');
+            toast.warning(t('common.sessionExp'));
         } else {
             toast.error(error.response.data);
         }
