@@ -69,11 +69,11 @@ function ChangeWarehouse({ productId, updateProduct, closeModal }) {
     return (
         <div>
             <div className={styles['main-container']}>
-                <h3 className={styles['header']}>Select warehouse:</h3>
+                <h3 className={styles['header']}>{t('changeWarehouse.header')}</h3>
                 <input
                     type='text'
                     value={searchTerm}
-                    placeholder='Search'
+                    placeholder={t('changeWarehouse.search')}
                     className={`form-control ${styles.input}`}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -81,8 +81,8 @@ function ChangeWarehouse({ productId, updateProduct, closeModal }) {
                     <table className={styles['tableCustom']}>
                         <thead className={styles['tableHeader']}>
                             <tr>
-                                <th>Name</th>
-                                <th>Type</th>
+                                <th>{t('changeWarehouse.table.name')}</th>
+                                <th>{t('changeWarehouse.table.type')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,10 +109,10 @@ function ChangeWarehouse({ productId, updateProduct, closeModal }) {
                 </div>
                 <div className={styles['buttons-container']}>
                     <button className={styles['button-cancel']} onClick={closeModal}>
-                        Cancel
+                        {t('changeWarehouse.cancel')}
                     </button>
                     <button type="submit" className={styles["button-confirm"]} onClick={confirmHandler}>
-                        Confirm
+                        {t('changeWarehouse.confirm')}
                     </button>
                 </div>
             </div>
