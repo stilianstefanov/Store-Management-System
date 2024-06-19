@@ -143,6 +143,16 @@
         "cancel": "Cancel",
         "confirm": "Confirm"
     },
+    "changeWarehouse": {
+        "header": "Select warehouse:",
+        "search": "Search",
+        "table": {
+            "name": "Name",
+            "type": "Type"
+        },
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+    },
     "warehouses": {
         "header": "Warehouses",
         "searchLabel": "Search:",
