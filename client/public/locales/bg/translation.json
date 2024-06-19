@@ -143,6 +143,16 @@
         "cancel": "Отмяна",
         "confirm": "Потвърди"
     },
+    "changeWarehouse": {
+        "header": "Избери склад:",
+        "search": "Търсене",
+        "table": {
+            "name": "Име",
+            "type": "Тип"
+        },
+        "cancel": "Отмяна",
+        "confirm": "Потвърди"
+    },
     "warehouses": {
         "header": "Складове",
         "searchLabel": "Търсене:",
