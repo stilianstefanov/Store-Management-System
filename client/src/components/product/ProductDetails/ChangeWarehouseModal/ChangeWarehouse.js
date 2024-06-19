@@ -6,7 +6,8 @@ import { useAuth } from '../../../../context/AuthContext';
 import { toast } from 'react-toastify';
 import WarehouseRow from '../../../warehouse/warehouseSelectTable/WarehouseRow/WarehouseRow';
 import * as WarehouseService from '../../../../services/warehouseService';
-import * as ProductService from '../../../../services/productService'
+import * as ProductService from '../../../../services/productService';
+import { useTranslation } from 'react-i18next';
 
 function ChangeWarehouse({ productId, updateProduct, closeModal }) {
     const [warehouses, setWarehouses] = useState([]);
@@ -15,6 +16,7 @@ function ChangeWarehouse({ productId, updateProduct, closeModal }) {
     const [isLoading, setIsLoading] = useState(false);
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleError = useCallback((error) => {
         if (error.response && error.response.status === 401) {
