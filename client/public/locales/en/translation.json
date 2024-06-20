@@ -2,7 +2,12 @@
     "homeHeader": "Manage your store easy and secure!",
     "common": {
         "sessionExp": "Your session has expired. Please login again.",
-        "error": "An error occured"
+        "error": "An error occured",
+        "deleteModal": {
+            "header": "Are you sure?",
+            "cancel": "Cancel",
+            "confirm": "Confirm"
+        }
     },
     "nav": {
         "notLogged": {
