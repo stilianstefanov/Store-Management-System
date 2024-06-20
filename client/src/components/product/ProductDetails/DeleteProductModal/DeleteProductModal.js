@@ -2,11 +2,13 @@ import styles from './DeleteProductModal.module.css';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthContext';
-import * as ProductService from '../../../../services/productService'
+import * as ProductService from '../../../../services/productService';
+import { useTranslation } from 'react-i18next';
 
 function DeleteProductModal({ productId, closeModal, refreshProducts, closeProductDetails }) {
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const confirmHandler = async () => {
         try {
@@ -33,13 +35,13 @@ function DeleteProductModal({ productId, closeModal, refreshProducts, closeProdu
     return (
         <div>
             <div className={styles["container"]}>
-                <h1 className={styles["header"]}>Are you sure?</h1>
+                <h1 className={styles["header"]}>{t('common.deleteModal.header')}</h1>
                 <div className={styles['buttons-container']}>
                     <button className={styles['button-cancel']} onClick={closeModal}>
-                        Cancel
+                        {t('common.deleteModal.cancel')}
                     </button>
                     <button className={styles["button-confirm"]} onClick={confirmHandler}>
-                        Confirm
+                        {t('common.deleteModal.confirm')}
                     </button>
                 </div>
             </div>
