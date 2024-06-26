@@ -5,6 +5,8 @@ import { useAuth } from '../../../../context/AuthContext';
 import { useState } from 'react';
 import { commonValidationRules, registerValidationRules } from '../../../../validationRules';
 import * as UserService from '../../../../services/userService';
+import { useTranslation } from 'react-i18next';
+
 
 function UpdateProfileModal({ closeModal, claims }) {
     const [userName, setUserName] = useState(claims.unique_name);
@@ -13,6 +15,7 @@ function UpdateProfileModal({ closeModal, claims }) {
     const [validationErrors, setValidationErrors] = useState({});
     const { logout, login } = useAuth();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -39,7 +42,7 @@ function UpdateProfileModal({ closeModal, claims }) {
         if (error.response && error.response.status === 401) {
             logout();
             navigate('/login');
-            toast.warning('Your session has expired. Please login again.');
+            toast.warning(t('common.sessionExp'));
         } else {
             toast.error(error.response.data);
         }
