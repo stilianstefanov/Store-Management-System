@@ -2,11 +2,13 @@ import styles from './DeletePurchasedProductModal.module.css';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
-import * as PurchasedProductService from '../../../services/purchasedProductService'
+import * as PurchasedProductService from '../../../services/purchasedProductService';
+import { useTranslation } from 'react-i18next';
 
 function DeletePurchasedProductModal({ clientId, purchaseId, purchasedProductId, closeModal, refreshClients }) {
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const confirmHandler = async () => {
         try {
