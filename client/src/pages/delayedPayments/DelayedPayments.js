@@ -34,7 +34,7 @@ function DelayedPaymentsPage() {
             toast.error(error.response ? error.response.data : "An error occurred");
         }
         console.error(error);
-    }, [logout, navigate]);
+    }, [logout, navigate, t]);
 
     const getClients = useCallback(async () => {
         setIsLoading(true);

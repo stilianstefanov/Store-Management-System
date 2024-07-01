@@ -34,7 +34,7 @@ function ProductsPage() {
             toast.error(error.response ? error.response.data : "An error occurred");
         }
         console.error(error);
-    }, [logout, navigate]);
+    }, [logout, navigate, t]);
 
     const getProducts = useCallback(async () => {
         setIsLoading(true);

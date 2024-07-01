@@ -34,7 +34,7 @@ function WarehousesPage() {
             toast.error(error.response ? error.response.data : "An error occurred");
         }
         console.error(error);
-    }, [logout, navigate]);
+    }, [logout, navigate, t]);
 
     const getWarehouses = useCallback(async () => {
         setIsLoading(true);

@@ -36,7 +36,7 @@ function GmvPage() {
             toast.error(error.response ? error.response.data : "An error occurred");
         }
         console.error(error);
-    }, [logout, navigate]);
+    }, [logout, navigate, t]);
 
     const getTransactionsData = useCallback(async () => {
         setIsLoading(true);

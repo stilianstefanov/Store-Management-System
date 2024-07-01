@@ -29,7 +29,7 @@ function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDeta
             toast.error(error.response ? error.response.data : t('common.error'));
         }
         console.error(error);
-    }, [logout, navigate]);
+    }, [logout, navigate, t]);
 
     const getPurchasedProducts = useCallback(async () => {
         setIsLoading(true);
