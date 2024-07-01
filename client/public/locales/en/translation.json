@@ -192,6 +192,38 @@
         "warehouseUpdated": "Warehouse updated successfully!",
         "warehouseAdded": "Warehouse added successfully!"
     },
+    "warehouseDetails": {
+        "name": "Name:",
+        "type": "Type:",
+        "count": "Count of products:",
+        "update": "Update",
+        "header": "Products",
+        "checkbox": "Show Low Stock Items",
+        "searchLabel": "Search:",
+        "searchInput": "Search",
+        "sortLabel": "Sort by:",
+        "sortInput": {
+            "nameAsc": "Name (Ascending)",
+            "nameDesc": "Name (Descending)",
+            "quantityAsc": "Quantity (Ascending)",
+            "quantityDesc": "Quantity (Descending)",
+            "minQtyAsc": "Min Quantity (Ascending)",
+            "minQtyDesc": "Min Quantity (Descending)",
+            "maxQtyAsc": "Max Quantity (Ascending)",
+            "maxQtyDesc": "Max Quantity (Descending)",
+            "recQtyAsc": "Recommended Order Qty (Ascending)",
+            "recQtyDesc": "Recommended Order Qty (Descending)"
+        },
+        "perPageLabel": "Products per Page",
+        "table": {
+            "name": "Name",
+            "quantity": "Quantity",
+            "minQty": "Min Quantity",
+            "maxQty": "Max Quantity",
+            "recQty": "Recommended Order Quantity"
+        },
+        "close": "Close"
+    },
     "clients": {
         "header": "Clients",
         "searchLabel": "Search:",
