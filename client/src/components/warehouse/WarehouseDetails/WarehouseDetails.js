@@ -27,12 +27,12 @@ function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses 
         if (error.response && error.response.status === 401) {
             logout();
             navigate('/login');
-            toast.warning('Your session has expired. Please login again.');
+            toast.warning(t('common.sessionExp'));
         } else {
             toast.error(error.response ? error.response.data : "An error occurred");
         }
         console.error(error);
-    }, [logout, navigate]);
+    }, [logout, navigate, t]);
 
     const getProducts = useCallback(async () => {
         setIsLoading(true);
@@ -68,35 +68,35 @@ function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses 
         <div>
             <div className={styles['container']}>
                 <div className={styles['header-container']}>
-                    <p className={styles['text']}>Name: {warehouse.name}</p>
-                    <p className={styles['text']}>Type: {warehouse.type}</p>
-                    <p className={styles['text']}>Count of products: {warehouse.productsCount}</p>
+                    <p className={styles['text']}>{t('warehouseDetails.name')} {warehouse.name}</p>
+                    <p className={styles['text']}>{t('warehouseDetails.type')} {warehouse.type}</p>
+                    <p className={styles['text']}>{t('warehouseDetails.count')} {warehouse.productsCount}</p>
                     <button
                         className={styles['update-button']}
                         onClick={() => setWarehouseFormIsOpen(true)}>
-                        Update
+                        {t('warehouseDetails.update')}
                     </button>
                 </div>
                 <div className={styles['table-header-wrapper']}>
-                    <h2 className={styles['table-header']}>Products</h2>
+                    <h2 className={styles['table-header']}>{t('warehouseDetails.header')}</h2>
                     <div className={styles["checkbox-wrapper-14"]}>
                         <input id="s1-14" type="checkbox" className={styles["switch"]}
                             onChange={() => setShowLowStocksOnly(!showLowStocksOnly)} />
-                        <label for="s1-14">Show Low Stock Items</label>
+                        <label for="s1-14">{t('warehouseDetails.checkbox')}</label>
                     </div>
                     {showLowStocksOnly &&
                         <button className={styles['export-button']}
                         //ToDo Implement Excel export
                         >
-                            Export
+                            {t('warehouseDetails.export')}
                         </button>}
                 </div>
                 <div className={styles['input-fields-container']}>
                     <div className={styles['input-group']}>
-                        <label htmlFor="search-input">Search:</label>
+                        <label htmlFor="search-input">{t('warehouseDetails.searchLabel')}</label>
                         <input
                             id="search-input"
-                            placeholder="Search"
+                            placeholder={t('warehouseDetails.searchInput')}
                             className={`form-control ${styles['input-field']}`}
                             onChange={(e) => {
                                 setCurrentPage(1);
@@ -105,7 +105,7 @@ function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses 
                         />
                     </div>
                     <div className={styles['input-group']}>
-                        <label htmlFor="order-select">Sort by:</label>
+                        <label htmlFor="order-select">{t('warehouseDetails.sortLabel')}</label>
                         <select
                             id="order-select"
                             className={`form-control ${styles['input-field']}`}
@@ -114,20 +114,20 @@ function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses 
                                 setSorting(e.target.value);
                             }}
                         >
-                            <option value="0">Name (Ascending)</option>
-                            <option value="1">Name (Descending)</option>
-                            <option value="2">Quantity (Ascending)</option>
-                            <option value="3">Quantity (Descending)</option>
-                            <option value="4">Min Quantity (Ascending)</option>
-                            <option value="5">Min Quantity (Descending)</option>
-                            <option value="6">Max Quantity (Ascending)</option>
-                            <option value="7">Max Quantity (Descending)</option>
-                            <option value="8">Recommended Order Qty (Ascending)</option>
-                            <option value="9">Recommended Order Qty (Descending)</option>
+                            <option value="0">{t('warehouseDetails.sortInput.nameAsc')}</option>
+                            <option value="1">{t('warehouseDetails.sortInput.nameDesc')}</option>
+                            <option value="2">{t('warehouseDetails.sortInput.quantityAsc')}</option>
+                            <option value="3">{t('warehouseDetails.sortInput.quantityDesc')}</option>
+                            <option value="4">{t('warehouseDetails.sortInput.minQtyAsc')}</option>
+                            <option value="5">{t('warehouseDetails.sortInput.minQtyDesc')}</option>
+                            <option value="6">{t('warehouseDetails.sortInput.maxQtyAsc')}</option>
+                            <option value="7">{t('warehouseDetails.sortInput.maxQtyDesc')}</option>
+                            <option value="8">{t('warehouseDetails.sortInput.recQtyAsc')}</option>
+                            <option value="9">{t('warehouseDetails.sortInput.recQtyDesc')}</option>
                         </select>
                     </div>
                     <div className={styles['input-group']}>
-                        <label htmlFor="order-select">Products per Page:</label>
+                        <label htmlFor="order-select">{t('warehouseDetails.perPageLabel')}</label>
                         <select
                             id="order-select"
                             className={`form-control ${styles['input-field']}`}
@@ -145,11 +145,11 @@ function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses 
                     <table className={styles['table-fill']}>
                         <thead>
                             <tr>
-                                <th className={styles['text-left']}>Name</th>
-                                <th className={styles['text-left']}>Quantity</th>
-                                <th className={styles['text-left']}>Min Quantity</th>
-                                <th className={styles['text-left']}>Max Quantity</th>
-                                <th className={styles['text-left']}>Recommended Order Quantity</th>
+                                <th className={styles['text-left']}>{t('warehouseDetails.table.name')}</th>
+                                <th className={styles['text-left']}>{t('warehouseDetails.table.quantity')}</th>
+                                <th className={styles['text-left']}>{t('warehouseDetails.table.minQty')}</th>
+                                <th className={styles['text-left']}>{t('warehouseDetails.table.maxQty')}</th>
+                                <th className={styles['text-left']}>{t('warehouseDetails.table.recQty')}</th>
                             </tr>
                         </thead>
                         <tbody className={styles['table-hover']}>
@@ -176,7 +176,7 @@ function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses 
                     <button
                         className={styles['close-button']}
                         onClick={() => closeWarehouseDetails()}>
-                        Close
+                        {t('warehouseDetails.close')}
                     </button>
                     <div className={styles['buttons-wrapper']}>
                         {currentPage > 1 && (

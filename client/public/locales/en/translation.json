@@ -222,7 +222,8 @@
             "maxQty": "Max Quantity",
             "recQty": "Recommended Order Quantity"
         },
-        "close": "Close"
+        "close": "Close",
+        "export": "Export"
     },
     "clients": {
         "header": "Clients",
