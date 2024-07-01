@@ -7,6 +7,7 @@ import { useAuth } from '../../../context/AuthContext';
 import ProductRow from './ProductRow/ProductRow';
 import WarehouseForm from '../WarehouseForm/WarehouseForm';
 import * as WarehouseService from '../../../services/warehouseService';
+import { useTranslation } from 'react-i18next';
 
 function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses }) {
     const [products, setProducts] = useState([]);
@@ -20,6 +21,7 @@ function WarehouseDetails({ warehouse, closeWarehouseDetails, refreshWarehouses 
     const [warehouseFormIsOpen, setWarehouseFormIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const handleError = useCallback((error) => {
         if (error.response && error.response.status === 401) {
