@@ -7,7 +7,8 @@ import { useAuth } from '../../../context/AuthContext';
 import TablePurchasedProduct from '../../purchasedProduct/TablePurchasedProduct/TablePurchasedProduct';
 import DeletePurchaseModal from './DeletePurchaseModal/DeletePurchaseModal';
 import DeletePurchasedProductModal from '../../purchasedProduct/DeletePurchasedProductModal/DeletePurchasedProductModal';
-import * as PurchasedProductService from '../../../services/purchasedProductService'
+import * as PurchasedProductService from '../../../services/purchasedProductService';
+import { useTranslation } from 'react-i18next';
 
 function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDetails }) {
     const [purchasedProducts, setPurchasedProducts] = useState([]);
@@ -17,6 +18,7 @@ function PurchaseDetails({ clientId, purchase, refreshClients, closePurchaseDeta
     const [deleteProductModalIsOpen, setDeleteProductModalIsOpen] = useState(false);
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const handleError = useCallback((error) => {
         if (error.response && error.response.status === 401) {
