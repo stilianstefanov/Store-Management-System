@@ -32,12 +32,12 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
         if (error.response && error.response.status === 401) {
             logout();
             navigate('/login');
-            toast.warning('Your session has expired. Please login again.');
+            toast.warning(t('common.sessionExp'));
         } else {
             toast.error(error.response ? error.response.data : "An error occurred");
         }
         console.error(error);
-    }, [logout, navigate]);
+    }, [logout, navigate, t]);
 
     const getPurchases = useCallback(async () => {
         setIsLoading(true);
