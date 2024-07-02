@@ -10,6 +10,7 @@ import DecreaseCreditModal from './DecreaseCreditModal/DecreaseCreditModal';
 import DeleteClientModal from './DeleteClientModal/DeleteClientModal';
 import PurchaseDetails from '../../purchase/PurchaseDetails/PurchaseDetails';
 import * as PurchaseService from '../../../services/purchaseService';
+import { useTranslation } from 'react-i18next';
 
 function ClientDetails({ client, closeClientDetails, refreshClients }) {
     const [purchases, setPurchases] = useState([]);
@@ -25,6 +26,7 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
     const [selectedPurchaseId, setSelectedPurchaseId] = useState("");
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const handleError = useCallback((error) => {
         if (error.response && error.response.status === 401) {
