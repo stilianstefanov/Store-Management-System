@@ -269,6 +269,32 @@
         "clientUpdated": "Клиентът е обновен успешно!",
         "clientAdded": "Клиентът е добавен успешно!"
     },
+    "clientDetails": {
+        "name": "Име:",
+        "surname": "Презиме:",
+        "lastname": "Фамилия:",
+        "currCredit": "Текущ кредит:",
+        "limit": "Кредитен лимит:",
+        "update": "Обнови",
+        "decrCredit": "Погасяване кредит",
+        "delete": "Изтриване",
+        "close": "Затвори",
+        "purchases": {
+            "header": "Покупки",
+            "dateLabel": "Дата:",
+            "sortLabel": "Сортиране:",
+            "sortInput": {
+                "dateLatest": "Дата (Най - нови)",
+                "dateOldest": "Дата (Най - стари)",
+                "amountDesc": "Стойност (Низходящ ред)",
+                "amountAsc": "Стойност (Възходящ ред)"
+            },
+            "table": {
+                "date": "Дата",
+                "amount": "Стойност"
+            }
+        }
+    },
     "gmv": {
         "header": "Оборот",
         "periodLabel": "Период:",
