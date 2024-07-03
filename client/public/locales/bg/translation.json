@@ -295,6 +295,13 @@
             }
         }
     },
+    "decreaseCredit": {
+        "header": "Погасяване на текущ кредит",
+        "amountLabel": "Стойност:",
+        "amountInput": "Въведете стойност за погасяване",
+        "cancel": "Отмяна",
+        "confirm": "Потвърди"
+    },
     "gmv": {
         "header": "Оборот",
         "periodLabel": "Период:",
