@@ -4,13 +4,15 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../context/AuthContext';
 import { clientValidationRules, commonValidationRules } from '../../../../validationRules';
-import * as ClientService from '../../../../services/clientService'
+import * as ClientService from '../../../../services/clientService';
+import { useTranslation } from 'react-i18next';
 
 function DecreaseCreditModal({ client, closeModal, refreshClients }) {
     const [decreaseAmount, setDecreaseAmount] = useState("");
     const [validationError, setValidationError] = useState("");
     const navigate = useNavigate();
     const { logout } = useAuth();
+    const { t } = useTranslation();
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -59,13 +61,13 @@ function DecreaseCreditModal({ client, closeModal, refreshClients }) {
     return (
         <div>
             <div className={styles["container"]}>
-                <h1 className={styles["header"]}>Decrease current credit</h1>
+                <h1 className={styles["header"]}>{t('decreaseCredit.header')}</h1>
                 <form onSubmit={submitHandler}>
                     <div className={styles['input-group']}>
-                        <label htmlFor="amount-input">Amount:</label>
+                        <label htmlFor="amount-input">{t('decreaseCredit.amountLabel')}</label>
                         <input
                             id="amount-input"
-                            placeholder="Enter amount to decrease"
+                            placeholder={t('decreaseCredit.amountInput')}
                             className={styles["input"]}
                             value={decreaseAmount}
                             onChange={inputAmountHandler}
@@ -74,10 +76,10 @@ function DecreaseCreditModal({ client, closeModal, refreshClients }) {
                     </div>
                     <div className={styles['buttons-container']}>
                         <button className={styles['button-cancel']} onClick={closeModal}>
-                            Cancel
+                            {t('decreaseCredit.cancel')}
                         </button>
                         <button type="submit" className={styles["button-confirm"]}>
-                            Confirm
+                            {t('decreaseCredit.confirm')}
                         </button>
                     </div>
                 </form>
