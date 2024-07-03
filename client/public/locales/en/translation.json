@@ -295,6 +295,13 @@
             }
         }
     },
+    "decreaseCredit": {
+        "header": "Decrease current credit",
+        "amountLabel": "Amount:",
+        "amountInput": "Enter amount to decrease",
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+    },
     "gmv": {
         "header": "GMV",
         "periodLabel": "Period:",
