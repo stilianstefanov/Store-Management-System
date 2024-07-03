@@ -269,6 +269,32 @@
         "clientUpdated": "Client updated successfully!",
         "clientAdded": "Client added successfully!"
     },
+    "clientDetails": {
+        "name": "Name:",
+        "surname": "Surname:",
+        "lastname": "Lastname:",
+        "currCredit": "Current credit:",
+        "limit": "Credit limit:",
+        "update": "Update",
+        "decrCredit": "Decrease credit",
+        "delete": "Delete",
+        "close": "Close",
+        "purchases": {
+            "header": "Purchases",
+            "dateLabel": "Date:",
+            "sortLabel": "Sort by:",
+            "sortInput": {
+                "dateLatest": "Date (Latest)",
+                "dateOldest": "Date (Oldest)",
+                "amountDesc": "Amount (Descending)",
+                "amountAsc": "Amount (Ascending)",
+            },
+            "table": {
+                "date": "Date",
+                "amount": "Amount"
+            }
+        }
+    },
     "gmv": {
         "header": "GMV",
         "periodLabel": "Period:",
