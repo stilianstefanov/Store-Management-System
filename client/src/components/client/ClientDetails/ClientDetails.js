@@ -79,50 +79,50 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                     <div className={styles['flex-container']}>
                         <ul className={styles['list-info']}>
                             <li>
-                                <p>Name: <span className={styles['list-info-span']}>{client.name}</span></p>
+                                <p>{t('clientDetails.name')} <span className={styles['list-info-span']}>{client.name}</span></p>
                             </li>
                             <li>
-                                <p>Surname: <span className={styles['list-info-span']}>{client.surname ? client.surname : 'N/A'}</span></p>
+                                <p>{t('clientDetails.surname')} <span className={styles['list-info-span']}>{client.surname ? client.surname : 'N/A'}</span></p>
                             </li>
                             <li>
-                                <p>Lastname: <span className={styles['list-info-span']}>{client.lastName}</span></p>
+                                <p>{t('clientDetails.lastname')} <span className={styles['list-info-span']}>{client.lastName}</span></p>
                             </li>
                             <li>
-                                <p>Current credit: <span className={styles['list-info-span']}>{client.currentCredit.toFixed(2)}</span></p>
+                                <p>{t('clientDetails.currCredit')} <span className={styles['list-info-span']}>{client.currentCredit.toFixed(2)}</span></p>
                             </li>
                             <li>
-                                <p>Credit limit: <span className={styles['list-info-span']}>{client.creditLimit.toFixed(2)}</span></p>
+                                <p>{t('clientDetails.limit')} <span className={styles['list-info-span']}>{client.creditLimit.toFixed(2)}</span></p>
                             </li>
                         </ul>
                         <div className={styles['buttons-container']}>
                             <button
                                 className={styles['update-button']}
                                 onClick={() => setclientFormIsOpen(true)}>
-                                Update
+                                {t('clientDetails.update')}
                             </button>
                             <button
                                 className={styles['decr-credit-button']}
                                 onClick={() => setDecreaseCreditModalIsOpen(true)}>
-                                Decrease credit
+                                {t('clientDetails.decrCredit')}
                             </button>
                             <button
                                 className={styles['delete-button']}
                                 onClick={() => setDeleteModalIsOpen(true)}>
-                                Delete
+                                {t('clientDetails.delete')}
                             </button>
                         </div>
                         <button
                             className={styles['close-button']}
                             onClick={() => closeClientDetails()}>
-                            Close
+                            {t('clientDetails.close')}
                         </button>
                     </div>
                 </div>
                 <div className={styles['purchases-wrapper']}>
-                    <h2 className={styles['list-info-span']}>Purchases</h2>
+                    <h2 className={styles['list-info-span']}>{t('clientDetails.purchases.header')}</h2>
                     <div className="d-flex justify-content-center flex-wrap">
                         <div className={styles['input-group']}>
-                            <label htmlFor="select-date">Date:</label>
+                            <label htmlFor="select-date">{t('clientDetails.purchases.dateLabel')}</label>
                             <input
                                 id="select-date"
                                 type="date"
@@ -135,7 +135,7 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                             />
                         </div>
                         <div className={styles['input-group']}>
-                            <label htmlFor="order-select">Sort by:</label>
+                            <label htmlFor="order-select">{t('clientDetails.purchases.sortLabel')}</label>
                             <select
                                 id="order-select"
                                 className={`form-control ${styles['input-field']}`}
@@ -144,10 +144,10 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                                     setSorting(e.target.value);
                                 }}
                             >
-                                <option value="0">Date (Latest)</option>
-                                <option value="1">Date (Oldest)</option>
-                                <option value="2">Amount (Descending)</option>
-                                <option value="3">Amount (Ascending)</option>
+                                <option value="0">{t('clientDetails.purchases.sortInput.dateLatest')}</option>
+                                <option value="1">{t('clientDetails.purchases.sortInput.dateOldest')}</option>
+                                <option value="2">{t('clientDetails.purchases.sortInput.amountDesc')}</option>
+                                <option value="3">{t('clientDetails.purchases.sortInput.amountAsc')}</option>
                             </select>
                         </div>
                     </div>
@@ -155,8 +155,8 @@ function ClientDetails({ client, closeClientDetails, refreshClients }) {
                         <table className={styles['table-fill']}>
                             <thead>
                                 <tr>
-                                    <th className={styles['text-left']}>Date</th>
-                                    <th className={styles['text-left']}>Amount</th>
+                                    <th className={styles['text-left']}>{t('clientDetails.purchases.table.date')}</th>
+                                    <th className={styles['text-left']}>{t('clientDetails.purchases.table.amount')}</th>
                                 </tr>
                             </thead>
                             <tbody className={styles['table-hover']}>
