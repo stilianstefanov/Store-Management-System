@@ -287,7 +287,7 @@
                 "dateLatest": "Date (Latest)",
                 "dateOldest": "Date (Oldest)",
                 "amountDesc": "Amount (Descending)",
-                "amountAsc": "Amount (Ascending)",
+                "amountAsc": "Amount (Ascending)"
             },
             "table": {
                 "date": "Date",
